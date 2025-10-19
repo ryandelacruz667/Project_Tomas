@@ -706,23 +706,27 @@
             </div>
 
             <!-- Modern Table Container for Household Data (initially hidden) -->
-            <div id="household-data-table-container">
+            <div id="household-data-table-container" style="display:none;">
                 <button id="close-household-table-btn" title="Close Table">&times;</button>
                 <table class="modern-table" id="household-data-table">
                     <thead>
                         <tr>
                             <th>Given Name</th>
-                           <th>Middle Name</th>
+                            <th>Middle Name</th>
                             <th>Last Name</th>
                             <th>Household Size</th>
                             <th>Age</th>
                             <th>Sex</th>
                             <th>Occupation</th>
+                            <th>Religion</th>
+                            <th>Relation</th>
+                            <th>Illness</th>
+                            <th>PWD</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="empty-message" colspan="6">No household selected.</td>
+                            <td class="empty-message" colspan="7">No household selected.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -736,8 +740,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
         <script src="resources/qgis2web_expressions.js"></script>
         <script src="./resources/functions.js"></script>
         <script src="./resources/ol.js"></script>
@@ -747,6 +749,7 @@
         <script src="layers/Municipality_2.js"></script>
         <script src="layers/Province_3.js"></script>
         <script src="layers/Households_11.js"></script>
+        <script src="layers/Households_1.js"></script>
         <script src="layers/Roads_12.js"></script>
         <script src="styles/Barangay_1_style.js"></script>
         <script src="styles/Municipality_2_style.js"></script>
@@ -756,11 +759,11 @@
         <script src="./layers/layers.js" type="text/javascript"></script> 
         <script src="./resources/Autolinker.min.js"></script>
         <script src="./resources/qgis2web.js"></script>
+   
+        
+     
         <script>
-        // Wait for Province_3 features to load before attempting to access them.
-        // The variable 'json_Province_3_0' is defined in Province_3.js and holds the GeoJSON FeatureCollection.
-
-        // --- Hide Household and Roads polygons unless button is clicked ---.
+           // --- Hide Household and Roads polygons unless button is clicked ---.
 
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -943,67 +946,60 @@
                 return null;
             }
 
-            // Fields to display in the table:
-            // Last name, Middle Name, household size, age, sex, Occupation.
-            // Try typical spellings for field names from Household properties (adapt as needed)
+            // Fields to display in the table based on the actual data structure
             const householdTableFields = [
-                { label: "Given Name",      field: ["GIVEN NAME", "LNAME", "lname", "last_name", "Last_Name", "lastName"] },
-                { label: "Middle Name",    field: ["MIDDLE NAME", "MNAME", "mname", "middle_name", "Middle_Name", "middleName"] },
-                { label: "Last Name",      field: ["LAST NAME", "LNAME", "lname", "last_name", "Last_Name", "lastName"] },
-                { label: "Household Size", field: ["NUMBER OF OCCUPANTS", "SIZE", "household_size", "Household_Size", "HouseholdSize"] },
-                { label: "Age",            field: ["AGE", "age"] },
-                { label: "Sex",            field: ["SEX", "sex", "Sex"] },
-                { label: "Occupation",     field: ["OCCUPATION", "occupation", "Occupation"] }
+                { label: "Given Name",      field: ["GIVEN NAME"] },
+                { label: "Middle Name",     field: ["MIDDLE NAME"] },
+                { label: "Last Name",       field: ["LAST NAME"] },
+                { label: "Household Size",  field: ["NUMBER OF OCCUPANTS"] },
+                { label: "Age",             field: ["AGE"] },
+                { label: "Sex",             field: ["SEX"] },
+                { label: "Occupation",      field: ["OCCUPATION"] },
+                { label: "Religion",        field: ["_RELIGION"] },
+                { label: "Relation",        field: ["RELATION"] },
+                { label: "Illness",         field: ["_ILLNESS"] },
+                { label: "PWD",             field: ["_PWD"] }
             ];
 
-            // Handles multiple household member records (if properties includes arrays), but if not, just outputs a single row.
-            function buildHouseholdTableRows(properties) {
-                if (!properties) return `<tr><td class="empty-message" colspan="6">No household data found.</td></tr>`;
-                // Check if any property is array: if so, per-member rows, else single-row household
-                let maxLen = 1;
-                const values = householdTableFields.map(f => {
-                    let v = undefined;
-                    for (let fname of f.field) if (v === undefined && properties.hasOwnProperty(fname)) v = properties[fname];
-                    return v;
-                });
-                // If any value is array, get max array length for member records
-                values.forEach(v => {
-                    if (Array.isArray(v) && v.length > maxLen) maxLen = v.length;
-                });
+            // Handles multiple household member records from the same family
+            function buildHouseholdTableRows(familyMembers) {
+                if (!familyMembers || familyMembers.length === 0) {
+                    return `<tr><td class="empty-message" colspan="11">No household data found.</td></tr>`;
+                }
 
                 let rows = "";
-                for (let i = 0; i < maxLen; ++i) {
+                familyMembers.forEach(member => {
                     rows += "<tr>";
                     for (let j = 0; j < householdTableFields.length; ++j) {
-                        const v = values[j];
-                        let display;
-                        if (Array.isArray(v)) {
-                            display = (v[i] !== undefined && v[i] !== null) ? v[i] : "";
-                        } else {
-                            display = (i === 0 && v !== undefined && v !== null) ? v : "";
+                        const fieldConfig = householdTableFields[j];
+                        let value = "";
+                        
+                        // Try to find the value using the field configuration
+                        for (let fieldName of fieldConfig.field) {
+                            if (member.hasOwnProperty(fieldName) && member[fieldName] !== undefined && member[fieldName] !== null) {
+                                value = member[fieldName];
+                                break;
+                            }
                         }
-                        rows += `<td>${display !== undefined ? display : ""}</td>`;
+                        
+                        rows += `<td>${value}</td>`;
                     }
                     rows += "</tr>";
-                }
+                });
 
-                // If all values are empty (all first row values are undefined/empty), return a 'no data' row.
-                if (/^<tr>(<td>(|undefined|null)<\/td>)+<\/tr>$/.test(rows)) {
-                    return `<tr><td class="empty-message" colspan="6">No household data found.</td></tr>`;
-                }
                 return rows;
             }
 
-            // Show the data table with given properties (or hide if null)
-            function showHouseholdDataTable(properties) {
+            // Show the data table with given family members (or hide if null)
+            function showHouseholdDataTable(familyMembers) {
                 var container = document.getElementById("household-data-table-container");
                 var tbody = document.getElementById("household-data-table").getElementsByTagName("tbody")[0];
-                if (properties) {
-                    tbody.innerHTML = buildHouseholdTableRows(properties);
+                if (familyMembers && familyMembers.length > 0) {
+                    tbody.innerHTML = buildHouseholdTableRows(familyMembers);
                     container.style.display = "block";
                 } else {
                     // No selection: message shown, hide
-                    tbody.innerHTML = `<tr><td class="empty-message" colspan="6">No household selected.</td></tr>`;
+                    tbody.innerHTML = `<tr><td class="empty-message" colspan="11">No household selected.</td></tr>`;
                     container.style.display = "none";
                 }
             }
@@ -1011,6 +1007,34 @@
             document.getElementById("close-household-table-btn").addEventListener("click", function() {
                 showHouseholdDataTable(null);
             });
+
+            // Function to find all family members with the same FAMILY-ID
+            function findFamilyMembers(clickedFeature) {
+                if (!clickedFeature) return [];
+                
+                const clickedFamilyId = clickedFeature.getProperties()["FAMILY-ID"];
+                if (!clickedFamilyId) return [clickedFeature.getProperties()];
+                
+                // Get all features from the household layer
+                const householdLayer = (typeof lyr_Households_11 !== "undefined") ? lyr_Households_11 : null;
+                if (!householdLayer || typeof householdLayer.getSource !== "function") {
+                    return [clickedFeature.getProperties()];
+                }
+                
+                const source = householdLayer.getSource();
+                const features = source.getFeatures();
+                
+                // Find all features with the same FAMILY-ID
+                const familyMembers = [];
+                features.forEach(feature => {
+                    const properties = feature.getProperties();
+                    if (properties["FAMILY-ID"] === clickedFamilyId) {
+                        familyMembers.push(properties);
+                    }
+                });
+                
+                return familyMembers;
+            }
 
             // ========== MAIN: Listen for household polygon selection ===========
             // - show table on select
@@ -1070,7 +1094,9 @@
                         if (popupContainer) popupContainer.style.display = 'none';
 
                         if (featureFound) {
-                            showHouseholdDataTable(featureFound.getProperties());
+                            // Find all family members with the same FAMILY-ID
+                            const familyMembers = findFamilyMembers(featureFound);
+                            showHouseholdDataTable(familyMembers);
                         } else {
                             showHouseholdDataTable(null);
                         }
