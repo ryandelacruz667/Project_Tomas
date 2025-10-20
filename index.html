@@ -563,6 +563,51 @@
             margin: 0;
         }
 
+        /* Responsive breakpoints */
+        @media (max-width: 1200px) {
+            #left-pane { width: 240px; }
+            #top-pane { left: 240px; }
+            .search-form { max-width: 520px; gap: 1rem; }
+            .sidebar-header, .sidebar-header.flood-header { font-size: 1.6rem; }
+        }
+
+        @media (max-width: 992px) {
+            #left-pane { width: 200px; }
+            #top-pane { left: 200px; height: 66px; padding-left: 1.5rem; padding-right: 1.5rem; }
+            #map-container { height: calc(100vh - 66px); margin-top: 66px; }
+            .search-form { max-width: 480px; gap: 0.9rem; }
+            .form-label, .flood-form-label { font-size: 0.98rem; }
+            .modern-select, .flood-modern-select { font-size: 1rem; }
+            .search-btn { padding: 0.55rem 1.6rem; font-size: 1.02rem; }
+        }
+
+        @media (max-width: 768px) {
+            #main-wrapper { flex-direction: column; }
+            #left-pane { width: 100%; height: auto; position: relative; }
+            #top-pane { left: 0; right: 0; position: sticky; top: 0; height: 60px; }
+            #map-container { height: calc(100vh - 60px); margin-top: 0; }
+            .nav-bar { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; padding: 0.6rem; }
+            .nav-btn { padding: 0.7rem 0.8rem; font-size: 0.95rem; }
+            .search-form { max-width: none; width: 100%; gap: 0.6rem; }
+            .modern-select, .flood-modern-select { min-width: 0; flex: 1; }
+            .sidebar-header, .sidebar-header.flood-header { padding: 1rem; font-size: 1.3rem; }
+            .infographics-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .modern-table th, .modern-table td { padding: 0.7rem 0.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            #left-pane { width: 100%; }
+            #top-pane { height: 56px; }
+            #map-container { height: calc(100vh - 56px); }
+            .nav-btn i { font-size: 1.2rem; }
+            .nav-btn { padding: 0.55rem 0.7rem; font-size: 0.9rem; }
+            .form-label, .flood-form-label { font-size: 0.88rem; }
+            .modern-select, .flood-modern-select { font-size: 0.95rem; padding: 0.45rem 0.7rem; }
+            .search-btn { padding: 0.45rem 0.9rem; font-size: 0.95rem; margin-left: 0.4rem; }
+            .infographics-grid { grid-template-columns: 1fr; }
+            #flood-infographics-container, #household-data-table-container { min-width: unset; max-width: 96vw; }
+        }
+
         @media only screen and (max-width: 700px) {
 
             #left-pane { width: 95px; }
