@@ -50,7 +50,7 @@
         }
 
         #left-pane {
-            width: 270px;
+            width: 320px;
             background: #23272f;
             color: #fff;
             height: 100vh;
@@ -59,67 +59,85 @@
             flex-direction: column;
             padding: 0;
             z-index: 10;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Ensure all child elements inherit the dark background */
+        #left-pane * {
+            background-color: inherit;
+        }
+        
+        /* Override any white backgrounds that might be inherited */
+        #left-pane .sidebar-header,
+        #left-pane .nav-bar,
+        #left-pane .flood-section,
+        #left-pane .flood-form-group,
+        #left-pane .flood-legend-section {
+            background: #23272f !important;
         }
         .sidebar-header {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             text-align: left;
-            padding: 2.2rem 2rem 1rem 2rem;
-            letter-spacing: 0.5px;
+            padding: 1.5rem 1.5rem 0.8rem 1.5rem;
+            letter-spacing: 0.3px;
             border-bottom: none;
             color: #fafafa;
+            background: #23272f;
         }
         .sidebar-header span {
             border-bottom: 3px solid #24b2ff;
-            padding-bottom: 0.3rem;
+            padding-bottom: 0.2rem;
             color: #24b2ff;
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             display: inline-block;
-            letter-spacing:1px;
+            letter-spacing: 0.5px;
         }
         .sidebar-header.flood-header {
             /* Same as .sidebar-header but separate class for Flood Extent */
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             text-align: left;
-            padding: 2.2rem 2rem 1rem 2rem;
-            letter-spacing: 0.5px;
+            padding: 1.5rem 1.5rem 0.8rem 1.5rem;
+            letter-spacing: 0.3px;
             border-bottom: none;
             color: #fafafa;
+            background: #23272f;
         }
         .sidebar-header.flood-header span {
             border-bottom: 3px solid #f39c12;
-            padding-bottom: 0.3rem;
+            padding-bottom: 0.2rem;
             color: #f39c12;
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             display: inline-block;
-            letter-spacing:1px;
+            letter-spacing: 0.5px;
         }
         .nav-bar {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            margin-top: 2rem;
-            padding: 0 1.4rem;
+            gap: 0.3rem;
+            margin-top: 1rem;
+            padding: 0 1.2rem;
         }
         .nav-btn {
             display: flex;
             align-items: center;
-            gap: 1.2rem;
-            padding: 1rem 1.2rem;
-            font-size: 1.17rem;
+            gap: 0.8rem;
+            padding: 0.7rem 1rem;
+            font-size: 1rem;
             font-weight: 600;
             border: none;
             outline: none;
             background: none;
             color: #fafafa;
             transition: background 0.18s, color 0.18s;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .nav-btn i {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
         .nav-btn:hover, .nav-btn.active {
             background: #24b2ff;
@@ -127,13 +145,13 @@
         }
         /* Flood hazard section style */
         .flood-section {
-            margin-top: 2.5rem;
+            margin-top: 1.5rem;
         }
         .flood-form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
-            margin: 0 2rem 1.4rem 2rem;
+            gap: 0.2rem;
+            margin: 0 1.5rem 1rem 1.5rem;
         }
         .flood-form-label {
             font-size: 1.03rem;
@@ -202,7 +220,7 @@
         /* Top Pane Styles */
         #top-pane {
             position: fixed;
-            left: 270px;
+            left: 320px;
             top: 0;
             right: 0;
             height: 72px;
@@ -215,6 +233,7 @@
             padding-left: 2.5rem;
             padding-right: 3rem;
         }
+        
         .search-form {
             display: flex;
             align-items: center;
@@ -564,18 +583,25 @@
         }
 
         /* Responsive breakpoints */
-        @media (max-width: 1200px) {
-            #left-pane { width: 240px; }
-            #top-pane { left: 240px; }
+        @media (max-width: 1400px) {
+            #left-pane { width: 300px; }
+            #top-pane { left: 300px; }
             .search-form { max-width: 520px; gap: 1rem; }
             .sidebar-header, .sidebar-header.flood-header { font-size: 1.6rem; }
         }
 
-        @media (max-width: 992px) {
-            #left-pane { width: 200px; }
-            #top-pane { left: 200px; height: 66px; padding-left: 1.5rem; padding-right: 1.5rem; }
-            #map-container { height: calc(100vh - 66px); margin-top: 66px; }
+        @media (max-width: 1200px) {
+            #left-pane { width: 280px; }
+            #top-pane { left: 280px; }
             .search-form { max-width: 480px; gap: 0.9rem; }
+            .sidebar-header, .sidebar-header.flood-header { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 992px) {
+            #left-pane { width: 260px; }
+            #top-pane { left: 260px; height: 66px; padding-left: 1.5rem; padding-right: 1.5rem; }
+            #map-container { height: calc(100vh - 66px); margin-top: 66px; }
+            .search-form { max-width: 450px; gap: 0.8rem; }
             .form-label, .flood-form-label { font-size: 0.98rem; }
             .modern-select, .flood-modern-select { font-size: 1rem; }
             .search-btn { padding: 0.55rem 1.6rem; font-size: 1.02rem; }
@@ -632,11 +658,20 @@
         }
         </style>
 
-        <title>PROJECT TOMAS</title>
+        <title>PROJECT TOMaS (Tactical Overlay for Mapping and Safety)</title>
     </head>
     <body>
         <div id="main-wrapper">
             <div id="left-pane">
+                <div class="sidebar-header" style="background: #24b2ff; border-bottom: none; padding-bottom: 0.7rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.2rem; justify-content: center; text-align: center;">
+                    <i class="fas fa-map-marked-alt" style="font-size: 2.1rem; color: #fff;"></i>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 1.45rem; font-weight: 800; color: #fff; letter-spacing: 1.1px; line-height: 1; text-align: center;">PROJECT TOMaS</span>
+                        <div style="font-size: 0.98rem; color: #e6e6e6; margin-top: 0.18rem; font-weight: 400; letter-spacing: 0.2px; font-style: italic; opacity: 0.95; text-align: center;">
+                            (Tactical Overlay for Mapping and Safety)
+                        </div>
+                    </div>
+                </div>
                 <div class="sidebar-header">
                     <span>Database</span>
                 </div>
@@ -689,7 +724,6 @@
                         </select>
                     </div>
                     <hr class="flood-divider" />
-                    
                     <!-- Flood Extent Legend -->
                     <div class="flood-legend-section">
                         <div class="flood-form-label" style="font-size: 0.9em;">Legends (Flood Depth)</div>
