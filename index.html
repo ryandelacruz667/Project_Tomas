@@ -406,23 +406,22 @@
         /* overlay removed in split layout */
         #household-data-table-container::before { display: none; }
 
-        /* Flood Impact Infographics Container - moved to lower-right */
+        /* Flood Impact Infographics Container - floating overlay */
         #flood-infographics-container {
             position: absolute;
             right: 12px;
             bottom: 12px;
-            z-index: 20;
+            z-index: 50;
             background: rgba(250, 252, 255, 0.98);
             display: none;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.14);
             border-radius: 12px;
             padding: 0;
             width: 480px;
             max-width: 95vw;
             max-height: 70vh;
             overflow: hidden;
-            backdrop-filter: blur(6px);
             cursor: move;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.14);
         }
         
         .infographics-drag-handle {
@@ -592,7 +591,31 @@
             flex: 1 1 auto;
             min-height: 0;
             position: relative;
+            display: flex;
+            flex-direction: row;
         }
+        #map-left {
+            flex: 1 1 auto;
+            min-width: 0;
+            position: relative;
+        }
+        #resize-handle {
+            flex: 0 0 6px;
+            cursor: col-resize;
+            background: #e5e9f2;
+            border-left: 1px solid #e1e6ef;
+            border-right: 1px solid #e1e6ef;
+        }
+        #right-pane {
+            flex: 0 0 420px;
+            max-width: 420px;
+            min-width: 320px;
+            background: #f6f8fb;
+            border-left: 1px solid #e5e9f2;
+            display: none; /* shown when infographics visible */
+            overflow: auto;
+        }
+        #right-pane.collapsed { display: none; }
 
         /* Flood Results Table (overlay on top of the map pane) */
         /* Results container now sits inside upper pane (not absolute) */
@@ -637,6 +660,46 @@
             padding: 0.75rem 1rem 1rem 1rem;
             overflow: auto;
             height: calc(100% - 48px);
+        }
+        .filter-controls {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: #f8f9fb;
+            border-radius: 8px;
+            border: 1px solid #e5e9f2;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            min-width: 120px;
+        }
+        .filter-label {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .filter-select {
+            padding: 0.5rem 0.7rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #fff;
+            color: #374151;
+            font-size: 0.9rem;
+            font-weight: 500;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .filter-select:focus {
+            border-color: #f39c12;
+            box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.1);
         }
         .compact-table {
             width: 100%;
@@ -797,6 +860,7 @@
                             <option value="29">29 meters</option>
                             <option value="30">30 meters</option>
                         </select>
+                        <button id="toggleInfographicsBtn" style="margin-top: 8px; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #3a3f4a; background:#2a2f39; color:#fff; cursor:pointer; font-weight:600;">Show Infographics</button>
                     </div>
                     <hr class="flood-divider" />
                     <!-- Flood Extent Legend -->
@@ -1147,11 +1211,61 @@
                     <div id="upper-pane">
                         <div id="flood-results-container">
                             <div class="flood-results-header">
-                                <span id="flood-results-title">Intersecting Polygons</span>
+                                <span id="flood-results-title">Affected Households</span>
                                 <span id="flood-results-count" class="flood-results-count">0 of 0 rows</span>
                                 <button id="close-flood-results-btn" title="Close">&times;</button>
                             </div>
                             <div class="flood-results-content">
+                                <div class="filter-controls">
+                                    <div class="filter-group">
+                                        <label class="filter-label">Age Start</label>
+                                        <select id="ageStartFilter" class="filter-select">
+                                            <option value="">All Ages</option>
+                                            <option value="0">0</option>
+                                            <option value="18">18+</option>
+                                            <option value="25">25+</option>
+                                            <option value="35">35+</option>
+                                            <option value="45">45+</option>
+                                            <option value="55">55+</option>
+                                            <option value="65">65+</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label class="filter-label">Age Up To</label>
+                                        <select id="ageEndFilter" class="filter-select">
+                                            <option value="">All Ages</option>
+                                            <option value="17">17</option>
+                                            <option value="24">24</option>
+                                            <option value="34">34</option>
+                                            <option value="44">44</option>
+                                            <option value="54">54</option>
+                                            <option value="64">64</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label class="filter-label">Gender</label>
+                                        <select id="genderFilter" class="filter-select">
+                                            <option value="">All</option>
+                                            <option value="M">M</option>
+                                            <option value="F">F</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label class="filter-label">Occupation</label>
+                                        <select id="occupationFilter" class="filter-select">
+                                            <option value="">All</option>
+                                            <option value="Farmer">Farmer</option>
+                                            <option value="Teacher">Teacher</option>
+                                            <option value="Student">Student</option>
+                                            <option value="Driver">Driver</option>
+                                            <option value="Nurse">Nurse</option>
+                                            <option value="Engineer">Engineer</option>
+                                            <option value="Business">Business</option>
+                                            <option value="Unemployed">Unemployed</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <table class="compact-table" id="flood-results-table">
                                     <thead>
                                         <tr>
@@ -1171,10 +1285,58 @@
                         </div>
                     </div>
                     <div id="lower-pane">
-                        <div id="map">
+                        <div id="map-left">
+                            <div id="map">
                             <div id="popup" class="ol-popup">
                                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                                 <div id="popup-content"></div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- Floating infographics overlay inside map area -->
+                        <div id="flood-infographics-container" style="display:none;">
+                            <div class="infographics-drag-handle" id="infographics-drag-handle">
+                                <span>Flood Impact Report - 24m</span>
+                                <button id="close-infographics-btn" title="Close Infographics">&times;</button>
+                            </div>
+                            <div class="infographics-content">
+                                <div class="infographics-grid">
+                                    <div class="infographic-card">
+                                        <i class="fas fa-home infographic-icon" style="color: #3498db;"></i>
+                                        <div class="infographic-number">200</div>
+                                        <div class="infographic-label">Families Displaced</div>
+                                    </div>
+                                    <div class="infographic-card">
+                                        <i class="fas fa-wheelchair infographic-icon" style="color: #9b59b6;"></i>
+                                        <div class="infographic-number">20</div>
+                                        <div class="infographic-label">Persons with Disabilities</div>
+                                    </div>
+                                    <div class="infographic-card">
+                                        <i class="fas fa-male infographic-icon" style="color: #2ecc71;"></i>
+                                        <div class="infographic-number">50</div>
+                                        <div class="infographic-label">Male Affected</div>
+                                    </div>
+                                    <div class="infographic-card">
+                                        <i class="fas fa-female infographic-icon" style="color: #e91e63;"></i>
+                                        <div class="infographic-number">30</div>
+                                        <div class="infographic-label">Female Affected</div>
+                                    </div>
+                                    <div class="infographic-card">
+                                        <i class="fas fa-utensils infographic-icon" style="color: #f39c12;"></i>
+                                        <div class="infographic-number">1,000</div>
+                                        <div class="infographic-label">Packs of Noodles</div>
+                                    </div>
+                                    <div class="infographic-card">
+                                        <i class="fas fa-seedling infographic-icon" style="color: #27ae60;"></i>
+                                        <div class="infographic-number">500</div>
+                                        <div class="infographic-label">Bags of Rice</div>
+                                    </div>
+                                </div>
+                                <div class="damage-summary">
+                                    <i class="fas fa-exclamation-triangle infographic-icon"></i>
+                                    <div class="infographic-number">₱1,000,000</div>
+                                    <div class="infographic-label">Estimated Damages</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1591,7 +1753,7 @@
                 }
             }
             
-            // Initialize infographics draggable functionality
+            // Re-enable draggable floating infographics
             makeInfographicsDraggable();
 
             // ========== FLOOD EXTENT INFOGRAPHICS CONTROL ===========
@@ -1601,6 +1763,9 @@
                 const closeBtn = document.getElementById('close-infographics-btn');
                 const floodResultsContainer = document.getElementById('flood-results-container');
                 const upperPane = document.getElementById('upper-pane');
+                const rightPane = document.getElementById('right-pane');
+                const resizeHandle = document.getElementById('resize-handle');
+                const toggleRightPaneBtn = document.getElementById('toggle-right-pane-btn');
                 
                 if (!floodDropdown || !infographicsContainer || !closeBtn) {
                     setTimeout(setupFloodExtentInfographics, 150);
@@ -1618,7 +1783,7 @@
                         }
                         
                         // Show infographics and calculate data for selected flood extent
-                        infographicsContainer.style.display = 'block';
+                        // Do not auto-open the infographics; only update data
                         // keep results visible; just update content below
                         if (upperPane) upperPane.style.display = 'block';
                         
@@ -1627,7 +1792,7 @@
                             calculateFloodExtentData(selectedValue);
                         }, 300);
                     } else {
-                        infographicsContainer.style.display = 'none';
+                        // Do not change infographics visibility on clear; leave as user toggled
                         // keep table state; do not auto-hide upper pane on clear
                     }
                 });
@@ -1635,12 +1800,79 @@
                 // Close button functionality
                 closeBtn.addEventListener('click', function() {
                     infographicsContainer.style.display = 'none';
+                    if (rightPane) rightPane.style.display = 'none';
                     // table remains open until its own close button is clicked
                 });
+
+                // Toggle collapse right pane
+                if (toggleRightPaneBtn && rightPane) {
+                    toggleRightPaneBtn.addEventListener('click', function() {
+                        if (rightPane.classList.contains('collapsed')) {
+                            rightPane.classList.remove('collapsed');
+                            rightPane.style.display = 'block';
+                            this.title = 'Collapse Right Pane';
+                            this.textContent = '⟘';
+                        } else {
+                            rightPane.classList.add('collapsed');
+                            rightPane.style.display = 'none';
+                            this.title = 'Expand Right Pane';
+                            this.textContent = '⟙';
+                        }
+                    });
+                }
+
+                // Resizable right pane via drag handle
+                if (resizeHandle && rightPane) {
+                    let isResizing = false;
+                    resizeHandle.addEventListener('mousedown', function(e) {
+                        isResizing = true;
+                        document.body.style.cursor = 'col-resize';
+                        e.preventDefault();
+                    });
+                    document.addEventListener('mousemove', function(e) {
+                        if (!isResizing) return;
+                        const containerRect = document.getElementById('lower-pane').getBoundingClientRect();
+                        const newWidth = Math.max(320, Math.min(600, containerRect.right - e.clientX));
+                        rightPane.style.flexBasis = newWidth + 'px';
+                        rightPane.style.maxWidth = newWidth + 'px';
+                    });
+                    document.addEventListener('mouseup', function() {
+                        if (!isResizing) return;
+                        isResizing = false;
+                        document.body.style.cursor = '';
+                    });
+                }
             }
             
             // Initialize flood extent infographics control
             setupFloodExtentInfographics();
+            
+            // Initialize table filters
+            setupTableFilters();
+
+                // Toggle button to show/hide infographics right pane
+                (function() {
+                    const btn = document.getElementById('toggleInfographicsBtn');
+                    const infographicsContainer = document.getElementById('flood-infographics-container');
+                    if (!btn || !infographicsContainer) return;
+
+                    function openPane() {
+                        infographicsContainer.style.display = 'block';
+                        btn.textContent = 'Hide Infographics';
+                    }
+                    function closePane() {
+                        infographicsContainer.style.display = 'none';
+                        btn.textContent = 'Show Infographics';
+                    }
+
+                    btn.addEventListener('click', function() {
+                        if (infographicsContainer.style.display === 'block') {
+                            closePane();
+                        } else {
+                            openPane();
+                        }
+                    });
+                })();
 
             // ========== FLOOD EXTENT DATA CALCULATION ===========
             function calculateFloodExtentData(floodExtent) {
@@ -1844,6 +2076,8 @@
             }
 
             // ================= FLOOD RESULTS TABLE (overlay) =================
+            let allTableData = []; // Store all data for filtering
+            
             function updateFloodResultsTable(floodExtent, features) {
                 const container = document.getElementById('flood-results-container');
                 const title = document.getElementById('flood-results-title');
@@ -1856,27 +2090,38 @@
                 title.textContent = `Intersecting Polygons - ${floodExtent}m`;
 
                 if (!features || features.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" class="empty-message">No results</td></tr>';
-                    // keep table visible; user may switch extents
+                    allTableData = [];
+                    tbody.innerHTML = '<tr><td colspan="10" class="empty-message">No results</td></tr>';
                     if (upperPane) upperPane.style.display = 'block';
                     container.style.display = 'block';
                     if (countEl) countEl.textContent = '0 of 0 rows';
                     return;
                 }
 
-                let rows = '';
+                // Store all data for filtering
+                allTableData = [];
                 for (let i = 0; i < features.length; i++) {
                     const f = features[i];
                     const p = (typeof f.getProperties === 'function') ? f.getProperties() : f;
-                    const familyId = p['FAMILY-ID'] || p['FAMILY_ID'] || p['FAMILYID'] || '';
-                    const given = p['GIVEN NAME'] || p['GIVEN_NAME'] || p['FIRSTNAME'] || '';
-                    const last = p['LAST NAME'] || p['LAST_NAME'] || p['SURNAME'] || '';
-                    const sex = p['SEX'] || p['GENDER'] || '';
-                    const hhsize = p['NUMBER OF OCCUPANTS'] || p['HOUSEHOLD SIZE'] || p['SIZE'] || '';
-                    rows += `<tr><td>${i+1}</td><td>${familyId}</td><td>${given}</td><td>${last}</td><td>${sex}</td><td>${hhsize}</td></tr>`;
+                    allTableData.push({
+                        index: i + 1,
+                        familyId: p['FAMILY-ID'] || p['FAMILY_ID'] || p['FAMILYID'] || '',
+                        given: p['GIVEN NAME'] || p['GIVEN_NAME'] || p['FIRSTNAME'] || '',
+                        middle: p['MIDDLE NAME'] || p['MIDDLE_NAME'] || p['MIDDLENAME'] || '',
+                        last: p['LAST NAME'] || p['LAST_NAME'] || p['SURNAME'] || '',
+                        sex: p['SEX'] || p['GENDER'] || '',
+                        age: p['AGE'] || '',
+                        occupation: p['OCCUPATION'] || '',
+                        illness: p['_ILLNESS'] || p['ILLNESS'] || '',
+                        pwd: p['_PWD'] || p['PWD'] || '',
+                        religion: p['_RELIGION'] || p['RELIGION'] || '',
+                        hhsize: p['NUMBER OF OCCUPANTS'] || p['HOUSEHOLD SIZE'] || p['SIZE'] || ''
+                    });
                 }
-                tbody.innerHTML = rows;
-                if (countEl) countEl.textContent = `${features.length} of ${features.length} rows`;
+
+                // Apply current filters and render
+                applyTableFilters();
+                
                 container.style.display = 'block';
                 if (upperPane) upperPane.style.display = 'block';
 
@@ -1887,6 +2132,79 @@
                     });
                     closeBtn._wired = true;
                 }
+            }
+
+            function applyTableFilters() {
+                const tbody = document.querySelector('#flood-results-table tbody');
+                const countEl = document.getElementById('flood-results-count');
+                if (!tbody || !countEl) return;
+
+                const ageStart = document.getElementById('ageStartFilter').value;
+                const ageEnd = document.getElementById('ageEndFilter').value;
+                const gender = document.getElementById('genderFilter').value;
+                const occupation = document.getElementById('occupationFilter').value;
+
+                let filteredData = allTableData.filter(row => {
+                    // Age filtering
+                    if (ageStart && row.age) {
+                        const age = parseInt(row.age);
+                        if (isNaN(age) || age < parseInt(ageStart)) return false;
+                    }
+                    if (ageEnd && row.age) {
+                        const age = parseInt(row.age);
+                        if (isNaN(age) || age > parseInt(ageEnd)) return false;
+                    }
+                    
+                    // Gender filtering
+                    if (gender) {
+                        const gSel = gender.toLowerCase(); // 'm' or 'f'
+                        const gRow = (row.sex || '').toString().trim().toLowerCase();
+                        const isMale = gRow === 'male' || gRow === 'm';
+                        const isFemale = gRow === 'female' || gRow === 'f';
+                        if (gSel === 'm' && !isMale) return false;
+                        if (gSel === 'f' && !isFemale) return false;
+                    }
+                    
+                    // Occupation filtering
+                    if (occupation && row.occupation.toLowerCase() !== occupation.toLowerCase()) return false;
+                    
+                    return true;
+                });
+
+                // Render filtered rows
+                if (filteredData.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="10" class="empty-message">No matching results</td></tr>';
+                    countEl.textContent = '0 of ' + allTableData.length + ' rows';
+                } else {
+                    let rows = '';
+                    filteredData.forEach((row) => {
+                        rows += `<tr>` +
+                            `<td>${row.given || ''}</td>` +
+                            `<td>${row.middle || ''}</td>` +
+                            `<td>${row.last || ''}</td>` +
+                            `<td>${row.hhsize || ''}</td>` +
+                            `<td>${row.age || ''}</td>` +
+                            `<td>${row.sex || ''}</td>` +
+                            `<td>${row.occupation || ''}</td>` +
+                            `<td>${row.illness || ''}</td>` +
+                            `<td>${row.pwd || ''}</td>` +
+                            `<td>${row.religion || ''}</td>` +
+                        `</tr>`;
+                    });
+                    tbody.innerHTML = rows;
+                    countEl.textContent = filteredData.length + ' of ' + allTableData.length + ' rows';
+                }
+            }
+
+            // Wire up filter event listeners
+            function setupTableFilters() {
+                const filters = ['ageStartFilter', 'ageEndFilter', 'genderFilter', 'occupationFilter'];
+                filters.forEach(filterId => {
+                    const filter = document.getElementById(filterId);
+                    if (filter) {
+                        filter.addEventListener('change', applyTableFilters);
+                    }
+                });
             }
 
             // Legacy function for backward compatibility (now handled by calculateFloodExtentData)
