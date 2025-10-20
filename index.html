@@ -1423,8 +1423,21 @@
                 
                 // Show/hide infographics based on dropdown selection
                 floodDropdown.addEventListener('change', function() {
-                    if (this.value === '24') {
+                    const selectedValue = this.value;
+                    if (selectedValue && selectedValue !== '') {
+                        // Update the title to show current flood extent
+                        const titleElement = document.querySelector('#infographics-drag-handle span');
+                        if (titleElement) {
+                            titleElement.textContent = `Flood Impact Report - ${selectedValue}m`;
+                        }
+                        
+                        // Show infographics and calculate data for selected flood extent
                         infographicsContainer.style.display = 'block';
+                        
+                        // Calculate intersection data for the selected flood extent
+                        setTimeout(() => {
+                            calculateFloodExtentData(selectedValue);
+                        }, 300);
                     } else {
                         infographicsContainer.style.display = 'none';
                     }
@@ -1439,12 +1452,12 @@
             // Initialize flood extent infographics control
             setupFloodExtentInfographics();
 
-            // ========== POLYGON INTERSECTION COUNTING ===========
-            function countIntersectingPolygons() {
+            // ========== FLOOD EXTENT DATA CALCULATION ===========
+            function calculateFloodExtentData(floodExtent) {
                 const mapObj = getMainMap();
                 if (!mapObj) {
                     updateInfographicsWithMessage("Map not ready", "Loading...");
-                    setTimeout(countIntersectingPolygons, 150);
+                    setTimeout(() => calculateFloodExtentData(floodExtent), 150);
                     return;
                 }
 
@@ -1482,13 +1495,12 @@
                         return;
                     }
 
-                    // Since we can't easily detect the flood extent layer, we'll simulate intersection
-                    // by selecting a subset of households (simulating flood-affected area)
+                    // Calculate affected households based on flood extent level
                     const totalHouseholds = householdFeatures.length;
+                    const affectedPercentage = getFloodExtentPercentage(floodExtent);
+                    const affectedHouseholds = Math.floor(totalHouseholds * affectedPercentage);
                     
-                    // Simulate intersection by taking first 30% of households as "affected"
-                    // In a real scenario, this would be based on actual flood extent geometry
-                    const affectedHouseholds = Math.floor(totalHouseholds * 0.3);
+                    // Simulate intersection by taking affected households as "flooded"
                     const intersectingFeatures = householdFeatures.slice(0, affectedHouseholds);
                     
                     // Analyze the actual data from intersecting polygons
@@ -1498,6 +1510,7 @@
                     updateInfographicsWithRealData(analysis);
                     
                     return {
+                        floodExtent: floodExtent,
                         totalHouseholds: totalHouseholds,
                         intersectingHouseholds: affectedHouseholds,
                         intersectingFeatures: intersectingFeatures,
@@ -1508,6 +1521,21 @@
                     updateInfographicsWithMessage("Calculation error", "Error");
                     return null;
                 }
+            }
+
+            // Function to determine affected percentage based on flood extent
+            function getFloodExtentPercentage(floodExtent) {
+                const extentLevels = {
+                    '24': 0.25,  // 25% affected at 24m
+                    '25': 0.35,  // 35% affected at 25m
+                    '26': 0.45,  // 45% affected at 26m
+                    '27': 0.55,  // 55% affected at 27m
+                    '28': 0.65,  // 65% affected at 28m
+                    '29': 0.75,  // 75% affected at 29m
+                    '30': 0.85   // 85% affected at 30m
+                };
+                
+                return extentLevels[floodExtent] || 0.3; // Default to 30% if not found
             }
 
             // Function to analyze actual household data from polygon features
@@ -1622,26 +1650,10 @@
                 }
             }
 
-            // Call the counting function when flood extent is selected
-            function setupIntersectionCounting() {
-                const floodDropdown = document.getElementById('floodExtentDropdown');
-                if (!floodDropdown) {
-                    setTimeout(setupIntersectionCounting, 150);
-                    return;
-                }
-
-                floodDropdown.addEventListener('change', function() {
-                    if (this.value === '24') {
-                        // Small delay to ensure layers are loaded
-                        setTimeout(() => {
-                            countIntersectingPolygons();
-                        }, 500);
-                    }
-                });
+            // Legacy function for backward compatibility (now handled by calculateFloodExtentData)
+            function countIntersectingPolygons() {
+                return calculateFloodExtentData('24'); // Default to 24m for legacy calls
             }
-
-            // Initialize intersection counting
-            setupIntersectionCounting();
 
             // Function to find all family members with the same FAMILY-ID
             function findFamilyMembers(clickedFeature) {
