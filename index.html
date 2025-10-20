@@ -1269,12 +1269,17 @@
                                 <table class="compact-table" id="flood-results-table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Family ID</th>
                                             <th>Given Name</th>
+                                            <th>Middle Name</th>
                                             <th>Last Name</th>
-                                            <th>Sex</th>
                                             <th>Household Size</th>
+                                            <th>Age</th>
+                                            <th>Sex</th>
+                                            <th>Occupation</th>
+                                            <th>Illness</th>
+                                            <th>PWD</th>
+                                            <th>Religion</th>
+                                            <th>Relation</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2146,13 +2151,13 @@
 
                 let filteredData = allTableData.filter(row => {
                     // Age filtering
-                    if (ageStart && row.age) {
-                        const age = parseInt(row.age);
-                        if (isNaN(age) || age < parseInt(ageStart)) return false;
-                    }
-                    if (ageEnd && row.age) {
-                        const age = parseInt(row.age);
-                        if (isNaN(age) || age > parseInt(ageEnd)) return false;
+                    const hasStart = ageStart !== '' && ageStart !== null;
+                    const hasEnd = ageEnd !== '' && ageEnd !== null;
+                    if (hasStart || hasEnd) {
+                        const ageVal = parseInt(row.age);
+                        if (isNaN(ageVal)) return false; // require valid age to filter by range
+                        if (hasStart && ageVal < parseInt(ageStart)) return false;
+                        if (hasEnd && ageVal > parseInt(ageEnd)) return false;
                     }
                     
                     // Gender filtering
@@ -2205,6 +2210,30 @@
                         filter.addEventListener('change', applyTableFilters);
                     }
                 });
+                // Populate age filter options 1..100
+                populateAgeFilterOptions();
+            }
+
+            function populateAgeFilterOptions() {
+                const startSel = document.getElementById('ageStartFilter');
+                const endSel = document.getElementById('ageEndFilter');
+                if (!startSel || !endSel) return;
+
+                function refill(selectEl, includeEmptyLabel) {
+                    // Keep the first option as "All Ages"
+                    while (selectEl.options.length > 1) {
+                        selectEl.remove(1);
+                    }
+                    for (let i = 1; i <= 100; i++) {
+                        const opt = document.createElement('option');
+                        opt.value = String(i);
+                        opt.textContent = String(i);
+                        selectEl.appendChild(opt);
+                    }
+                }
+
+                refill(startSel);
+                refill(endSel);
             }
 
             // Legacy function for backward compatibility (now handled by calculateFloodExtentData)
