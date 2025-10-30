@@ -431,6 +431,44 @@
     max-width: none !important;
     height: 95vh !important;
 }
+
+        /* Simple loading spinner */
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #3a3f4a;
+            border-top-color: #f39c12;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1e2329;
+        }
+        .inline-error {
+            color: #ff7675;
+            background: #2a2f39;
+            border: 1px solid #3a3f4a;
+            padding: 12px 14px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Bright blue glow on hover for buttons */
+        button, .nav-btn, .close-btn {
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        button:hover, .nav-btn:hover, .close-btn:hover {
+            border-color: #3ea8ff !important;
+            box-shadow: 0 0 0 2px rgba(62, 168, 255, 0.35), 0 0 10px rgba(62, 168, 255, 0.6) inset;
+        }
         
         .modal-header {
             cursor: move;
@@ -804,6 +842,22 @@
                             </div>
                             <div class="modal-body" style="flex: 1 1 auto; padding: 0;">
                                 <div id="infographics-container" style="width:100%; height:100%; background:#1e2329; display:flex; align-items:center; justify-content:center;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Impact Report Modal -->
+                    <div id="impact-report-modal" class="modal" style="display: none;">
+                        <div class="modal-content" style="width: 95%; max-width: 1000px; height: 85vh; display: flex; flex-direction: column;">
+                            <div class="modal-header">
+                                <h3 id="impact-report-modal-title">Impact Report</h3>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <button id="impact-report-modal-maximize" class="close-btn" title="Maximize" style="line-height:1;">⛶</button>
+                                    <button id="impact-report-modal-close" class="close-btn">&times;</button>
+                                </div>
+                            </div>
+                            <div class="modal-body" style="flex: 1 1 auto; padding: 0;">
+                                <div id="impact-report-container" style="width:100%; height:100%; background:#1e2329; display:flex; align-items:center; justify-content:center;"></div>
                             </div>
                         </div>
                     </div>
@@ -2614,15 +2668,24 @@
                 var safeMeter = String(meter).replace(/[^0-9]/g, '');
                 var pdfPath = 'infographics/' + safeMeter + '/output/infographic.pdf';
                 if (title) title.textContent = 'Infographics – ' + safeMeter + ' meters';
-                // Build embed/object with fallback link
-                var html = '' +
-                    '<object data="' + pdfPath + '" type="application/pdf" style="width:100%; height:100%;">' +
-                    '  <embed src="' + pdfPath + '" type="application/pdf" style="width:100%; height:100%;" />' +
-                    '  <div style="padding:16px; color:#e0e0e0; text-align:center;">' +
-                    '    Unable to display PDF here in this browser.' +
-                    '  </div>' +
-                    '</object>';
-                container.innerHTML = html;
+                // Show loading state
+                container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div></div>';
+                // Insert <object> for PDF
+                var objectEl = document.createElement('object');
+                objectEl.setAttribute('data', pdfPath);
+                objectEl.setAttribute('type', 'application/pdf');
+                objectEl.setAttribute('style', 'width:100%; height:100%;');
+                // Fallback content for object
+                var fallbackDiv = document.createElement('div');
+                fallbackDiv.setAttribute('style', 'padding:16px; color:#e0e0e0; text-align:center;');
+                fallbackDiv.textContent = 'Attempting to load PDF...';
+                objectEl.appendChild(fallbackDiv);
+
+                // Replace loading after a short delay regardless (object has no reliable load)
+                setTimeout(function(){
+                    container.innerHTML = '';
+                    container.appendChild(objectEl);
+                }, 800);
                 modal.style.display = 'flex';
                 modal.style.zIndex = '1000';
             } catch (e) { /* ignore */ }
@@ -2634,6 +2697,63 @@
                 if (!modal) return; 
                 modal.style.display = 'none';
                 var container = document.getElementById('infographics-container');
+                if (container) container.innerHTML = '';
+            } catch (e) { /* ignore */ }
+        }
+
+        // Impact Report modal helpers
+        function showImpactReportModal(meter) {
+            try {
+                var modal = document.getElementById('impact-report-modal');
+                var container = document.getElementById('impact-report-container');
+                var title = document.getElementById('impact-report-modal-title');
+                if (!modal || !container) return;
+                var safeMeter = String(meter).replace(/[^0-9]/g, '');
+                if (title) title.textContent = 'Impact Report – ' + safeMeter + ' meters';
+                var htmlPath = 'infographics/' + safeMeter + '/output/impact-report-output.html';
+                // Prepare container and overlay spinner without replacing content repeatedly
+                container.innerHTML = '';
+                var wrapper = document.createElement('div');
+                wrapper.setAttribute('style', 'position:relative; width:100%; height:100%; background:#1e2329;');
+
+                var spinnerWrap = document.createElement('div');
+                spinnerWrap.className = 'loading-wrap';
+                spinnerWrap.setAttribute('style', 'position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:#1e2329;');
+                var spinner = document.createElement('div');
+                spinner.className = 'spinner';
+                spinnerWrap.appendChild(spinner);
+
+                var iframe = document.createElement('iframe');
+                iframe.src = htmlPath;
+                iframe.title = 'Impact Report';
+                iframe.setAttribute('style', 'width:100%; height:100%; border:none; background:#1e2329; visibility:hidden;');
+                iframe.onload = function(){
+                    iframe.style.visibility = 'visible';
+                    if (spinnerWrap && spinnerWrap.parentNode) spinnerWrap.parentNode.removeChild(spinnerWrap);
+                };
+                iframe.onerror = function(){
+                    if (spinnerWrap && spinnerWrap.parentNode) spinnerWrap.parentNode.removeChild(spinnerWrap);
+                    wrapper.innerHTML = '';
+                    var err = document.createElement('div');
+                    err.className = 'inline-error';
+                    err.innerHTML = 'Unable to load Impact Report. <a href="' + htmlPath + '" target="_blank" style="color:#f39c12; text-decoration:underline;">Open in new tab</a>';
+                    wrapper.appendChild(err);
+                };
+
+                wrapper.appendChild(iframe);
+                wrapper.appendChild(spinnerWrap);
+                container.appendChild(wrapper);
+                modal.style.display = 'flex';
+                modal.style.zIndex = '1000';
+            } catch (e) { /* ignore */ }
+        }
+
+        function hideImpactReportModal() {
+            try {
+                var modal = document.getElementById('impact-report-modal');
+                if (!modal) return;
+                modal.style.display = 'none';
+                var container = document.getElementById('impact-report-container');
                 if (container) container.innerHTML = '';
             } catch (e) { /* ignore */ }
         }
@@ -2957,6 +3077,20 @@
         document.addEventListener('DOMContentLoaded', function() {
             setupHouseholdModal();
             setupTableClickHandlers();
+            // Restore last selected flood extent if available
+            (function restoreLastMeter(){
+                try {
+                    var last = localStorage.getItem('lastFloodMeter');
+                    if (!last) return;
+                    var dropdown = document.getElementById('floodExtentDropdown');
+                    if (!dropdown) return;
+                    var exists = false;
+                    for (var i = 0; i < dropdown.options.length; i++) {
+                        if (String(dropdown.options[i].value) === String(last)) { exists = true; break; }
+                    }
+                    if (exists) dropdown.value = String(last);
+                } catch (e) { /* ignore */ }
+            })();
             var infoClose = document.getElementById('infographics-modal-close');
             if (infoClose && !infoClose._wired) {
                 infoClose.addEventListener('click', hideInfographicsModal);
@@ -2984,6 +3118,37 @@
                     } catch (e) { /* ignore */ }
                 });
                 infoMax._wired = true;
+            }
+
+            // Impact Report modal close
+            var irClose = document.getElementById('impact-report-modal-close');
+            if (irClose && !irClose._wired) {
+                irClose.addEventListener('click', hideImpactReportModal);
+                irClose._wired = true;
+            }
+
+            // Impact Report modal maximize
+            var irMax = document.getElementById('impact-report-modal-maximize');
+            if (irMax && !irMax._wired) {
+                irMax.addEventListener('click', function(){
+                    try {
+                        var modal = document.getElementById('impact-report-modal');
+                        if (!modal) return;
+                        var content = modal.querySelector('.modal-content');
+                        if (!content) return;
+                        var isMax = content.classList.contains('maximized');
+                        if (isMax) {
+                            content.classList.remove('maximized');
+                            irMax.title = 'Maximize';
+                            irMax.textContent = '⛶';
+                        } else {
+                            content.classList.add('maximized');
+                            irMax.title = 'Restore';
+                            irMax.textContent = '↙';
+                        }
+                    } catch (e) { /* ignore */ }
+                });
+                irMax._wired = true;
             }
 
             // Make Infographics modal draggable by its header
@@ -3027,6 +3192,65 @@
                 }
             })();
 
+            // Make Impact Report modal draggable by its header
+            (function(){
+                var modal = document.getElementById('impact-report-modal');
+                if (!modal) return;
+                var content = modal.querySelector('.modal-content');
+                var header = modal.querySelector('.modal-header');
+                if (!content || !header) return;
+
+                var isDragging = false;
+                var initialX = 0, initialY = 0;
+                var currentX = 0, currentY = 0;
+                var xOffset = 0, yOffset = 0;
+
+                header.style.cursor = 'move';
+                header.addEventListener('mousedown', dragStart);
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', dragEnd);
+
+                function dragStart(e) {
+                    initialX = e.clientX - xOffset;
+                    initialY = e.clientY - yOffset;
+                    if (e.target === header || header.contains(e.target)) {
+                        isDragging = true;
+                    }
+                }
+
+                function drag(e) {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                    xOffset = currentX;
+                    yOffset = currentY;
+                    content.style.transform = 'translate(' + currentX + 'px, ' + currentY + 'px)';
+                }
+
+                function dragEnd() {
+                    isDragging = false;
+                }
+            })();
+
+            // Wire Impact Report button
+            var impactBtn = document.getElementById('impactReportBtn');
+            if (impactBtn && !impactBtn._wired) {
+                impactBtn.addEventListener('click', function() {
+                    try {
+                        var dropdown = document.getElementById('floodExtentDropdown');
+                        var meterVal = dropdown ? String(dropdown.value || '').trim() : '';
+                        if (!meterVal) {
+                            alert('Please select a Flood Extent first.');
+                            return;
+                        }
+                        try { localStorage.setItem('lastFloodMeter', meterVal); } catch (e) { /* ignore */ }
+                        showImpactReportModal(meterVal);
+                    } catch (e) { /* ignore */ }
+                });
+                impactBtn._wired = true;
+            }
+
             // Wire standalone Infographics button (near L645)
             var toggleInfoBtn = document.getElementById('toggleInfographicsBtn');
             if (toggleInfoBtn && !toggleInfoBtn._wired) {
@@ -3038,11 +3262,29 @@
                             alert('Please select a Flood Extent first.');
                             return;
                         }
+                        try { localStorage.setItem('lastFloodMeter', meterVal); } catch (e) { /* ignore */ }
                         showInfographicsModal(meterVal);
                     } catch (e) { /* ignore */ }
                 });
                 toggleInfoBtn._wired = true;
             }
+
+            // ESC to close whichever modal is open
+            document.addEventListener('keydown', function(e){
+                try {
+                    if (e.key !== 'Escape') return;
+                    var info = document.getElementById('infographics-modal');
+                    var ir = document.getElementById('impact-report-modal');
+                    if (ir && ir.style.display === 'flex') {
+                        hideImpactReportModal();
+                        return;
+                    }
+                    if (info && info.style.display === 'flex') {
+                        hideInfographicsModal();
+                        return;
+                    }
+                } catch (err) { /* ignore */ }
+            });
         });
         </script>
         </body>

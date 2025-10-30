@@ -66,6 +66,19 @@
             <li><strong>Coordinate System Handling:</strong> Automatic transformation between WGS84 and Web Mercator projections</li>
             <li><strong>Documentation Access:</strong> Built-in documentation button in navigation bar for easy reference</li>
         </ul>
+
+        <h3 id="infographics-impact">Infographics and Impact Report Modals</h3>
+        <ul>
+            <li><strong>Folder-Aware Loading:</strong> Uses the selected flood extent (e.g., 24) to load <code>infographics/[METER]/output/</code> content.</li>
+            <li><strong>Infographics:</strong> Opens <code>infographic.pdf</code> for the chosen meter inside a modal.</li>
+            <li><strong>Impact Report:</strong> Opens <code>impact-report-output.html</code> for the chosen meter inside a modal.</li>
+            <li><strong>Loading Spinners:</strong> A spinner shows while content loads.</li>
+            <li><strong>Error Handling:</strong> If loading fails, an inline error is shown with a link to open in a new tab.</li>
+            <li><strong>Maximize/Restore:</strong> Each modal supports maximize/restore controls.</li>
+            <li><strong>Draggable Headers:</strong> Click-and-drag the modal header to reposition the window.</li>
+            <li><strong>Keyboard Shortcut:</strong> Press <strong>ESC</strong> to close the currently open modal.</li>
+            <li><strong>Preference Memory:</strong> The last selected flood extent is remembered and restored on next visit.</li>
+        </ul>
     </section>
 
     <section id="design">
@@ -242,6 +255,9 @@ tryCandidates([
             <li>Click any cell in the population table to view detailed household information.</li>
             <li>Navigate the map while the household modal is open to explore the area.</li>
             <li>Use the X button to close the modal and remove the house marker.</li>
+            <li><strong>Open Infographics:</strong> Select a flood extent (e.g., 24m), then press the Infographics button. The app loads <code>infographics/[METER]/output/infographic.pdf</code> in a modal.</li>
+            <li><strong>Open Impact Report:</strong> Select a flood extent, then press the Impact Report button. The app loads <code>infographics/[METER]/output/impact-report-output.html</code> in a modal.</li>
+            <li>Use the maximize button (⛶) to enlarge a modal, and press <strong>ESC</strong> to close.</li>
         </ol>
         <div class="note">
             <strong>Note:</strong> The application expects raster PNG files to be present in the <code>layers/</code> directory for each scenario. Fallbacks exist, but if all are missing, a console warning appears.
