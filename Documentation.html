@@ -28,6 +28,7 @@
         <a href="#core-components">Core Components</a>
         <a href="#interactive-features">Interactive Features</a>
         <a href="#technical-implementation">Technical Details</a>
+        <a href="#ai-chat">AI Chat Assistant</a>
         <a href="#usage">Usage</a>
         <a href="#customization">Customization</a>
         <a href="#faq">FAQ</a>
@@ -79,6 +80,67 @@
             <li><strong>Keyboard Shortcut:</strong> Press <strong>ESC</strong> to close the currently open modal.</li>
             <li><strong>Preference Memory:</strong> The last selected flood extent is remembered and restored on next visit.</li>
         </ul>
+    </section>
+
+    <section id="ai-chat">
+        <h2>AI Chat Assistant</h2>
+        <p>
+            The application includes an optional bottom-right chat widget that lets you ask an AI assistant
+            questions about the map and data context (e.g., the selected flood extent). You can open it with the
+            <strong>Ask AI</strong> button, set credentials via the <strong>⚙ (Settings)</strong> icon, and send
+            questions from the input at the bottom of the panel.
+        </p>
+
+        <h3>Security and Authentication</h3>
+        <ul>
+            <li><strong>Do not</strong> expose API keys in client-side code in production.</li>
+            <li>Preferred: configure a <strong>server-side proxy</strong> endpoint (e.g., <code>/api/chat</code>) that adds the <code>Authorization: Bearer OPENAI_API_KEY</code> header on the server.</li>
+            <li>In Settings, you can enter either:
+                <ul>
+                    <li><strong>Proxy URL</strong> (recommended): requests go to your server, which forwards to OpenAI.</li>
+                    <li><strong>OpenAI API Key</strong> (not recommended for production): used only from the browser.</li>
+                </ul>
+            </li>
+            <li>Optional headers supported when calling OpenAI directly:
+                <ul>
+                    <li><code>OpenAI-Organization: &lt;ORG_ID&gt;</code></li>
+                    <li><code>OpenAI-Project: &lt;PROJECT_ID&gt;</code></li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Rate Limiting and Troubleshooting</h3>
+        <p>
+            The chat handles HTTP <strong>429 Too Many Requests</strong> by retrying with exponential backoff.
+            If limits persist, wait 10–60 seconds and retry. The app logs useful response headers to the browser console:
+        </p>
+        <ul>
+            <li><code>x-request-id</code>: unique request identifier to share with support</li>
+            <li><code>x-ratelimit-remaining-requests</code> / <code>x-ratelimit-remaining-tokens</code>: remaining quota</li>
+            <li><code>x-ratelimit-reset-requests</code> / <code>x-ratelimit-reset-tokens</code>: reset timing</li>
+        </ul>
+
+        <h3>Context Provided to the Model</h3>
+        <p>
+            The assistant receives a concise system prompt and the <strong>currently selected flood extent (meter)</strong>
+            to make answers more relevant. Avoid sending sensitive data in prompts.
+        </p>
+
+        <h3>Recommended Server Proxy (Example)</h3>
+        <div class="codeblock">
+<pre>
+POST /api/chat
+  - Server reads OPENAI_API_KEY from env
+  - Adds Authorization: Bearer &lt;OPENAI_API_KEY&gt;
+  - Forwards JSON body to https://api.openai.com/v1/chat/completions
+  - Returns OpenAI JSON response
+</pre>
+        </div>
+
+        <div class="note">
+            <strong>Note:</strong> Using a proxy keeps your API key off the client and allows you to implement
+            additional safeguards (e.g., auth, rate limiting, logging request IDs).
+        </div>
     </section>
 
     <section id="design">

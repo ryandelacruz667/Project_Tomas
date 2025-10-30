@@ -3379,8 +3379,18 @@
                 function setApiKey(val){
                     try { localStorage.setItem('openai_api_key', val || ''); } catch(e){}
                 }
+                function getProxyUrl(){
+                    try { return localStorage.getItem('openai_proxy_url') || ''; } catch(e){ return ''; }
+                }
+                function setProxyUrl(val){
+                    try { localStorage.setItem('openai_proxy_url', val || ''); } catch(e){}
+                }
+                function getOrgId(){ try { return localStorage.getItem('openai_org_id') || ''; } catch(e){ return ''; } }
+                function setOrgId(v){ try { localStorage.setItem('openai_org_id', v || ''); } catch(e){} }
+                function getProjectId(){ try { return localStorage.getItem('openai_project_id') || ''; } catch(e){ return ''; } }
+                function setProjectId(v){ try { localStorage.setItem('openai_project_id', v || ''); } catch(e){} }
                 function ensureKeyHint(){
-                    var has = !!getApiKey();
+                    var has = !!getApiKey() || !!getProxyUrl();
                     if (keyHint) keyHint.style.display = has ? 'none' : 'block';
                 }
                 function appendMsg(role, text){
@@ -3397,19 +3407,24 @@
                 function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
                 async function sendToAI(query){
                     var key = getApiKey();
-                    if (!key){ appendMsg('assistant', 'Set your OpenAI API key first (⚙).'); return; }
+                    var proxy = getProxyUrl();
+                    if (!key && !proxy){ appendMsg('assistant', 'Set an API key or a proxy URL in ⚙ (recommended: proxy on your server).'); return; }
                     var meter = currentMeter();
                     var systemPrompt = 'You are a helpful GIS assistant for a flood exposure web app. Answer concisely. If asked about a meter, assume the selected meter is ' + (meter || 'unknown') + ' unless specified.';
                     var backoffs = [1000, 2000, 4000];
                     var warnedRateLimit = false;
                     try {
                         for (var i = 0; i <= backoffs.length; i++) {
-                            var res = await fetch('https://api.openai.com/v1/chat/completions', {
+                            var url = proxy || 'https://api.openai.com/v1/chat/completions';
+                            var headers = { 'Content-Type': 'application/json' };
+                            if (!proxy && key) headers['Authorization'] = 'Bearer ' + key;
+                            var org = getOrgId();
+                            var proj = getProjectId();
+                            if (!proxy && org) headers['OpenAI-Organization'] = org;
+                            if (!proxy && proj) headers['OpenAI-Project'] = proj;
+                            var res = await fetch(url, {
                                 method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': 'Bearer ' + key
-                                },
+                                headers: headers,
                                 body: JSON.stringify({
                                     model: 'gpt-4o-mini',
                                     messages: [
@@ -3423,12 +3438,21 @@
                             if (res.ok) {
                                 var data = await res.json();
                                 var answer = (data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || 'No response';
+                                try {
+                                    var reqId = res.headers.get('x-request-id');
+                                    var remReq = res.headers.get('x-ratelimit-remaining-requests');
+                                    var remTok = res.headers.get('x-ratelimit-remaining-tokens');
+                                    if (reqId) console.log('OpenAI x-request-id:', reqId);
+                                    if (remReq || remTok) console.log('RateLimit remaining - requests:', remReq, 'tokens:', remTok);
+                                } catch(_e){}
                                 appendMsg('assistant', answer);
                                 return;
                             }
                             if (res.status === 429 && i < backoffs.length) {
                                 if (!warnedRateLimit) {
-                                    appendMsg('assistant', 'Rate limit reached. Retrying...');
+                                    var resetMs = res.headers.get('x-ratelimit-reset-requests');
+                                    var waitHint = resetMs ? (' ~' + resetMs + 'ms') : '';
+                                    appendMsg('assistant', 'Rate limit reached. Retrying' + waitHint + '...');
                                     warnedRateLimit = true;
                                 }
                                 await sleep(backoffs[i]);
@@ -3464,12 +3488,18 @@
                 }
                 if (settings && !settings._wired){
                     settings.addEventListener('click', function(){
-                        var current = getApiKey();
-                        var val = prompt('Enter your OpenAI API key (stored locally):', current ? (current.slice(0,3) + '...' + current.slice(-4)) : '');
-                        if (!val) { ensureKeyHint(); return; }
-                        if (val.indexOf('...') >= 0 && current){ ensureKeyHint(); return; }
-                        setApiKey(val);
+                        var currentKey = getApiKey();
+                        var keyVal = prompt('OpenAI API key (stored locally). Leave blank if using a server proxy:', currentKey ? (currentKey.slice(0,3) + '...' + currentKey.slice(-4)) : '');
+                        if (keyVal && keyVal.indexOf('...') < 0) setApiKey(keyVal); else if (!keyVal) setApiKey('');
+                        var currentProxy = getProxyUrl();
+                        var proxyVal = prompt('Proxy URL (optional, recommended). Example: https://your-domain.com/api/chat', currentProxy || '');
+                        if (proxyVal !== null) setProxyUrl(proxyVal.trim());
+                        var org = prompt('OpenAI Organization ID (optional):', getOrgId() || ''); if (org !== null) setOrgId(org.trim());
+                        var proj = prompt('OpenAI Project ID (optional):', getProjectId() || ''); if (proj !== null) setProjectId(proj.trim());
                         ensureKeyHint();
+                        if (!getProxyUrl() && getApiKey()) {
+                            appendMsg('assistant', 'Note: Using a key in the browser is insecure. Prefer configuring a server proxy.');
+                        }
                     });
                     settings._wired = true;
                 }
