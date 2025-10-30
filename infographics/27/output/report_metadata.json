@@ -1,0 +1,20 @@
+{
+  "pdf_product_tag": {
+    "impact-report-pdf": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\impact-report-output.pdf",
+    "action-checklist-pdf": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\action-checklist-output.pdf",
+    "analysis-provenance-details-report-pdf": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\analysis-provenance-details-report-output.pdf",
+    "population-infographic": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\infographic.pdf",
+    "inasafe-map-report-portrait": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\inasafe-map-report-portrait.pdf",
+    "inasafe-map-report-landscape": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\inasafe-map-report-landscape.pdf"
+  },
+  "html_product_tag": {
+    "impact-report": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\impact-report-output.html",
+    "action-checklist-report": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\action-checklist-output.html",
+    "analysis-provenance-details-report": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\analysis-provenance-details-report-output.html"
+  },
+  "qpt_product_tag": {
+    "population-infographic": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\infographic.qpt",
+    "inasafe-map-report-portrait": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\inasafe-map-report-portrait.qpt",
+    "inasafe-map-report-landscape": "C:\\Users\\RyanDelacruz\\Desktop\\TOMAS_V2\\Flood report\\FloodRasterOnPopulationPolygon_23October2025_12h54-33.868606\\output\\inasafe-map-report-landscape.qpt"
+  }
+}

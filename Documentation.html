@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Documentation: Flood Visualization Web Map</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.7; background: #fcfcfc; color: #232323; margin: 0; padding: 0 2rem 2rem 2rem; }
+        h1, h2, h3 { color: #145A32; }
+        h1 { font-size: 2.5rem; margin-top: 2rem;}
+        h2 { margin-top: 2em; }
+        pre, code { background: #f4f4f4; border-radius: 5px; padding: 2px 5px; }
+        .codeblock { background: #f4f4f4; border-radius: 5px; padding: 10px 15px; margin: 1em 0; }
+        nav { background: #eafaf1; border-bottom: 1px solid #b6dfc1; padding: 1em 2em; margin-bottom: 2em;}
+        nav a { margin-right: 2em; text-decoration: none; color: #145A32; font-weight: bold;}
+        ul { margin-left: 2em;}
+        table { border-collapse: collapse; margin: 2em 0; }
+        th, td { border: 1px solid #bbb; padding: 0.5em 1.5em; }
+        th { background: #dfefdf; }
+        .note { background: #fffbe5; padding: .75em; margin: 1em 0; border-left: 5px solid #ffe066;}
+    </style>
+</head>
+<body>
+    <h1>Flood Visualization Web Map – Project Documentation</h1>
+    <nav>
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#design">System Design</a>
+        <a href="#core-components">Core Components</a>
+        <a href="#interactive-features">Interactive Features</a>
+        <a href="#technical-implementation">Technical Details</a>
+        <a href="#usage">Usage</a>
+        <a href="#customization">Customization</a>
+        <a href="#faq">FAQ</a>
+        <a href="#appendix">Appendix</a>
+    </nav>
+
+    <section id="overview">
+        <h2>Overview</h2>
+        <p>
+            This project provides an interactive web-based map for visualizing flood extents and population impacts under scenario flooding at 24–30 meters. Built using <strong>OpenLayers</strong>, the application supports raster flood PNG overlays, thematic vector layers for people counts, and interactive tools for exploring the impact on regions and households.
+        </p>
+    </section>
+
+    <section id="features">
+        <h2>Key Features</h2>
+        <ul>
+            <li>Toggleable flood extent overlays for <strong>24–30 meters</strong></li>
+            <li>Thematic population impact polygons (hazard class, number of people, region, and household aggregation)</li>
+            <li>Dropdown to select flood scenario with automatic layer and legend toggling</li>
+            <li>Dynamically managed layer z-order for proper visual stacking</li>
+            <li>Interactive tables showing population and household details</li>
+            <li>Basemap and region reference layers, always visible beneath flood data</li>
+            <li>Support for multiple fallback PNGs per meter for robust raster loading</li>
+        </ul>
+        
+        <h3>Advanced Interactive Features</h3>
+        <ul>
+            <li><strong>Split-Pane Layout:</strong> Population exposure table displayed above the map with sticky headers</li>
+            <li><strong>Dual Filtering System:</strong> Filter by Barangay and Flood Exposure level simultaneously</li>
+            <li><strong>Household Detail Modals:</strong> Click any table cell to view detailed family information</li>
+            <li><strong>Interactive Map Navigation:</strong> Pan, zoom, and explore the map while modal is open</li>
+            <li><strong>Automatic Map Zoom:</strong> Automatically zooms to selected household polygon location</li>
+            <li><strong>Visual House Markers:</strong> Red pin with "This house" label at household center</li>
+            <li><strong>Draggable Modals:</strong> Drag household detail windows to any position</li>
+            <li><strong>Live Data Counters:</strong> Real-time display of filtered vs total records</li>
+            <li><strong>Coordinate System Handling:</strong> Automatic transformation between WGS84 and Web Mercator projections</li>
+            <li><strong>Documentation Access:</strong> Built-in documentation button in navigation bar for easy reference</li>
+        </ul>
+    </section>
+
+    <section id="design">
+        <h2>System Design</h2>
+        <p>
+            The frontend consists of a single-page application, heavily leveraging OpenLayers and vanilla JavaScript. The overall design is modular, exposing a variety of map layer toggles, listeners, and dropdown-driven UI elements for maximum interactivity.
+        </p>
+        <h3>Layer Architecture</h3>
+        <ul>
+            <li>
+                <strong>Basemap Layer:</strong> Rendered at z-index <code>0</code>, always visible and foundational for map context.
+            </li>
+            <li>
+                <strong>Region Layer:</strong> Rendered at z-index <code>5</code>, above basemap but below flood overlays.
+            </li>
+            <li>
+                <strong>Flood PNG Layers:</strong> Raster layers (e.g., <code>24_8.png</code>) rendered at z-index <code>2000</code> for visual priority.
+            </li>
+            <li>
+                <strong>Thematic Vector Layers:</strong> Show population and hazard polygons, styled by hazard class and scenario.
+            </li>
+            <li>
+                <strong>Highlight Layer:</strong> Used for interactive highlighting, z-index <code>900</code>.
+            </li>
+        </ul>
+
+        <h3>File Structure</h3>
+        <ul>
+            <li>
+                <code>index.html</code> – Main application HTML and JavaScript
+            </li>
+            <li>
+                <code>styles/Numberofpeopleat24meters_12_style.js</code> – Thematic style functions (categorical styles for each hazard class)
+            </li>
+            <li>
+                <code>layers/</code> – Directory for PNG raster overlays (e.g., <code>24_8.png</code>)
+            </li>
+        </ul>
+    </section>
+
+    <section id="core-components">
+        <h2>Core Components</h2>
+
+        <h3>Flood Layer Control</h3>
+        <p>
+            The dropdown menu with id <code>floodExtentDropdown</code> controls which flood extent is visible. For each selection (24–30 meters):
+        </p>
+        <ul>
+            <li>The corresponding PNG flood extent layer is shown and all others are hidden.</li>
+            <li>The population table and thematic vector layer for the correct meter are displayed.</li>
+        </ul>
+        <div class="codeblock"><strong>Core Layer Management (simplified pseudo-JS):</strong>
+<pre>
+onFloodDropdownChange(selectedMeter) {
+    hideAllFloodGroups();
+    ensureBasemapVisible();
+    // Show flood layer and thematic
+    if (selectedMeter == 24) {
+        toggleNumberOfPeople24(true);
+    } else {
+        toggleHouseholds(true);
+    }
+    setTimeout(function(){ showPeopleTableFor(selectedMeter); }, 200);
+}
+</pre>
+        </div>
+
+        <h3>Style Functions</h3>
+        <p>
+            The vector style for hazard polygons leverages <code>categories_Numberofpeopleat24meters_12</code> in <code>Numberofpeopleat24meters_12_style.js</code> to color features by hazard class:
+        </p>
+        <div class="codeblock">
+<pre>
+switch (hazard_class) {
+    case 'high':      fill: 'rgba(240,59,32,1.0)';
+    case 'medium':    fill: 'rgba(254,178,76,1.0)';
+    case 'low':       fill: 'rgba(255,255,178,1.0)';
+    case 'very low':
+    case 'use_caution': fill: 'rgba(166,217,106,1.0)';
+    default:          transparent;
+}
+</pre>
+        </div>
+
+        <h3>Layer Loading Logic for PNGs</h3>
+        <p>
+            Raster flood PNGs are loaded with multi-candidate fallback logic, trying several alternative filenames (e.g., <code>24_8.png</code>, <code>24_10.png</code>, etc.) to ensure a missing file does not break functionality.
+        </p>
+        <div class="codeblock">
+<strong>Example code (simplified):</strong>
+<pre>
+tryCandidates([
+    './layers/24_8.png',
+    './24_8.png',
+    './layers/24_10.png',
+    ...
+]);
+</pre>
+        </div>
+
+        <h3>Layer Z-Order Management</h3>
+        <p>
+            Proper stacking of layers is enforced by <code>setZIndex()</code> calls:
+        </p>
+        <ul>
+            <li>Basemap: <code>0</code></li>
+            <li>Region: <code>5</code></li>
+            <li>Highlight: <code>900</code></li>
+            <li>Flood PNG: <code>2000</code></li>
+        </ul>
+    </section>
+
+    <section id="interactive-features">
+        <h2>Interactive Features Guide</h2>
+        
+        <h3>Population Exposure Table</h3>
+        <p>The split-pane layout displays a comprehensive table above the map showing population exposure data for the selected flood level.</p>
+        <ul>
+            <li><strong>Table Columns:</strong> Family ID, Barangay, Infant, Child, Youth, Adult, Elderly, Male, Female, Disabled, Flood Exposure Level</li>
+            <li><strong>Sticky Headers:</strong> Column headers remain visible while scrolling through data</li>
+            <li><strong>Live Counter:</strong> Shows "X of Y rows" indicating filtered vs total records</li>
+            <li><strong>Click to Explore:</strong> Click any cell to view detailed household information</li>
+        </ul>
+
+        <h3>Dual Filtering System</h3>
+        <p>Two dropdown filters allow precise data filtering:</p>
+        <ul>
+            <li><strong>Barangay Filter:</strong> Filter by specific barangay (populated from data)</li>
+            <li><strong>Flood Exposure Filter:</strong> Filter by risk level (High, Medium, Low, Very Low, Use Caution)</li>
+            <li><strong>Combined Filtering:</strong> Both filters work together for targeted analysis</li>
+            <li><strong>Real-time Updates:</strong> Table updates immediately when filters change</li>
+        </ul>
+
+        <h3>Household Detail Modal</h3>
+        <p>Click any table cell to open a detailed household information modal:</p>
+        <ul>
+            <li><strong>Household Information:</strong> Given Name, Last Name, Age, Sex, Occupation, Religion</li>
+            <li><strong>Household Size:</strong> Total number of occupants displayed at the top</li>
+            <li><strong>Consistent Religion:</strong> All family members show the same randomly assigned religion</li>
+            <li><strong>Draggable Window:</strong> Drag the modal by its header to reposition</li>
+            <li><strong>Map Interaction:</strong> Continue navigating the map while modal is open</li>
+        </ul>
+
+        <h3>Map Integration</h3>
+        <p>Advanced map features enhance the user experience:</p>
+        <ul>
+            <li><strong>Automatic Zoom:</strong> Map automatically zooms to selected household polygon</li>
+            <li><strong>House Marker:</strong> Red pin with "This house" label appears at household center</li>
+            <li><strong>Coordinate Transformation:</strong> Handles WGS84 to Web Mercator conversion automatically</li>
+            <li><strong>Interactive Navigation:</strong> Pan, zoom, and explore while modal is open</li>
+            <li><strong>Marker Management:</strong> Previous markers are removed when selecting new households</li>
+        </ul>
+
+        <h3>Navigation System</h3>
+        <p>The application includes a comprehensive navigation system:</p>
+        <ul>
+            <li><strong>Layer Toggle Buttons:</strong> Household, ACVs, Equipment, Roads & Bridges, Evac Center, Buildings, Schools</li>
+            <li><strong>Documentation Button:</strong> Quick access to this documentation in the same window</li>
+            <li><strong>Flood Extent Dropdown:</strong> Select flood scenarios (24-30 meters) with automatic layer updates</li>
+            <li><strong>Active State Management:</strong> Visual feedback for currently selected layers and features</li>
+            <li><strong>Consistent Styling:</strong> All navigation elements follow the same design pattern</li>
+        </ul>
+    </section>
+
+    <section id="usage">
+        <h2>Usage</h2>
+        <ol>
+            <li>Open <strong>index.html</strong> in a browser. No server required for local use if PNG files are present.</li>
+            <li>Use the navigation buttons to toggle different layers (Household, Roads, Schools, etc.).</li>
+            <li>Click the <strong>Documentation</strong> button (book icon) to access this help guide in the same window.</li>
+            <li>Use the dropdown menu labeled "Flood Extent" to select a meter value (24–30).</li>
+            <li>The map updates to show the selected flood extent raster overlay and population impact layer.</li>
+            <li>Use the <strong>Barangay</strong> and <strong>Flood Exposure</strong> filters to narrow down the data.</li>
+            <li>Click any cell in the population table to view detailed household information.</li>
+            <li>Navigate the map while the household modal is open to explore the area.</li>
+            <li>Use the X button to close the modal and remove the house marker.</li>
+        </ol>
+        <div class="note">
+            <strong>Note:</strong> The application expects raster PNG files to be present in the <code>layers/</code> directory for each scenario. Fallbacks exist, but if all are missing, a console warning appears.
+        </div>
+    </section>
+
+    <section id="customization">
+        <h2>Customization</h2>
+        <h3>Adding New Flood Extents</h3>
+        <ol>
+            <li>Add PNG files into layers/ with appropriate naming (<code>31_6.png</code>, etc.).</li>
+            <li>Update the code in <code>index.html</code> to recognize the new meter value in dropdown options and <code>setFloodExtentInitialVisibilityFor</code> and related handler arrays.</li>
+            <li>Create a new style function for additional meters as needed (see <code>Numberofpeopleat24meters_12_style.js</code> for example).</li>
+        </ol>
+
+        <h3>Styling Vector Layers</h3>
+        <ul>
+            <li>Edit <code>styles/Numberofpeopleat24meters_12_style.js</code> to update colors, labels, or hazard logic.</li>
+        </ul>
+    </section>
+
+    <section id="technical-implementation">
+        <h2>Technical Implementation Details</h2>
+        
+        <h3>Modal System</h3>
+        <p>The household detail modal system uses a combination of HTML, CSS, and JavaScript:</p>
+        <ul>
+            <li><strong>HTML Structure:</strong> Modal container with header, body, and close button</li>
+            <li><strong>CSS Styling:</strong> Fixed positioning, reduced opacity background, draggable header</li>
+            <li><strong>JavaScript Logic:</strong> Event handlers for drag functionality and data population</li>
+        </ul>
+
+        <h3>Coordinate System Handling</h3>
+        <p>The application handles coordinate transformations between different projection systems:</p>
+        <div class="codeblock">
+<strong>Coordinate Transformation Example:</strong>
+<pre>
+var format = new ol.format.GeoJSON({
+    dataProjection: 'EPSG:4326',    // Input: WGS84 (longitude/latitude)
+    featureProjection: 'EPSG:3857'  // Output: Web Mercator (map projection)
+});
+geometry = format.readGeometry(feature.geometry);
+</pre>
+        </div>
+
+        <h3>Data Filtering Logic</h3>
+        <p>The dual filtering system processes data in real-time:</p>
+        <div class="codeblock">
+<strong>Filter Implementation:</strong>
+<pre>
+// Barangay filter
+var brgyVal = (p['aggregation_name'] || '').toString().trim().toLowerCase();
+var brgySel = (brgy || '').toString().trim().toLowerCase();
+if (brgySel && brgyVal !== brgySel) continue;
+
+// Flood exposure filter
+var hazardClass = (p['hazard_class'] || '').toString().trim().toLowerCase();
+if (hazardClass === 'use_caution') hazardClass = 'very low';
+var exposureSel = (exposure || '').toString().trim().toLowerCase();
+if (exposureSel && hazardClass !== exposureSel) continue;
+</pre>
+        </div>
+
+        <h3>Map Marker System</h3>
+        <p>House markers are created using OpenLayers vector layers with custom SVG icons:</p>
+        <ul>
+            <li><strong>Icon Creation:</strong> Inline SVG encoded as base64 data URL</li>
+            <li><strong>Layer Management:</strong> Single marker layer with high z-index (1000)</li>
+            <li><strong>Marker Removal:</strong> Previous markers are removed when selecting new households</li>
+            <li><strong>Positioning:</strong> Markers placed at polygon center using <code>ol.extent.getCenter()</code></li>
+        </ul>
+
+        <h3>Navigation System Implementation</h3>
+        <p>The navigation system uses a combination of HTML buttons and JavaScript event listeners:</p>
+        <div class="codeblock">
+<strong>Documentation Button Implementation:</strong>
+<pre>
+// HTML Button
+&lt;button class="nav-btn" id="documentation-btn" title="Documentation"&gt;
+    &lt;i class="fas fa-book"&gt;&lt;/i&gt;
+    &lt;span&gt;Documentation&lt;/span&gt;
+&lt;/button&gt;
+
+// JavaScript Event Listener
+var documentationBtn = document.getElementById('documentation-btn');
+if (documentationBtn) {
+    documentationBtn.addEventListener('click', function() {
+        window.location.href = 'Documentation.html';
+    });
+}
+</pre>
+        </div>
+        <ul>
+            <li><strong>Button Styling:</strong> Inherits from <code>.nav-btn</code> CSS class for consistency</li>
+            <li><strong>Icon Integration:</strong> Uses Font Awesome book icon (<code>fas fa-book</code>)</li>
+            <li><strong>Navigation Method:</strong> Uses <code>window.location.href</code> for same-window navigation</li>
+            <li><strong>Event Handling:</strong> Standard addEventListener pattern for click events</li>
+        </ul>
+    </section>
+
+    <section id="faq">
+        <h2>FAQ</h2>
+        <strong>Q: The PNG raster flood layer does not appear – what should I check?</strong><br>
+        A: Ensure at least one of the candidate PNGs for the selected meter is present in <code>./layers/</code>. See JavaScript console for error logs.<br><br>
+
+        <strong>Q: How does the app determine which layers to show/hide?</strong><br>
+        A: On dropdown change, all flood scenario layers are hidden, then the selected meter/raster is re-shown. The vector layer and population table are updated accordingly.<br><br>
+
+        <strong>Q: Can I add custom basemaps?</strong><br>
+        A: Yes, by editing the basemap layer definition in <code>index.html</code> and supplying your own tiles or WMTS source.<br><br>
+
+        <strong>Q: Why doesn't the map zoom to the correct location when I click a table cell?</strong><br>
+        A: This is usually due to coordinate system mismatches. The application automatically handles WGS84 to Web Mercator transformation, but ensure your household data has valid geometry coordinates.<br><br>
+
+        <strong>Q: How do I customize the household modal appearance?</strong><br>
+        A: Edit the CSS classes <code>.modal</code>, <code>.modal-content</code>, and <code>.household-table</code> in the <code>&lt;style&gt;</code> section of <code>index.html</code>.<br><br>
+
+        <strong>Q: Can I add more filter options to the population table?</strong><br>
+        A: Yes, add new dropdown elements to the filter section and update the <code>applyPeopleFiltersAndRender()</code> function to include the new filter logic.<br><br>
+
+        <strong>Q: How do I access the documentation while using the application?</strong><br>
+        A: Click the "Documentation" button (book icon) in the navigation bar. This will open the documentation in the same window, allowing you to reference it while using the application.
+    </section>
+
+    <section id="appendix">
+        <h2>Appendix</h2>
+        <h3>Hazard Class Color Codes</h3>
+        <table>
+            <tr><th>Hazard Class</th><th>Fill Color</th></tr>
+            <tr><td>High</td><td style="background:#f03b20; color:#fff;">#f03b20</td></tr>
+            <tr><td>Medium</td><td style="background:#feb24c;">#feb24c</td></tr>
+            <tr><td>Low</td><td style="background:#ffffb2;">#ffffb2</td></tr>
+            <tr><td>Very Low / Use Caution</td><td style="background:#a6d96a;">#a6d96a</td></tr>
+            <tr><td>Default / N/A</td><td style="background:rgba(255,255,255,0.0);">Transparent</td></tr>
+        </table>
+
+        <h3>Data Structure</h3>
+        <p>The application works with several key data files:</p>
+        <ul>
+            <li><strong>NumberofpeopleatXmeters_12.js</strong> – Population exposure data for each flood level (24-30m)</li>
+            <li><strong>Households_1.js</strong> – Detailed household information with family member data</li>
+            <li><strong>HazardAggregationSummaryatXmeters_11.js</strong> – Hazard classification data</li>
+            <li><strong>AggregationSummaryatXmeters_14.js</strong> – Aggregated summary statistics</li>
+        </ul>
+
+        <h3>Key Data Properties</h3>
+        <table>
+            <tr><th>Data Source</th><th>Key Properties</th><th>Purpose</th></tr>
+            <tr><td>Population Data</td><td>exposure_id, aggregation_name, hazard_class, infant, child, youth, adult, elderly, male, female, disabled</td><td>Population exposure table</td></tr>
+            <tr><td>Household Data</td><td>FAMILY-ID, GIVEN NAME, LAST NAME, AGE, SEX, OCCUPATION, NUMBER OF OCCUPANTS</td><td>Household detail modal</td></tr>
+            <tr><td>Hazard Data</td><td>hazard_class (high, medium, low, very low, use_caution)</td><td>Risk level classification</td></tr>
+        </table>
+
+        <h3>Relevant Files</h3>
+        <ul>
+            <li><strong>index.html</strong> – Application logic, UI, OpenLayers map construction</li>
+            <li><strong>styles/Numberofpeopleat24meters_12_style.js</strong> – Core thematic style selector for polygons</li>
+            <li><strong>layers/*.png</strong> – Flood extent raster overlays (24–30 meters)</li>
+            <li><strong>layers/*.js</strong> – GeoJSON data files for population, household, and hazard data</li>
+        </ul>
+    </section>
+</body>
+</html>

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head id="inasafe-html-resources">
+    <meta charset="utf-8" />
+    <title>InaSAFE</title>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="resources/css/bootstrap.css" rel="stylesheet" />
+    <link href="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/css/bootstrap.css" rel="stylesheet" />
+    <link href="resources/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="resources/css/InaSAFE.css" rel="stylesheet" />
+    <link href="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/css/InaSAFE.css" rel="stylesheet" />
+    <script type="text/javascript" src="resources/js/jquery-1.7.1.min.js">
+      /*fake space for html scraping purpose*/
+    </script>
+    <script type="text/javascript" src="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/js/jquery-1.7.1.min.js">
+      /*fake space for html scraping purpose*/
+    </script>
+    <script type="text/javascript" src="resources/js/inasafe.js">
+      /*fake space for html scraping purpose*/
+    </script>
+    <script type="text/javascript" src="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/js/inasafe.js">
+      /*fake space for html scraping purpose*/
+    </script>
+
+    <style type="text/css">
+      body {
+        margin-left: -10px;
+        margin-right: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='container'>
+        
+    <div class="branding">
+        <img src="file:///C:/Users/RyanDelacruz/AppData/Roaming/QGIS/QGIS3/profiles/Ryan P. Dela Cruz/python/plugins/inasafe/safe/resources/img/logos/inasafe-logo-white.png" title="InaSAFE" alt="InaSAFE" />
+    </div>
+
+    <div id="analysis-question">
+    <h5 class="info">
+        Analysis question
+    </h5>
+    <p>
+        
+            <h5>In the event of a Flood, how many Population might be affected?</h5>
+        
+    </p>
+</div>
+    <div id="analysis-provenance-details">
+    <h5 class="info">
+        Analysis details
+    </h5>
+
+    <!--static tree starts here. ps: it would be great if we can make it dynamic (recursive tree)-->
+    <div class="tree">
+        <ul>
+            
+                <li>
+                    <b>Impact Function</b>
+                    
+                        Flood raster on population polygon
+                    
+                </li>
+            
+                <li>
+                    <b>Hazard</b>
+                    
+                        <ul>
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Title </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                28
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Layer Purpose </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                hazard
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Layer Geometry </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                raster
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Hazard </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                flood
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Hazard Category </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                single_event
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Layer Mode </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                continuous
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Hazard Layer </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                C:/Users/RyanDelacruz/Documents/Project Tomas/DEM/Flood Extent/28.tif
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Keyword Version </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                5.0
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Continuous Hazard Unit </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                metres
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Thresholds </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                <table class="table table-condensed table-striped">
+<tbody>
+<tr>
+<td colspan=1><strong>Exposure</strong></td>
+<td colspan=1>Population</td>
+<td colspan=1></td>
+</tr>
+<tr>
+<td colspan=1><strong>Classification</strong></td>
+<td colspan=1>Flood classes</td>
+<td colspan=1></td>
+</tr>
+<tr>
+<td colspan=1>Class name</td>
+<td colspan=1>Minimum</td>
+<td colspan=1>Maximum</td>
+</tr>
+<tr>
+<td colspan=1>Use caution</td>
+<td colspan=1>0.0</td>
+<td colspan=1>0.1</td>
+</tr>
+<tr>
+<td colspan=1>Low</td>
+<td colspan=1>0.1</td>
+<td colspan=1>0.7</td>
+</tr>
+<tr>
+<td colspan=1>Medium</td>
+<td colspan=1>0.7</td>
+<td colspan=1>1.5</td>
+</tr>
+<tr>
+<td colspan=1>High</td>
+<td colspan=1>1.5</td>
+<td colspan=1>9999.0</td>
+</tr>
+</tbody>
+</table>
+
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Active Band </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                1
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li>
+                    <b>Exposure</b>
+                    
+                        <ul>
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Title </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                People
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Layer Purpose </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                exposure
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Layer Geometry </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                polygon
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Exposure </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                population
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Exposure Unit </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                count
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>InaSAFE Fields </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                <table class="table table-condensed">
+<tbody>
+<tr>
+<td colspan=1><strong>Adult Count</strong></td>
+<td colspan=1>Adult</td>
+</tr>
+<tr>
+<td colspan=1><strong>Child Count</strong></td>
+<td colspan=1>Child</td>
+</tr>
+<tr>
+<td colspan=1><strong>Disabled Count</strong></td>
+<td colspan=1>Disabled</td>
+</tr>
+<tr>
+<td colspan=1><strong>Elderly Count</strong></td>
+<td colspan=1>Elderly</td>
+</tr>
+<tr>
+<td colspan=1><strong>Exposure ID</strong></td>
+<td colspan=1>FAMILY_ID</td>
+</tr>
+<tr>
+<td colspan=1><strong>Female Count</strong></td>
+<td colspan=1>Female</td>
+</tr>
+<tr>
+<td colspan=1><strong>Infant Count</strong></td>
+<td colspan=1>Infant</td>
+</tr>
+<tr>
+<td colspan=1><strong>Male Count</strong></td>
+<td colspan=1>Male</td>
+</tr>
+<tr>
+<td colspan=1><strong>Over 60 Count</strong></td>
+<td colspan=1>Over_60</td>
+</tr>
+<tr>
+<td colspan=1><strong>Population count</strong></td>
+<td colspan=1><ul>
+<li>Male</li>
+<li>Female</li>
+</ul></td>
+</tr>
+<tr>
+<td colspan=1><strong>Under 5 Count</strong></td>
+<td colspan=1>Under_5</td>
+</tr>
+<tr>
+<td colspan=1><strong>Youth Count</strong></td>
+<td colspan=1>Youth</td>
+</tr>
+</tbody>
+</table>
+
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Layer Mode </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                continuous
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Exposure Layer </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Exposure.gpkg|layername=Exposure
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Keyword Version </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                5.0
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li>
+                    <b>Aggregation</b>
+                    
+                        <ul>
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Title </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                Barangay
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Layer Purpose </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                aggregation
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Layer Geometry </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                polygon
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>InaSAFE Fields </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                <table class="table table-condensed">
+<tbody>
+<tr>
+<td colspan=1><strong>Adult Ratio</strong></td>
+<td colspan=1>Adult</td>
+</tr>
+<tr>
+<td colspan=1><strong>Aggregation Name</strong></td>
+<td colspan=1>BARANGAY</td>
+</tr>
+<tr>
+<td colspan=1><strong>Child Ratio</strong></td>
+<td colspan=1>Child</td>
+</tr>
+<tr>
+<td colspan=1><strong>Disabled Ratio</strong></td>
+<td colspan=1>Disabled</td>
+</tr>
+<tr>
+<td colspan=1><strong>Elderly Ratio</strong></td>
+<td colspan=1>Elderly</td>
+</tr>
+<tr>
+<td colspan=1><strong>Female Ratio</strong></td>
+<td colspan=1>Female</td>
+</tr>
+<tr>
+<td colspan=1><strong>Infant Ratio</strong></td>
+<td colspan=1>Infant</td>
+</tr>
+<tr>
+<td colspan=1><strong>Male Ratio</strong></td>
+<td colspan=1>Male</td>
+</tr>
+<tr>
+<td colspan=1><strong>Over 60 Years Ratio</strong></td>
+<td colspan=1>Over_60</td>
+</tr>
+<tr>
+<td colspan=1><strong>Under 5 Years Ratio</strong></td>
+<td colspan=1>Under 5</td>
+</tr>
+<tr>
+<td colspan=1><strong>Youth Ratio</strong></td>
+<td colspan=1>Youth</td>
+</tr>
+</tbody>
+</table>
+
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Aggregation Layer </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Agregation_data.shp
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Keyword Version </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                5.0
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                        </ul>
+                    
+                </li>
+            
+                <li>
+                    <b>Analysis Environment</b>
+                    
+                        <ul>
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>OS </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                Windows-11-10.0.26200-SP0
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>InaSAFE Version </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                5.0.6
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Use Rounding </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                On
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Debug Mode </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                Off
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>QGIS Version </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                3.40.6-Bratislava
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>Qt Version </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                5.15.13
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>GDAL Version </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                3.10.3
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                                
+                                <li>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <b>PyQt Version </b>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            
+                                                5.15.11
+                                            
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            
+                        </ul>
+                    
+                </li>
+            
+        </ul>
+    </div>
+</div>
+
+    </div>
+  </body>
+</html>

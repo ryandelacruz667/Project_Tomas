@@ -1,9 +1,8 @@
 var wms_layers = [];
 
 
-        var lyr_Basemap_0 = new ol.layer.Tile({
-            'title': 'Basemap',
-            'type':'base',
+        var lyr_Positron_0 = new ol.layer.Tile({
+            'title': 'Positron',
             'opacity': 1.000000,
             
             
@@ -12,306 +11,823 @@ var wms_layers = [];
                 url: 'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
             })
         });
-var format_Barangay_1 = new ol.format.GeoJSON();
-var features_Barangay_1 = format_Barangay_1.readFeatures(json_Barangay_1, 
+var format_Households_1 = new ol.format.GeoJSON();
+var features_Households_1 = format_Households_1.readFeatures(json_Households_1, 
             {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Barangay_1 = new ol.source.Vector({
+var jsonSource_Households_1 = new ol.source.Vector({
     attributions: ' ',
 });
-jsonSource_Barangay_1.addFeatures(features_Barangay_1);
-var lyr_Barangay_1 = new ol.layer.Vector({
+jsonSource_Households_1.addFeatures(features_Households_1);
+var lyr_Households_1 = new ol.layer.Vector({
                 declutter: false,
-                source:jsonSource_Barangay_1, 
-                style: style_Barangay_1,
-                popuplayertitle: 'Barangay',
+                source:jsonSource_Households_1, 
+                style: style_Households_1,
+                popuplayertitle: 'Households',
                 interactive: false,
-                title: '<img src="styles/legend/Barangay_1.png" /> Barangay'
+                title: '<img src="styles/legend/Households_1.png" /> Households'
             });
-var format_Municipality_2 = new ol.format.GeoJSON();
-var features_Municipality_2 = format_Municipality_2.readFeatures(json_Municipality_2, 
-            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Municipality_2 = new ol.source.Vector({
-    attributions: ' ',
-});
-jsonSource_Municipality_2.addFeatures(features_Municipality_2);
-var lyr_Municipality_2 = new ol.layer.Vector({
-                declutter: false,
-                source:jsonSource_Municipality_2, 
-                style: style_Municipality_2,
-                popuplayertitle: 'Municipality',
-                interactive: false,
-                title: '<img src="styles/legend/Municipality_2.png" /> Municipality'
-            });
-var format_Province_3 = new ol.format.GeoJSON();
-var features_Province_3 = format_Province_3.readFeatures(json_Province_3, 
-            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Province_3 = new ol.source.Vector({
-    attributions: ' ',
-});
-jsonSource_Province_3.addFeatures(features_Province_3);
-var lyr_Province_3 = new ol.layer.Vector({
-                declutter: false,
-                source:jsonSource_Province_3, 
-                style: style_Province_3,
-                popuplayertitle: 'Province',
-                interactive: false,
-                title: '<img src="styles/legend/Province_3.png" /> Province'
-            });
-var lyr_30_4 = new ol.layer.Image({
+var lyr_30_2 = new ol.layer.Image({
         opacity: 1,
         
     title: '30<br />\
-    <img src="styles/legend/30_4_0.png" /> 0.0010<br />\
-    <img src="styles/legend/30_4_1.png" /> 2.3258<br />\
-    <img src="styles/legend/30_4_2.png" /> 4.6505<br />\
-    <img src="styles/legend/30_4_3.png" /> 6.9753<br />\
-    <img src="styles/legend/30_4_4.png" /> 9.3000<br />' ,
+    <img src="styles/legend/30_2_0.png" /> 0<br />\
+    <img src="styles/legend/30_2_1.png" /> 9.42<br />' ,
         
         
         source: new ol.source.ImageStatic({
-            url: "./layers/30_4.png",
+            url: "./layers/30_2.png",
             attributions: ' ',
             projection: 'EPSG:3857',
             alwaysInRange: true,
             imageExtent: [13540235.716279, 1947216.452722, 13566724.528428, 1971690.071692]
         })
     });
-var lyr_29_5 = new ol.layer.Image({
+var lyr_29_3 = new ol.layer.Image({
         opacity: 1,
         
     title: '29<br />\
-    <img src="styles/legend/29_5_0.png" /> 0.0010<br />\
-    <img src="styles/legend/29_5_1.png" /> 2.3258<br />\
-    <img src="styles/legend/29_5_2.png" /> 4.6505<br />\
-    <img src="styles/legend/29_5_3.png" /> 6.9753<br />\
-    <img src="styles/legend/29_5_4.png" /> 9.3000<br />' ,
+    <img src="styles/legend/29_3_0.png" /> 0<br />\
+    <img src="styles/legend/29_3_1.png" /> 9.42<br />' ,
         
         
         source: new ol.source.ImageStatic({
-            url: "./layers/29_5.png",
+            url: "./layers/29_3.png",
             attributions: ' ',
             projection: 'EPSG:3857',
             alwaysInRange: true,
             imageExtent: [13540235.716279, 1947216.452722, 13566724.528428, 1971690.071692]
         })
     });
-var lyr_28_6 = new ol.layer.Image({
+var lyr_28_4 = new ol.layer.Image({
         opacity: 1,
         
     title: '28<br />\
-    <img src="styles/legend/28_6_0.png" /> 0.0010<br />\
-    <img src="styles/legend/28_6_1.png" /> 2.3258<br />\
-    <img src="styles/legend/28_6_2.png" /> 4.6505<br />\
-    <img src="styles/legend/28_6_3.png" /> 6.9753<br />\
-    <img src="styles/legend/28_6_4.png" /> 9.3000<br />' ,
+    <img src="styles/legend/28_4_0.png" /> 0<br />\
+    <img src="styles/legend/28_4_1.png" /> 9.42<br />' ,
         
         
         source: new ol.source.ImageStatic({
-            url: "./layers/28_6.png",
+            url: "./layers/28_4.png",
             attributions: ' ',
             projection: 'EPSG:3857',
             alwaysInRange: true,
             imageExtent: [13540235.716279, 1947216.452722, 13566724.528428, 1971690.071692]
         })
     });
-var lyr_27_7 = new ol.layer.Image({
+var lyr_27_5 = new ol.layer.Image({
         opacity: 1,
         
     title: '27<br />\
-    <img src="styles/legend/27_7_0.png" /> 0.0010<br />\
-    <img src="styles/legend/27_7_1.png" /> 2.3258<br />\
-    <img src="styles/legend/27_7_2.png" /> 4.6505<br />\
-    <img src="styles/legend/27_7_3.png" /> 6.9753<br />\
-    <img src="styles/legend/27_7_4.png" /> 9.3000<br />' ,
+    <img src="styles/legend/27_5_0.png" /> 0<br />\
+    <img src="styles/legend/27_5_1.png" /> 9.42<br />' ,
         
         
         source: new ol.source.ImageStatic({
-            url: "./layers/27_7.png",
+            url: "./layers/27_5.png",
             attributions: ' ',
             projection: 'EPSG:3857',
             alwaysInRange: true,
             imageExtent: [13540235.716279, 1947216.452722, 13566724.528428, 1971690.071692]
         })
     });
-var lyr_26_8 = new ol.layer.Image({
+var lyr_26_6 = new ol.layer.Image({
         opacity: 1,
         
     title: '26<br />\
-    <img src="styles/legend/26_8_0.png" /> 0.0010<br />\
-    <img src="styles/legend/26_8_1.png" /> 2.3258<br />\
-    <img src="styles/legend/26_8_2.png" /> 4.6505<br />\
-    <img src="styles/legend/26_8_3.png" /> 6.9753<br />\
-    <img src="styles/legend/26_8_4.png" /> 9.3000<br />' ,
+    <img src="styles/legend/26_6_0.png" /> 0<br />\
+    <img src="styles/legend/26_6_1.png" /> 9.42<br />' ,
         
         
         source: new ol.source.ImageStatic({
-            url: "./layers/26_8.png",
+            url: "./layers/26_6.png",
             attributions: ' ',
             projection: 'EPSG:3857',
             alwaysInRange: true,
             imageExtent: [13540235.716279, 1947216.452722, 13566724.528428, 1971690.071692]
         })
     });
-var lyr_25_9 = new ol.layer.Image({
+var lyr_25_7 = new ol.layer.Image({
         opacity: 1,
         
     title: '25<br />\
-    <img src="styles/legend/25_9_0.png" /> 0.0010<br />\
-    <img src="styles/legend/25_9_1.png" /> 2.3258<br />\
-    <img src="styles/legend/25_9_2.png" /> 4.6505<br />\
-    <img src="styles/legend/25_9_3.png" /> 6.9753<br />\
-    <img src="styles/legend/25_9_4.png" /> 9.3000<br />' ,
+    <img src="styles/legend/25_7_0.png" /> 0<br />\
+    <img src="styles/legend/25_7_1.png" /> 9.42<br />' ,
         
         
         source: new ol.source.ImageStatic({
-            url: "./layers/25_9.png",
+            url: "./layers/25_7.png",
             attributions: ' ',
             projection: 'EPSG:3857',
             alwaysInRange: true,
             imageExtent: [13540235.716279, 1947216.452722, 13566724.528428, 1971690.071692]
         })
     });
-var lyr_24_10 = new ol.layer.Image({
+var lyr_24_8 = new ol.layer.Image({
         opacity: 1,
         
     title: '24<br />\
-    <img src="styles/legend/24_10_0.png" /> 0.0010<br />\
-    <img src="styles/legend/24_10_1.png" /> 2.3258<br />\
-    <img src="styles/legend/24_10_2.png" /> 4.6505<br />\
-    <img src="styles/legend/24_10_3.png" /> 6.9753<br />\
-    <img src="styles/legend/24_10_4.png" /> 9.3000<br />' ,
+    <img src="styles/legend/24_8_0.png" /> 0<br />\
+    <img src="styles/legend/24_8_1.png" /> 9.42<br />' ,
         
         
         source: new ol.source.ImageStatic({
-            url: "./layers/24_10.png",
+            url: "./layers/24_8.png",
             attributions: ' ',
             projection: 'EPSG:3857',
             alwaysInRange: true,
             imageExtent: [13540235.716279, 1947216.452722, 13566724.528428, 1971690.071692]
         })
     });
-var format_Households_11 = new ol.format.GeoJSON();
-var features_Households_11 = format_Households_11.readFeatures(json_Households_11, 
+var format_AnalysisSummaryat24meters_9 = new ol.format.GeoJSON();
+var features_AnalysisSummaryat24meters_9 = format_AnalysisSummaryat24meters_9.readFeatures(json_AnalysisSummaryat24meters_9, 
             {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Households_11 = new ol.source.Vector({
+var jsonSource_AnalysisSummaryat24meters_9 = new ol.source.Vector({
     attributions: ' ',
 });
-jsonSource_Households_11.addFeatures(features_Households_11);
-var lyr_Households_11 = new ol.layer.Vector({
+jsonSource_AnalysisSummaryat24meters_9.addFeatures(features_AnalysisSummaryat24meters_9);
+var lyr_AnalysisSummaryat24meters_9 = new ol.layer.Vector({
                 declutter: false,
-                source:jsonSource_Households_11, 
-                style: style_Households_11,
-                popuplayertitle: 'Households',
-                interactive: true,
-                title: '<img src="styles/legend/Households_11.png" /> Households'
+                source:jsonSource_AnalysisSummaryat24meters_9, 
+                style: style_AnalysisSummaryat24meters_9,
+                popuplayertitle: 'Analysis Summary at 24 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AnalysisSummaryat24meters_9.png" /> Analysis Summary at 24 meters'
             });
-var format_Roads_12 = new ol.format.GeoJSON();
-var features_Roads_12 = format_Roads_12.readFeatures(json_Roads_12, 
+var format_AggregationSummaryat24meters_10 = new ol.format.GeoJSON();
+var features_AggregationSummaryat24meters_10 = format_AggregationSummaryat24meters_10.readFeatures(json_AggregationSummaryat24meters_10, 
             {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Roads_12 = new ol.source.Vector({
+var jsonSource_AggregationSummaryat24meters_10 = new ol.source.Vector({
     attributions: ' ',
 });
-jsonSource_Roads_12.addFeatures(features_Roads_12);
-var lyr_Roads_12 = new ol.layer.Vector({
+jsonSource_AggregationSummaryat24meters_10.addFeatures(features_AggregationSummaryat24meters_10);
+var lyr_AggregationSummaryat24meters_10 = new ol.layer.Vector({
                 declutter: false,
-                source:jsonSource_Roads_12, 
-                style: style_Roads_12,
+                source:jsonSource_AggregationSummaryat24meters_10, 
+                style: style_AggregationSummaryat24meters_10,
+                popuplayertitle: 'Aggregation Summary at 24 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AggregationSummaryat24meters_10.png" /> Aggregation Summary at 24 meters'
+            });
+var format_HazardAggregationSummaryat24meters_11 = new ol.format.GeoJSON();
+var features_HazardAggregationSummaryat24meters_11 = format_HazardAggregationSummaryat24meters_11.readFeatures(json_HazardAggregationSummaryat24meters_11, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_HazardAggregationSummaryat24meters_11 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_HazardAggregationSummaryat24meters_11.addFeatures(features_HazardAggregationSummaryat24meters_11);
+var lyr_HazardAggregationSummaryat24meters_11 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_HazardAggregationSummaryat24meters_11, 
+                style: style_HazardAggregationSummaryat24meters_11,
+                popuplayertitle: 'Hazard Aggregation Summary at 24 meters',
+                interactive: false,
+    title: 'Hazard Aggregation Summary at 24 meters<br />\
+    <img src="styles/legend/HazardAggregationSummaryat24meters_11_0.png" /> High > 1.5 m (530)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat24meters_11_1.png" /> Medium > 0.7 - 1.5 m (420)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat24meters_11_2.png" /> Low > 0.1 - 0.7 m (520)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat24meters_11_3.png" /> Use caution <= 0.1 m (8,200)<br />' });
+var format_Numberofpeopleat24meters_12 = new ol.format.GeoJSON();
+var features_Numberofpeopleat24meters_12 = format_Numberofpeopleat24meters_12.readFeatures(json_Numberofpeopleat24meters_12, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Numberofpeopleat24meters_12 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Numberofpeopleat24meters_12.addFeatures(features_Numberofpeopleat24meters_12);
+var lyr_Numberofpeopleat24meters_12 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Numberofpeopleat24meters_12, 
+                style: style_Numberofpeopleat24meters_12,
+                popuplayertitle: 'Number of people at 24 meters',
+                interactive: false,
+    title: 'Number of people at 24 meters<br />\
+    <img src="styles/legend/Numberofpeopleat24meters_12_0.png" /> High > 1.5 m (530)<br />\
+    <img src="styles/legend/Numberofpeopleat24meters_12_1.png" /> Medium > 0.7 - 1.5 m (420)<br />\
+    <img src="styles/legend/Numberofpeopleat24meters_12_2.png" /> Low > 0.1 - 0.7 m (520)<br />\
+    <img src="styles/legend/Numberofpeopleat24meters_12_3.png" /> Use caution <= 0.1 m (8,200)<br />' });
+var format_AnalysisSummaryat25meters_13 = new ol.format.GeoJSON();
+var features_AnalysisSummaryat25meters_13 = format_AnalysisSummaryat25meters_13.readFeatures(json_AnalysisSummaryat25meters_13, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AnalysisSummaryat25meters_13 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AnalysisSummaryat25meters_13.addFeatures(features_AnalysisSummaryat25meters_13);
+var lyr_AnalysisSummaryat25meters_13 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AnalysisSummaryat25meters_13, 
+                style: style_AnalysisSummaryat25meters_13,
+                popuplayertitle: 'Analysis Summary at 25 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AnalysisSummaryat25meters_13.png" /> Analysis Summary at 25 meters'
+            });
+var format_AggregationSummaryat25meters_14 = new ol.format.GeoJSON();
+var features_AggregationSummaryat25meters_14 = format_AggregationSummaryat25meters_14.readFeatures(json_AggregationSummaryat25meters_14, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AggregationSummaryat25meters_14 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AggregationSummaryat25meters_14.addFeatures(features_AggregationSummaryat25meters_14);
+var lyr_AggregationSummaryat25meters_14 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AggregationSummaryat25meters_14, 
+                style: style_AggregationSummaryat25meters_14,
+                popuplayertitle: 'Aggregation Summary at 25 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AggregationSummaryat25meters_14.png" /> Aggregation Summary at 25 meters'
+            });
+var format_HazardAggregationSummaryat25meters_15 = new ol.format.GeoJSON();
+var features_HazardAggregationSummaryat25meters_15 = format_HazardAggregationSummaryat25meters_15.readFeatures(json_HazardAggregationSummaryat25meters_15, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_HazardAggregationSummaryat25meters_15 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_HazardAggregationSummaryat25meters_15.addFeatures(features_HazardAggregationSummaryat25meters_15);
+var lyr_HazardAggregationSummaryat25meters_15 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_HazardAggregationSummaryat25meters_15, 
+                style: style_HazardAggregationSummaryat25meters_15,
+                popuplayertitle: 'Hazard Aggregation Summary at 25 meters',
+                interactive: false,
+    title: 'Hazard Aggregation Summary at 25 meters<br />\
+    <img src="styles/legend/HazardAggregationSummaryat25meters_15_0.png" /> High > 1.5 m (1,200)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat25meters_15_1.png" /> Medium > 0.7 - 1.5 m (670)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat25meters_15_2.png" /> Low > 0.1 - 0.7 m (520)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat25meters_15_3.png" /> Use caution <= 0.1 m (7,300)<br />' });
+var format_Numberofpeopleat25meters_16 = new ol.format.GeoJSON();
+var features_Numberofpeopleat25meters_16 = format_Numberofpeopleat25meters_16.readFeatures(json_Numberofpeopleat25meters_16, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Numberofpeopleat25meters_16 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Numberofpeopleat25meters_16.addFeatures(features_Numberofpeopleat25meters_16);
+var lyr_Numberofpeopleat25meters_16 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Numberofpeopleat25meters_16, 
+                style: style_Numberofpeopleat25meters_16,
+                popuplayertitle: 'Number of people at 25 meters',
+                interactive: false,
+    title: 'Number of people at 25 meters<br />\
+    <img src="styles/legend/Numberofpeopleat25meters_16_0.png" /> High > 1.5 m (1,200)<br />\
+    <img src="styles/legend/Numberofpeopleat25meters_16_1.png" /> Medium > 0.7 - 1.5 m (670)<br />\
+    <img src="styles/legend/Numberofpeopleat25meters_16_2.png" /> Low > 0.1 - 0.7 m (520)<br />\
+    <img src="styles/legend/Numberofpeopleat25meters_16_3.png" /> Use caution <= 0.1 m (7,300)<br />' });
+var format_AnalysisSummaryat27meters_17 = new ol.format.GeoJSON();
+var features_AnalysisSummaryat27meters_17 = format_AnalysisSummaryat27meters_17.readFeatures(json_AnalysisSummaryat27meters_17, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AnalysisSummaryat27meters_17 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AnalysisSummaryat27meters_17.addFeatures(features_AnalysisSummaryat27meters_17);
+var lyr_AnalysisSummaryat27meters_17 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AnalysisSummaryat27meters_17, 
+                style: style_AnalysisSummaryat27meters_17,
+                popuplayertitle: 'Analysis Summary at 27 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AnalysisSummaryat27meters_17.png" /> Analysis Summary at 27 meters'
+            });
+var format_AggregationSummaryat27meters_18 = new ol.format.GeoJSON();
+var features_AggregationSummaryat27meters_18 = format_AggregationSummaryat27meters_18.readFeatures(json_AggregationSummaryat27meters_18, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AggregationSummaryat27meters_18 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AggregationSummaryat27meters_18.addFeatures(features_AggregationSummaryat27meters_18);
+var lyr_AggregationSummaryat27meters_18 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AggregationSummaryat27meters_18, 
+                style: style_AggregationSummaryat27meters_18,
+                popuplayertitle: 'Aggregation Summary at 27  meters',
+                interactive: false,
+                title: '<img src="styles/legend/AggregationSummaryat27meters_18.png" /> Aggregation Summary at 27  meters'
+            });
+var format_HazardAggregationSummaryat27meters_19 = new ol.format.GeoJSON();
+var features_HazardAggregationSummaryat27meters_19 = format_HazardAggregationSummaryat27meters_19.readFeatures(json_HazardAggregationSummaryat27meters_19, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_HazardAggregationSummaryat27meters_19 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_HazardAggregationSummaryat27meters_19.addFeatures(features_HazardAggregationSummaryat27meters_19);
+var lyr_HazardAggregationSummaryat27meters_19 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_HazardAggregationSummaryat27meters_19, 
+                style: style_HazardAggregationSummaryat27meters_19,
+                popuplayertitle: 'Hazard Aggregation Summary at 27 meters',
+                interactive: false,
+    title: 'Hazard Aggregation Summary at 27 meters<br />\
+    <img src="styles/legend/HazardAggregationSummaryat27meters_19_0.png" /> High > 1.5 m (2,100)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat27meters_19_1.png" /> Medium > 0.7 - 1.5 m (580)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat27meters_19_2.png" /> Low > 0.1 - 0.7 m (470)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat27meters_19_3.png" /> Use caution <= 0.1 m (6,500)<br />' });
+var format_Numberofpeopleat26meters_20 = new ol.format.GeoJSON();
+var features_Numberofpeopleat26meters_20 = format_Numberofpeopleat26meters_20.readFeatures(json_Numberofpeopleat26meters_20, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Numberofpeopleat26meters_20 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Numberofpeopleat26meters_20.addFeatures(features_Numberofpeopleat26meters_20);
+var lyr_Numberofpeopleat26meters_20 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Numberofpeopleat26meters_20, 
+                style: style_Numberofpeopleat26meters_20,
+                popuplayertitle: 'Number of people at 26 meters',
+                interactive: false,
+    title: 'Number of people at 26 meters<br />\
+    <img src="styles/legend/Numberofpeopleat26meters_20_0.png" /> High > 1.5 m (2,100)<br />\
+    <img src="styles/legend/Numberofpeopleat26meters_20_1.png" /> Medium > 0.7 - 1.5 m (580)<br />\
+    <img src="styles/legend/Numberofpeopleat26meters_20_2.png" /> Low > 0.1 - 0.7 m (470)<br />\
+    <img src="styles/legend/Numberofpeopleat26meters_20_3.png" /> Use caution <= 0.1 m (6,500)<br />' });
+var format_AnalysisSummaryat27meters_21 = new ol.format.GeoJSON();
+var features_AnalysisSummaryat27meters_21 = format_AnalysisSummaryat27meters_21.readFeatures(json_AnalysisSummaryat27meters_21, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AnalysisSummaryat27meters_21 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AnalysisSummaryat27meters_21.addFeatures(features_AnalysisSummaryat27meters_21);
+var lyr_AnalysisSummaryat27meters_21 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AnalysisSummaryat27meters_21, 
+                style: style_AnalysisSummaryat27meters_21,
+                popuplayertitle: 'Analysis Summary at 27 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AnalysisSummaryat27meters_21.png" /> Analysis Summary at 27 meters'
+            });
+var format_AggregationSummaryatat27meters_22 = new ol.format.GeoJSON();
+var features_AggregationSummaryatat27meters_22 = format_AggregationSummaryatat27meters_22.readFeatures(json_AggregationSummaryatat27meters_22, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AggregationSummaryatat27meters_22 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AggregationSummaryatat27meters_22.addFeatures(features_AggregationSummaryatat27meters_22);
+var lyr_AggregationSummaryatat27meters_22 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AggregationSummaryatat27meters_22, 
+                style: style_AggregationSummaryatat27meters_22,
+                popuplayertitle: 'Aggregation Summary at at 27 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AggregationSummaryatat27meters_22.png" /> Aggregation Summary at at 27 meters'
+            });
+var format_HazardAggregationSummaryat27meters_23 = new ol.format.GeoJSON();
+var features_HazardAggregationSummaryat27meters_23 = format_HazardAggregationSummaryat27meters_23.readFeatures(json_HazardAggregationSummaryat27meters_23, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_HazardAggregationSummaryat27meters_23 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_HazardAggregationSummaryat27meters_23.addFeatures(features_HazardAggregationSummaryat27meters_23);
+var lyr_HazardAggregationSummaryat27meters_23 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_HazardAggregationSummaryat27meters_23, 
+                style: style_HazardAggregationSummaryat27meters_23,
+                popuplayertitle: 'Hazard Aggregation Summary at 27 meters',
+                interactive: false,
+    title: 'Hazard Aggregation Summary at 27 meters<br />\
+    <img src="styles/legend/HazardAggregationSummaryat27meters_23_0.png" /> High > 1.5 m (2,800)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat27meters_23_1.png" /> Medium > 0.7 - 1.5 m (920)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat27meters_23_2.png" /> Low > 0.1 - 0.7 m (1,500)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat27meters_23_3.png" /> Use caution <= 0.1 m (4,500)<br />' });
+var format_Numberofpeopleat27meters_24 = new ol.format.GeoJSON();
+var features_Numberofpeopleat27meters_24 = format_Numberofpeopleat27meters_24.readFeatures(json_Numberofpeopleat27meters_24, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Numberofpeopleat27meters_24 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Numberofpeopleat27meters_24.addFeatures(features_Numberofpeopleat27meters_24);
+var lyr_Numberofpeopleat27meters_24 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Numberofpeopleat27meters_24, 
+                style: style_Numberofpeopleat27meters_24,
+                popuplayertitle: 'Number of people at 27 meters',
+                interactive: false,
+    title: 'Number of people at 27 meters<br />\
+    <img src="styles/legend/Numberofpeopleat27meters_24_0.png" /> High > 1.5 m (2,800)<br />\
+    <img src="styles/legend/Numberofpeopleat27meters_24_1.png" /> Medium > 0.7 - 1.5 m (920)<br />\
+    <img src="styles/legend/Numberofpeopleat27meters_24_2.png" /> Low > 0.1 - 0.7 m (1,500)<br />\
+    <img src="styles/legend/Numberofpeopleat27meters_24_3.png" /> Use caution <= 0.1 m (4,500)<br />' });
+var format_AnalysisSummaryat28meters_25 = new ol.format.GeoJSON();
+var features_AnalysisSummaryat28meters_25 = format_AnalysisSummaryat28meters_25.readFeatures(json_AnalysisSummaryat28meters_25, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AnalysisSummaryat28meters_25 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AnalysisSummaryat28meters_25.addFeatures(features_AnalysisSummaryat28meters_25);
+var lyr_AnalysisSummaryat28meters_25 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AnalysisSummaryat28meters_25, 
+                style: style_AnalysisSummaryat28meters_25,
+                popuplayertitle: 'Analysis Summary at 28 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AnalysisSummaryat28meters_25.png" /> Analysis Summary at 28 meters'
+            });
+var format_AggregationSummaryat28meters_26 = new ol.format.GeoJSON();
+var features_AggregationSummaryat28meters_26 = format_AggregationSummaryat28meters_26.readFeatures(json_AggregationSummaryat28meters_26, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AggregationSummaryat28meters_26 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AggregationSummaryat28meters_26.addFeatures(features_AggregationSummaryat28meters_26);
+var lyr_AggregationSummaryat28meters_26 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AggregationSummaryat28meters_26, 
+                style: style_AggregationSummaryat28meters_26,
+                popuplayertitle: 'Aggregation Summary at 28 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AggregationSummaryat28meters_26.png" /> Aggregation Summary at 28 meters'
+            });
+var format_HazardAggregationSummaryat28meters_27 = new ol.format.GeoJSON();
+var features_HazardAggregationSummaryat28meters_27 = format_HazardAggregationSummaryat28meters_27.readFeatures(json_HazardAggregationSummaryat28meters_27, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_HazardAggregationSummaryat28meters_27 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_HazardAggregationSummaryat28meters_27.addFeatures(features_HazardAggregationSummaryat28meters_27);
+var lyr_HazardAggregationSummaryat28meters_27 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_HazardAggregationSummaryat28meters_27, 
+                style: style_HazardAggregationSummaryat28meters_27,
+                popuplayertitle: 'Hazard Aggregation Summary at 28 meters ',
+                interactive: false,
+    title: 'Hazard Aggregation Summary at 28 meters <br />\
+    <img src="styles/legend/HazardAggregationSummaryat28meters_27_0.png" /> High > 1.5 m (4,200)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat28meters_27_1.png" /> Medium > 0.7 - 1.5 m (1,800)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat28meters_27_2.png" /> Low > 0.1 - 0.7 m (970)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat28meters_27_3.png" /> Use caution <= 0.1 m (2,800)<br />' });
+var format_Numberofpeopleat28meters_28 = new ol.format.GeoJSON();
+var features_Numberofpeopleat28meters_28 = format_Numberofpeopleat28meters_28.readFeatures(json_Numberofpeopleat28meters_28, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Numberofpeopleat28meters_28 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Numberofpeopleat28meters_28.addFeatures(features_Numberofpeopleat28meters_28);
+var lyr_Numberofpeopleat28meters_28 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Numberofpeopleat28meters_28, 
+                style: style_Numberofpeopleat28meters_28,
+                popuplayertitle: 'Number of people at 28 meters',
+                interactive: false,
+    title: 'Number of people at 28 meters<br />\
+    <img src="styles/legend/Numberofpeopleat28meters_28_0.png" /> High > 1.5 m (4,200)<br />\
+    <img src="styles/legend/Numberofpeopleat28meters_28_1.png" /> Medium > 0.7 - 1.5 m (1,800)<br />\
+    <img src="styles/legend/Numberofpeopleat28meters_28_2.png" /> Low > 0.1 - 0.7 m (970)<br />\
+    <img src="styles/legend/Numberofpeopleat28meters_28_3.png" /> Use caution <= 0.1 m (2,800)<br />' });
+var format_AnalysisSummaryat29meters_29 = new ol.format.GeoJSON();
+var features_AnalysisSummaryat29meters_29 = format_AnalysisSummaryat29meters_29.readFeatures(json_AnalysisSummaryat29meters_29, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AnalysisSummaryat29meters_29 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AnalysisSummaryat29meters_29.addFeatures(features_AnalysisSummaryat29meters_29);
+var lyr_AnalysisSummaryat29meters_29 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AnalysisSummaryat29meters_29, 
+                style: style_AnalysisSummaryat29meters_29,
+                popuplayertitle: 'Analysis Summary at 29 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AnalysisSummaryat29meters_29.png" /> Analysis Summary at 29 meters'
+            });
+var format_AggregationSummaryat29meters_30 = new ol.format.GeoJSON();
+var features_AggregationSummaryat29meters_30 = format_AggregationSummaryat29meters_30.readFeatures(json_AggregationSummaryat29meters_30, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AggregationSummaryat29meters_30 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AggregationSummaryat29meters_30.addFeatures(features_AggregationSummaryat29meters_30);
+var lyr_AggregationSummaryat29meters_30 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AggregationSummaryat29meters_30, 
+                style: style_AggregationSummaryat29meters_30,
+                popuplayertitle: 'Aggregation Summary at 29 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AggregationSummaryat29meters_30.png" /> Aggregation Summary at 29 meters'
+            });
+var format_HazardAggregationSummaryat29meters_31 = new ol.format.GeoJSON();
+var features_HazardAggregationSummaryat29meters_31 = format_HazardAggregationSummaryat29meters_31.readFeatures(json_HazardAggregationSummaryat29meters_31, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_HazardAggregationSummaryat29meters_31 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_HazardAggregationSummaryat29meters_31.addFeatures(features_HazardAggregationSummaryat29meters_31);
+var lyr_HazardAggregationSummaryat29meters_31 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_HazardAggregationSummaryat29meters_31, 
+                style: style_HazardAggregationSummaryat29meters_31,
+                popuplayertitle: 'Hazard Aggregation Summary at 29 meters',
+                interactive: false,
+    title: 'Hazard Aggregation Summary at 29 meters<br />\
+    <img src="styles/legend/HazardAggregationSummaryat29meters_31_0.png" /> High > 1.5 m (6,200)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat29meters_31_1.png" /> Medium > 0.7 - 1.5 m (1,300)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat29meters_31_2.png" /> Low > 0.1 - 0.7 m (390)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat29meters_31_3.png" /> Use caution <= 0.1 m (1,800)<br />' });
+var format_Numberofpeopleat29meters_32 = new ol.format.GeoJSON();
+var features_Numberofpeopleat29meters_32 = format_Numberofpeopleat29meters_32.readFeatures(json_Numberofpeopleat29meters_32, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Numberofpeopleat29meters_32 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Numberofpeopleat29meters_32.addFeatures(features_Numberofpeopleat29meters_32);
+var lyr_Numberofpeopleat29meters_32 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Numberofpeopleat29meters_32, 
+                style: style_Numberofpeopleat29meters_32,
+                popuplayertitle: 'Number of people at 29 meters',
+                interactive: false,
+    title: 'Number of people at 29 meters<br />\
+    <img src="styles/legend/Numberofpeopleat29meters_32_0.png" /> High > 1.5 m (6,200)<br />\
+    <img src="styles/legend/Numberofpeopleat29meters_32_1.png" /> Medium > 0.7 - 1.5 m (1,300)<br />\
+    <img src="styles/legend/Numberofpeopleat29meters_32_2.png" /> Low > 0.1 - 0.7 m (390)<br />\
+    <img src="styles/legend/Numberofpeopleat29meters_32_3.png" /> Use caution <= 0.1 m (1,800)<br />' });
+var format_AnalysisSummaryat30meters_33 = new ol.format.GeoJSON();
+var features_AnalysisSummaryat30meters_33 = format_AnalysisSummaryat30meters_33.readFeatures(json_AnalysisSummaryat30meters_33, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AnalysisSummaryat30meters_33 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AnalysisSummaryat30meters_33.addFeatures(features_AnalysisSummaryat30meters_33);
+var lyr_AnalysisSummaryat30meters_33 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AnalysisSummaryat30meters_33, 
+                style: style_AnalysisSummaryat30meters_33,
+                popuplayertitle: 'Analysis Summary at 30 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AnalysisSummaryat30meters_33.png" /> Analysis Summary at 30 meters'
+            });
+var format_AggregationSummaryfor30meters_34 = new ol.format.GeoJSON();
+var features_AggregationSummaryfor30meters_34 = format_AggregationSummaryfor30meters_34.readFeatures(json_AggregationSummaryfor30meters_34, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_AggregationSummaryfor30meters_34 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_AggregationSummaryfor30meters_34.addFeatures(features_AggregationSummaryfor30meters_34);
+var lyr_AggregationSummaryfor30meters_34 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_AggregationSummaryfor30meters_34, 
+                style: style_AggregationSummaryfor30meters_34,
+                popuplayertitle: 'Aggregation Summary for 30 meters',
+                interactive: false,
+                title: '<img src="styles/legend/AggregationSummaryfor30meters_34.png" /> Aggregation Summary for 30 meters'
+            });
+var format_HazardAggregationSummaryat30meters_35 = new ol.format.GeoJSON();
+var features_HazardAggregationSummaryat30meters_35 = format_HazardAggregationSummaryat30meters_35.readFeatures(json_HazardAggregationSummaryat30meters_35, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_HazardAggregationSummaryat30meters_35 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_HazardAggregationSummaryat30meters_35.addFeatures(features_HazardAggregationSummaryat30meters_35);
+var lyr_HazardAggregationSummaryat30meters_35 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_HazardAggregationSummaryat30meters_35, 
+                style: style_HazardAggregationSummaryat30meters_35,
+                popuplayertitle: 'Hazard Aggregation Summary at 30 meters',
+                interactive: false,
+    title: 'Hazard Aggregation Summary at 30 meters<br />\
+    <img src="styles/legend/HazardAggregationSummaryat30meters_35_0.png" /> High > 1.5 m (7,700)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat30meters_35_1.png" /> Medium > 0.7 - 1.5 m (230)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat30meters_35_2.png" /> Low > 0.1 - 0.7 m (30)<br />\
+    <img src="styles/legend/HazardAggregationSummaryat30meters_35_3.png" /> Use caution <= 0.1 m (1,800)<br />' });
+var format_Numberofpeopleaffectedat30meters_36 = new ol.format.GeoJSON();
+var features_Numberofpeopleaffectedat30meters_36 = format_Numberofpeopleaffectedat30meters_36.readFeatures(json_Numberofpeopleaffectedat30meters_36, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Numberofpeopleaffectedat30meters_36 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Numberofpeopleaffectedat30meters_36.addFeatures(features_Numberofpeopleaffectedat30meters_36);
+var lyr_Numberofpeopleaffectedat30meters_36 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Numberofpeopleaffectedat30meters_36, 
+                style: style_Numberofpeopleaffectedat30meters_36,
+                popuplayertitle: 'Number of people affected at 30 meters',
+                interactive: false,
+    title: 'Number of people affected at 30 meters<br />\
+    <img src="styles/legend/Numberofpeopleaffectedat30meters_36_0.png" /> High > 1.5 m (7,700)<br />\
+    <img src="styles/legend/Numberofpeopleaffectedat30meters_36_1.png" /> Medium > 0.7 - 1.5 m (230)<br />\
+    <img src="styles/legend/Numberofpeopleaffectedat30meters_36_2.png" /> Low > 0.1 - 0.7 m (30)<br />\
+    <img src="styles/legend/Numberofpeopleaffectedat30meters_36_3.png" /> Use caution <= 0.1 m (1,800)<br />' });
+var format_Schools_37 = new ol.format.GeoJSON();
+var features_Schools_37 = format_Schools_37.readFeatures(json_Schools_37, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Schools_37 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Schools_37.addFeatures(features_Schools_37);
+var lyr_Schools_37 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Schools_37, 
+                style: style_Schools_37,
+                popuplayertitle: 'Schools',
+                interactive: false,
+                title: '<img src="styles/legend/Schools_37.png" /> Schools'
+            });
+var format_Roads_38 = new ol.format.GeoJSON();
+var features_Roads_38 = format_Roads_38.readFeatures(json_Roads_38, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Roads_38 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Roads_38.addFeatures(features_Roads_38);
+var lyr_Roads_38 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Roads_38, 
+                style: style_Roads_38,
                 popuplayertitle: 'Roads',
                 interactive: false,
-                title: '<img src="styles/legend/Roads_12.png" /> Roads'
+                title: '<img src="styles/legend/Roads_38.png" /> Roads'
             });
+var format_Region2_39 = new ol.format.GeoJSON();
+var features_Region2_39 = format_Region2_39.readFeatures(json_Region2_39, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Region2_39 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_Region2_39.addFeatures(features_Region2_39);
+var lyr_Region2_39 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_Region2_39, 
+                style: style_Region2_39,
+                popuplayertitle: 'Region 2',
+                interactive: false,
+                title: '<img src="styles/legend/Region2_39.png" /> Region 2'
+            });
+var group_Affectedpeopleat30meterswaterlevel = new ol.layer.Group({
+                                layers: [lyr_AnalysisSummaryat30meters_33,lyr_AggregationSummaryfor30meters_34,lyr_HazardAggregationSummaryat30meters_35,lyr_Numberofpeopleaffectedat30meters_36,],
+                                fold: 'open',
+                                title: 'Affected people at 30 meters water level'});
+var group_Affectedpeopleat29meterswaterlevel = new ol.layer.Group({
+                                layers: [lyr_AnalysisSummaryat29meters_29,lyr_AggregationSummaryat29meters_30,lyr_HazardAggregationSummaryat29meters_31,lyr_Numberofpeopleat29meters_32,],
+                                fold: 'open',
+                                title: 'Affected people at 29 meters water level'});
+var group_Affectedpeopleat28meterswaterlevel = new ol.layer.Group({
+                                layers: [lyr_AnalysisSummaryat28meters_25,lyr_AggregationSummaryat28meters_26,lyr_HazardAggregationSummaryat28meters_27,lyr_Numberofpeopleat28meters_28,],
+                                fold: 'open',
+                                title: 'Affected people at 28 meters water level'});
+var group_Affectedpeopleat27meterswaterlevel = new ol.layer.Group({
+                                layers: [lyr_AnalysisSummaryat27meters_21,lyr_AggregationSummaryatat27meters_22,lyr_HazardAggregationSummaryat27meters_23,lyr_Numberofpeopleat27meters_24,],
+                                fold: 'open',
+                                title: 'Affected people at 27 meters water level'});
+var group_Affectedpeopleat26meterswaterlevel = new ol.layer.Group({
+                                layers: [lyr_AnalysisSummaryat27meters_17,lyr_AggregationSummaryat27meters_18,lyr_HazardAggregationSummaryat27meters_19,lyr_Numberofpeopleat26meters_20,],
+                                fold: 'open',
+                                title: 'Affected people at 26 meters water level'});
+var group_Affectedpeopleat25meterswaterlevel = new ol.layer.Group({
+                                layers: [lyr_AnalysisSummaryat25meters_13,lyr_AggregationSummaryat25meters_14,lyr_HazardAggregationSummaryat25meters_15,lyr_Numberofpeopleat25meters_16,],
+                                fold: 'open',
+                                title: 'Affected people at 25 meters water level'});
+var group_Affectedpeopleat24meterswaterlevel = new ol.layer.Group({
+                                layers: [lyr_AnalysisSummaryat24meters_9,lyr_AggregationSummaryat24meters_10,lyr_HazardAggregationSummaryat24meters_11,lyr_Numberofpeopleat24meters_12,],
+                                fold: 'open',
+                                title: 'Affected people at 24 meters water level'});
 var group_FloodExtent = new ol.layer.Group({
-                                layers: [lyr_30_4,lyr_29_5,lyr_28_6,lyr_27_7,lyr_26_8,lyr_25_9,lyr_24_10,],
+                                layers: [lyr_30_2,lyr_29_3,lyr_28_4,lyr_27_5,lyr_26_6,lyr_25_7,lyr_24_8,],
                                 fold: 'open',
                                 title: 'Flood Extent'});
-var group_GeoraphicalBoundaries = new ol.layer.Group({
-                                layers: [lyr_Barangay_1,lyr_Municipality_2,lyr_Province_3,],
-                                fold: 'open',
-                                title: 'Georaphical Boundaries'});
 
-// ---- MODIFIED VISIBILITY OF lyr_24_10 BASED ON DROPDOWN ----
+// Only set Region2 and Positron as visible by default - other layers will be enabled when selected from dropdown
+lyr_Positron_0.setVisible(true);
+lyr_Region2_39.setVisible(true);
+// All other layers are set to false by default
+lyr_Households_1.setVisible(false);
+lyr_30_2.setVisible(false);
+lyr_29_3.setVisible(false);
+lyr_28_4.setVisible(false);
+lyr_27_5.setVisible(false);
+lyr_26_6.setVisible(false);
+lyr_25_7.setVisible(false);
+lyr_24_8.setVisible(false);
+lyr_AnalysisSummaryat24meters_9.setVisible(false);
+lyr_AggregationSummaryat24meters_10.setVisible(false);
+lyr_HazardAggregationSummaryat24meters_11.setVisible(false);
+lyr_Numberofpeopleat24meters_12.setVisible(false);
+lyr_AnalysisSummaryat25meters_13.setVisible(false);
+lyr_AggregationSummaryat25meters_14.setVisible(false);
+lyr_HazardAggregationSummaryat25meters_15.setVisible(false);
+lyr_Numberofpeopleat25meters_16.setVisible(false);
+lyr_AnalysisSummaryat27meters_17.setVisible(false);
+lyr_AggregationSummaryat27meters_18.setVisible(false);
+lyr_HazardAggregationSummaryat27meters_19.setVisible(false);
+lyr_Numberofpeopleat26meters_20.setVisible(false);
+lyr_AnalysisSummaryat27meters_21.setVisible(false);
+lyr_AggregationSummaryatat27meters_22.setVisible(false);
+lyr_HazardAggregationSummaryat27meters_23.setVisible(false);
+lyr_Numberofpeopleat27meters_24.setVisible(false);
+lyr_AnalysisSummaryat28meters_25.setVisible(false);
+lyr_AggregationSummaryat28meters_26.setVisible(false);
+lyr_HazardAggregationSummaryat28meters_27.setVisible(false);
+lyr_Numberofpeopleat28meters_28.setVisible(false);
+lyr_AnalysisSummaryat29meters_29.setVisible(false);
+lyr_AggregationSummaryat29meters_30.setVisible(false);
+lyr_HazardAggregationSummaryat29meters_31.setVisible(false);
+lyr_Numberofpeopleat29meters_32.setVisible(false);
+lyr_AnalysisSummaryat30meters_33.setVisible(false);
+lyr_AggregationSummaryfor30meters_34.setVisible(false);
+lyr_HazardAggregationSummaryat30meters_35.setVisible(false);
+lyr_Numberofpeopleaffectedat30meters_36.setVisible(false);
+lyr_Schools_37.setVisible(false);
+lyr_Roads_38.setVisible(false);
 
-// Set all layers to visible
-lyr_Basemap_0.setVisible(true);
-lyr_Barangay_1.setVisible(true);
-lyr_Municipality_2.setVisible(false);
-lyr_Province_3.setVisible(true);
-// Set all flood extent layers initially invisible
-lyr_30_4.setVisible(true);
-lyr_29_5.setVisible(true);
-lyr_28_6.setVisible(false);
-lyr_27_7.setVisible(false);
-lyr_26_8.setVisible(false);
-lyr_25_9.setVisible(false);
-lyr_24_10.setVisible(false);
-lyr_Households_11.setVisible(true);
-lyr_Roads_12.setVisible(true);
+// Set all layer groups to hidden by default
+group_FloodExtent.setVisible(false);
+group_Affectedpeopleat24meterswaterlevel.setVisible(false);
+group_Affectedpeopleat25meterswaterlevel.setVisible(false);
+group_Affectedpeopleat26meterswaterlevel.setVisible(false);
+group_Affectedpeopleat27meterswaterlevel.setVisible(false);
+group_Affectedpeopleat28meterswaterlevel.setVisible(false);
+group_Affectedpeopleat29meterswaterlevel.setVisible(false);
+group_Affectedpeopleat30meterswaterlevel.setVisible(false);
 
-// --- Set visible flood extent based on dropdown ---
-document.addEventListener('DOMContentLoaded', function() {
-    var dropdown = document.getElementById('floodExtentDropdown');
-    // Map dropdown values to their corresponding layer variables
-    var floodLayers = {
-        "24": lyr_24_10,
-        "25": lyr_25_9,
-        "26": lyr_26_8,
-        "27": lyr_27_7,
-        "28": lyr_28_6,
-        "29": lyr_29_5,
-        "30": lyr_30_4
-    };
-    function updateFloodLayerVisibility() {
-        var selected = dropdown ? dropdown.value : "";
-        // Hide all flood extent layers
-        Object.keys(floodLayers).forEach(function(key) {
-            floodLayers[key].setVisible(false);
-        });
-        // Show only the layer matching the selected dropdown value, if valid
-        if (floodLayers[selected]) {
-            floodLayers[selected].setVisible(true);
-        }
-    }
-    if (dropdown) {
-        dropdown.addEventListener('change', updateFloodLayerVisibility);
-        // Set initial state
-        updateFloodLayerVisibility();
-    }
-});
-
-var layersList = [lyr_Basemap_0,group_GeoraphicalBoundaries,group_FloodExtent,lyr_Households_11,lyr_Roads_12];
-lyr_Barangay_1.set('fieldAliases', {'GID_3': 'GID_3', 'GID_0': 'GID_0', 'COUNTRY': 'COUNTRY', 'GID_1': 'GID_1', 'NAME_1': 'NAME_1', 'NL_NAME_1': 'NL_NAME_1', 'GID_2': 'GID_2', 'NAME_2': 'NAME_2', 'NL_NAME_2': 'NL_NAME_2', 'NAME_3': 'NAME_3', 'VARNAME_3': 'VARNAME_3', 'NL_NAME_3': 'NL_NAME_3', 'TYPE_3': 'TYPE_3', 'ENGTYPE_3': 'ENGTYPE_3', 'CC_3': 'CC_3', 'HASC_3': 'HASC_3', });
-lyr_Municipality_2.set('fieldAliases', {'GID_2': 'GID_2', 'GID_0': 'GID_0', 'COUNTRY': 'COUNTRY', 'GID_1': 'GID_1', 'NAME_1': 'NAME_1', 'NL_NAME_1': 'NL_NAME_1', 'NAME_2': 'NAME_2', 'VARNAME_2': 'VARNAME_2', 'NL_NAME_2': 'NL_NAME_2', 'TYPE_2': 'TYPE_2', 'ENGTYPE_2': 'ENGTYPE_2', 'CC_2': 'CC_2', 'HASC_2': 'HASC_2', });
-lyr_Province_3.set('fieldAliases', {'GID_1': 'GID_1', 'GID_0': 'GID_0', 'COUNTRY': 'COUNTRY', 'NAME_1': 'NAME_1', 'VARNAME_1': 'VARNAME_1', 'NL_NAME_1': 'NL_NAME_1', 'TYPE_1': 'TYPE_1', 'ENGTYPE_1': 'ENGTYPE_1', 'CC_1': 'CC_1', 'HASC_1': 'HASC_1', 'ISO_1': 'ISO_1', });
-lyr_Households_11.set('fieldAliases', {'fid': 'fid', 'FAMILY-ID': 'Family ID', 'REGION': 'REGION', 'PROVINCE': 'PROVINCE', 'CITY/MUN': 'CITY/MUN', 'BARANGAY': 'BARANGAY', 'NUMBER OF OCCUPANTS': 'Household Size', 'HOUSE OWNERSHIP': 'HOUSE OWNERSHIP', 'CLASSIFICATION': 'CLASSIFICATION', 'STOREYS': 'STOREYS', 'ROOFING': 'ROOFING', 'YEARS BUILT': 'YEARS BUILT', 'OTHER DETAILS': 'OTHER DETAILS', 'RELATION': 'RELATION', 'LAST NAME': 'Last Name', 'GIVEN NAME': 'Given Name', 'MIDDLE NAME': 'Middle Name', 'AGE': 'Age', 'SEX': 'Sex', 'OCCUPATION': 'Occupation', });
-lyr_Roads_12.set('fieldAliases', {'fid': 'fid', 'full_id': 'full_id', 'osm_id': 'osm_id', 'osm_type': 'osm_type', 'highway': 'highway', 'name': 'name', 'surface': 'surface', 'maxspeed': 'maxspeed', 'ref': 'ref', });
-lyr_Barangay_1.set('fieldImages', {'GID_3': '', 'GID_0': 'TextEdit', 'COUNTRY': 'TextEdit', 'GID_1': 'TextEdit', 'NAME_1': 'TextEdit', 'NL_NAME_1': 'TextEdit', 'GID_2': '', 'NAME_2': '', 'NL_NAME_2': '', 'NAME_3': '', 'VARNAME_3': '', 'NL_NAME_3': '', 'TYPE_3': '', 'ENGTYPE_3': '', 'CC_3': '', 'HASC_3': '', });
-lyr_Municipality_2.set('fieldImages', {'GID_2': '', 'GID_0': 'TextEdit', 'COUNTRY': 'TextEdit', 'GID_1': 'TextEdit', 'NAME_1': 'TextEdit', 'NL_NAME_1': 'TextEdit', 'NAME_2': '', 'VARNAME_2': '', 'NL_NAME_2': '', 'TYPE_2': '', 'ENGTYPE_2': '', 'CC_2': '', 'HASC_2': '', });
-lyr_Province_3.set('fieldImages', {'GID_1': 'TextEdit', 'GID_0': 'TextEdit', 'COUNTRY': 'TextEdit', 'NAME_1': 'TextEdit', 'VARNAME_1': 'TextEdit', 'NL_NAME_1': 'TextEdit', 'TYPE_1': 'TextEdit', 'ENGTYPE_1': 'TextEdit', 'CC_1': 'TextEdit', 'HASC_1': 'TextEdit', 'ISO_1': 'TextEdit', });
-lyr_Households_11.set('fieldImages', {'fid': 'TextEdit', 'FAMILY-ID': 'TextEdit', 'REGION': 'TextEdit', 'PROVINCE': 'TextEdit', 'CITY/MUN': 'TextEdit', 'BARANGAY': 'TextEdit', 'NUMBER OF OCCUPANTS': 'TextEdit', 'HOUSE OWNERSHIP': 'TextEdit', 'CLASSIFICATION': 'TextEdit', 'STOREYS': 'TextEdit', 'ROOFING': 'TextEdit', 'YEARS BUILT': 'TextEdit', 'OTHER DETAILS': 'TextEdit', 'RELATION': 'TextEdit', 'LAST NAME': 'TextEdit', 'GIVEN NAME': 'TextEdit', 'MIDDLE NAME': 'TextEdit', 'AGE': 'TextEdit', 'SEX': 'TextEdit', 'OCCUPATION': 'TextEdit', });
-lyr_Roads_12.set('fieldImages', {'fid': '', 'full_id': '', 'osm_id': '', 'osm_type': '', 'highway': '', 'name': '', 'surface': '', 'maxspeed': '', 'ref': '', });
-lyr_Barangay_1.set('fieldLabels', {'GID_3': 'no label', 'GID_0': 'no label', 'COUNTRY': 'no label', 'GID_1': 'no label', 'NAME_1': 'no label', 'NL_NAME_1': 'no label', 'GID_2': 'no label', 'NAME_2': 'no label', 'NL_NAME_2': 'no label', 'NAME_3': 'no label', 'VARNAME_3': 'no label', 'NL_NAME_3': 'no label', 'TYPE_3': 'no label', 'ENGTYPE_3': 'no label', 'CC_3': 'no label', 'HASC_3': 'no label', });
-lyr_Municipality_2.set('fieldLabels', {'GID_2': 'no label', 'GID_0': 'no label', 'COUNTRY': 'no label', 'GID_1': 'no label', 'NAME_1': 'no label', 'NL_NAME_1': 'no label', 'NAME_2': 'no label', 'VARNAME_2': 'no label', 'NL_NAME_2': 'no label', 'TYPE_2': 'no label', 'ENGTYPE_2': 'no label', 'CC_2': 'no label', 'HASC_2': 'no label', });
-lyr_Province_3.set('fieldLabels', {'GID_1': 'no label', 'GID_0': 'no label', 'COUNTRY': 'no label', 'NAME_1': 'no label', 'VARNAME_1': 'no label', 'NL_NAME_1': 'no label', 'TYPE_1': 'no label', 'ENGTYPE_1': 'no label', 'CC_1': 'no label', 'HASC_1': 'no label', 'ISO_1': 'no label', });
-lyr_Households_11.set('fieldLabels', {'fid': 'hidden field', 'FAMILY-ID': 'hidden field', 'REGION': 'hidden field', 'PROVINCE': 'hidden field', 'CITY/MUN': 'hidden field', 'BARANGAY': 'header label - visible with data', 'NUMBER OF OCCUPANTS': 'header label - visible with data', 'HOUSE OWNERSHIP': 'hidden field', 'CLASSIFICATION': 'hidden field', 'STOREYS': 'hidden field', 'ROOFING': 'hidden field', 'YEARS BUILT': 'hidden field', 'OTHER DETAILS': 'hidden field', 'RELATION': 'hidden field', 'LAST NAME': 'header label - visible with data', 'GIVEN NAME': 'header label - visible with data', 'MIDDLE NAME': 'header label - visible with data', 'AGE': 'header label - visible with data', 'SEX': 'header label - visible with data', 'OCCUPATION': 'header label - visible with data', });
-lyr_Roads_12.set('fieldLabels', {'fid': 'no label', 'full_id': 'no label', 'osm_id': 'no label', 'osm_type': 'no label', 'highway': 'no label', 'name': 'no label', 'surface': 'no label', 'maxspeed': 'no label', 'ref': 'no label', });
-lyr_Roads_12.on('precompose', function(evt) {
+var layersList = [lyr_Positron_0,lyr_Households_1,group_FloodExtent,group_Affectedpeopleat24meterswaterlevel,group_Affectedpeopleat25meterswaterlevel,group_Affectedpeopleat26meterswaterlevel,group_Affectedpeopleat27meterswaterlevel,group_Affectedpeopleat28meterswaterlevel,group_Affectedpeopleat29meterswaterlevel,group_Affectedpeopleat30meterswaterlevel,lyr_Schools_37,lyr_Roads_38,lyr_Region2_39];
+lyr_Households_1.set('fieldAliases', {'fid': 'fid', 'FAMILY-ID': 'FAMILY-ID', 'REGION': 'REGION', 'PROVINCE': 'PROVINCE', 'CITY/MUN': 'CITY/MUN', 'BARANGAY': 'BARANGAY', 'NUMBER OF OCCUPANTS': 'NUMBER OF OCCUPANTS', 'HOUSE OWNERSHIP': 'HOUSE OWNERSHIP', 'CLASSIFICATION': 'CLASSIFICATION', 'STOREYS': 'STOREYS', 'ROOFING': 'ROOFING', 'YEARS BUILT': 'YEARS BUILT', 'OTHER DETAILS': 'OTHER DETAILS', 'RELATION': 'RELATION', 'LAST NAME': 'LAST NAME', 'GIVEN NAME': 'GIVEN NAME', 'MIDDLE NAME': 'MIDDLE NAME', 'AGE': 'AGE', 'SEX': 'SEX', 'OCCUPATION': 'OCCUPATION', 'Religion': 'Religion', });
+lyr_AnalysisSummaryat24meters_9.set('fieldAliases', {'analysis_name': 'analysis_name', 'use_caution_hazard_count': 'use_caution_hazard_count', 'not exposed_hazard_count': 'not exposed_hazard_count', 'medium_hazard_count': 'medium_hazard_count', 'low_hazard_count': 'low_hazard_count', 'high_hazard_count': 'high_hazard_count', 'total_affected': 'total_affected', 'total_not_affected': 'total_not_affected', 'total_exposed': 'total_exposed', 'total_not_exposed': 'total_not_exposed', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', 'exposed_population': 'exposed_population', });
+lyr_AggregationSummaryat24meters_10.set('fieldAliases', {'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_affected': 'population_affected', 'total_affected': 'total_affected', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_HazardAggregationSummaryat24meters_11.set('fieldAliases', {'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_exposure_count': 'population_exposure_count', 'affected': 'affected', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_Numberofpeopleat24meters_12.set('fieldAliases', {'population': 'population', 'exposure_id': 'exposure_id', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'size': 'size', 'exposure_class': 'exposure_class', 'infant_ratio': 'infant_ratio', 'child_ratio': 'child_ratio', 'youth_ratio': 'youth_ratio', 'adult_ratio': 'adult_ratio', 'elderly_ratio': 'elderly_ratio', 'male_ratio': 'male_ratio', 'female_ratio': 'female_ratio', 'under_5_ratio': 'under_5_ratio', 'over_60_ratio': 'over_60_ratio', 'disabled_ratio': 'disabled_ratio', 'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'affected': 'affected', 'population_displacement_ratio': 'population_displacement_ratio', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_AnalysisSummaryat25meters_13.set('fieldAliases', {'analysis_name': 'analysis_name', 'use_caution_hazard_count': 'use_caution_hazard_count', 'not exposed_hazard_count': 'not exposed_hazard_count', 'high_hazard_count': 'high_hazard_count', 'low_hazard_count': 'low_hazard_count', 'medium_hazard_count': 'medium_hazard_count', 'total_affected': 'total_affected', 'total_not_affected': 'total_not_affected', 'total_exposed': 'total_exposed', 'total_not_exposed': 'total_not_exposed', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', 'exposed_population': 'exposed_population', });
+lyr_AggregationSummaryat25meters_14.set('fieldAliases', {'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_affected': 'population_affected', 'total_affected': 'total_affected', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_HazardAggregationSummaryat25meters_15.set('fieldAliases', {'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_exposure_count': 'population_exposure_count', 'affected': 'affected', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_Numberofpeopleat25meters_16.set('fieldAliases', {'population': 'population', 'exposure_id': 'exposure_id', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'size': 'size', 'exposure_class': 'exposure_class', 'infant_ratio': 'infant_ratio', 'child_ratio': 'child_ratio', 'youth_ratio': 'youth_ratio', 'adult_ratio': 'adult_ratio', 'elderly_ratio': 'elderly_ratio', 'male_ratio': 'male_ratio', 'female_ratio': 'female_ratio', 'under_5_ratio': 'under_5_ratio', 'over_60_ratio': 'over_60_ratio', 'disabled_ratio': 'disabled_ratio', 'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'affected': 'affected', 'population_displacement_ratio': 'population_displacement_ratio', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_AnalysisSummaryat27meters_17.set('fieldAliases', {'analysis_name': 'analysis_name', 'use_caution_hazard_count': 'use_caution_hazard_count', 'not exposed_hazard_count': 'not exposed_hazard_count', 'high_hazard_count': 'high_hazard_count', 'low_hazard_count': 'low_hazard_count', 'medium_hazard_count': 'medium_hazard_count', 'total_affected': 'total_affected', 'total_not_affected': 'total_not_affected', 'total_exposed': 'total_exposed', 'total_not_exposed': 'total_not_exposed', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', 'exposed_population': 'exposed_population', });
+lyr_AggregationSummaryat27meters_18.set('fieldAliases', {'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_affected': 'population_affected', 'total_affected': 'total_affected', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_HazardAggregationSummaryat27meters_19.set('fieldAliases', {'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_exposure_count': 'population_exposure_count', 'affected': 'affected', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_Numberofpeopleat26meters_20.set('fieldAliases', {'population': 'population', 'exposure_id': 'exposure_id', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'size': 'size', 'exposure_class': 'exposure_class', 'infant_ratio': 'infant_ratio', 'child_ratio': 'child_ratio', 'youth_ratio': 'youth_ratio', 'adult_ratio': 'adult_ratio', 'elderly_ratio': 'elderly_ratio', 'male_ratio': 'male_ratio', 'female_ratio': 'female_ratio', 'under_5_ratio': 'under_5_ratio', 'over_60_ratio': 'over_60_ratio', 'disabled_ratio': 'disabled_ratio', 'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'affected': 'affected', 'population_displacement_ratio': 'population_displacement_ratio', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_AnalysisSummaryat27meters_21.set('fieldAliases', {'analysis_name': 'analysis_name', 'use_caution_hazard_count': 'use_caution_hazard_count', 'not exposed_hazard_count': 'not exposed_hazard_count', 'high_hazard_count': 'high_hazard_count', 'low_hazard_count': 'low_hazard_count', 'medium_hazard_count': 'medium_hazard_count', 'total_affected': 'total_affected', 'total_not_affected': 'total_not_affected', 'total_exposed': 'total_exposed', 'total_not_exposed': 'total_not_exposed', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', 'exposed_population': 'exposed_population', });
+lyr_AggregationSummaryatat27meters_22.set('fieldAliases', {'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_affected': 'population_affected', 'total_affected': 'total_affected', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_HazardAggregationSummaryat27meters_23.set('fieldAliases', {'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_exposure_count': 'population_exposure_count', 'affected': 'affected', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_Numberofpeopleat27meters_24.set('fieldAliases', {'population': 'population', 'exposure_id': 'exposure_id', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'size': 'size', 'exposure_class': 'exposure_class', 'infant_ratio': 'infant_ratio', 'child_ratio': 'child_ratio', 'youth_ratio': 'youth_ratio', 'adult_ratio': 'adult_ratio', 'elderly_ratio': 'elderly_ratio', 'male_ratio': 'male_ratio', 'female_ratio': 'female_ratio', 'under_5_ratio': 'under_5_ratio', 'over_60_ratio': 'over_60_ratio', 'disabled_ratio': 'disabled_ratio', 'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'affected': 'affected', 'population_displacement_ratio': 'population_displacement_ratio', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_AnalysisSummaryat28meters_25.set('fieldAliases', {'analysis_name': 'analysis_name', 'use_caution_hazard_count': 'use_caution_hazard_count', 'not exposed_hazard_count': 'not exposed_hazard_count', 'high_hazard_count': 'high_hazard_count', 'low_hazard_count': 'low_hazard_count', 'medium_hazard_count': 'medium_hazard_count', 'total_affected': 'total_affected', 'total_not_affected': 'total_not_affected', 'total_exposed': 'total_exposed', 'total_not_exposed': 'total_not_exposed', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', 'exposed_population': 'exposed_population', });
+lyr_AggregationSummaryat28meters_26.set('fieldAliases', {'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_affected': 'population_affected', 'total_affected': 'total_affected', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_HazardAggregationSummaryat28meters_27.set('fieldAliases', {'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_exposure_count': 'population_exposure_count', 'affected': 'affected', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_Numberofpeopleat28meters_28.set('fieldAliases', {'population': 'population', 'exposure_id': 'exposure_id', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'size': 'size', 'exposure_class': 'exposure_class', 'infant_ratio': 'infant_ratio', 'child_ratio': 'child_ratio', 'youth_ratio': 'youth_ratio', 'adult_ratio': 'adult_ratio', 'elderly_ratio': 'elderly_ratio', 'male_ratio': 'male_ratio', 'female_ratio': 'female_ratio', 'under_5_ratio': 'under_5_ratio', 'over_60_ratio': 'over_60_ratio', 'disabled_ratio': 'disabled_ratio', 'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'affected': 'affected', 'population_displacement_ratio': 'population_displacement_ratio', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_AnalysisSummaryat29meters_29.set('fieldAliases', {'analysis_name': 'analysis_name', 'use_caution_hazard_count': 'use_caution_hazard_count', 'not exposed_hazard_count': 'not exposed_hazard_count', 'high_hazard_count': 'high_hazard_count', 'low_hazard_count': 'low_hazard_count', 'medium_hazard_count': 'medium_hazard_count', 'total_affected': 'total_affected', 'total_not_affected': 'total_not_affected', 'total_exposed': 'total_exposed', 'total_not_exposed': 'total_not_exposed', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', 'exposed_population': 'exposed_population', });
+lyr_AggregationSummaryat29meters_30.set('fieldAliases', {'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_affected': 'population_affected', 'total_affected': 'total_affected', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_HazardAggregationSummaryat29meters_31.set('fieldAliases', {'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_exposure_count': 'population_exposure_count', 'affected': 'affected', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_Numberofpeopleat29meters_32.set('fieldAliases', {'population': 'population', 'exposure_id': 'exposure_id', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'size': 'size', 'exposure_class': 'exposure_class', 'infant_ratio': 'infant_ratio', 'child_ratio': 'child_ratio', 'youth_ratio': 'youth_ratio', 'adult_ratio': 'adult_ratio', 'elderly_ratio': 'elderly_ratio', 'male_ratio': 'male_ratio', 'female_ratio': 'female_ratio', 'under_5_ratio': 'under_5_ratio', 'over_60_ratio': 'over_60_ratio', 'disabled_ratio': 'disabled_ratio', 'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'affected': 'affected', 'population_displacement_ratio': 'population_displacement_ratio', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_AnalysisSummaryat30meters_33.set('fieldAliases', {'analysis_name': 'analysis_name', 'use_caution_hazard_count': 'use_caution_hazard_count', 'not exposed_hazard_count': 'not exposed_hazard_count', 'high_hazard_count': 'high_hazard_count', 'low_hazard_count': 'low_hazard_count', 'medium_hazard_count': 'medium_hazard_count', 'total_affected': 'total_affected', 'total_not_affected': 'total_not_affected', 'total_exposed': 'total_exposed', 'total_not_exposed': 'total_not_exposed', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', 'exposed_population': 'exposed_population', });
+lyr_AggregationSummaryfor30meters_34.set('fieldAliases', {'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_affected': 'population_affected', 'total_affected': 'total_affected', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_HazardAggregationSummaryat30meters_35.set('fieldAliases', {'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_exposure_count': 'population_exposure_count', 'affected': 'affected', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_Numberofpeopleaffectedat30meters_36.set('fieldAliases', {'population': 'population', 'exposure_id': 'exposure_id', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'size': 'size', 'exposure_class': 'exposure_class', 'infant_ratio': 'infant_ratio', 'child_ratio': 'child_ratio', 'youth_ratio': 'youth_ratio', 'adult_ratio': 'adult_ratio', 'elderly_ratio': 'elderly_ratio', 'male_ratio': 'male_ratio', 'female_ratio': 'female_ratio', 'under_5_ratio': 'under_5_ratio', 'over_60_ratio': 'over_60_ratio', 'disabled_ratio': 'disabled_ratio', 'hazard_id': 'hazard_id', 'hazard_class': 'hazard_class', 'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'affected': 'affected', 'population_displacement_ratio': 'population_displacement_ratio', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
+lyr_Schools_37.set('fieldAliases', {'fid': 'fid', 'full_id': 'full_id', 'building': 'building', 'name': 'name', });
+lyr_Roads_38.set('fieldAliases', {'fid': 'fid', 'full_id': 'full_id', 'osm_id': 'osm_id', 'osm_type': 'osm_type', 'highway': 'highway', 'name': 'name', 'surface': 'surface', 'maxspeed': 'maxspeed', 'ref': 'ref', });
+lyr_Region2_39.set('fieldAliases', {'Reg_Code': 'Reg_Code', 'Reg_Name': 'Reg_Name', 'Pro_Code': 'Pro_Code', 'Pro_Name': 'Pro_Name', 'Mun_Code': 'Mun_Code', 'Mun_Name': 'Mun_Name', 'Bgy_Code': 'Bgy_Code', 'Bgy_Name': 'Bgy_Name', 'auxiliary_': 'auxiliary_', 'auxiliar_1': 'auxiliar_1', });
+lyr_Households_1.set('fieldImages', {'fid': '', 'FAMILY-ID': '', 'REGION': '', 'PROVINCE': '', 'CITY/MUN': '', 'BARANGAY': '', 'NUMBER OF OCCUPANTS': '', 'HOUSE OWNERSHIP': '', 'CLASSIFICATION': '', 'STOREYS': '', 'ROOFING': '', 'YEARS BUILT': '', 'OTHER DETAILS': '', 'RELATION': '', 'LAST NAME': '', 'GIVEN NAME': '', 'MIDDLE NAME': '', 'AGE': '', 'SEX': '', 'OCCUPATION': '', 'Religion': '', });
+lyr_AnalysisSummaryat24meters_9.set('fieldImages', {'analysis_name': '', 'use_caution_hazard_count': '', 'not exposed_hazard_count': '', 'medium_hazard_count': '', 'low_hazard_count': '', 'high_hazard_count': '', 'total_affected': '', 'total_not_affected': '', 'total_exposed': '', 'total_not_exposed': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', 'exposed_population': '', });
+lyr_AggregationSummaryat24meters_10.set('fieldImages', {'aggregation_id': '', 'aggregation_name': '', 'population_affected': '', 'total_affected': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_HazardAggregationSummaryat24meters_11.set('fieldImages', {'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'population_exposure_count': '', 'affected': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_Numberofpeopleat24meters_12.set('fieldImages', {'population': '', 'exposure_id': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'size': '', 'exposure_class': '', 'infant_ratio': '', 'child_ratio': '', 'youth_ratio': '', 'adult_ratio': '', 'elderly_ratio': '', 'male_ratio': '', 'female_ratio': '', 'under_5_ratio': '', 'over_60_ratio': '', 'disabled_ratio': '', 'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'affected': '', 'population_displacement_ratio': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_AnalysisSummaryat25meters_13.set('fieldImages', {'analysis_name': '', 'use_caution_hazard_count': '', 'not exposed_hazard_count': '', 'high_hazard_count': '', 'low_hazard_count': '', 'medium_hazard_count': '', 'total_affected': '', 'total_not_affected': '', 'total_exposed': '', 'total_not_exposed': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', 'exposed_population': '', });
+lyr_AggregationSummaryat25meters_14.set('fieldImages', {'aggregation_id': '', 'aggregation_name': '', 'population_affected': '', 'total_affected': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_HazardAggregationSummaryat25meters_15.set('fieldImages', {'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'population_exposure_count': '', 'affected': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_Numberofpeopleat25meters_16.set('fieldImages', {'population': '', 'exposure_id': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'size': '', 'exposure_class': '', 'infant_ratio': '', 'child_ratio': '', 'youth_ratio': '', 'adult_ratio': '', 'elderly_ratio': '', 'male_ratio': '', 'female_ratio': '', 'under_5_ratio': '', 'over_60_ratio': '', 'disabled_ratio': '', 'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'affected': '', 'population_displacement_ratio': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_AnalysisSummaryat27meters_17.set('fieldImages', {'analysis_name': '', 'use_caution_hazard_count': '', 'not exposed_hazard_count': '', 'high_hazard_count': '', 'low_hazard_count': '', 'medium_hazard_count': '', 'total_affected': '', 'total_not_affected': '', 'total_exposed': '', 'total_not_exposed': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', 'exposed_population': '', });
+lyr_AggregationSummaryat27meters_18.set('fieldImages', {'aggregation_id': '', 'aggregation_name': '', 'population_affected': '', 'total_affected': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_HazardAggregationSummaryat27meters_19.set('fieldImages', {'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'population_exposure_count': '', 'affected': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_Numberofpeopleat26meters_20.set('fieldImages', {'population': '', 'exposure_id': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'size': '', 'exposure_class': '', 'infant_ratio': '', 'child_ratio': '', 'youth_ratio': '', 'adult_ratio': '', 'elderly_ratio': '', 'male_ratio': '', 'female_ratio': '', 'under_5_ratio': '', 'over_60_ratio': '', 'disabled_ratio': '', 'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'affected': '', 'population_displacement_ratio': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_AnalysisSummaryat27meters_21.set('fieldImages', {'analysis_name': '', 'use_caution_hazard_count': '', 'not exposed_hazard_count': '', 'high_hazard_count': '', 'low_hazard_count': '', 'medium_hazard_count': '', 'total_affected': '', 'total_not_affected': '', 'total_exposed': '', 'total_not_exposed': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', 'exposed_population': '', });
+lyr_AggregationSummaryatat27meters_22.set('fieldImages', {'aggregation_id': '', 'aggregation_name': '', 'population_affected': '', 'total_affected': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_HazardAggregationSummaryat27meters_23.set('fieldImages', {'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'population_exposure_count': '', 'affected': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_Numberofpeopleat27meters_24.set('fieldImages', {'population': '', 'exposure_id': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'size': '', 'exposure_class': '', 'infant_ratio': '', 'child_ratio': '', 'youth_ratio': '', 'adult_ratio': '', 'elderly_ratio': '', 'male_ratio': '', 'female_ratio': '', 'under_5_ratio': '', 'over_60_ratio': '', 'disabled_ratio': '', 'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'affected': '', 'population_displacement_ratio': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_AnalysisSummaryat28meters_25.set('fieldImages', {'analysis_name': '', 'use_caution_hazard_count': '', 'not exposed_hazard_count': '', 'high_hazard_count': '', 'low_hazard_count': '', 'medium_hazard_count': '', 'total_affected': '', 'total_not_affected': '', 'total_exposed': '', 'total_not_exposed': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', 'exposed_population': '', });
+lyr_AggregationSummaryat28meters_26.set('fieldImages', {'aggregation_id': '', 'aggregation_name': '', 'population_affected': '', 'total_affected': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_HazardAggregationSummaryat28meters_27.set('fieldImages', {'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'population_exposure_count': '', 'affected': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_Numberofpeopleat28meters_28.set('fieldImages', {'population': '', 'exposure_id': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'size': '', 'exposure_class': '', 'infant_ratio': '', 'child_ratio': '', 'youth_ratio': '', 'adult_ratio': '', 'elderly_ratio': '', 'male_ratio': '', 'female_ratio': '', 'under_5_ratio': '', 'over_60_ratio': '', 'disabled_ratio': '', 'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'affected': '', 'population_displacement_ratio': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_AnalysisSummaryat29meters_29.set('fieldImages', {'analysis_name': '', 'use_caution_hazard_count': '', 'not exposed_hazard_count': '', 'high_hazard_count': '', 'low_hazard_count': '', 'medium_hazard_count': '', 'total_affected': '', 'total_not_affected': '', 'total_exposed': '', 'total_not_exposed': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', 'exposed_population': '', });
+lyr_AggregationSummaryat29meters_30.set('fieldImages', {'aggregation_id': '', 'aggregation_name': '', 'population_affected': '', 'total_affected': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_HazardAggregationSummaryat29meters_31.set('fieldImages', {'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'population_exposure_count': '', 'affected': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_Numberofpeopleat29meters_32.set('fieldImages', {'population': '', 'exposure_id': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'size': '', 'exposure_class': '', 'infant_ratio': '', 'child_ratio': '', 'youth_ratio': '', 'adult_ratio': '', 'elderly_ratio': '', 'male_ratio': '', 'female_ratio': '', 'under_5_ratio': '', 'over_60_ratio': '', 'disabled_ratio': '', 'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'affected': '', 'population_displacement_ratio': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_AnalysisSummaryat30meters_33.set('fieldImages', {'analysis_name': '', 'use_caution_hazard_count': '', 'not exposed_hazard_count': '', 'high_hazard_count': '', 'low_hazard_count': '', 'medium_hazard_count': '', 'total_affected': '', 'total_not_affected': '', 'total_exposed': '', 'total_not_exposed': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', 'exposed_population': '', });
+lyr_AggregationSummaryfor30meters_34.set('fieldImages', {'aggregation_id': '', 'aggregation_name': '', 'population_affected': '', 'total_affected': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_HazardAggregationSummaryat30meters_35.set('fieldImages', {'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'population_exposure_count': '', 'affected': '', 'total': '', 'population': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_Numberofpeopleaffectedat30meters_36.set('fieldImages', {'population': '', 'exposure_id': '', 'infant': '', 'child': '', 'youth': '', 'adult': '', 'elderly': '', 'male': '', 'female': '', 'under_5': '', 'over_60': '', 'disabled': '', 'size': '', 'exposure_class': '', 'infant_ratio': '', 'child_ratio': '', 'youth_ratio': '', 'adult_ratio': '', 'elderly_ratio': '', 'male_ratio': '', 'female_ratio': '', 'under_5_ratio': '', 'over_60_ratio': '', 'disabled_ratio': '', 'hazard_id': '', 'hazard_class': '', 'aggregation_id': '', 'aggregation_name': '', 'affected': '', 'population_displacement_ratio': '', 'displaced': '', 'male_displaced': '', 'female_displaced': '', 'hygiene_packs': '', 'infant_displaced': '', 'child_displaced': '', 'youth_displaced': '', 'adult_displaced': '', 'elderly_displaced': '', 'minimum_needs__family_food_pack': '', 'minimum_needs__hygiene_kits': '', 'minimum_needs__family_kits': '', 'minimum_needs__water_kits': '', 'minimum_needs__drinking_water': '', 'minimum_needs__clean_water': '', 'minimum_needs__minimum_water_demand_for_prolonged_period': '', 'minimum_needs__shelter_space': '', 'minimum_needs__toilet': '', 'minimum_needs__child_friendly_facilities': '', 'minimum_needs__laundry_spaces': '', 'minimum_needs__water_spaces': '', 'minimum_needs__health_station': '', 'minimum_needs__couple_room': '', 'under_5_displaced': '', 'over_60_displaced': '', 'disabled_displaced': '', });
+lyr_Schools_37.set('fieldImages', {'fid': '', 'full_id': '', 'building': '', 'name': '', });
+lyr_Roads_38.set('fieldImages', {'fid': 'TextEdit', 'full_id': 'TextEdit', 'osm_id': 'TextEdit', 'osm_type': 'TextEdit', 'highway': 'TextEdit', 'name': 'TextEdit', 'surface': 'TextEdit', 'maxspeed': 'TextEdit', 'ref': 'TextEdit', });
+lyr_Region2_39.set('fieldImages', {'Reg_Code': 'TextEdit', 'Reg_Name': 'TextEdit', 'Pro_Code': 'TextEdit', 'Pro_Name': 'TextEdit', 'Mun_Code': 'TextEdit', 'Mun_Name': 'TextEdit', 'Bgy_Code': 'TextEdit', 'Bgy_Name': 'TextEdit', 'auxiliary_': 'TextEdit', 'auxiliar_1': 'TextEdit', });
+lyr_Households_1.set('fieldLabels', {'fid': 'header label - visible with data', 'FAMILY-ID': 'inline label - always visible', 'REGION': 'no label', 'PROVINCE': 'no label', 'CITY/MUN': 'no label', 'BARANGAY': 'no label', 'NUMBER OF OCCUPANTS': 'no label', 'HOUSE OWNERSHIP': 'no label', 'CLASSIFICATION': 'no label', 'STOREYS': 'no label', 'ROOFING': 'no label', 'YEARS BUILT': 'no label', 'OTHER DETAILS': 'no label', 'RELATION': 'no label', 'LAST NAME': 'no label', 'GIVEN NAME': 'no label', 'MIDDLE NAME': 'no label', 'AGE': 'no label', 'SEX': 'no label', 'OCCUPATION': 'no label', 'Religion': 'no label', });
+lyr_AnalysisSummaryat24meters_9.set('fieldLabels', {'analysis_name': 'header label - visible with data', 'use_caution_hazard_count': 'no label', 'not exposed_hazard_count': 'no label', 'medium_hazard_count': 'no label', 'low_hazard_count': 'no label', 'high_hazard_count': 'no label', 'total_affected': 'no label', 'total_not_affected': 'no label', 'total_exposed': 'no label', 'total_not_exposed': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', 'exposed_population': 'no label', });
+lyr_AggregationSummaryat24meters_10.set('fieldLabels', {'aggregation_id': 'header label - visible with data', 'aggregation_name': 'no label', 'population_affected': 'no label', 'total_affected': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_HazardAggregationSummaryat24meters_11.set('fieldLabels', {'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_exposure_count': 'no label', 'affected': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_Numberofpeopleat24meters_12.set('fieldLabels', {'population': 'no label', 'exposure_id': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'size': 'no label', 'exposure_class': 'no label', 'infant_ratio': 'no label', 'child_ratio': 'no label', 'youth_ratio': 'no label', 'adult_ratio': 'no label', 'elderly_ratio': 'no label', 'male_ratio': 'no label', 'female_ratio': 'no label', 'under_5_ratio': 'no label', 'over_60_ratio': 'no label', 'disabled_ratio': 'no label', 'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'affected': 'no label', 'population_displacement_ratio': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_AnalysisSummaryat25meters_13.set('fieldLabels', {'analysis_name': 'no label', 'use_caution_hazard_count': 'no label', 'not exposed_hazard_count': 'no label', 'high_hazard_count': 'no label', 'low_hazard_count': 'no label', 'medium_hazard_count': 'no label', 'total_affected': 'no label', 'total_not_affected': 'no label', 'total_exposed': 'no label', 'total_not_exposed': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', 'exposed_population': 'no label', });
+lyr_AggregationSummaryat25meters_14.set('fieldLabels', {'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_affected': 'no label', 'total_affected': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_HazardAggregationSummaryat25meters_15.set('fieldLabels', {'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_exposure_count': 'no label', 'affected': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_Numberofpeopleat25meters_16.set('fieldLabels', {'population': 'no label', 'exposure_id': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'size': 'no label', 'exposure_class': 'no label', 'infant_ratio': 'no label', 'child_ratio': 'no label', 'youth_ratio': 'no label', 'adult_ratio': 'no label', 'elderly_ratio': 'no label', 'male_ratio': 'no label', 'female_ratio': 'no label', 'under_5_ratio': 'no label', 'over_60_ratio': 'no label', 'disabled_ratio': 'no label', 'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'affected': 'no label', 'population_displacement_ratio': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_AnalysisSummaryat27meters_17.set('fieldLabels', {'analysis_name': 'no label', 'use_caution_hazard_count': 'no label', 'not exposed_hazard_count': 'no label', 'high_hazard_count': 'no label', 'low_hazard_count': 'no label', 'medium_hazard_count': 'no label', 'total_affected': 'no label', 'total_not_affected': 'no label', 'total_exposed': 'no label', 'total_not_exposed': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', 'exposed_population': 'no label', });
+lyr_AggregationSummaryat27meters_18.set('fieldLabels', {'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_affected': 'no label', 'total_affected': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_HazardAggregationSummaryat27meters_19.set('fieldLabels', {'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_exposure_count': 'no label', 'affected': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_Numberofpeopleat26meters_20.set('fieldLabels', {'population': 'no label', 'exposure_id': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'size': 'no label', 'exposure_class': 'no label', 'infant_ratio': 'no label', 'child_ratio': 'no label', 'youth_ratio': 'no label', 'adult_ratio': 'no label', 'elderly_ratio': 'no label', 'male_ratio': 'no label', 'female_ratio': 'no label', 'under_5_ratio': 'no label', 'over_60_ratio': 'no label', 'disabled_ratio': 'no label', 'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'affected': 'no label', 'population_displacement_ratio': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_AnalysisSummaryat27meters_21.set('fieldLabels', {'analysis_name': 'no label', 'use_caution_hazard_count': 'no label', 'not exposed_hazard_count': 'no label', 'high_hazard_count': 'no label', 'low_hazard_count': 'no label', 'medium_hazard_count': 'no label', 'total_affected': 'no label', 'total_not_affected': 'no label', 'total_exposed': 'no label', 'total_not_exposed': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', 'exposed_population': 'no label', });
+lyr_AggregationSummaryatat27meters_22.set('fieldLabels', {'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_affected': 'no label', 'total_affected': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_HazardAggregationSummaryat27meters_23.set('fieldLabels', {'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_exposure_count': 'no label', 'affected': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_Numberofpeopleat27meters_24.set('fieldLabels', {'population': 'no label', 'exposure_id': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'size': 'no label', 'exposure_class': 'no label', 'infant_ratio': 'no label', 'child_ratio': 'no label', 'youth_ratio': 'no label', 'adult_ratio': 'no label', 'elderly_ratio': 'no label', 'male_ratio': 'no label', 'female_ratio': 'no label', 'under_5_ratio': 'no label', 'over_60_ratio': 'no label', 'disabled_ratio': 'no label', 'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'affected': 'no label', 'population_displacement_ratio': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_AnalysisSummaryat28meters_25.set('fieldLabels', {'analysis_name': 'no label', 'use_caution_hazard_count': 'no label', 'not exposed_hazard_count': 'no label', 'high_hazard_count': 'no label', 'low_hazard_count': 'no label', 'medium_hazard_count': 'no label', 'total_affected': 'no label', 'total_not_affected': 'no label', 'total_exposed': 'no label', 'total_not_exposed': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', 'exposed_population': 'no label', });
+lyr_AggregationSummaryat28meters_26.set('fieldLabels', {'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_affected': 'no label', 'total_affected': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_HazardAggregationSummaryat28meters_27.set('fieldLabels', {'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_exposure_count': 'no label', 'affected': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_Numberofpeopleat28meters_28.set('fieldLabels', {'population': 'no label', 'exposure_id': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'size': 'no label', 'exposure_class': 'no label', 'infant_ratio': 'no label', 'child_ratio': 'no label', 'youth_ratio': 'no label', 'adult_ratio': 'no label', 'elderly_ratio': 'no label', 'male_ratio': 'no label', 'female_ratio': 'no label', 'under_5_ratio': 'no label', 'over_60_ratio': 'no label', 'disabled_ratio': 'no label', 'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'affected': 'no label', 'population_displacement_ratio': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_AnalysisSummaryat29meters_29.set('fieldLabels', {'analysis_name': 'no label', 'use_caution_hazard_count': 'no label', 'not exposed_hazard_count': 'no label', 'high_hazard_count': 'no label', 'low_hazard_count': 'no label', 'medium_hazard_count': 'no label', 'total_affected': 'no label', 'total_not_affected': 'no label', 'total_exposed': 'no label', 'total_not_exposed': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', 'exposed_population': 'no label', });
+lyr_AggregationSummaryat29meters_30.set('fieldLabels', {'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_affected': 'no label', 'total_affected': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_HazardAggregationSummaryat29meters_31.set('fieldLabels', {'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_exposure_count': 'no label', 'affected': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_Numberofpeopleat29meters_32.set('fieldLabels', {'population': 'no label', 'exposure_id': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'size': 'no label', 'exposure_class': 'no label', 'infant_ratio': 'no label', 'child_ratio': 'no label', 'youth_ratio': 'no label', 'adult_ratio': 'no label', 'elderly_ratio': 'no label', 'male_ratio': 'no label', 'female_ratio': 'no label', 'under_5_ratio': 'no label', 'over_60_ratio': 'no label', 'disabled_ratio': 'no label', 'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'affected': 'no label', 'population_displacement_ratio': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_AnalysisSummaryat30meters_33.set('fieldLabels', {'analysis_name': 'no label', 'use_caution_hazard_count': 'no label', 'not exposed_hazard_count': 'no label', 'high_hazard_count': 'no label', 'low_hazard_count': 'no label', 'medium_hazard_count': 'no label', 'total_affected': 'no label', 'total_not_affected': 'no label', 'total_exposed': 'no label', 'total_not_exposed': 'no label', 'total': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', 'exposed_population': 'no label', });
+lyr_AggregationSummaryfor30meters_34.set('fieldLabels', {'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_affected': 'header label - visible with data', 'total_affected': 'no label', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_HazardAggregationSummaryat30meters_35.set('fieldLabels', {'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'population_exposure_count': 'no label', 'affected': 'no label', 'total': 'header label - visible with data', 'population': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_Numberofpeopleaffectedat30meters_36.set('fieldLabels', {'population': 'header label - visible with data', 'exposure_id': 'no label', 'infant': 'no label', 'child': 'no label', 'youth': 'no label', 'adult': 'no label', 'elderly': 'no label', 'male': 'no label', 'female': 'no label', 'under_5': 'no label', 'over_60': 'no label', 'disabled': 'no label', 'size': 'no label', 'exposure_class': 'no label', 'infant_ratio': 'no label', 'child_ratio': 'no label', 'youth_ratio': 'no label', 'adult_ratio': 'no label', 'elderly_ratio': 'no label', 'male_ratio': 'no label', 'female_ratio': 'no label', 'under_5_ratio': 'no label', 'over_60_ratio': 'no label', 'disabled_ratio': 'no label', 'hazard_id': 'no label', 'hazard_class': 'no label', 'aggregation_id': 'no label', 'aggregation_name': 'no label', 'affected': 'no label', 'population_displacement_ratio': 'no label', 'displaced': 'no label', 'male_displaced': 'no label', 'female_displaced': 'no label', 'hygiene_packs': 'no label', 'infant_displaced': 'no label', 'child_displaced': 'no label', 'youth_displaced': 'no label', 'adult_displaced': 'no label', 'elderly_displaced': 'no label', 'minimum_needs__family_food_pack': 'no label', 'minimum_needs__hygiene_kits': 'no label', 'minimum_needs__family_kits': 'no label', 'minimum_needs__water_kits': 'no label', 'minimum_needs__drinking_water': 'no label', 'minimum_needs__clean_water': 'no label', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'no label', 'minimum_needs__shelter_space': 'no label', 'minimum_needs__toilet': 'no label', 'minimum_needs__child_friendly_facilities': 'no label', 'minimum_needs__laundry_spaces': 'no label', 'minimum_needs__water_spaces': 'no label', 'minimum_needs__health_station': 'no label', 'minimum_needs__couple_room': 'no label', 'under_5_displaced': 'no label', 'over_60_displaced': 'no label', 'disabled_displaced': 'no label', });
+lyr_Schools_37.set('fieldLabels', {'fid': 'no label', 'full_id': 'no label', 'building': 'no label', 'name': 'no label', });
+lyr_Roads_38.set('fieldLabels', {'fid': 'no label', 'full_id': 'no label', 'osm_id': 'no label', 'osm_type': 'no label', 'highway': 'no label', 'name': 'no label', 'surface': 'no label', 'maxspeed': 'no label', 'ref': 'no label', });
+lyr_Region2_39.set('fieldLabels', {'Reg_Code': 'no label', 'Reg_Name': 'header label - visible with data', 'Pro_Code': 'no label', 'Pro_Name': 'no label', 'Mun_Code': 'header label - visible with data', 'Mun_Name': 'no label', 'Bgy_Code': 'no label', 'Bgy_Name': 'header label - visible with data', 'auxiliary_': 'no label', 'auxiliar_1': 'no label', });
+lyr_Region2_39.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
-});
-
-// --- Add listener for flood extent dropdown to toggle 24m layer ---
-// Assumes dropdown has id="floodExtentDropdown", and option text/value for 24 meters is "24 meters"
-document.addEventListener('DOMContentLoaded', function() {
-    var dropdown = document.getElementById('floodExtentDropdown');
-    if (dropdown) {
-        var handleFloodExtentChange = function() {
-            if (dropdown.value === "24 meters" || dropdown.options[dropdown.selectedIndex].text === "24 meters") {
-                lyr_24_10.setVisible(true);
-            } else {
-                lyr_24_10.setVisible(false);
-            }
-        };
-        dropdown.addEventListener('change', handleFloodExtentChange);
-        // Set initial state in case dropdown is preset
-        handleFloodExtentChange();
-    }
 });

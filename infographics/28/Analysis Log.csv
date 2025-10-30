@@ -1,0 +1,193 @@
+function,time,memory_mb
+|\ Run,31.38700,161
+|*| Pre process,0.00000,0
+|*\ Aggregation preparation,0.03200,0
+|**\ Prepare vector layer,0.01600,0
+|***| Create memory layer,0.00000,0
+|***| Copy layer,0.00000,0
+|***| Remove features,0.00000,0
+|***| Add id column,0.00000,0
+|***\ Clean inasafe fields,0.01600,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.01600,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.01600,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****\ Sum fields,0.01600,0
+|*****| Copy fields,0.01600,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****\ Sum fields,0.00000,0
+|*****| Copy fields,0.00000,0
+|****| Sum fields,0.00000,0
+|****| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**| Remove fields,0.00000,0
+|**\ Create analysis layer,0.00000,0
+|***| Create memory layer,0.00000,0
+|*\ Hazard preparation,0.59700,8
+|**| Clip by extent,0.09200,13
+|**| Reclassify,0.04400,2
+|**| Polygonize,0.08000,7
+|**| Clean layer,0.25300,0
+|**| Clip,0.03200,0
+|**\ Prepare vector layer,0.06400,0
+|***| Create memory layer,0.00000,0
+|***| Copy layer,0.01600,0
+|***| Remove features,0.01600,0
+|***| Add id column,0.00000,0
+|***\ Clean inasafe fields,0.01600,0
+|****\ Sum fields,0.01600,0
+|*****| Copy fields,0.01600,0
+|****| Sum fields,0.00000,0
+|****| Remove fields,0.00000,0
+|**\ Update value map,0.01600,0
+|***| Remove fields,0.00000,0
+|*\ Aggregate hazard preparation,2.12800,1
+|**| Clean layer,0.14200,0
+|**\ Union,1.98200,1
+|***| Fill hazard class,0.00200,0
+|*\ Exposure preparation,1.45300,88
+|**\ Smart clip,0.10500,0
+|***| Create memory layer,0.01600,0
+|**\ Prepare vector layer,1.09500,87
+|***| Create memory layer,0.00200,0
+|***| Copy layer,0.05400,1
+|***| Remove features,0.03700,0
+|***| Add id column,0.00000,0
+|***\ Clean inasafe fields,0.90500,72
+|****| Sum fields,0.57000,24
+|****\ Sum fields,0.01600,0
+|*****| Copy fields,0.01600,0
+|****\ Sum fields,0.03700,1
+|*****| Copy fields,0.03700,1
+|****\ Sum fields,0.02700,1
+|*****| Copy fields,0.02700,0
+|****\ Sum fields,0.03100,10
+|*****| Copy fields,0.03100,10
+|****\ Sum fields,0.03100,2
+|*****| Copy fields,0.02800,2
+|****\ Sum fields,0.03200,9
+|*****| Copy fields,0.03200,9
+|****\ Sum fields,0.03200,53
+|*****| Copy fields,0.03200,53
+|****\ Sum fields,0.03200,21
+|*****| Copy fields,0.03200,21
+|****\ Sum fields,0.03300,47
+|*****| Copy fields,0.03100,47
+|****\ Sum fields,0.01400,1
+|*****| Copy fields,0.01200,1
+|****\ Sum fields,0.03200,1
+|*****| Copy fields,0.01600,1
+|****| Remove fields,0.01600,1
+|***| Run single post processor,0.06300,5
+|***| Add default exposure class,0.03200,11
+|***| Check value mapping,0.00000,0
+|**| From counts to ratios,0.21200,1
+|**| Clip,0.03500,0
+|**| Add default values,0.00200,0
+|*\ Intersect exposure and aggregate hazard,1.02200,33
+|**| Clean layer,0.07900,0
+|**| Clean layer,0.14300,7
+|**| Intersection,0.54000,17
+|**| Recompute counts,0.25800,4
+|*\ Post process,17.90500,41
+|**| Run single post processor,0.00000,0
+|**| Run single post processor,5.50100,91
+|**| Run single post processor,10.41900,28
+|**| Run single post processor,0.14100,2
+|**| Run single post processor,0.11900,0
+|**| Run single post processor,0.09900,0
+|**| Run single post processor,0.07900,16
+|**| Run single post processor,0.06700,7
+|**| Run single post processor,0.05300,0
+|**| Run single post processor,0.06000,1
+|**| Run single post processor,0.07900,5
+|**| Run single post processor,0.06300,2
+|**| Run single post processor,0.04900,0
+|**| Run single post processor,0.06400,0
+|**| Run single post processor,0.06500,0
+|**| Run single post processor,0.05900,0
+|**| Run single post processor,0.06600,0
+|**| Run single post processor,0.06200,1
+|**| Run single post processor,0.06100,0
+|**| Run single post processor,0.06300,4
+|**| Run single post processor,0.05300,0
+|**| Run single post processor,0.06300,5
+|**| Run single post processor,0.06900,0
+|**| Run single post processor,0.09000,0
+|**| Run single post processor,0.06500,1
+|**| Run single post processor,0.12200,2
+|**| Run single post processor,0.06300,0
+|**| Run single post processor,0.07700,0
+|**| Run single post processor,0.06700,0
+|*\ Summary calculation,3.43900,32
+|**| Aggregate hazard summary,3.11900,34
+|**| Aggregation summary,0.19500,1
+|**| Analysis summary,0.09900,1

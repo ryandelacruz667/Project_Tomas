@@ -1,0 +1,301 @@
+<?xml version="1.0" ?>
+<gmd:MD_Metadata xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd">
+  <gmd:fileIdentifier>
+    <gco:CharacterString>None</gco:CharacterString>
+  </gmd:fileIdentifier>
+  <gmd:language>
+    <gmd:LanguageCode codeSpace="ISO 639-2" codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng">eng</gmd:LanguageCode>
+  </gmd:language>
+  <gmd:characterSet>
+    <gmd:MD_CharacterSetCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8">utf8</gmd:MD_CharacterSetCode>
+  </gmd:characterSet>
+  <gmd:hierarchyLevel>
+    <gmd:MD_ScopeCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</gmd:MD_ScopeCode>
+  </gmd:hierarchyLevel>
+  <gmd:contact>
+    <gmd:CI_ResponsibleParty>
+      <gmd:organisationName>
+        <gco:CharacterString>InaSAFE.org</gco:CharacterString>
+      </gmd:organisationName>
+      <gmd:contactInfo>
+        <gmd:CI_Contact>
+          <gmd:address>
+            <gmd:CI_Address>
+              <gmd:electronicMailAddress>
+                <gco:CharacterString>info@inasafe.org</gco:CharacterString>
+              </gmd:electronicMailAddress>
+            </gmd:CI_Address>
+          </gmd:address>
+        </gmd:CI_Contact>
+      </gmd:contactInfo>
+      <gmd:role>
+        <gmd:CI_RoleCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
+      </gmd:role>
+    </gmd:CI_ResponsibleParty>
+  </gmd:contact>
+  <gmd:dateStamp>
+    <gco:Date/>
+  </gmd:dateStamp>
+  <gmd:metadataStandardName>
+    <gco:CharacterString>ISO 19115:2003 - Geographic information - Metadata</gco:CharacterString>
+  </gmd:metadataStandardName>
+  <gmd:metadataStandardVersion>
+    <gco:CharacterString>ISO 19115:2003</gco:CharacterString>
+  </gmd:metadataStandardVersion>
+  <gmd:identificationInfo>
+    <gmd:MD_DataIdentification>
+      <gmd:citation>
+        <gmd:CI_Citation>
+          <gmd:title>
+            <gco:CharacterString>Analysis Summary</gco:CharacterString>
+          </gmd:title>
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date>
+                <gco:Date/>
+              </gmd:date>
+              <gmd:dateType>
+                <gmd:CI_DateTypeCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+              </gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date>
+                <gco:Date/>
+              </gmd:date>
+              <gmd:dateType>
+                <gmd:CI_DateTypeCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
+              </gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date>
+                <gco:Date/>
+              </gmd:date>
+              <gmd:dateType>
+                <gmd:CI_DateTypeCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+              </gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+          <gmd:identifier>
+            <gmd:RS_Identifier>
+              <gmd:code>
+                <gco:CharacterString>None</gco:CharacterString>
+              </gmd:code>
+            </gmd:RS_Identifier>
+          </gmd:identifier>
+        </gmd:CI_Citation>
+      </gmd:citation>
+      <gmd:abstract>
+        <gco:CharacterString/>
+      </gmd:abstract>
+      <gmd:credit>
+        <gco:CharacterString/>
+      </gmd:credit>
+      <gmd:status>
+        <gmd:MD_ProgressCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ProgressCode" codeListValue="revision">revision</gmd:MD_ProgressCode>
+      </gmd:status>
+      <gmd:pointOfContact>
+        <gmd:CI_ResponsibleParty>
+          <gmd:organisationName>
+            <gco:CharacterString/>
+          </gmd:organisationName>
+          <gmd:contactInfo>
+            <gmd:CI_Contact>
+              <gmd:address>
+                <gmd:CI_Address>
+                  <gmd:electronicMailAddress>
+                    <gco:CharacterString/>
+                  </gmd:electronicMailAddress>
+                </gmd:CI_Address>
+              </gmd:address>
+            </gmd:CI_Contact>
+          </gmd:contactInfo>
+          <gmd:role>
+            <gmd:CI_RoleCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
+          </gmd:role>
+        </gmd:CI_ResponsibleParty>
+      </gmd:pointOfContact>
+      <gmd:resourceMaintenance>
+        <gmd:MD_MaintenanceInformation>
+          <gmd:maintenanceAndUpdateFrequency>
+            <gmd:MD_MaintenanceFrequencyCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="continual">continual</gmd:MD_MaintenanceFrequencyCode>
+          </gmd:maintenanceAndUpdateFrequency>
+        </gmd:MD_MaintenanceInformation>
+      </gmd:resourceMaintenance>
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword>
+            <gco:CharacterString>Human health and safety</gco:CharacterString>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme">theme</gmd:MD_KeywordTypeCode>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2008-06-01</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+      <gmd:resourceConstraints>
+        <gmd:MD_Constraints>
+          <gmd:useLimitation>
+            <gco:CharacterString>Free use with accreditation</gco:CharacterString>
+          </gmd:useLimitation>
+        </gmd:MD_Constraints>
+      </gmd:resourceConstraints>
+      <gmd:language>
+        <gmd:LanguageCode codeSpace="ISO 639-2" codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng">eng</gmd:LanguageCode>
+      </gmd:language>
+      <gmd:topicCategory>
+        <gmd:MD_TopicCategoryCode>geoscientificInformation</gmd:MD_TopicCategoryCode>
+      </gmd:topicCategory>
+      <gmd:extent>
+        <gmd:EX_Extent>
+                </gmd:EX_Extent>
+      </gmd:extent>
+      <gmd:supplementalInformation>
+        <inasafe>
+          <layer_purpose>
+            <gco:CharacterString>analysis_summary</gco:CharacterString>
+          </layer_purpose>
+          <layer_mode>
+            <gco:CharacterString/>
+          </layer_mode>
+          <layer_geometry>
+            <gco:CharacterString/>
+          </layer_geometry>
+          <keyword_version>
+            <gco:CharacterString>5.0</gco:CharacterString>
+          </keyword_version>
+          <scale>
+            <gco:CharacterString/>
+          </scale>
+          <source>
+            <gco:CharacterString/>
+          </source>
+          <inasafe_fields>
+            <gco:Dictionary>{&quot;analysis_name_field&quot;: &quot;analysis_name&quot;, &quot;use_caution_hazard_count_field&quot;: &quot;use_caution_hazard_count&quot;, &quot;not exposed_hazard_count_field&quot;: &quot;not exposed_hazard_count&quot;, &quot;high_hazard_count_field&quot;: &quot;high_hazard_count&quot;, &quot;low_hazard_count_field&quot;: &quot;low_hazard_count&quot;, &quot;medium_hazard_count_field&quot;: &quot;medium_hazard_count&quot;, &quot;total_affected_field&quot;: &quot;total_affected&quot;, &quot;total_not_affected_field&quot;: &quot;total_not_affected&quot;, &quot;total_exposed_field&quot;: &quot;total_exposed&quot;, &quot;total_not_exposed_field&quot;: &quot;total_not_exposed&quot;, &quot;total_field&quot;: &quot;total&quot;, &quot;population_count_field&quot;: &quot;population&quot;, &quot;infant_count_field&quot;: &quot;infant&quot;, &quot;child_count_field&quot;: &quot;child&quot;, &quot;youth_count_field&quot;: &quot;youth&quot;, &quot;adult_count_field&quot;: &quot;adult&quot;, &quot;elderly_count_field&quot;: &quot;elderly&quot;, &quot;male_count_field&quot;: &quot;male&quot;, &quot;female_count_field&quot;: &quot;female&quot;, &quot;under_5_count_field&quot;: &quot;under_5&quot;, &quot;over_60_count_field&quot;: &quot;over_60&quot;, &quot;disabled_count_field&quot;: &quot;disabled&quot;, &quot;displaced_field&quot;: &quot;displaced&quot;, &quot;male_displaced_count_field&quot;: &quot;male_displaced&quot;, &quot;female_displaced_count_field&quot;: &quot;female_displaced&quot;, &quot;hygiene_packs_field&quot;: &quot;hygiene_packs&quot;, &quot;infant_displaced_count_field&quot;: &quot;infant_displaced&quot;, &quot;child_displaced_count_field&quot;: &quot;child_displaced&quot;, &quot;youth_displaced_count_field&quot;: &quot;youth_displaced&quot;, &quot;adult_displaced_count_field&quot;: &quot;adult_displaced&quot;, &quot;elderly_displaced_count_field&quot;: &quot;elderly_displaced&quot;, &quot;minimum_needs__family_food_pack_count_field&quot;: &quot;minimum_needs__family_food_pack&quot;, &quot;minimum_needs__hygiene_kits_count_field&quot;: &quot;minimum_needs__hygiene_kits&quot;, &quot;minimum_needs__family_kits_count_field&quot;: &quot;minimum_needs__family_kits&quot;, &quot;minimum_needs__water_kits_count_field&quot;: &quot;minimum_needs__water_kits&quot;, &quot;minimum_needs__drinking_water_count_field&quot;: &quot;minimum_needs__drinking_water&quot;, &quot;minimum_needs__clean_water_count_field&quot;: &quot;minimum_needs__clean_water&quot;, &quot;minimum_needs__minimum_water_demand_for_prolonged_period_count_field&quot;: &quot;minimum_needs__minimum_water_demand_for_prolonged_period&quot;, &quot;minimum_needs__shelter_space_count_field&quot;: &quot;minimum_needs__shelter_space&quot;, &quot;minimum_needs__toilet_count_field&quot;: &quot;minimum_needs__toilet&quot;, &quot;minimum_needs__child_friendly_facilities_count_field&quot;: &quot;minimum_needs__child_friendly_facilities&quot;, &quot;minimum_needs__laundry_spaces_count_field&quot;: &quot;minimum_needs__laundry_spaces&quot;, &quot;minimum_needs__water_spaces_count_field&quot;: &quot;minimum_needs__water_spaces&quot;, &quot;minimum_needs__health_station_count_field&quot;: &quot;minimum_needs__health_station&quot;, &quot;minimum_needs__couple_room_count_field&quot;: &quot;minimum_needs__couple_room&quot;, &quot;under_5_displaced_count_field&quot;: &quot;under_5_displaced&quot;, &quot;over_60_displaced_count_field&quot;: &quot;over_60_displaced&quot;, &quot;disabled_displaced_count_field&quot;: &quot;disabled_displaced&quot;, &quot;exposed_population_count_field&quot;: &quot;exposed_population&quot;}</gco:Dictionary>
+          </inasafe_fields>
+          <inasafe_default_values>
+            <gco:Dictionary/>
+          </inasafe_default_values>
+          <extra_keywords>
+            <gco:Dictionary/>
+          </extra_keywords>
+          <exposure_keywords>
+            <gco:Dictionary>{&quot;title&quot;: &quot;People&quot;, &quot;layer_purpose&quot;: &quot;exposure&quot;, &quot;layer_mode&quot;: &quot;continuous&quot;, &quot;layer_geometry&quot;: &quot;polygon&quot;, &quot;keyword_version&quot;: &quot;5.0&quot;, &quot;inasafe_fields&quot;: {&quot;population_count_field&quot;: [&quot;Male&quot;, &quot;Female&quot;], &quot;exposure_id_field&quot;: &quot;FAMILY_ID&quot;, &quot;infant_count_field&quot;: [&quot;Infant&quot;], &quot;child_count_field&quot;: [&quot;Child&quot;], &quot;youth_count_field&quot;: [&quot;Youth&quot;], &quot;adult_count_field&quot;: [&quot;Adult&quot;], &quot;elderly_count_field&quot;: [&quot;Elderly&quot;], &quot;male_count_field&quot;: [&quot;Male&quot;], &quot;female_count_field&quot;: [&quot;Female&quot;], &quot;under_5_count_field&quot;: [&quot;Under_5&quot;], &quot;over_60_count_field&quot;: [&quot;Over_60&quot;], &quot;disabled_count_field&quot;: [&quot;Disabled&quot;]}, &quot;exposure&quot;: &quot;population&quot;, &quot;exposure_unit&quot;: &quot;count&quot;, &quot;inasafe_default_values&quot;: {}}</gco:Dictionary>
+          </exposure_keywords>
+          <hazard_keywords>
+            <gco:Dictionary>{&quot;title&quot;: &quot;26&quot;, &quot;layer_purpose&quot;: &quot;hazard&quot;, &quot;layer_mode&quot;: &quot;continuous&quot;, &quot;layer_geometry&quot;: &quot;raster&quot;, &quot;keyword_version&quot;: &quot;5.0&quot;, &quot;hazard&quot;: &quot;flood&quot;, &quot;hazard_category&quot;: &quot;single_event&quot;, &quot;continuous_hazard_unit&quot;: &quot;metres&quot;, &quot;thresholds&quot;: {&quot;population&quot;: {&quot;flood_petabencana_hazard_classes&quot;: {&quot;classes&quot;: {&quot;use_caution&quot;: [0.0, 0.1], &quot;low&quot;: [0.1, 0.7], &quot;medium&quot;: [0.7, 1.5], &quot;high&quot;: [1.5, 9999.0]}, &quot;active&quot;: true}}}, &quot;active_band&quot;: 1}</gco:Dictionary>
+          </hazard_keywords>
+          <aggregation_keywords>
+            <gco:Dictionary/>
+          </aggregation_keywords>
+          <provenance_data>
+            <gco:Dictionary>{&quot;host_name&quot;: &quot;thingkingzombie&quot;, &quot;user&quot;: &quot;RyanDelacruz&quot;, &quot;qgis_version&quot;: &quot;3.40.6-Bratislava&quot;, &quot;gdal_version&quot;: &quot;3.10.3&quot;, &quot;qt_version&quot;: &quot;5.15.13&quot;, &quot;pyqt_version&quot;: &quot;5.15.11&quot;, &quot;os&quot;: &quot;Windows-11-10.0.26200-SP0&quot;, &quot;inasafe_version&quot;: &quot;5.0.6&quot;, &quot;exposure_layer&quot;: &quot;C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Exposure.gpkg|layername=Exposure|qgis_provider=ogr&quot;, &quot;exposure_layer_id&quot;: &quot;Exposure_44c27319_43ae_4ff1_81b4_b72b92b45e96&quot;, &quot;exposure_keywords&quot;: {&quot;title&quot;: &quot;People&quot;, &quot;layer_purpose&quot;: &quot;exposure&quot;, &quot;layer_mode&quot;: &quot;continuous&quot;, &quot;layer_geometry&quot;: &quot;polygon&quot;, &quot;keyword_version&quot;: &quot;5.0&quot;, &quot;inasafe_fields&quot;: {&quot;population_count_field&quot;: [&quot;Male&quot;, &quot;Female&quot;], &quot;exposure_id_field&quot;: &quot;FAMILY_ID&quot;, &quot;infant_count_field&quot;: [&quot;Infant&quot;], &quot;child_count_field&quot;: [&quot;Child&quot;], &quot;youth_count_field&quot;: [&quot;Youth&quot;], &quot;adult_count_field&quot;: [&quot;Adult&quot;], &quot;elderly_count_field&quot;: [&quot;Elderly&quot;], &quot;male_count_field&quot;: [&quot;Male&quot;], &quot;female_count_field&quot;: [&quot;Female&quot;], &quot;under_5_count_field&quot;: [&quot;Under_5&quot;], &quot;over_60_count_field&quot;: [&quot;Over_60&quot;], &quot;disabled_count_field&quot;: [&quot;Disabled&quot;]}, &quot;exposure&quot;: &quot;population&quot;, &quot;exposure_unit&quot;: &quot;count&quot;}, &quot;hazard_layer&quot;: &quot;C:/Users/RyanDelacruz/Documents/Project Tomas/DEM/Flood Extent/26.tif|qgis_provider=gdal&quot;, &quot;hazard_layer_id&quot;: &quot;26_76c7e6ca_2870_42ff_9439_bbe4159fdbff&quot;, &quot;hazard_keywords&quot;: {&quot;title&quot;: &quot;26&quot;, &quot;layer_purpose&quot;: &quot;hazard&quot;, &quot;layer_mode&quot;: &quot;continuous&quot;, &quot;layer_geometry&quot;: &quot;raster&quot;, &quot;keyword_version&quot;: &quot;5.0&quot;, &quot;hazard&quot;: &quot;flood&quot;, &quot;hazard_category&quot;: &quot;single_event&quot;, &quot;continuous_hazard_unit&quot;: &quot;metres&quot;, &quot;thresholds&quot;: {&quot;population&quot;: {&quot;flood_petabencana_hazard_classes&quot;: {&quot;classes&quot;: {&quot;use_caution&quot;: [0.0, 0.1], &quot;low&quot;: [0.1, 0.7], &quot;medium&quot;: [0.7, 1.5], &quot;high&quot;: [1.5, 9999.0]}, &quot;active&quot;: true}}}, &quot;active_band&quot;: 1}, &quot;aggregation_layer_id&quot;: &quot;Agregation_data_da587dc5_daaa_4f41_baf2_fbe7a549ffae&quot;, &quot;aggregation_layer&quot;: &quot;C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Agregation_data.shp|qgis_provider=ogr&quot;, &quot;aggregation_keywords&quot;: {&quot;title&quot;: &quot;Barangay&quot;, &quot;layer_purpose&quot;: &quot;aggregation&quot;, &quot;layer_geometry&quot;: &quot;polygon&quot;, &quot;keyword_version&quot;: &quot;5.0&quot;, &quot;inasafe_fields&quot;: {&quot;aggregation_name_field&quot;: &quot;BARANGAY&quot;, &quot;infant_ratio_field&quot;: [&quot;Infant&quot;], &quot;child_ratio_field&quot;: [&quot;Child&quot;], &quot;youth_ratio_field&quot;: [&quot;Youth&quot;], &quot;adult_ratio_field&quot;: [&quot;Adult&quot;], &quot;elderly_ratio_field&quot;: [&quot;Elderly&quot;], &quot;male_ratio_field&quot;: [&quot;Male&quot;], &quot;female_ratio_field&quot;: [&quot;Female&quot;], &quot;under_5_ratio_field&quot;: [&quot;Under 5&quot;], &quot;over_60_ratio_field&quot;: [&quot;Over_60&quot;], &quot;disabled_ratio_field&quot;: [&quot;Disabled&quot;]}}, &quot;earthquake_function&quot;: null, &quot;start_datetime&quot;: &quot;2025-10-23T12:53:30.747452&quot;, &quot;end_datetime&quot;: &quot;2025-10-23T12:53:59.818392&quot;, &quot;duration&quot;: 29.07094, &quot;impact_function_name&quot;: &quot;Flood Raster On Population Polygon&quot;, &quot;impact_function_title&quot;: &quot;need evacuation&quot;, &quot;map_title&quot;: &quot;Population affected by Flood event&quot;, &quot;map_legend_title&quot;: &quot;Number of people&quot;, &quot;analysis_question&quot;: &quot;In the event of a Flood, how many Population might be affected?&quot;, &quot;requested_extent&quot;: null, &quot;analysis_extent&quot;: &quot;Polygon ((367349.54666605533566326 1917849.56449459283612669, 367361.76632639858871698 1917809.31653001811355352, 367377.34392410248983651 1917761.95820276974700391, 367405.50194926781114191 1917729.87680826731957495, 367421.2483395409071818 1917708.50887933443300426, 367447.19089669996174052 1917684.7119663015473634, 367460.67585094290552661 1917664.5401058834977448, 367463.94934471801389009 1917644.43463245150633156, 367477.35768787853885442 1917612.44908452755771577, 367487.42355601652525365 1917589.93661683681420982, 367499.7817394802113995 1917570.95356621546670794, 367516.76263066555839032 1917564.93631073087453842, 367533.69755786843597889 1917551.83080605557188392, 367557.30230572924483567 1917517.41627020388841629, 367578.75282466353382915 1917500.73724720091558993, 367595.71081931539811194 1917491.17593202437274158, 367606.91909010510426015 1917469.83759760903194547, 367603.32378966582473367 1917440.32519986480474472, 367572.43627038516569883 1917401.53835388924926519, 367566.54872325260657817 1917368.49654121208004653, 367548.17253668064950034 1917334.35435322416014969, 367520.88785853900481015 1917326.26126875798217952, 367494.76080997788812965 1917321.70499059208668768, 367464.10286518943030387 1917318.35960648371838033, 367434.57179807405918837 1917313.82560098147951066, 367408.36802267679013312 1917297.45561891002580523, 367379.81050450284965336 1917268.10539519949816167, 367371.70708184741670266 1917243.34803151409141719, 367352.31085905467625707 1917226.93391478946432471, 367342.00709541508695111 1917212.82369517395272851, 367307.76854780467692763 1917182.32898678141646087, 367326.9806006426224485 1917170.38989176228642464, 367359.862123167142272 1917166.63208596780896187, 367381.40491890907287598 1917164.12940420815721154, 367366.51654136477736756 1917142.96037137182429433, 367340.35074888460803777 1917132.49742307281121612, 367250.53010342246852815 1917104.72662688745185733, 367175.45638360938755795 1917097.30884041823446751, 366584.70042717352043837 1917308.50446937256492674, 366008.58657835249323398 1917235.61384975234977901, 365331.60975755262188613 1917093.71152897574938834, 363488.31695536337792873 1916729.09878246625885367, 361013.66708899295190349 1916820.02392909047193825, 360334.1067749933572486 1916805.00675118202343583, 359409.73491509421728551 1916870.29917266638949513, 358826.43706497631501406 1917129.78509919159114361, 358146.4704459662316367 1917055.89070708327926695, 358047.09871901624137536 1918134.65826160321012139, 357796.18796838074922562 1918912.85092272306792438, 357755.50632196466904134 1919762.37358969263732433, 357765.30489229841623455 1920472.55513264890760183, 357808.07830965856555849 1921181.65441093849949539, 359211.72458747425116599 1921612.62716406630352139, 359470.70284475153312087 1921772.44967271178029478, 359542.11540552147198468 1921869.39863662328571081, 359644.93410687369760126 1921887.70306252734735608, 359877.34943853481672704 1921836.19449438760057092, 359950.07785400713328272 1921792.91542534180916846, 360038.91086989420000464 1921768.53892632247880101, 360114.18282893969444558 1921763.26882313750684261, 361061.71557277883403003 1922167.93870967323891819, 364654.3693960775854066 1923237.59559510066173971, 365085.50321218714816496 1923367.01528165373019874, 365670.86922581575345248 1923476.39901987137272954, 366168.61793079931521788 1923745.3757857782766223, 366926.58522703510243446 1923909.37878707097843289, 367596.50127117556985468 1923973.29719786811619997, 367666.23224692838266492 1923950.29314748081378639, 367759.54939814005047083 1924024.40358138526789844, 367816.01290162355871871 1924501.16166492481715977, 367684.23565548210171983 1924772.06353922630660236, 367609.85010209353640676 1924947.65449640620499849, 367785.562963911681436 1925291.27023379481397569, 367707.48048602568451315 1925636.93532462697476149, 368351.63068900385405868 1925780.07465375517494977, 368995.19341804785653949 1925818.25948450434952974, 369526.19141058693639934 1926352.37894545146264136, 369751.41833174519706517 1926294.70532351289875805, 370756.34278521937085316 1925894.49511515605263412, 370806.6419009359087795 1925874.46527824527584016, 371491.73817345983115956 1925495.1012887426186353, 371684.27785209444118664 1925380.05472666095010936, 371838.10345087328460068 1925295.65985893551260233, 371845.50156785373110324 1925286.02660394250415266, 371940.88853700901381671 1925137.69774174364283681, 372427.29889753391034901 1924381.39309531101025641, 372441.08977665880229324 1924347.55013279104605317, 372660.73990598251111805 1923989.32854890683665872, 372832.16623088443884626 1923677.72760415216907859, 372852.69712306797737256 1923622.6629326397087425, 373106.87794404581654817 1922940.96830821922048926, 373112.32462959317490458 1922920.02208729810081422, 373045.04431253636721522 1922512.22798718954436481, 372907.37075343471951783 1922370.88815647969022393, 372701.34485594829311594 1922194.94381157355383039, 371882.41411661222809926 1921876.01993066444993019, 370854.19218575034756213 1921781.58849095343612134, 370047.18953761411830783 1921529.51826405059546232, 369449.99814166768919677 1921368.73710416117683053, 369304.65146944904699922 1921324.8990648970939219, 368890.85172358667477965 1921188.55960662523284554, 368661.60798732086550444 1921055.97785660903900862, 368351.21643294137902558 1920703.58889115508645773, 368273.73104803619207814 1920571.39357788232155144, 367794.88462888379581273 1919977.23239095881581306, 367705.63745096430648118 1919720.3011129058431834, 367709.89696014812216163 1919596.60303607163950801, 367738.71748527348972857 1919294.94228037120774388, 367842.71001749485731125 1918993.95919536054134369, 367689.15436636155936867 1918602.51217381097376347, 367661.13032206980278715 1918582.81919166911393404, 367638.99879466195125133 1918566.1456567570567131, 367606.61984838231001049 1918554.12514760787598789, 367555.13470445107668638 1918539.17091152747161686, 367506.50652995199197903 1918511.96776331053115427, 367475.55576661147642881 1918493.82282322132959962, 367434.49654681712854654 1918501.73348183953203261, 367402.17693824775051326 1918498.88576869061216712, 367377.11858474957989529 1918483.76032052934169769, 367376.95967331377323717 1918459.30024621053598821, 367368.00167276716092601 1918436.42615115107037127, 367359.09321247722255066 1918421.19579852535389364, 367334.13418762967921793 1918421.35798420128412545, 367307.70698908006306738 1918421.52974345139227808, 367281.18039996566949412 1918406.4139454283285886, 367267.82757965550990775 1918385.09727040957659483, 367270.03073716966900975 1918348.88518499303609133, 367287.85807588399620727 1918331.5837564435787499, 367304.25031417957507074 1918314.29167371150106192, 367329.96602882107254118 1918296.19187229755334556, 367348.45272109692450613 1918269.91982963867485523, 367353.97480719321174547 1918236.26015498000197113, 367345.07756919891107827 1918192.23348941444419324, 367339.92841202882118523 1918172.83976809540763497, 367335.54531345563009381 1918160.91317213885486126, 367335.41908849659375846 1918141.48692548531107605, 367337.44067263597389683 1918121.29946932941675186, 367342.28411591664189473 1918093.62179971253499389, 367345.69232105684932321 1918065.9534573897253722, 367341.20726650243159384 1918038.33628705702722073, 367340.26159351196838543 1918003.22424261714331806, 367342.32586608687415719 1917960.66569110658019781, 367344.34952921915100887 1917922.84676631703041494, 367345.23846752324607223 1917885.03532563894987106, 367349.54666605533566326 1917849.56449459283612669))&quot;, &quot;data_store_uri&quot;: &quot;C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Flood report/FloodRasterOnPopulationPolygon_23October2025_12h53-30.762638&quot;, &quot;notes&quot;: [{&quot;item_category&quot;: &quot;population_general&quot;, &quot;item_header&quot;: &quot;population exposure general notes&quot;, &quot;item_list&quot;: [&quot;The impacts on roads, people, buildings and other exposure elements may be underestimated if the exposure data are incomplete.&quot;, &quot;Exposed population varies by the time (day or night, weekends, holidays etc.). Such variations are not included in the analysis.&quot;, &quot;Numbers reported for population counts have been rounded to the nearest 10 people if the total is less than 1,000; nearest 100 people if more than 1,000 and less than 100,000; and nearest 1,000 if more than 100,000.&quot;, &quot;Rounding is applied to all population values, which may cause discrepancies between subtotals and totals.&quot;, &quot;Note that report rows containing totals are calculated from the entire analysis area totals and then rounded, whereas the subtotal rows are calculated from the aggregation areas and then rounded. Using this approach we avoid adding already rounded numbers and in so doing compounding the rounding.&quot;, &quot;If displacement counts are 0, no minimum needs and displaced related postprocessors will be shown.&quot;]}, {&quot;item_category&quot;: &quot;flood_general&quot;, &quot;item_header&quot;: &quot;flood general notes&quot;, &quot;item_list&quot;: [&quot;The extent and severity of the mapped scenario or hazard zones may not be consistent with future events.&quot;, &quot;The impacts on roads, people, buildings and other exposure elements may differ from the analysis results due to local conditions such as terrain and infrastructure type.&quot;, &quot;The analysis extent is limited to the extent of the aggregation layer or analysis extent. Hazard and exposure data outside the analysis extent are not included in the impact layer, impact map or impact reports.&quot;]}], &quot;action_checklist&quot;: [{&quot;item_category&quot;: &quot;general&quot;, &quot;item_header&quot;: &quot;general checklist&quot;, &quot;item_list&quot;: [&quot;How will warnings be disseminated?&quot;, &quot;What are people's likely movements?&quot;, &quot;Which group or population is most affected?&quot;, &quot;Who are the vulnerable people in the population and why?&quot;, &quot;How will we distribute relief items?&quot;, &quot;Where can we obtain additional relief items?&quot;, &quot;How will we distribute relief items?&quot;, &quot;Who are the key people responsible for coordination?&quot;, &quot;What are the security factors for relief responders?&quot;, &quot;Are there enough victim identification units?&quot;]}, {&quot;item_category&quot;: &quot;shelter&quot;, &quot;item_header&quot;: &quot;shelter, settlement, and non-food item&quot;, &quot;item_list&quot;: [&quot;What are people's likely movements?&quot;, &quot;How will we reach displaced people?&quot;, &quot;Are there enough covered floor areas available for the displaced people?&quot;, &quot;What are the land-use rights for the settlement location?&quot;, &quot;What is the ownership of the shelter or settlement location?&quot;, &quot;What is the appropriate construction for temporary or transitional household shelter?&quot;, &quot;What are the existing environmental risks or vulnerabilities at the shelter location?&quot;, &quot;Are there enough clothing, bedding and household items available for the displaced people?&quot;, &quot;What are the critical non-food items required by the affected population?&quot;, &quot;Are the non-food items available at an active local market?&quot;]}, {&quot;item_category&quot;: &quot;food&quot;, &quot;item_header&quot;: &quot;food security and nutrition&quot;, &quot;item_list&quot;: [&quot;What kind of food does the population normally consume?&quot;, &quot;Are there any alternative source of food?&quot;, &quot;Is there enough food for the displaced people?&quot;, &quot;Are there any crops that can be used for consumption?&quot;, &quot;Are there large numbers of separated children?&quot;]}, {&quot;item_category&quot;: &quot;wash&quot;, &quot;item_header&quot;: &quot;sanitation and clean water&quot;, &quot;item_list&quot;: [&quot;What water and sanitation practices were the population accustomed to before the emergency?&quot;, &quot;What type of outreach system would work for hygiene promotion for this situation?&quot;, &quot;What is the current water supply source and who are the present users?&quot;, &quot;Are there enough water supply, sanitation and hygiene, items available for displaced people?&quot;, &quot;Are water collection points close enough to where people live?&quot;, &quot;Are water collection points safe?&quot;, &quot;Is the water source contaminated or at risk of contamination?&quot;, &quot;Are there alternative sources of water nearby?&quot;, &quot;Is there a drainage problem?&quot;]}, {&quot;item_category&quot;: &quot;health&quot;, &quot;item_header&quot;: &quot;health facilities&quot;, &quot;item_list&quot;: [&quot;What are the existing health problems?&quot;, &quot;What are the potential epidemic diseases?&quot;, &quot;Are there any potential disease outbreaks?&quot;, &quot;Are there any healthcare sources that are accessible and functioning?&quot;]}], &quot;crs&quot;: &quot;EPSG:32651&quot;, &quot;use_rounding&quot;: true, &quot;debug&quot;: false, &quot;impact_analysis&quot;: &quot;C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Flood report/FloodRasterOnPopulationPolygon_23October2025_12h53-30.762638/impact_analysis.geojson|qgis_provider=ogr&quot;, &quot;hazard_aggregation_summary&quot;: &quot;C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Flood report/FloodRasterOnPopulationPolygon_23October2025_12h53-30.762638/hazard_aggregation_summary.geojson|qgis_provider=ogr&quot;, &quot;aggregation_summary&quot;: &quot;C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Flood report/FloodRasterOnPopulationPolygon_23October2025_12h53-30.762638/aggregation_summary.geojson|qgis_provider=ogr&quot;, &quot;analysis_summary&quot;: &quot;C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Flood report/FloodRasterOnPopulationPolygon_23October2025_12h53-30.762638/analysis_summary.geojson|qgis_provider=ogr&quot;, &quot;exposure_summary_table&quot;: null, &quot;analysis_log&quot;: &quot;C:/Users/RyanDelacruz/Desktop/TOMAS_V2/Flood report/FloodRasterOnPopulationPolygon_23October2025_12h53-30.762638\\Analysis Log.csv&quot;, &quot;impact_analysis_id&quot;: &quot;impact_analysis_e68419c6_406f_471b_be4a_b6b2445b8814&quot;, &quot;hazard_aggregation_summary_id&quot;: &quot;hazard_aggregation_summary_d6614a62_5209_4fa4_b76f_322ec1c63f6e&quot;, &quot;aggregation_summary_id&quot;: &quot;aggregation_summary_081182fe_0e0d_4a0b_b5cd_3c0330b4ec6d&quot;, &quot;analysis_summary_id&quot;: &quot;analysis_summary_c6a2f970_b32b_4f02_9e5f_c859545e81b9&quot;, &quot;exposure_summary_table_id&quot;: null}</gco:Dictionary>
+          </provenance_data>
+        </inasafe>
+      </gmd:supplementalInformation>
+    </gmd:MD_DataIdentification>
+  </gmd:identificationInfo>
+  <gmd:distributionInfo>
+    <gmd:MD_Distribution>
+      <gmd:distributionFormat>
+        <gmd:MD_Format>
+          <gmd:name>
+            <gco:CharacterString>unknown</gco:CharacterString>
+          </gmd:name>
+          <gmd:version>
+            <gco:CharacterString>unknown</gco:CharacterString>
+          </gmd:version>
+        </gmd:MD_Format>
+      </gmd:distributionFormat>
+      <gmd:transferOptions>
+        <gmd:MD_DigitalTransferOptions>
+          <gmd:onLine>
+            <gmd:CI_OnlineResource>
+              <gmd:linkage>
+                <gmd:URL>http://inasafe.org</gmd:URL>
+              </gmd:linkage>
+            </gmd:CI_OnlineResource>
+          </gmd:onLine>
+        </gmd:MD_DigitalTransferOptions>
+      </gmd:transferOptions>
+    </gmd:MD_Distribution>
+  </gmd:distributionInfo>
+  <gmd:dataQualityInfo>
+    <gmd:DQ_DataQuality>
+      <gmd:scope>
+        <gmd:DQ_Scope>
+          <gmd:level>
+            <gmd:MD_ScopeCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</gmd:MD_ScopeCode>
+          </gmd:level>
+        </gmd:DQ_Scope>
+      </gmd:scope>
+      <gmd:report>
+        <gmd:DQ_DomainConsistency>
+          <gmd:result>
+            <gmd:DQ_ConformanceResult>
+              <gmd:specification>
+                <gmd:CI_Citation>
+                  <gmd:title>
+                    <gco:CharacterString/>
+                  </gmd:title>
+                  <gmd:date>
+                    <gmd:CI_Date>
+                      <gmd:date>
+                        <gco:Date/>
+                      </gmd:date>
+                      <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+                      </gmd:dateType>
+                    </gmd:CI_Date>
+                  </gmd:date>
+                </gmd:CI_Citation>
+              </gmd:specification>
+              <gmd:explanation>
+                <gco:CharacterString>See the referenced specification</gco:CharacterString>
+              </gmd:explanation>
+              <gmd:pass>
+                <gco:Boolean>true</gco:Boolean>
+              </gmd:pass>
+            </gmd:DQ_ConformanceResult>
+          </gmd:result>
+        </gmd:DQ_DomainConsistency>
+      </gmd:report>
+      <gmd:lineage>
+        <gmd:LI_Lineage>
+          <gmd:statement>
+            <gco:CharacterString/>
+          </gmd:statement>
+        </gmd:LI_Lineage>
+      </gmd:lineage>
+    </gmd:DQ_DataQuality>
+  </gmd:dataQualityInfo>
+  <gmd:metadataMaintenance>
+    <gmd:MD_MaintenanceInformation>
+      <gmd:maintenanceAndUpdateFrequency>
+        <gmd:MD_MaintenanceFrequencyCode codeSpace="ISOTC211/19115" codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="continual">continual</gmd:MD_MaintenanceFrequencyCode>
+      </gmd:maintenanceAndUpdateFrequency>
+      <gmd:maintenanceNote>
+        <gco:CharacterString>This record was generated by InaSAFE (http://inasafe.org)</gco:CharacterString>
+      </gmd:maintenanceNote>
+    </gmd:MD_MaintenanceInformation>
+  </gmd:metadataMaintenance>
+</gmd:MD_Metadata>

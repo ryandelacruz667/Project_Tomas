@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 256 256"
+        preserveAspectRatio="xMidYMid">
+    
+    <g class="pielayer">
+    
+        <g stroke-linejoin="round" class="trace" style="opacity: 1;">
+            <g class="pie">
+                
+                <g class="slice">
+                    <path class="surface" d="M128.000000,0.000000a128.000000,128.000000 0 1 1 -124.188988,96.998463l62.094494,15.500768a64.000000,64.000000 0 1 0 62.094494,-48.499232Z" fill="#f03b20" style="pointer-events: all; stroke-width: ; stroke: #fff; stroke-opacity: 1;" />
+                </g>
+                    
+                    <text class="slice-value" text-anchor="middle" alignment-baseline="middle" x="187.09267869296326" y="195.65748690572667">
+                        7,700
+                    </text>
+                    <text class="slice-percentage" text-anchor="middle" alignment-baseline="middle" x="187.09267869296326" y="211.65748690572667">
+                        78.89%
+                    </text>
+                    
+                
+                <g class="slice">
+                    <path class="surface" d="M3.811012,96.998463a128.000000,128.000000 0 0 1 5.932408,-17.981943l59.128290,24.491740a64.000000,64.000000 0 0 0 -2.966204,8.990971Z" fill="#feb24c" style="pointer-events: all; stroke-width: ; stroke: #fff; stroke-opacity: 1;" />
+                </g>
+                    
+                
+                <g class="slice">
+                    <path class="surface" d="M9.743420,79.016521a128.000000,128.000000 0 0 1 0.968016,-2.274621l58.644282,25.629050a64.000000,64.000000 0 0 0 -0.484008,1.137310Z" fill="#ffffb2" style="pointer-events: all; stroke-width: ; stroke: #fff; stroke-opacity: 1;" />
+                </g>
+                    
+                
+                <g class="slice">
+                    <path class="surface" d="M10.711436,76.741900a128.000000,128.000000 0 0 1 117.288564,-76.741900l0.000000,64.000000a64.000000,64.000000 0 0 0 -58.644282,38.370950Z" fill="#1a9641" style="pointer-events: all; stroke-width: ; stroke: #fff; stroke-opacity: 1;" />
+                </g>
+                    
+                    <text class="slice-value" text-anchor="middle" alignment-baseline="middle" x="75.43852739164396" y="39.66761800344125">
+                        1,800
+                    </text>
+                    <text class="slice-percentage" text-anchor="middle" alignment-baseline="middle" x="75.43852739164396" y="55.66761800344125">
+                        18.44%
+                    </text>
+                    
+                
+            </g>
+        </g>
+        <g class="total-text">
+            <text class="total-value" text-anchor="middle" x="128" y="108">
+                9,760
+            </text>
+            <text class="total-value-header" text-anchor="middle" x="128" y="128">
+                Total
+            </text>
+            <text class="total-value-header" text-anchor="middle" x="128" y="148">
+                Exposed
+            </text>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head id="inasafe-html-resources">
+    <meta charset="utf-8" />
+    <title>InaSAFE</title>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="resources/css/bootstrap.css" rel="stylesheet" />
+    <link href="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/css/bootstrap.css" rel="stylesheet" />
+    <link href="resources/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="resources/css/InaSAFE.css" rel="stylesheet" />
+    <link href="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/css/InaSAFE.css" rel="stylesheet" />
+    <script type="text/javascript" src="resources/js/jquery-1.7.1.min.js">
+      /*fake space for html scraping purpose*/
+    </script>
+    <script type="text/javascript" src="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/js/jquery-1.7.1.min.js">
+      /*fake space for html scraping purpose*/
+    </script>
+    <script type="text/javascript" src="resources/js/inasafe.js">
+      /*fake space for html scraping purpose*/
+    </script>
+    <script type="text/javascript" src="file:///C:\Users\RyanDelacruz\AppData\Roaming\QGIS\QGIS3\profiles\Ryan P. Dela Cruz\python\plugins\inasafe\safe\resources/js/inasafe.js">
+      /*fake space for html scraping purpose*/
+    </script>
+
+    <style type="text/css">
+      body {
+        margin-left: -10px;
+        margin-right: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='container'>
+        
+    <div class="branding">
+        <img src="file:///C:/Users/RyanDelacruz/AppData/Roaming/QGIS/QGIS3/profiles/Ryan P. Dela Cruz/python/plugins/inasafe/safe/resources/img/logos/inasafe-logo-white.png" title="InaSAFE" alt="InaSAFE" />
+    </div>
+
+    <div id="analysis-question">
+    <h5 class="info">
+        Analysis question
+    </h5>
+    <p>
+        
+            <h5>In the event of a Flood, how many Population might be affected?</h5>
+        
+    </p>
+</div>
+    <div id="general-report">
+    <h5 class="info">
+        General report
+    </h5>
+    <div class="container">
+        <div class="row">
+            <h5>
+                Estimated number of people affected per hazard zone
+            </h5>
+        </div>
+        
+            <div class="row">
+                <div class="col-sm-12" style="margin-top: 10px">
+                    <table class="table table-striped condensed">
+                        <thead>
+                            <tr>
+                                <th colspan="1">Hazard Zone</th>
+                                
+                                    <th class="text-right" colspan="1">Count</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                
+                                    <td colspan="1">High</td>
+                                
+                                
+                                    <td class="text-right" colspan="1">1,200</td>
+                                
+                            </tr>
+                            
+                            <tr>
+                                
+                                    <td colspan="1">Medium</td>
+                                
+                                
+                                    <td class="text-right" colspan="1">670</td>
+                                
+                            </tr>
+                            
+                            <tr>
+                                
+                                    <td colspan="1">Low</td>
+                                
+                                
+                                    <td class="text-right" colspan="1">520</td>
+                                
+                            </tr>
+                            
+                            <tr>
+                                
+                                    <td colspan="1">Use caution</td>
+                                
+                                
+                                    <td class="text-right" colspan="1">7,300</td>
+                                
+                            </tr>
+                            
+                            <tr>
+                                
+                                    <th colspan="1">Total Exposed</th>
+                                
+                                
+                                    <td class="text-right" colspan="1">9,600</td>
+                                
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-sm-12" style="margin-top: 10px">
+                    <table class="table table-striped condensed">
+                        <thead>
+                            <tr>
+                                <th colspan="1">Population</th>
+                                
+                                    <th class="text-right" colspan="1">Count</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                
+                                    <td colspan="1">Affected</td>
+                                
+                                
+                                    <td class="text-right" colspan="1">2,300</td>
+                                
+                            </tr>
+                            
+                            <tr>
+                                
+                                    <td colspan="1">Not Affected</td>
+                                
+                                
+                                    <td class="text-right" colspan="1">7,300</td>
+                                
+                            </tr>
+                            
+                            <tr>
+                                
+                                    <td colspan="1">Not Exposed</td>
+                                
+                                
+                                    <td class="text-right" colspan="1">0</td>
+                                
+                            </tr>
+                            
+                            <tr>
+                                
+                                    <td colspan="1">Displaced</td>
+                                
+                                
+                                    <td class="text-right" colspan="1">10</td>
+                                
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+        <div>
+            <ul>
+                
+                    
+                        
+                        
+                        
+                        <li colspan="100%"><b>Exposed people</b>: People who are present in hazard zones and are thereby subject to potential losses. In InaSAFE, people who are exposed are those people who are within the extent of the hazard.</li>
+                    
+                
+                    
+                        
+                        
+                        
+                        <li colspan="100%"><b>Affected people</b>: People who are affected by a hazardous event. People can be affected directly or indirectly. Affected people may experience short-term or long-term consequences to their lives, livelihoods or health and in the economic, physical, social, cultural and environmental assets. In InaSAFE, people who are killed during the event are also considered affected.</li>
+                    
+                
+                    
+                        
+                        
+                        
+                        <li colspan="100%"><b>Displaced people</b>: Displaced people are people who, for different reasons and circumstances because of risk or disaster, have to leave their place of residence. In InaSAFE, demographic and minimum needs reports are based on displaced / evacuated people.</li>
+                    
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+    <div id="minimum-needs">
+    
+        <h5 class="info">
+            Minimum needs
+        </h5>
+        <table class="table table-striped condensed">
+            <tbody>
+                
+                <tr>
+                    <th colspan="1" class="text-left">Relief items to be provided daily</th>
+                    <th class="text-right" colspan=1>Total</th>
+                </tr>
+
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Family food pack** [pc.]</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Drinking water [l]</td>
+                        <td colspan="1" class="text-right">20</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Clean water [l]</td>
+                        <td colspan="1" class="text-right">50</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Minimum water demand for prolonged period [l]</td>
+                        <td colspan="1" class="text-right">210</td>
+                    </tr>
+                    
+                
+                <tr>
+                    <th colspan="1" class="text-left">Relief items to be provided monthly</th>
+                    <th class="text-right" colspan=1>Total</th>
+                </tr>
+
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Hygiene kits [pc.]</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Water kits [pc.]</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                
+                <tr>
+                    <th colspan="1" class="text-left">Relief items to be provided once</th>
+                    <th class="text-right" colspan=1>Total</th>
+                </tr>
+
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Family kits [pc.]</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Shelter space [sq m]</td>
+                        <td colspan="1" class="text-right">20</td>
+                    </tr>
+                    
+                
+                <tr>
+                    <th colspan="1" class="text-left">Relief items to be provided single</th>
+                    <th class="text-right" colspan=1>Total</th>
+                </tr>
+
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Toilet [pc.]</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Child friendly facilities [sq m]</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Laundry spaces [pc.]</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Water spaces [pc.]</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Health station</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Couple room</td>
+                        <td colspan="1" class="text-right">0</td>
+                    </tr>
+                    
+                
+                <tr>
+                    <th colspan="1" class="text-left">Relief items to be provided weekly</th>
+                    <th class="text-right" colspan=1>Total</th>
+                </tr>
+
+                    
+                    <tr>
+                        <td colspan="1" class="text-left">Hygiene packs</td>
+                        <td colspan="1" class="text-right">10</td>
+                    </tr>
+                    
+                
+            </tbody>
+        </table>
+    
+</div>
+    
+    <div id="aggregation-postprocessors">
+    
+        
+            
+                
+                <h5 class="info">
+                    Estimated number of people displaced by age per aggregation area
+                </h5>
+                    
+                        <table class="table table-striped condensed">
+                            <thead>
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left" rowspan="2">
+                                            Aggregation Area
+                                        </th>
+                                        
+                                    
+                                        
+                                        <th class="text-right" rowspan="2">
+                                            Total displaced population
+                                        </th>
+                                        
+                                    
+                                        
+                                            
+                                            <th class="text-center" colspan="5">
+                                                Age breakdown
+                                            </th>
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                </tr>
+                                <tr>
+                                
+                                    
+                                
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Infant
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Child
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Youth
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Adult
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Elderly
+                                    </th>
+                                    
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Balelleng</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Colunguan</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">San Roque</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                
+                                    
+                                    <th class="text-left">Total</th>
+                                    
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div>
+                            <ul>
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Infant</b>: A very young child or baby aged between 0 and 4 years.</li>
+                                    
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Child</b>: A young person aged between 5 and 14 years, usually below the age of puberty.</li>
+                                    
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Youth</b>: A person aged between 0 and 14 years.</li>
+                                    
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Adult</b>: Person aged between 15 and 64 years, usually of working age.</li>
+                                    
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Elderly</b>: Persons aged 65 years and over.</li>
+                                    
+                                
+                            </ul>
+                        </div>
+                    
+                
+            
+        
+            
+                
+                <h5 class="info">
+                    Estimated number of people displaced by gender per aggregation area
+                </h5>
+                    
+                        <table class="table table-striped condensed">
+                            <thead>
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left" rowspan="2">
+                                            Aggregation Area
+                                        </th>
+                                        
+                                    
+                                        
+                                        <th class="text-right" rowspan="2">
+                                            Total displaced population
+                                        </th>
+                                        
+                                    
+                                        
+                                            
+                                            <th class="text-center" colspan="2">
+                                                Gender breakdown
+                                            </th>
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                </tr>
+                                <tr>
+                                
+                                    
+                                
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Male
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Female
+                                    </th>
+                                    
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Balelleng</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Colunguan</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">San Roque</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                
+                                    
+                                    <th class="text-left">Total</th>
+                                    
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div>
+                            <ul>
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Male</b>: Relating to the characteristics of men.</li>
+                                    
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Female</b>: Relating to the characteristics of women.</li>
+                                    
+                                
+                            </ul>
+                        </div>
+                    
+                
+            
+        
+            
+                
+                <h5 class="info">
+                    Estimated number of people displaced by age vulnerability per aggregation area
+                </h5>
+                    
+                        <table class="table table-striped condensed">
+                            <thead>
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left" rowspan="2">
+                                            Aggregation Area
+                                        </th>
+                                        
+                                    
+                                        
+                                        <th class="text-right" rowspan="2">
+                                            Total displaced population
+                                        </th>
+                                        
+                                    
+                                        
+                                            
+                                            <th class="text-center" colspan="2">
+                                                Age vulnerability breakdown
+                                            </th>
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                </tr>
+                                <tr>
+                                
+                                    
+                                
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Under 5
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Over 60
+                                    </th>
+                                    
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Balelleng</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Colunguan</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">San Roque</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                
+                                    
+                                    <th class="text-left">Total</th>
+                                    
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div>
+                            <ul>
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Under 5</b>: Persons aged under 5 years</li>
+                                    
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Over 60</b>: Persons aged 60 years and over</li>
+                                    
+                                
+                            </ul>
+                        </div>
+                    
+                
+            
+                
+                <h5 class="info">
+                    Estimated number of people displaced by gender vulnerability per aggregation area
+                </h5>
+                    
+                        <p>
+                            Vulnerability ratio is not found. No calculations produced.
+                        </p>
+                    
+                
+            
+                
+                <h5 class="info">
+                    Estimated number of people displaced by disability vulnerability per aggregation area
+                </h5>
+                    
+                        <table class="table table-striped condensed">
+                            <thead>
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left" rowspan="2">
+                                            Aggregation Area
+                                        </th>
+                                        
+                                    
+                                        
+                                        <th class="text-right" rowspan="2">
+                                            Total displaced population
+                                        </th>
+                                        
+                                    
+                                        
+                                            
+                                            <th class="text-center" colspan="1">
+                                                Disability vulnerability breakdown
+                                            </th>
+                                            
+                                        
+                                    
+                                </tr>
+                                <tr>
+                                
+                                    
+                                
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Disabled
+                                    </th>
+                                    
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Balelleng</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Colunguan</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">San Roque</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                
+                                    
+                                    <th class="text-left">Total</th>
+                                    
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div>
+                            <ul>
+                                
+                                    
+                                        
+                                        
+                                        
+                                        <li colspan="100%"><b>Disabled</b>: A person having a physical or mental condition that limits their movements, senses, or activities.</li>
+                                    
+                                
+                            </ul>
+                        </div>
+                    
+                
+            
+        
+            
+                
+                <h5 class="info">
+                    Estimated number of minimum needs per week
+                </h5>
+                    
+                        <table class="table table-striped condensed">
+                            <thead>
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left" rowspan="2">
+                                            Aggregation Area
+                                        </th>
+                                        
+                                    
+                                        
+                                        <th class="text-right" rowspan="2">
+                                            Total displaced population
+                                        </th>
+                                        
+                                    
+                                        
+                                            
+                                            <th class="text-center" colspan="15">
+                                                Minimum needs breakdown
+                                            </th>
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                        
+                                            
+                                        
+                                    
+                                </tr>
+                                <tr>
+                                
+                                    
+                                
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Family food pack** [pc.]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Hygiene kits [pc.]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Family kits [pc.]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Water kits [pc.]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Drinking water [l]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Clean water [l]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Minimum water demand for prolonged period [l]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Shelter space [sq m]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Toilet [pc.]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Child friendly facilities [sq m]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Laundry spaces [pc.]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Water spaces [pc.]
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Health station
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Couple room
+                                    </th>
+                                    
+                                
+                                    
+                                    <th class="text-right">
+                                        Hygiene packs
+                                    </th>
+                                    
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Balelleng</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">30</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">110</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">Colunguan</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">20</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">60</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    
+                                        
+                                        <th class="text-left">San Roque</th>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">20</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">60</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">10</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                        
+                                        <td class="text-right">0</td>
+                                        
+                                    
+                                </tr>
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                
+                                    
+                                    <th class="text-left">Total</th>
+                                    
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">20</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">50</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">210</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">20</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">0</td>
+                                     
+                                
+                                    
+                                    <td class="text-right">10</td>
+                                     
+                                
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div>
+                            <ul>
+                                
+                            </ul>
+                        </div>
+                    
+                
+            
+        
+    
+</div>
+    <div id="notes-assumptions">
+    
+    <h5 class="info">
+        Notes and assumptions
+    </h5>
+    
+    
+    <ul>
+        
+            
+            <h5 class="category">
+                Analysis notes
+            </h5>
+            <div style="background-color: #3DB2DD; height: 4px; margin-top: -8px; margin-left: -15px;" class="category"></div>
+                
+                <li colspan="100%">Columns and rows containing only 0 or "No data" values are excluded from the tables.</li>
+                
+            
+        
+            
+            <h5 class="category">
+                Population exposure general notes
+            </h5>
+            <div style="background-color: #3DB2DD; height: 4px; margin-top: -8px; margin-left: -15px;" class="category"></div>
+                
+                <li colspan="100%">The impacts on roads, people, buildings and other exposure elements may be underestimated if the exposure data are incomplete.</li>
+                
+                <li colspan="100%">Exposed population varies by the time (day or night, weekends, holidays etc.). Such variations are not included in the analysis.</li>
+                
+                <li colspan="100%">Numbers reported for population counts have been rounded to the nearest 10 people if the total is less than 1,000; nearest 100 people if more than 1,000 and less than 100,000; and nearest 1,000 if more than 100,000.</li>
+                
+                <li colspan="100%">Rounding is applied to all population values, which may cause discrepancies between subtotals and totals.</li>
+                
+                <li colspan="100%">Note that report rows containing totals are calculated from the entire analysis area totals and then rounded, whereas the subtotal rows are calculated from the aggregation areas and then rounded. Using this approach we avoid adding already rounded numbers and in so doing compounding the rounding.</li>
+                
+                <li colspan="100%">If displacement counts are 0, no minimum needs and displaced related postprocessors will be shown.</li>
+                
+            
+        
+            
+            <h5 class="category">
+                Flood general notes
+            </h5>
+            <div style="background-color: #3DB2DD; height: 4px; margin-top: -8px; margin-left: -15px;" class="category"></div>
+                
+                <li colspan="100%">The extent and severity of the mapped scenario or hazard zones may not be consistent with future events.</li>
+                
+                <li colspan="100%">The impacts on roads, people, buildings and other exposure elements may differ from the analysis results due to local conditions such as terrain and infrastructure type.</li>
+                
+                <li colspan="100%">The analysis extent is limited to the extent of the aggregation layer or analysis extent. Hazard and exposure data outside the analysis extent are not included in the impact layer, impact map or impact reports.</li>
+                
+            
+        
+            
+            <h5 class="category">
+                Affected notes
+            </h5>
+            <div style="background-color: #3DB2DD; height: 4px; margin-top: -8px; margin-left: -15px;" class="category"></div>
+                
+                <li colspan="100%">Exposures in the following hazard classes are considered affected: High, Medium, Low</li>
+                
+            
+        
+            
+            <h5 class="category">
+                Displacement rates notes
+            </h5>
+            <div style="background-color: #3DB2DD; height: 4px; margin-top: -8px; margin-left: -15px;" class="category"></div>
+                
+                <li colspan="100%">For this analysis, the following displacement rates were used: High - 5%, Medium - 3%, Low - 1%, Use caution - 0%</li>
+                
+            
+        
+    </ul>
+    
+</div>
+    <div id="analysis-provenance-details-simplified">
+    <h5 class="info">
+        Analysis details
+    </h5>
+    
+        
+        <p>
+            <b>Hazard source</b> 25 - source not available - 
+        </p>
+        
+    
+        
+        <p>
+            <b>Exposure source</b> People - source not available - 
+        </p>
+        
+    
+        
+        <p>
+            <b>Aggregation source</b> Barangay - source not available - 
+        </p>
+        
+    
+        
+        <p>
+            <b>Impact Function</b> Flood Raster On Population Polygon
+        </p>
+        
+    
+</div>
+
+    </div>
+  </body>
+</html>
