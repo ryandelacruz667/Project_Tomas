@@ -141,6 +141,69 @@ POST /api/chat
             <strong>Note:</strong> Using a proxy keeps your API key off the client and allows you to implement
             additional safeguards (e.g., auth, rate limiting, logging request IDs).
         </div>
+
+        <h3 id="ai-proxy">OpenAI-Compatible Proxy (Edge-friendly)</h3>
+        <p>
+            You can deploy an OpenAI-compatible proxy (e.g., on Cloudflare Workers) that exposes the same
+            <code>/v1</code> API shape and lets you route to different LLM providers. This helps centralize credentials
+            and policy while keeping keys off clients.
+        </p>
+        <h4>Deploy</h4>
+        <ul>
+            <li>Target: Cloudflare Workers (or any Edge runtime)</li>
+            <li>Set environment variables for the providers you intend to use</li>
+        </ul>
+        <h4>Environment Variables (examples)</h4>
+        <ul>
+            <li><strong>API_KEY</strong>: Proxy API key required by clients calling your proxy</li>
+            <li><strong>OPENAI_API_KEY</strong>: OpenAI API key (if using OpenAI backends)</li>
+            <li><strong>ANTROPIC_API_KEY</strong>: Anthropic API key (if using Anthropic)</li>
+            <li><strong>GOOGLE_GEN_AI_API_KEY</strong>: Google Gemini API key (if using Gemini)</li>
+            <li><strong>VERTEX_ANTROPIC_*</strong>: Service account credentials and region for Vertex Anthropic</li>
+        </ul>
+        <h4>Supported providers/models</h4>
+        <ul>
+            <li>OpenAI (e.g., <code>gpt-4o-mini</code>)</li>
+            <li>Anthropic (e.g., <code>claude-3-5-sonnet-20240620</code>)</li>
+            <li>Google Vertex Anthropic</li>
+            <li>Google Gemini</li>
+            <li>DeepSeek</li>
+        </ul>
+        <h4>Usage (curl)</h4>
+        <div class="codeblock"><pre>
+curl http://localhost:8787/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $API_KEY" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [{ "role": "user", "content": "Hello, world!" }]
+  }'
+        </pre></div>
+        <div class="codeblock"><pre>
+curl http://localhost:8787/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $API_KEY" \
+  -d '{
+    "model": "claude-3-5-sonnet-20240620",
+    "messages": [{ "role": "user", "content": "Hello, world!" }]
+  }'
+        </pre></div>
+        <h4>Usage (OpenAI SDK with baseURL)</h4>
+        <div class="codeblock"><pre>
+const openai = new OpenAI({
+  baseURL: 'http://localhost:8787/v1',
+  apiKey: '$API_KEY',
+});
+
+const response = await openai.chat.completions.create({
+  model: 'gpt-4o-mini',
+  messages: [{ role: 'user', content: 'Hello, world!' }],
+});
+        </pre></div>
+        <p>
+            Point the in-app Proxy URL setting to your proxy's base (e.g., <code>https://&lt;your-domain&gt;/v1</code>),
+            and the chat will route through it instead of hitting OpenAI directly.
+        </p>
     </section>
 
     <section id="design">
