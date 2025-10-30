@@ -3371,6 +3371,7 @@
                 var send = document.getElementById('ai-chat-send');
                 var settings = document.getElementById('ai-chat-settings');
                 var keyHint = document.getElementById('ai-key-hint');
+                var isSending = false;
 
                 function getApiKey(){
                     try { return localStorage.getItem('openai_api_key') || ''; } catch(e){ return ''; }
@@ -3393,34 +3394,58 @@
                     var dd = document.getElementById('floodExtentDropdown');
                     return dd ? String(dd.value || '').trim() : '';
                 }
+                function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
                 async function sendToAI(query){
                     var key = getApiKey();
                     if (!key){ appendMsg('assistant', 'Set your OpenAI API key first (⚙).'); return; }
                     var meter = currentMeter();
                     var systemPrompt = 'You are a helpful GIS assistant for a flood exposure web app. Answer concisely. If asked about a meter, assume the selected meter is ' + (meter || 'unknown') + ' unless specified.';
+                    var backoffs = [1000, 2000, 4000];
+                    var warnedRateLimit = false;
                     try {
-                        var res = await fetch('https://api.openai.com/v1/chat/completions', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ' + key
-                            },
-                            body: JSON.stringify({
-                                model: 'gpt-4o-mini',
-                                messages: [
-                                    { role: 'system', content: systemPrompt },
-                                    { role: 'user', content: query }
-                                ],
-                                temperature: 0.2,
-                                max_tokens: 400
-                            })
-                        });
-                        if (!res.ok){ throw new Error('HTTP ' + res.status); }
-                        var data = await res.json();
-                        var answer = (data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || 'No response';
-                        appendMsg('assistant', answer);
+                        for (var i = 0; i <= backoffs.length; i++) {
+                            var res = await fetch('https://api.openai.com/v1/chat/completions', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'Bearer ' + key
+                                },
+                                body: JSON.stringify({
+                                    model: 'gpt-4o-mini',
+                                    messages: [
+                                        { role: 'system', content: systemPrompt },
+                                        { role: 'user', content: query }
+                                    ],
+                                    temperature: 0.2,
+                                    max_tokens: 400
+                                })
+                            });
+                            if (res.ok) {
+                                var data = await res.json();
+                                var answer = (data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || 'No response';
+                                appendMsg('assistant', answer);
+                                return;
+                            }
+                            if (res.status === 429 && i < backoffs.length) {
+                                if (!warnedRateLimit) {
+                                    appendMsg('assistant', 'Rate limit reached. Retrying...');
+                                    warnedRateLimit = true;
+                                }
+                                await sleep(backoffs[i]);
+                                continue;
+                            }
+                            // Non-retryable or final failure
+                            throw new Error('HTTP ' + res.status);
+                        }
+                        // If we exit loop without return, treat as failure
+                        throw new Error('HTTP 429');
                     } catch(err){
-                        appendMsg('assistant', 'Error contacting AI: ' + (err && err.message ? err.message : String(err)));
+                        var msg = (err && err.message) ? err.message : String(err);
+                        if (msg.indexOf('429') >= 0) {
+                            appendMsg('assistant', 'Rate limit from API. Please wait a moment and try again.');
+                        } else {
+                            appendMsg('assistant', 'Error contacting AI: ' + msg);
+                        }
                     }
                 }
 
@@ -3451,9 +3476,15 @@
                 function doSend(){
                     var q = (input && input.value || '').trim();
                     if (!q) return;
+                    if (isSending) { return; }
+                    isSending = true;
+                    if (send) { send.disabled = true; }
                     appendMsg('user', q);
                     if (input) input.value = '';
-                    sendToAI(q);
+                    Promise.resolve().then(function(){ return sendToAI(q); }).finally(function(){
+                        isSending = false;
+                        if (send) { send.disabled = false; }
+                    });
                 }
                 if (send && !send._wired){ send.addEventListener('click', doSend); send._wired = true; }
                 if (input && !input._wired){ input.addEventListener('keydown', function(e){ if(e.key==='Enter'){ doSend(); } }); input._wired = true; }
