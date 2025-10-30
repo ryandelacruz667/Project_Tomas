@@ -487,6 +487,44 @@
             gap: 8px;
             box-shadow: 0 6px 18px rgba(0,0,0,0.4);
         }
+        .ai-chat-callout {
+            position: fixed;
+            right: 92px; /* 20px (edge) + ~72px (toggle total width) */
+            bottom: 28px;
+            z-index: 1200;
+            background: #243447;
+            color: #ffffff;
+            border: 1px solid #355070;
+            border-radius: 22px;
+            padding: 10px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1;
+            white-space: nowrap;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+            animation: aiCalloutPulse 2s ease-in-out infinite;
+            transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+        .ai-chat-callout::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0; height: 0;
+            border-left: 6px solid #243447;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+        }
+        .ai-chat-callout:hover {
+            border-color: #3ea8ff !important;
+            box-shadow: 0 0 0 2px rgba(62, 168, 255, 0.35), 0 0 10px rgba(62, 168, 255, 0.6) inset, 0 8px 22px rgba(0,0,0,0.45);
+            transform: translateY(-2px);
+        }
+        @keyframes aiCalloutPulse {
+            0%, 100% { transform: translateY(0); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+            50% { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.45); }
+        }
         .ai-chat-panel {
             position: fixed;
             right: 20px;
@@ -942,13 +980,11 @@
                     </div>
                     
                     <!-- AI Chat Widget -->
-                    <button id="ai-chat-toggle" class="ai-chat-toggle" title="Chat with AI">
-                        <span>💬</span>
-                        <span>Ask AI</span>
-                    </button>
+					<img id="ai-chat-toggle" class="ai-chat-toggle" src="images/customer-service.png" alt="Open chat" title="Chat with AI" style="width: 48px; height: 48px; cursor: pointer;">
+					<div class="ai-chat-callout" id="ai-chat-callout">Ask TOMAS</div>
                     <div id="ai-chat-panel" class="ai-chat-panel">
                         <div class="ai-chat-header">
-                            <div class="ai-chat-title">AI Assistant</div>
+                            <div class="ai-chat-title">Chat with TOMAS</div>
                             <div class="ai-chat-actions">
                                 <button id="ai-chat-docs" class="close-btn" title="Proxy setup (docs)">?</button>
                                 <button id="ai-chat-settings" class="close-btn" title="Settings">⚙</button>

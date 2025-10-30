@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CRUD - Items</title>
+	<link rel="icon" href="images/customer-service.png">
+	<style>
+		body {
+			margin: 0;
+			font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+			background: #0f141a;
+			color: #e6edf3;
+		}
+		.container {
+			max-width: 980px;
+			margin: 32px auto;
+			padding: 0 16px;
+		}
+		.card {
+			background: #1e2329;
+			border: 1px solid #3a3f4a;
+			border-radius: 12px;
+			padding: 16px;
+			box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+		}
+		h1 { font-size: 22px; margin: 0 0 16px; }
+		.form-row { display: flex; gap: 12px; flex-wrap: wrap; }
+		.field { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 6px; }
+		label { font-weight: 600; color: #cfd9e3; }
+		input, textarea {
+			background: #0f141a;
+			border: 1px solid #3a3f4a;
+			border-radius: 8px;
+			padding: 10px 12px;
+			color: #e6edf3;
+			outline: none;
+		}
+		textarea { min-height: 92px; resize: vertical; }
+		.actions { display: flex; gap: 10px; margin-top: 12px; }
+		button {
+			background: #2a2f39;
+			border: 1px solid #3a3f4a;
+			color: #fff;
+			border-radius: 8px;
+			padding: 10px 14px;
+			cursor: pointer;
+		}
+		button:hover {
+			border-color: #3ea8ff !important;
+			box-shadow: 0 0 0 2px rgba(62, 168, 255, 0.35), 0 0 10px rgba(62, 168, 255, 0.6) inset;
+		}
+		table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+		th, td { text-align: left; border-bottom: 1px solid #2a2f39; padding: 10px; }
+		th { color: #f39c12; }
+		.row-actions { display: flex; gap: 8px; }
+		.empty { text-align: center; color: #9aa7b4; padding: 20px; }
+		.header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+		.header a { color: #9aa7b4; text-decoration: none; }
+		.header a:hover { color: #e6edf3; }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<h1>Items</h1>
+			<a href="./index.html">← Back to map</a>
+		</div>
+		<div class="card">
+			<form id="item-form">
+				<input type="hidden" id="item-id">
+				<div class="form-row">
+					<div class="field">
+						<label for="name">Name</label>
+						<input id="name" type="text" placeholder="e.g. Generator" required>
+					</div>
+					<div class="field">
+						<label for="description">Description</label>
+						<textarea id="description" placeholder="Details..."></textarea>
+					</div>
+				</div>
+				<div class="actions">
+					<button id="save-btn" type="submit">Save</button>
+					<button id="reset-btn" type="button">Reset</button>
+				</div>
+			</form>
+			<table>
+				<thead>
+					<tr>
+						<th style="width: 80px;">ID</th>
+						<th>Name</th>
+						<th>Description</th>
+						<th style="width: 180px;">Actions</th>
+					</tr>
+				</thead>
+				<tbody id="items-tbody">
+					<tr class="empty"><td colspan="4">No items yet</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script>
+	(function(){
+		const apiBase = location.origin + '/api/items';
+		const form = document.getElementById('item-form');
+		const idEl = document.getElementById('item-id');
+		const nameEl = document.getElementById('name');
+		const descEl = document.getElementById('description');
+		const tbody = document.getElementById('items-tbody');
+		const resetBtn = document.getElementById('reset-btn');
+
+		async function listItems(){
+			const res = await fetch(apiBase);
+			const items = await res.json();
+			renderRows(items);
+		}
+
+		function renderRows(items){
+			tbody.innerHTML = '';
+			if (!items || items.length === 0){
+				const tr = document.createElement('tr');
+				tr.className = 'empty';
+				tr.innerHTML = '<td colspan="4">No items yet</td>';
+				tbody.appendChild(tr);
+				return;
+			}
+			for (const item of items){
+				const tr = document.createElement('tr');
+				tr.innerHTML = `
+					<td>${item.id}</td>
+					<td>${escapeHtml(item.name)}</td>
+					<td>${escapeHtml(item.description || '')}</td>
+					<td>
+						<div class="row-actions">
+							<button data-edit="${item.id}">Edit</button>
+							<button data-delete="${item.id}">Delete</button>
+						</div>
+					</td>`;
+				tr.addEventListener('click', onRowActionClick);
+				tbody.appendChild(tr);
+			}
+		}
+
+		function escapeHtml(str){
+			return String(str)
+				.replaceAll('&', '&amp;')
+				.replaceAll('<', '&lt;')
+				.replaceAll('>', '&gt;')
+				.replaceAll('"', '&quot;')
+				.replaceAll("'", '&#39;');
+		}
+
+		async function onRowActionClick(e){
+			const editId = e.target.getAttribute('data-edit');
+			const deleteId = e.target.getAttribute('data-delete');
+			if (editId){
+				const res = await fetch(`${apiBase}/${editId}`);
+				if (res.ok){
+					const item = await res.json();
+					idEl.value = item.id;
+					nameEl.value = item.name;
+					descEl.value = item.description || '';
+					nameEl.focus();
+				}
+			}
+			if (deleteId){
+				if (!confirm('Delete this item?')) return;
+				const res = await fetch(`${apiBase}/${deleteId}`, { method: 'DELETE' });
+				if (res.status === 204){
+					await listItems();
+				}
+			}
+		}
+
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			const payload = {
+				name: nameEl.value.trim(),
+				description: descEl.value.trim()
+			};
+			const id = idEl.value;
+			if (id){
+				const res = await fetch(`${apiBase}/${id}`, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload)
+				});
+				if (res.ok){
+					resetForm();
+					await listItems();
+				}
+			} else {
+				const res = await fetch(apiBase, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(payload)
+				});
+				if (res.ok){
+					resetForm();
+					await listItems();
+				}
+			}
+		});
+
+		function resetForm(){
+			idEl.value = '';
+			nameEl.value = '';
+			descEl.value = '';
+		}
+		resetBtn.addEventListener('click', resetForm);
+
+		listItems();
+	})();
+	</script>
+</body>
+</html>
+
+
