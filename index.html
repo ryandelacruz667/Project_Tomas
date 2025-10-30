@@ -950,6 +950,7 @@
                         <div class="ai-chat-header">
                             <div class="ai-chat-title">AI Assistant</div>
                             <div class="ai-chat-actions">
+                                <button id="ai-chat-docs" class="close-btn" title="Proxy setup (docs)">?</button>
                                 <button id="ai-chat-settings" class="close-btn" title="Settings">⚙</button>
                                 <button id="ai-chat-close" class="close-btn" title="Close">×</button>
                             </div>
@@ -3370,6 +3371,7 @@
                 var input = document.getElementById('ai-chat-input');
                 var send = document.getElementById('ai-chat-send');
                 var settings = document.getElementById('ai-chat-settings');
+                var docsBtn = document.getElementById('ai-chat-docs');
                 var keyHint = document.getElementById('ai-key-hint');
                 var isSending = false;
 
@@ -3502,6 +3504,12 @@
                         }
                     });
                     settings._wired = true;
+                }
+                if (docsBtn && !docsBtn._wired){
+                    docsBtn.addEventListener('click', function(){
+                        try { window.open('Documentation.html#ai-proxy', '_blank'); } catch(e){}
+                    });
+                    docsBtn._wired = true;
                 }
                 function doSend(){
                     var q = (input && input.value || '').trim();
