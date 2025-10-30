@@ -469,6 +469,77 @@
             border-color: #3ea8ff !important;
             box-shadow: 0 0 0 2px rgba(62, 168, 255, 0.35), 0 0 10px rgba(62, 168, 255, 0.6) inset;
         }
+
+        /* Chat widget */
+        .ai-chat-toggle {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1200;
+            background: #2a2f39;
+            color: #fff;
+            border: 1px solid #3a3f4a;
+            padding: 10px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+        }
+        .ai-chat-panel {
+            position: fixed;
+            right: 20px;
+            bottom: 76px;
+            width: 340px;
+            max-height: 70vh;
+            display: none;
+            flex-direction: column;
+            background: #1e2329;
+            border: 1px solid #3a3f4a;
+            border-radius: 12px;
+            overflow: hidden;
+            z-index: 1200;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+        }
+        .ai-chat-header {
+            padding: 10px 12px;
+            background: #161b22;
+            border-bottom: 1px solid #2a2f39;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .ai-chat-title { color: #f39c12; font-weight: 700; }
+        .ai-chat-actions { display: flex; gap: 6px; }
+        .ai-chat-body {
+            padding: 10px 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 52vh;
+        }
+        .ai-msg { padding: 8px 10px; border-radius: 10px; max-width: 85%; }
+        .ai-msg.user { background: #243447; align-self: flex-end; border: 1px solid #355070; }
+        .ai-msg.assistant { background: #2a2f39; align-self: flex-start; border: 1px solid #3a3f4a; }
+        .ai-chat-input {
+            display: flex;
+            gap: 8px;
+            padding: 10px 12px;
+            border-top: 1px solid #2a2f39;
+            background: #1e2329;
+        }
+        .ai-chat-input input {
+            flex: 1 1 auto;
+            background: #14181d;
+            color: #fff;
+            border: 1px solid #3a3f4a;
+            border-radius: 8px;
+            padding: 8px 10px;
+        }
+        .ai-chat-input button { border-radius: 8px; background:#2a2f39; color:#fff; border:1px solid #3a3f4a; padding: 8px 10px; cursor: pointer; }
+        .ai-key-hint { color:#8aa0b4; font-size: 12px; padding: 6px 12px; border-top: 1px dashed #2a2f39; }
         
         .modal-header {
             cursor: move;
@@ -867,6 +938,27 @@
                                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                                 <div id="popup-content"></div>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Chat Widget -->
+                    <button id="ai-chat-toggle" class="ai-chat-toggle" title="Chat with AI">
+                        <span>💬</span>
+                        <span>Ask AI</span>
+                    </button>
+                    <div id="ai-chat-panel" class="ai-chat-panel">
+                        <div class="ai-chat-header">
+                            <div class="ai-chat-title">AI Assistant</div>
+                            <div class="ai-chat-actions">
+                                <button id="ai-chat-settings" class="close-btn" title="Settings">⚙</button>
+                                <button id="ai-chat-close" class="close-btn" title="Close">×</button>
+                            </div>
+                        </div>
+                        <div id="ai-chat-body" class="ai-chat-body"></div>
+                        <div class="ai-key-hint" id="ai-key-hint" style="display:none;">No API key set. Click ⚙ to add your OpenAI API key locally.</div>
+                        <div class="ai-chat-input">
+                            <input id="ai-chat-input" type="text" placeholder="Ask about the data..." />
+                            <button id="ai-chat-send">Send</button>
                         </div>
                     </div>
                 </div>
@@ -3268,6 +3360,104 @@
                 });
                 toggleInfoBtn._wired = true;
             }
+
+            // AI Chat widget logic
+            (function(){
+                var toggle = document.getElementById('ai-chat-toggle');
+                var panel = document.getElementById('ai-chat-panel');
+                var closeBtn = document.getElementById('ai-chat-close');
+                var body = document.getElementById('ai-chat-body');
+                var input = document.getElementById('ai-chat-input');
+                var send = document.getElementById('ai-chat-send');
+                var settings = document.getElementById('ai-chat-settings');
+                var keyHint = document.getElementById('ai-key-hint');
+
+                function getApiKey(){
+                    try { return localStorage.getItem('openai_api_key') || ''; } catch(e){ return ''; }
+                }
+                function setApiKey(val){
+                    try { localStorage.setItem('openai_api_key', val || ''); } catch(e){}
+                }
+                function ensureKeyHint(){
+                    var has = !!getApiKey();
+                    if (keyHint) keyHint.style.display = has ? 'none' : 'block';
+                }
+                function appendMsg(role, text){
+                    var div = document.createElement('div');
+                    div.className = 'ai-msg ' + (role === 'user' ? 'user' : 'assistant');
+                    div.textContent = text;
+                    body.appendChild(div);
+                    body.scrollTop = body.scrollHeight;
+                }
+                function currentMeter(){
+                    var dd = document.getElementById('floodExtentDropdown');
+                    return dd ? String(dd.value || '').trim() : '';
+                }
+                async function sendToAI(query){
+                    var key = getApiKey();
+                    if (!key){ appendMsg('assistant', 'Set your OpenAI API key first (⚙).'); return; }
+                    var meter = currentMeter();
+                    var systemPrompt = 'You are a helpful GIS assistant for a flood exposure web app. Answer concisely. If asked about a meter, assume the selected meter is ' + (meter || 'unknown') + ' unless specified.';
+                    try {
+                        var res = await fetch('https://api.openai.com/v1/chat/completions', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + key
+                            },
+                            body: JSON.stringify({
+                                model: 'gpt-4o-mini',
+                                messages: [
+                                    { role: 'system', content: systemPrompt },
+                                    { role: 'user', content: query }
+                                ],
+                                temperature: 0.2,
+                                max_tokens: 400
+                            })
+                        });
+                        if (!res.ok){ throw new Error('HTTP ' + res.status); }
+                        var data = await res.json();
+                        var answer = (data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || 'No response';
+                        appendMsg('assistant', answer);
+                    } catch(err){
+                        appendMsg('assistant', 'Error contacting AI: ' + (err && err.message ? err.message : String(err)));
+                    }
+                }
+
+                if (toggle && !toggle._wired){
+                    toggle.addEventListener('click', function(){
+                        if (!panel) return;
+                        var isOpen = panel.style.display === 'flex';
+                        panel.style.display = isOpen ? 'none' : 'flex';
+                        ensureKeyHint();
+                    });
+                    toggle._wired = true;
+                }
+                if (closeBtn && !closeBtn._wired){
+                    closeBtn.addEventListener('click', function(){ if(panel) panel.style.display = 'none'; });
+                    closeBtn._wired = true;
+                }
+                if (settings && !settings._wired){
+                    settings.addEventListener('click', function(){
+                        var current = getApiKey();
+                        var val = prompt('Enter your OpenAI API key (stored locally):', current ? (current.slice(0,3) + '...' + current.slice(-4)) : '');
+                        if (!val) { ensureKeyHint(); return; }
+                        if (val.indexOf('...') >= 0 && current){ ensureKeyHint(); return; }
+                        setApiKey(val);
+                        ensureKeyHint();
+                    });
+                    settings._wired = true;
+                }
+                function doSend(){
+                    var q = (input && input.value || '').trim();
+                    if (!q) return;
+                    appendMsg('user', q);
+                    if (input) input.value = '';
+                    sendToAI(q);
+                }
+                if (send && !send._wired){ send.addEventListener('click', doSend); send._wired = true; }
+                if (input && !input._wired){ input.addEventListener('keydown', function(e){ if(e.key==='Enter'){ doSend(); } }); input._wired = true; }
+            })();
 
             // ESC to close whichever modal is open
             document.addEventListener('keydown', function(e){
