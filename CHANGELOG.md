@@ -23,15 +23,79 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Medium hazard: 412 population → 12.36 displaced (3%)
     - Low hazard: 519 population → 5.19 displaced (1%)
     - Total calculated displaced: 43.9 people
+- Row numbering column ("No.") in flood exposure table for easier reference
+- Charts panel on right side of map (appears automatically when flood extent is selected):
+  - Pie chart showing total exposed population by hazard level (High, Medium, Low, Very Low) - shows totals when no filters selected, filtered data when barangay or exposure level is selected
+  - Bar chart showing exposed population by age group (Infant, Child, Youth, Adult, Elderly, Disabled) - shows totals when no filters selected, filtered data when filters are applied
+  - Charts automatically update when barangay or exposure level selection changes
+  - Charts panel positioned on right side of map (no separate pane structure)
 
 ### Changed
 - Enhanced data analysis capabilities for hazard assessment
+- Moved "Flood Exposure" filter from table filters area to left sidebar in Flood Extent section for better organization and accessibility
+- Improved layout and organization of Flood Extent controls in sidebar
 
 ### Deprecated
 
 ### Removed
+- Removed "Flood Exposure" filter from table filters area (moved to sidebar)
 
 ### Fixed
+- Fixed flood exposure table to show all records when filtering by Barangay and Flood Exposure dropdowns
+- Removed deduplication logic that was preventing all matching records from being displayed
+- Updated table counter to accurately reflect the total number of displayed records matching the selected filters
+- Fixed white pane appearing on the right side by changing body/html background to dark theme and ensuring charts panel is properly hidden by default
+- Fixed table overlapping with charts panel by adding proper width constraints and overflow handling to table container elements
+- Adjusted table columns with fixed layout and centered headers for better fit
+- Removed horizontal scrolling from table by using fixed column widths and text overflow handling
+- Fixed table scrolling issue - table now scrolls vertically properly without being hidden behind charts panel by adjusting z-index and adding proper overflow handling
+- Redesigned charts panel and table layout for modern, non-overlapping design:
+  - Charts panel now matches table height (40vh) and aligns side-by-side
+  - Added gradient backgrounds and modern styling with rounded corners
+  - Enhanced visual hierarchy with improved shadows, borders, and typography
+  - Chart containers have rounded corners and subtle backgrounds
+  - Headers styled with uppercase text and accent borders
+  - Perfect alignment with no overlapping between table and charts
+- Fixed z-index and overflow issues:
+  - Added proper z-index values to select elements to prevent dropdowns from floating over charts panel
+  - Select dropdowns now have z-index: 1 (normal) and z-index: 100 (when focused) to ensure proper layering
+  - Charts panel maintains z-index: 999, table maintains z-index: 1001
+  - Sidebar has z-index: 100 to ensure proper stacking order
+  - Added overflow handling to prevent content from extending beyond boundaries
+- Added responsive design for multiple screen sizes:
+  - Desktop (1400px+): Full width charts panel (400px)
+  - Large tablets (1200px-1400px): Reduced charts panel (350px), adjusted table height (35vh)
+  - Medium tablets (1024px-1200px): Further reduced charts panel (300px), smaller fonts
+  - Small tablets (768px-1024px): Charts panel (280px), table height (30vh), adjusted padding
+  - Mobile landscape (640px-768px): Narrower sidebar (280px), charts panel (250px), vertical filter layout
+  - Mobile portrait (<640px): Charts panel moves to bottom (40vh), full width, sidebar narrows to 260px
+- Fixed chart containment in right pane:
+  - Added proper overflow handling to charts panel and all chart containers
+  - Charts (pie and bar) now properly contained within the right pane boundaries
+  - Added max-width and box-sizing constraints to prevent charts from overflowing
+  - Canvas elements now respect container boundaries with proper width/height constraints
+  - Chart container heights adjusted responsively for different screen sizes (280px default, 200px at 1024px, 160px at 768px, 140px at 640px)
+  - Headers and chart containers now have proper text overflow handling
+- Updated charts panel layout:
+  - Removed height restrictions on pie and bar charts - charts now flex to fill the entire height of the right pane
+  - Removed scroll from charts panel - charts spread to use all available vertical space
+  - Charts use flexbox layout to evenly distribute height between pie and bar charts
+  - Charts panel now extends to full viewport height (calc(100vh - 72px)) instead of 40vh, allowing charts to fill all available vertical space
+  - Moved "Flood Exposure" filter back to the flood exposure table filters area (removed from sidebar)
+- Fixed z-index layering for population exposure table:
+  - Lowered table z-index from 1001 to 950 so modals (z-index: 1000) can appear above it
+  - Table still appears above charts panel (z-index: 999) but below modals to ensure household details modal is visible
+- Fixed population exposure table data to match household details:
+  - Added `calculateDemographicsFromHouseholds()` function to calculate demographic counts from household data
+  - Population exposure table now calculates infant, child, youth, adult, elderly, male, female, and disabled counts from household members' AGE and SEX columns
+  - Counts are aggregated by exposure_id (FAMILY-ID) to match what's shown in household details modal
+  - Age groups: Infant (0-4), Child (5-14), Youth (15-24), Adult (25-64), Elderly (65+)
+  - Falls back to exposure dataset values if household data is not available
+- Fixed charts to reflect Population exposure table data:
+  - Pie chart (Hazard Level Distribution) now counts the number of rows by hazard level (High, Medium, Low, Very Low) instead of summing population
+  - Bar chart (Exposed Population by Age) now uses calculated demographics from household data (same as table) - sums infant, child, youth, adult, elderly, and disabled counts
+  - Charts use the same filtering logic as the table and calculate demographics the same way
+  - Tooltips updated to show whole numbers (records for pie chart, population counts for bar chart)
 
 ### Security
 
