@@ -198,6 +198,9 @@
         
         /* Flood Legend Styles */
         .flood-legend-section {
+            margin: 0.8rem 2rem 0.8rem 2rem;
+        }
+        .flood-legend-section:first-of-type {
             margin: 1.5rem 2rem 1rem 2rem;
         }
         .flood-legend {
@@ -795,33 +798,6 @@
                         <button id="toggleInfographicsBtn" style="margin-top: 8px; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #3a3f4a; background:#2a2f39; color:#fff; cursor:pointer; font-weight:600;">Infographics</button>
                     <button id="impactReportBtn" style="margin-top: 8px; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #3a3f4a; background:#2a2f39; color:#fff; cursor:pointer; font-weight:600;">Impact Report</button>
                     </div>
-                    <hr class="flood-divider" />
-                    <!-- Flood Extent Legend -->
-                    <div class="flood-legend-section">
-                        <div class="flood-form-label" style="font-size: 0.9em;">Legends (Flood Depth)</div>
-                        <div class="flood-legend" style="display: flex; flex-direction: column; gap: 4px;">
-                            <div class="legend-item" style="display: flex; align-items: center; gap: 6px;">
-                                <img src="styles/legend/24_10_0.png" alt="0.0010" class="legend-icon" style="width: 18px; height: 18px; padding: 4px;" />
-                                <span class="legend-text" style="font-size: 0.85em;">0.0010m</span>
-                            </div>
-                            <div class="legend-item" style="display: flex; align-items: center; gap: 6px;">
-                                <img src="styles/legend/24_10_1.png" alt="2.3258" class="legend-icon" style="width: 18px; height: 18px; padding: 4px;" />
-                                <span class="legend-text" style="font-size: 0.85em;">2.3258m</span>
-                            </div>
-                            <div class="legend-item" style="display: flex; align-items: center; gap: 6px;">
-                                <img src="styles/legend/24_10_2.png" alt="4.6505" class="legend-icon" style="width: 18px; height: 18px; padding: 4px;" />
-                                <span class="legend-text" style="font-size: 0.85em;">4.6505m</span>
-                            </div>
-                            <div class="legend-item" style="display: flex; align-items: center; gap: 6px;">
-                                <img src="styles/legend/24_10_3.png" alt="6.9753" class="legend-icon" style="width: 18px; height: 18px; padding: 4px;" />
-                                <span class="legend-text" style="font-size: 0.85em;">6.9753m</span>
-                            </div>
-                            <div class="legend-item" style="display: flex; align-items: center; gap: 6px;">
-                                <img src="styles/legend/24_10_4.png" alt="9.3000" class="legend-icon" style="width: 18px; height: 18px; padding: 4px;" />
-                                <span class="legend-text" style="font-size: 0.85em;">9.3000m</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- Top Bar -->
@@ -879,7 +855,6 @@
                                         <option value="medium">Medium</option>
                                         <option value="low">Low</option>
                                         <option value="very low">Very Low</option>
-                                        <option value="use_caution">Use Caution</option>
                                     </select>
                                 </div>
                             </div>
@@ -888,7 +863,6 @@
                                 <table class="flood-table" id="people-24-table-inner" style="margin:0;">
                                     <thead style="position: sticky; top: 0; z-index: 2;">
                                         <tr>
-                                            <th>Family ID</th>
                                             <th>Barangay</th>
                                             <th>Infant</th>
                                             <th>Child</th>
@@ -923,6 +897,7 @@
                                     <table id="household-details-table" class="household-table">
                                         <thead>
                                             <tr>
+                                                <th>Relation</th>
                                                 <th>Given Name</th>
                                                 <th>Last Name</th>
                                                 <th>Age</th>
@@ -972,9 +947,61 @@
                     </div>
                     <div id="lower-pane-map">
                         <div id="map">
-                            <div
+                            <div>
                                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                                 <div id="popup-content"></div>
+                            </div>
+                        </div>
+                        <!-- Map Legend -->
+                        <div id="map-legend" style="display: none; position: absolute; bottom: 20px; left: 20px; background: rgba(38, 42, 51, 0.95); border: 1px solid #333; border-radius: 8px; padding: 12px; min-width: 200px; z-index: 1000;">
+                            <div style="color: #fafafa; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; text-align: center;">Legends</div>
+                            <!-- Flood Depth Legend -->
+                            <div style="margin-bottom: 8px;">
+                                <div style="color: #fafafa; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid #444;">Water Depth</div>
+                                <div style="display: flex; flex-direction: column; gap: 3px;">
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <img src="styles/legend/24_10_0.png" alt="0.0010" style="width: 18px; height: 18px; padding: 4px;" />
+                                        <span style="color: #fafafa; font-size: 0.85em;">0.0010m</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <img src="styles/legend/24_10_1.png" alt="2.3258" style="width: 18px; height: 18px; padding: 4px;" />
+                                        <span style="color: #fafafa; font-size: 0.85em;">2.3258m</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <img src="styles/legend/24_10_2.png" alt="4.6505" style="width: 18px; height: 18px; padding: 4px;" />
+                                        <span style="color: #fafafa; font-size: 0.85em;">4.6505m</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <img src="styles/legend/24_10_3.png" alt="6.9753" style="width: 18px; height: 18px; padding: 4px;" />
+                                        <span style="color: #fafafa; font-size: 0.85em;">6.9753m</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <img src="styles/legend/24_10_4.png" alt="9.3000" style="width: 18px; height: 18px; padding: 4px;" />
+                                        <span style="color: #fafafa; font-size: 0.85em;">9.3000m</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Population Affected Legend -->
+                            <div>
+                                <div style="color: #fafafa; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; padding-top: 4px; padding-bottom: 4px; border-top: 1px solid #444; border-bottom: 1px solid #444;">Flood Exposure</div>
+                                <div style="display: flex; flex-direction: column; gap: 3px;">
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <img src="styles/legend/Numberofpeopleat24meters_12_0.png" alt="High" style="width: 18px; height: 18px; padding: 4px;" />
+                                        <span style="color: #fafafa; font-size: 0.85em;">High (> 1.5 m)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <img src="styles/legend/Numberofpeopleat24meters_12_1.png" alt="Moderate" style="width: 18px; height: 18px; padding: 4px;" />
+                                        <span style="color: #fafafa; font-size: 0.85em;">Moderate (> 0.7 - 1.5 m)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <img src="styles/legend/Numberofpeopleat24meters_12_2.png" alt="Low" style="width: 18px; height: 18px; padding: 4px;" />
+                                        <span style="color: #fafafa; font-size: 0.85em;">Low (> 0.1 - 0.7 m)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <img src="styles/legend/Numberofpeopleat24meters_12_3.png" alt="Very Low" style="width: 18px; height: 18px; padding: 4px;" />
+                                        <span style="color: #fafafa; font-size: 0.85em;">Very Low (<= 0.1 m)</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2320,6 +2347,12 @@
                     var selectedValue = this.value;
                     console.log('Flood extent changed to:', selectedValue);
                     
+                    // Show/hide map legend based on selection
+                    var mapLegend = document.getElementById('map-legend');
+                    if (mapLegend) {
+                        mapLegend.style.display = (selectedValue !== '') ? 'block' : 'none';
+                    }
+                    
                     if (selectedValue === '24') {
                         showFloodData('24');
                         setTimeout(function(){ showPeopleTableFor(24); }, 200);
@@ -2534,29 +2567,50 @@
                 }
                 var rows = '';
                 var feats = jsonObj.features;
+                var seenExposureIds = new Set(); // Track unique exposure_id values
+                
                 for (var i = 0; i < feats.length; i++) {
                     var p = feats[i] && feats[i].properties ? feats[i].properties : {};
+                    
+                    // Check for unique exposure_id
+                    var exposureId = p.exposure_id;
+                    if (exposureId != null && seenExposureIds.has(exposureId)) {
+                        continue; // Skip duplicate exposure_id
+                    }
+                    seenExposureIds.add(exposureId);
+                    
+                    // Filter to only show affected populations
+                    var affected = p.affected;
+                    if (affected !== 'True' && affected !== true) continue;
+                    
+                    // Check if sum of all demographic values is 0
+                    var sum = (p.infant || 0) + (p.child || 0) + (p.youth || 0) + (p.adult || 0) + 
+                             (p.elderly || 0) + (p.male || 0) + (p.female || 0) + (p.disabled || 0);
+                    if (sum === 0) continue; // Skip rows with no population data
+                    
                     var brgy = p['aggregation_name'] || '';
-                    rows += '<tr>' +
-                        '<td>' + (p.exposure_id != null ? p.exposure_id : '') + '</td>' +
+                    rows += '<tr data-exposure-id="' + (exposureId || '') + '">' +
                         '<td>' + brgy + '</td>' +
-                        '<td>' + (p.infant != null ? p.infant : '') + '</td>' +
-                        '<td>' + (p.child != null ? p.child : '') + '</td>' +
-                        '<td>' + (p.youth != null ? p.youth : '') + '</td>' +
-                        '<td>' + (p.adult != null ? p.adult : '') + '</td>' +
-                        '<td>' + (p.elderly != null ? p.elderly : '') + '</td>' +
-                        '<td>' + (p.male != null ? p.male : '') + '</td>' +
-                        '<td>' + (p.female != null ? p.female : '') + '</td>' +
-                        '<td>' + (p.disabled != null ? p.disabled : '') + '</td>' +
+                        '<td>' + (p.infant || 0) + '</td>' +
+                        '<td>' + (p.child || 0) + '</td>' +
+                        '<td>' + (p.youth || 0) + '</td>' +
+                        '<td>' + (p.adult || 0) + '</td>' +
+                        '<td>' + (p.elderly || 0) + '</td>' +
+                        '<td>' + (p.male || 0) + '</td>' +
+                        '<td>' + (p.female || 0) + '</td>' +
+                        '<td>' + (p.disabled || 0) + '</td>' +
                         '<td>' + (p.hazard_class != null ? p.hazard_class : '') + '</td>' +
                     '</tr>';
                 }
-                return rows || '<tr><td colspan="11" class="empty-message">No data</td></tr>';
+                return rows || '<tr><td colspan="10" class="empty-message">No data</td></tr>';
             } catch (e) {
-                return '<tr><td colspan="11" class="empty-message">Error loading data</td></tr>';
+                return '<tr><td colspan="10" class="empty-message">Error loading data</td></tr>';
             }
         }
 
+        // Helper function to calculate demographics from household data based on exposure_id
+        // (Function removed - now using precomputed population data from the exposure dataset)
+        
         // Filtering
         var currentPeopleAllFeats = [];
         function populatePeopleFiltersFromFeatures(feats) {
@@ -2591,9 +2645,13 @@
 
             var rendered = 0;
             var rows = '';
+            var seenExposureIds = new Set(); // Track unique exposure_id values
+            var totalAffected = 0; // Count total affected features for counter
+            
             for (var i = 0; i < currentPeopleAllFeats.length; i++) {
                 var f = currentPeopleAllFeats[i];
                 var p = f && f.properties ? f.properties : {};
+                
                 // filters
                 var brgyVal = (p['aggregation_name'] || '').toString().trim().toLowerCase();
                 var brgySel = (brgy || '').toString().trim().toLowerCase();
@@ -2604,28 +2662,45 @@
                 if (hazardClass === 'use_caution') hazardClass = 'very low'; // Normalize use_caution to very low
                 var exposureSel = (exposure || '').toString().trim().toLowerCase();
                 if (exposureSel && hazardClass !== exposureSel) continue;
+                
+                // Check for unique exposure_id
+                var exposureId = p.exposure_id;
+                if (exposureId != null && seenExposureIds.has(exposureId)) {
+                    continue; // Skip duplicate exposure_id
+                }
+                seenExposureIds.add(exposureId);
+                
+                // Filter to only show affected populations
+                var affected = p.affected;
+                if (affected !== 'True' && affected !== true) continue;
+                totalAffected++; // Count this affected feature
+                
+                // Check if sum of all demographic values is 0
+                var sum = (p.infant || 0) + (p.child || 0) + (p.youth || 0) + (p.adult || 0) + 
+                         (p.elderly || 0) + (p.male || 0) + (p.female || 0) + (p.disabled || 0);
+                if (sum === 0) continue; // Skip rows with no population data
+                
                 // row
                 var hazard = (p.hazard_class != null ? String(p.hazard_class) : '');
                 if (hazard.toLowerCase() === 'use_caution') hazard = 'very low';
                 var brgyShow = p['aggregation_name'] || '';
-                rows += '<tr>' +
-                    '<td>' + (p.exposure_id != null ? p.exposure_id : '') + '</td>' +
+                rows += '<tr data-exposure-id="' + (exposureId || '') + '">' +
                     '<td>' + brgyShow + '</td>' +
-                    '<td>' + (p.infant != null ? p.infant : '') + '</td>' +
-                    '<td>' + (p.child != null ? p.child : '') + '</td>' +
-                    '<td>' + (p.youth != null ? p.youth : '') + '</td>' +
-                    '<td>' + (p.adult != null ? p.adult : '') + '</td>' +
-                    '<td>' + (p.elderly != null ? p.elderly : '') + '</td>' +
-                    '<td>' + (p.male != null ? p.male : '') + '</td>' +
-                    '<td>' + (p.female != null ? p.female : '') + '</td>' +
-                    '<td>' + (p.disabled != null ? p.disabled : '') + '</td>' +
+                    '<td>' + (p.infant || 0) + '</td>' +
+                    '<td>' + (p.child || 0) + '</td>' +
+                    '<td>' + (p.youth || 0) + '</td>' +
+                    '<td>' + (p.adult || 0) + '</td>' +
+                    '<td>' + (p.elderly || 0) + '</td>' +
+                    '<td>' + (p.male || 0) + '</td>' +
+                    '<td>' + (p.female || 0) + '</td>' +
+                    '<td>' + (p.disabled || 0) + '</td>' +
                     '<td>' + hazard + '</td>' +
                 '</tr>';
                 rendered++;
             }
-            if (rows === '') rows = '<tr><td colspan="11" class="empty-message">No data</td></tr>';
+            if (rows === '') rows = '<tr><td colspan="10" class="empty-message">No data</td></tr>';
             tbody.innerHTML = rows;
-            updatePeopleCount(rendered, currentPeopleAllFeats.length);
+            updatePeopleCount(rendered, totalAffected);
         }
 
         function updatePeopleCount(rendered, total) {
@@ -2693,22 +2768,23 @@
                 
                 if (!modal || !title || !tbody || !householdSizeValue) return;
                 
-                // Find household data for this family ID
+                // Find household data for this fid
                 var householdData = findHouseholdDataByFamilyId(familyId);
                 
                 if (householdData.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">No household data found for Family ID: ' + familyId + '</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #999;">No household data found for fid: ' + familyId + '</td></tr>';
                     householdSizeValue.textContent = '-';
                 } else {
                     var rows = '';
                     var familyReligion = generateReligion(); // Generate one religion for the entire family
-                    var householdSize = householdData.length > 0 ? (householdData[0]['NUMBER OF OCCUPANTS'] || '') : '';
+                    var householdSize = householdData.length; // Count the number of rows
                     
                     // Display household size at the top
                     householdSizeValue.textContent = householdSize;
                     
                     householdData.forEach(function(member) {
                         rows += '<tr>' +
+                            '<td>' + (member['RELATION'] || '') + '</td>' +
                             '<td>' + (member['GIVEN NAME'] || '') + '</td>' +
                             '<td>' + (member['LAST NAME'] || '') + '</td>' +
                             '<td>' + (member['AGE'] || '') + '</td>' +
@@ -2720,13 +2796,15 @@
                     tbody.innerHTML = rows;
                 }
                 
-                title.textContent = 'Household Details - Family ID: ' + familyId;
+                title.textContent = 'Household Details - fid: ' + familyId;
                 modal.style.display = 'flex';
                 
-                // Zoom to the selected polygon
+                // Zoom to and highlight the selected polygon
                 console.log('Attempting to zoom to feature:', feature);
                 if (feature) {
                     zoomToFeature(feature);
+                    // Highlight the population polygon
+                    highlightPopulationPolygon(feature);
                 } else {
                     console.log('No feature provided for zooming');
                 }
@@ -2741,6 +2819,8 @@
                 modal.style.display = 'none';
                 // Remove house marker when modal is closed
                 removeHouseMarker();
+                // Remove highlight when modal is closed
+                removeHighlight();
             }
         }
         
@@ -2753,12 +2833,36 @@
                 
                 // Convert both values to strings for comparison
                 var familyIdStr = String(familyId);
-                console.log('Looking for household data with Family ID:', familyIdStr);
+                console.log('Looking for household data with fid:', familyIdStr);
                 
+                // First, find the fid match to get the FAMILY-ID
+                var matchedFeature = null;
+                for (var i = 0; i < json_Households_1.features.length; i++) {
+                    var feature = json_Households_1.features[i];
+                    if (feature && feature.properties) {
+                        var householdFid = String(feature.properties['fid']);
+                        if (householdFid === familyIdStr) {
+                            matchedFeature = feature;
+                            console.log('Found matching fid!', feature);
+                            break;
+                        }
+                    }
+                }
+                
+                if (!matchedFeature) {
+                    console.log('No matching fid found:', familyIdStr);
+                    return [];
+                }
+                
+                // Now get the FAMILY-ID from the matched feature
+                var familyIdValue = matchedFeature.properties['FAMILY-ID'];
+                console.log('FAMILY-ID for fid', familyIdStr, 'is:', familyIdValue);
+                
+                // Now find all features with the same FAMILY-ID
                 var matchingFeatures = json_Households_1.features.filter(function(feature) {
                     if (!feature.properties) return false;
                     var householdFamilyId = String(feature.properties['FAMILY-ID']);
-                    return householdFamilyId === familyIdStr;
+                    return householdFamilyId === String(familyIdValue);
                 });
                 
                 console.log('Found', matchingFeatures.length, 'matching household features');
@@ -2782,8 +2886,18 @@
         }
         
         function generateReligion() {
-            var religions = ['Catholic', 'Protestant', 'Islam', 'Buddhism', 'Hinduism', 'Other'];
-            return religions[Math.floor(Math.random() * religions.length)];
+            // Most households are Roman Catholic, then others
+            // Weighted distribution: 70% Roman Catholic, 15% Iglesia ni Cristo, 10% Born Again Christian, 5% Islam
+            var random = Math.random();
+            if (random < 0.70) {
+                return 'Roman Catholic';
+            } else if (random < 0.85) {
+                return 'Iglesia ni Cristo';
+            } else if (random < 0.95) {
+                return 'Born Again Christian';
+            } else {
+                return 'Islam';
+            }
         }
         
         // Infographics modal helpers
@@ -2889,6 +3003,68 @@
 
         // Global variable to store the current house marker
         var currentHouseMarker = null;
+        // Global variable to store the current highlighted polygon layer
+        var currentHighlightLayer = null;
+        
+        // Highlight population polygon function
+        function highlightPopulationPolygon(feature) {
+            try {
+                // Remove existing highlight layer
+                if (currentHighlightLayer) {
+                    map.removeLayer(currentHighlightLayer);
+                    currentHighlightLayer = null;
+                }
+                
+                if (!feature || !feature.geometry) {
+                    console.log('No feature geometry to highlight');
+                    return;
+                }
+                
+                // Convert GeoJSON feature to OpenLayers feature
+                var format = new ol.format.GeoJSON({
+                    dataProjection: 'EPSG:4326',
+                    featureProjection: 'EPSG:3857'
+                });
+                
+                var olFeature = format.readFeature(feature);
+                
+                // Create highlight style
+                var highlightStyle = new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: '#ff0000',
+                        width: 3
+                    }),
+                    fill: new ol.style.Fill({
+                        color: 'rgba(255, 0, 0, 0.2)'
+                    })
+                });
+                
+                // Create vector layer with highlighted feature
+                currentHighlightLayer = new ol.layer.Vector({
+                    source: new ol.source.Vector({
+                        features: [olFeature]
+                    }),
+                    style: highlightStyle,
+                    zIndex: 3000 // Above other layers
+                });
+                
+                // Add highlight layer to map
+                map.addLayer(currentHighlightLayer);
+                console.log('Population polygon highlighted');
+                
+            } catch (e) {
+                console.error('Error highlighting population polygon:', e);
+            }
+        }
+        
+        // Remove highlight function
+        function removeHighlight() {
+            if (currentHighlightLayer) {
+                map.removeLayer(currentHighlightLayer);
+                currentHighlightLayer = null;
+                console.log('Highlight removed');
+            }
+        }
         
         // Zoom to feature function
         function zoomToFeature(feature) {
@@ -3120,22 +3296,23 @@
                     var cell = e.target;
                     if (cell.tagName === 'TD') {
                         var row = cell.parentElement;
-                        var familyIdCell = row.cells[0]; // First column is Family ID
-                        var familyId = familyIdCell.textContent.trim();
+                        // Get exposure_id from the row's data attribute
+                        var exposureId = row.getAttribute('data-exposure-id');
+                        var familyId = exposureId ? exposureId.trim() : '';
                         
-                        console.log('Table cell clicked, Family ID:', familyId);
-                        console.log('Family ID type:', typeof familyId, 'Value:', familyId);
+                        console.log('Table cell clicked, fid:', familyId);
+                        console.log('fid type:', typeof familyId, 'Value:', familyId);
                         
                         if (familyId && familyId !== '') {
-                            // Find the corresponding household polygon
-                            var householdFeature = findHouseholdPolygonByFamilyId(familyId);
-                            if (householdFeature) {
-                                console.log('Found household polygon, showing modal');
-                                showHouseholdModal(familyId, householdFeature);
+                            // Find the corresponding population exposure polygon
+                            var populationFeature = findFeatureByFamilyId(familyId);
+                            if (populationFeature) {
+                                console.log('Found population exposure polygon, showing modal');
+                                showHouseholdModal(familyId, populationFeature);
                             } else {
-                                console.log('No household polygon found for Family ID:', familyId);
+                                console.log('No population exposure polygon found for fid:', familyId);
                                 // Show a message to the user
-                                alert('No household data found for Family ID: ' + familyId + '\n\nThis may be because:\n1. The family ID does not exist in the household database\n2. There is a data mismatch between the population and household datasets\n\nPlease try clicking on a different row.');
+                                alert('No population exposure data found for fid: ' + familyId + '\n\nThis may be because:\n1. The exposure_id does not exist in the population dataset\n2. There is a data mismatch\n\nPlease try clicking on a different row.');
                             }
                         }
                     }
@@ -3143,7 +3320,7 @@
             }
         }
         
-        // Find feature by family ID
+        // Find feature by fid
         function findFeatureByFamilyId(familyId) {
             try {
                 if (!currentPeopleAllFeats || currentPeopleAllFeats.length === 0) return null;
@@ -3157,15 +3334,15 @@
                 }
                 return null;
             } catch (e) {
-                console.error('Error finding feature by family ID:', e);
+                console.error('Error finding feature by fid:', e);
                 return null;
             }
         }
         
-        // Find household polygon by family ID
+        // Find household polygon by fid (first match to get the FAMILY-ID, then find polygon)
         function findHouseholdPolygonByFamilyId(familyId) {
             try {
-                console.log('Looking for household polygon with Family ID:', familyId);
+                console.log('Looking for household polygon with fid:', familyId);
                 
                 if (typeof json_Households_1 === 'undefined' || !json_Households_1.features) {
                     console.log('json_Households_1 not available');
@@ -3173,31 +3350,44 @@
                 }
                 
                 var familyIdStr = String(familyId);
-                console.log('Searching for Family ID string:', familyIdStr);
+                console.log('Searching for fid string:', familyIdStr);
                 console.log('Total household features:', json_Households_1.features.length);
                 
                 // Check first 10 household IDs for debugging
                 var sampleIds = json_Households_1.features
                     .slice(0, 10)
                     .map(function(f) { 
-                        return f.properties ? f.properties['FAMILY-ID'] : 'no-properties'; 
+                        return f.properties ? f.properties['fid'] : 'no-properties'; 
                     });
-                console.log('Sample household Family IDs:', sampleIds);
+                console.log('Sample household fids:', sampleIds);
                 
+                // First, find the fid match to get the FAMILY-ID
+                var matchedFeature = null;
                 for (var i = 0; i < json_Households_1.features.length; i++) {
                     var feature = json_Households_1.features[i];
                     if (feature && feature.properties) {
-                        var householdFamilyId = String(feature.properties['FAMILY-ID']);
-                        if (householdFamilyId === familyIdStr) {
-                            console.log('Found matching household polygon!', feature);
-                            return feature;
+                        var householdFid = String(feature.properties['fid']);
+                        if (householdFid === familyIdStr) {
+                            matchedFeature = feature;
+                            console.log('Found matching fid!', feature);
+                            break;
                         }
                     }
                 }
-                console.log('No matching household polygon found for Family ID:', familyIdStr);
-                return null;
+                
+                if (!matchedFeature) {
+                    console.log('No matching fid found:', familyIdStr);
+                    return null;
+                }
+                
+                // Now get the FAMILY-ID from the matched feature
+                var familyIdValue = matchedFeature.properties['FAMILY-ID'];
+                console.log('FAMILY-ID for fid', familyIdStr, 'is:', familyIdValue);
+                
+                // Return the first feature we found (they all have the same FAMILY-ID)
+                return matchedFeature;
             } catch (e) {
-                console.error('Error finding household polygon by family ID:', e);
+                console.error('Error finding household polygon by fid:', e);
                 return null;
             }
         }
@@ -3209,15 +3399,16 @@
             // Restore last selected flood extent if available
             (function restoreLastMeter(){
                 try {
-                    var last = localStorage.getItem('lastFloodMeter');
-                    if (!last) return;
-                    var dropdown = document.getElementById('floodExtentDropdown');
-                    if (!dropdown) return;
-                    var exists = false;
-                    for (var i = 0; i < dropdown.options.length; i++) {
-                        if (String(dropdown.options[i].value) === String(last)) { exists = true; break; }
-                    }
-                    if (exists) dropdown.value = String(last);
+                    // Removed localStorage memory - always start with "Select Flood Extent"
+                    // var last = localStorage.getItem('lastFloodMeter');
+                    // if (!last) return;
+                    // var dropdown = document.getElementById('floodExtentDropdown');
+                    // if (!dropdown) return;
+                    // var exists = false;
+                    // for (var i = 0; i < dropdown.options.length; i++) {
+                    //     if (String(dropdown.options[i].value) === String(last)) { exists = true; break; }
+                    // }
+                    // if (exists) dropdown.value = String(last);
                 } catch (e) { /* ignore */ }
             })();
             var infoClose = document.getElementById('infographics-modal-close');
