@@ -105,6 +105,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Set bar chart y-axis maximum to 20,000 for consistent scaling
 - Removed "Ask TOMAS" button and chat widget from the interface
 - Made map legend background 80% transparent (20% opacity) and changed text color to dark (#1a1a1a) for visibility on white map background
+- Adjusted legend width and height to fit content (changed from fixed min-width to auto/fit-content)
 
 ### Security
 
