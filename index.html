@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
         <style>
         html, body {
             background-color: #ffffff;
@@ -1301,62 +1302,60 @@
                             </div>
                         </div>
                         <!-- Map Legend -->
-                        <div id="map-legend" style="display: none; position: absolute; bottom: 20px; left: 20px; background: rgba(38, 42, 51, 0.95); border: 1px solid #333; border-radius: 8px; padding: 12px; min-width: 200px; z-index: 1000;">
-                            <div style="color: #fafafa; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; text-align: center;">Legends</div>
+                        <div id="map-legend" style="display: none; position: absolute; bottom: 20px; left: 20px; background: rgba(38, 42, 51, 0.2); border: 1px solid #666; border-radius: 8px; padding: 12px; min-width: 200px; z-index: 1000;">
+                            <div style="color: #1a1a1a; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; text-align: center;">Legends</div>
                             <!-- Flood Depth Legend -->
                             <div style="margin-bottom: 8px;">
-                                <div style="color: #fafafa; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid #444;">Water Depth</div>
+                                <div style="color: #1a1a1a; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid #999;">Water Depth</div>
                                 <div style="display: flex; flex-direction: column; gap: 3px;">
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/24_10_0.png" alt="0.0010" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #fafafa; font-size: 0.85em;">0.0010m</span>
+                                        <span style="color: #1a1a1a; font-size: 0.85em;">0.0010m</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/24_10_1.png" alt="2.3258" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #fafafa; font-size: 0.85em;">2.3258m</span>
+                                        <span style="color: #1a1a1a; font-size: 0.85em;">2.3258m</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/24_10_2.png" alt="4.6505" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #fafafa; font-size: 0.85em;">4.6505m</span>
+                                        <span style="color: #1a1a1a; font-size: 0.85em;">4.6505m</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/24_10_3.png" alt="6.9753" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #fafafa; font-size: 0.85em;">6.9753m</span>
+                                        <span style="color: #1a1a1a; font-size: 0.85em;">6.9753m</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/24_10_4.png" alt="9.3000" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #fafafa; font-size: 0.85em;">9.3000m</span>
+                                        <span style="color: #1a1a1a; font-size: 0.85em;">9.3000m</span>
                                     </div>
                                 </div>
                             </div>
                             <!-- Population Affected Legend -->
                             <div>
-                                <div style="color: #fafafa; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; padding-top: 4px; padding-bottom: 4px; border-top: 1px solid #444; border-bottom: 1px solid #444;">Flood Exposure</div>
+                                <div style="color: #1a1a1a; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; padding-top: 4px; padding-bottom: 4px; border-top: 1px solid #999; border-bottom: 1px solid #999;">Flood Exposure</div>
                                 <div style="display: flex; flex-direction: column; gap: 3px;">
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/Numberofpeopleat24meters_12_0.png" alt="High" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #fafafa; font-size: 0.85em;">High (> 1.5 m)</span>
+                                        <span style="color: #1a1a1a; font-size: 0.85em;">High (> 1.5 m)</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/Numberofpeopleat24meters_12_1.png" alt="Moderate" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #fafafa; font-size: 0.85em;">Moderate (> 0.7 - 1.5 m)</span>
+                                        <span style="color: #1a1a1a; font-size: 0.85em;">Moderate (> 0.7 - 1.5 m)</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/Numberofpeopleat24meters_12_2.png" alt="Low" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #fafafa; font-size: 0.85em;">Low (> 0.1 - 0.7 m)</span>
+                                        <span style="color: #1a1a1a; font-size: 0.85em;">Low (> 0.1 - 0.7 m)</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/Numberofpeopleat24meters_12_3.png" alt="Very Low" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #fafafa; font-size: 0.85em;">Very Low (<= 0.1 m)</span>
+                                        <span style="color: #1a1a1a; font-size: 0.85em;">Very Low (<= 0.1 m)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- AI Chat Widget -->
-					<img id="ai-chat-toggle" class="ai-chat-toggle" src="images/customer-service.png" alt="Open chat" title="Chat with AI" style="width: 48px; height: 48px; cursor: pointer;">
-					<div class="ai-chat-callout" id="ai-chat-callout">Ask TOMAS</div>
+                    <!-- AI Chat Widget - Removed -->
                     <div id="ai-chat-panel" class="ai-chat-panel">
                         <div class="ai-chat-header">
                             <div class="ai-chat-title">Chat with TOMAS</div>
@@ -3373,16 +3372,23 @@
                                 }
                             },
                             tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        var label = context.label || '';
-                                        var value = context.parsed || 0;
-                                        return label + ': ' + Math.round(value) + ' records';
-                                    }
-                                }
+                                enabled: false // Disable tooltips
+                            },
+                            datalabels: {
+                                color: '#ffffff',
+                                font: {
+                                    weight: 'bold',
+                                    size: 12
+                                },
+                                formatter: function(value, context) {
+                                    return Math.round(value);
+                                },
+                                anchor: 'center',
+                                align: 'center'
                             }
                         }
-                    }
+                    },
+                    plugins: [ChartDataLabels] // Register the plugin
                 });
             }
             
@@ -3417,17 +3423,26 @@
                                 display: false
                             },
                             tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        var value = context.parsed.y || 0;
-                                        return 'Population: ' + Math.round(value);
-                                    }
-                                }
+                                enabled: false // Disable tooltips
+                            },
+                            datalabels: {
+                                color: '#ffffff',
+                                font: {
+                                    weight: 'bold',
+                                    size: 11
+                                },
+                                formatter: function(value, context) {
+                                    return Math.round(value);
+                                },
+                                anchor: 'end',
+                                align: 'top',
+                                offset: 5
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: true,
+                                max: 20000,
                                 ticks: {
                                     color: '#fafafa',
                                     font: {
@@ -3450,7 +3465,8 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    plugins: [ChartDataLabels] // Register the plugin
                 });
             }
         }

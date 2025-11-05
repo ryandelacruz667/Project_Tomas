@@ -96,6 +96,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Bar chart (Exposed Population by Age) now uses calculated demographics from household data (same as table) - sums infant, child, youth, adult, elderly, and disabled counts
   - Charts use the same filtering logic as the table and calculate demographics the same way
   - Tooltips updated to show whole numbers (records for pie chart, population counts for bar chart)
+- Added data labels to pie and bar charts:
+  - Pie chart shows count values on each segment
+  - Bar chart shows population values on top of each bar
+  - Disabled tooltip popups on hover (tooltips.enabled: false)
+  - Added chartjs-plugin-datalabels plugin for data label functionality
+  - Labels use white color with bold font for better visibility
+  - Set bar chart y-axis maximum to 20,000 for consistent scaling
+- Removed "Ask TOMAS" button and chat widget from the interface
+- Made map legend background 80% transparent (20% opacity) and changed text color to dark (#1a1a1a) for visibility on white map background
 
 ### Security
 
