@@ -528,50 +528,6 @@
             top: 0;
             left: 0;
         }
-        #barangay-tooltip {
-            position: absolute;
-            background: rgba(15, 19, 29, 0.92);
-            border: 1px solid rgba(112, 178, 255, 0.45);
-            border-radius: 18px;
-            padding: 22px 26px;
-            box-shadow: 0 22px 40px rgba(3, 8, 20, 0.55);
-            z-index: 2000;
-            pointer-events: none;
-            min-width: 240px;
-            max-width: 360px;
-            color: #f7faff;
-            backdrop-filter: blur(12px);
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(0.82);
-            transform-origin: center;
-            transition: opacity 0.18s ease-out, transform 0.18s ease-out;
-        }
-        #barangay-tooltip.is-visible {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1);
-        }
-        #barangay-tooltip .barangay-tooltip-section {
-            color: rgba(150, 197, 255, 0.95);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            letter-spacing: 0.35px;
-            text-transform: uppercase;
-        }
-        #barangay-tooltip .barangay-tooltip-value {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 18px;
-            color: #f7faff;
-        }
-        #barangay-tooltip .barangay-tooltip-count {
-            font-size: 1.45rem;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: 0.55px;
-        }
         
         /* Flood Data Table Styles */
         #flood-data-table {
@@ -1237,17 +1193,7 @@
                             <div id="people-filters" style="margin-top: 0.75rem; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
                                 <div style="display:flex; flex-direction:column; gap:4px;">
                                     <label style="font-size: 0.85rem; color:#ccc;">Barangay</label>
-                                    <select id="people-filter-barangay" class="modern-select" style="min-width: 180px;"></select>
-                                </div>
-                                <div style="display:flex; flex-direction:column; gap:4px;">
-                                    <label style="font-size: 0.85rem; color:#ccc;">Flood Exposure</label>
-                                    <select id="people-filter-exposure" class="modern-select" style="min-width: 150px;">
-                                        <option value="">All Levels</option>
-                                        <option value="high">High</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="low">Low</option>
-                                        <option value="very low">Very Low</option>
-                                    </select>
+                                    <div id="people-filter-barangay-display" style="min-width: 180px; padding: 0.55rem 0.75rem; border-radius: 6px; border: 1px solid rgba(243, 156, 18, 0.35); background: rgba(26, 30, 38, 0.85); color: #f7f7f7; font-weight: 600; letter-spacing: 0.3px;">All Barangays</div>
                                 </div>
                             </div>
                             
@@ -1358,12 +1304,6 @@
                                 <div id="popup-content"></div>
                             </div>
                             <!-- Barangay Tooltip -->
-                            <div id="barangay-tooltip">
-                                <div class="barangay-tooltip-section">Barangay Name:</div>
-                                <div id="tooltip-barangay-name" class="barangay-tooltip-value barangay-tooltip-name"></div>
-                                <div class="barangay-tooltip-section">Number of Population:</div>
-                                <div id="tooltip-population-count" class="barangay-tooltip-value barangay-tooltip-count"></div>
-                            </div>
                         </div>
                         <!-- Map Legend -->
                         <div id="map-legend" style="display: none; position: absolute; bottom: 20px; left: 20px; background: rgba(38, 42, 51, 0.2); border: 1px solid #666; border-radius: 8px; padding: 12px; width: auto; height: auto; min-width: fit-content; z-index: 1000;">
@@ -1477,7 +1417,6 @@
         var regionLayer = null;
         var highlightLayer = null;
         var popupOverlay = null;
-        var barangayTooltipOverlay = null;
         var selectedFeatures = [];
         
         // Initialize map with base map and Region_2 layer visible
@@ -1540,15 +1479,15 @@
                 
                 // Add event listeners for dropdowns
                 setupDropdownEventListeners();
+
+                // Initialize barangay display value
+                updatePeopleBarangayDisplay();
                 
                 // Add event listeners for navigation buttons
                 setupNavigationButtons();
                 
                 // Add event listeners for flood extent functionality
                 setupFloodExtentListeners();
-                
-                // Setup barangay tooltip on hover
-                setupBarangayTooltip();
                 
             }, 2000); // Increased wait time to 2 seconds
         });
@@ -1606,176 +1545,6 @@
                 popupOverlay.setPosition(undefined);
                 return false;
             };
-        }
-        
-        // Setup barangay tooltip on hover
-        function setupBarangayTooltip() {
-            var tooltip = document.getElementById('barangay-tooltip');
-            var tooltipBarangayName = document.getElementById('tooltip-barangay-name');
-            var tooltipPopulationCount = document.getElementById('tooltip-population-count');
-            
-            if (!tooltip || !tooltipBarangayName || !tooltipPopulationCount) {
-                setTimeout(setupBarangayTooltip, 250);
-                return;
-            }
-            
-            // Cache population counts by barangay for performance
-            var populationCache = {};
-            var clickedFeature = null;
-            
-            function getPopulationForBarangay(barangayName) {
-                if (populationCache[barangayName] !== undefined) {
-                    return populationCache[barangayName];
-                }
-                
-                var count = 0;
-                if (typeof json_Households_1 !== 'undefined' && json_Households_1.features) {
-                    json_Households_1.features.forEach(function(feature) {
-                        if (feature.properties && feature.properties.BARANGAY) {
-                            var householdBarangay = String(feature.properties.BARANGAY).trim();
-                            if (householdBarangay === barangayName) {
-                                count++;
-                            }
-                        }
-                    });
-                }
-                
-                populationCache[barangayName] = count;
-                return count;
-            }
-            
-            function findRegionLayer() {
-                if (typeof map === 'undefined' || !map.getLayers) return null;
-                
-                var layers = map.getLayers().getArray();
-                for (var i = 0; i < layers.length; i++) {
-                    var layer = layers[i];
-                    var title = (layer.get('title') || layer.get('name') || '').toString().toLowerCase();
-                    if (title.indexOf('region2') !== -1 || title.indexOf('region_2') !== -1) {
-                        return layer;
-                    }
-                }
-                return null;
-            }
-            
-            var regionLayer = findRegionLayer();
-            if (!regionLayer) {
-                setTimeout(setupBarangayTooltip, 300);
-                return;
-            }
-            
-            if (!barangayTooltipOverlay) {
-                barangayTooltipOverlay = new ol.Overlay({
-                    element: tooltip,
-                    positioning: 'center-center',
-                    stopEvent: false,
-                    offset: [0, 0]
-                });
-                map.addOverlay(barangayTooltipOverlay);
-            }
-            
-            function hideTooltip(clearPinned) {
-                if (clearPinned) {
-                    clickedFeature = null;
-                }
-                tooltip.classList.remove('is-visible');
-                if (barangayTooltipOverlay) {
-                    barangayTooltipOverlay.setPosition(undefined);
-                }
-            }
-
-            function showTooltipForFeature(feature) {
-                if (!feature) {
-                    hideTooltip(false);
-                    return;
-                }
-
-                var props = feature.getProperties ? feature.getProperties() : null;
-                var barangayName = props ? (props.Bgy_Name || props.BARANGAY || props.barangay) : null;
-
-                if (!barangayName) {
-                    hideTooltip(false);
-                    return;
-                }
-
-                barangayName = String(barangayName).trim();
-                var population = getPopulationForBarangay(barangayName);
-
-                tooltipBarangayName.textContent = barangayName;
-                tooltipPopulationCount.textContent = population.toLocaleString();
-
-                var geometry = feature.getGeometry ? feature.getGeometry() : null;
-                var position = null;
-
-                if (geometry) {
-                    try {
-                        if (typeof geometry.getInteriorPoint === 'function') {
-                            position = geometry.getInteriorPoint().getCoordinates();
-                        } else if (typeof geometry.getExtent === 'function') {
-                            var extent = geometry.getExtent();
-                            if (extent && extent.length === 4) {
-                                position = [
-                                    (extent[0] + extent[2]) / 2,
-                                    (extent[1] + extent[3]) / 2
-                                ];
-                            }
-                        }
-
-                        if (!position && typeof geometry.getClosestPoint === 'function') {
-                            position = geometry.getClosestPoint(map.getView().getCenter());
-                        }
-                    } catch (e) {
-                        position = null;
-                    }
-                }
-
-                if (!position) {
-                    position = map.getView().getCenter();
-                }
-
-                if (barangayTooltipOverlay) {
-                    barangayTooltipOverlay.setPosition(position);
-                }
-
-                requestAnimationFrame(function() {
-                    tooltip.classList.add('is-visible');
-                });
-            }
-
-            function handleClick(evt) {
-                if (!regionLayer || map.getLayers().getArray().indexOf(regionLayer) === -1) {
-                    regionLayer = findRegionLayer();
-                    if (!regionLayer) {
-                        hideTooltip(true);
-                        return;
-                    }
-                }
-
-                var feature = map.forEachFeatureAtPixel(evt.pixel, function(feat, layer) {
-                    if (layer === regionLayer) {
-                        return feat;
-                    }
-                    return null;
-                });
-
-                if (feature) {
-                    clickedFeature = feature;
-                    showTooltipForFeature(feature);
-                } else {
-                    hideTooltip(true);
-                }
-            }
-
-            if (map._barangayTooltipMoveHandler) {
-                map.un('pointermove', map._barangayTooltipMoveHandler);
-                map._barangayTooltipMoveHandler = null;
-            }
-            if (map._barangayTooltipClickHandler) {
-                map.un('click', map._barangayTooltipClickHandler);
-            }
-
-            map._barangayTooltipClickHandler = handleClick;
-            map.on('click', handleClick);
         }
         
         // Function to populate dropdowns from Region2_39 data
@@ -1843,6 +1612,9 @@
                     updateProvinceDropdown();
                     updateMunicipalityDropdown();
                     updateBarangayDropdown();
+                    updatePeopleBarangayDisplay();
+                    applyPeopleFiltersAndRender();
+                    updateCharts();
                     if (this.value) {
                         zoomToArea();
                         highlightSelectedPolygon();
@@ -1861,6 +1633,9 @@
                     clearBarangayDropdown();
                     updateMunicipalityDropdown();
                     updateBarangayDropdown();
+                    updatePeopleBarangayDisplay();
+                    applyPeopleFiltersAndRender();
+                    updateCharts();
                     if (this.value) {
                         zoomToArea();
                         highlightSelectedPolygon();
@@ -1874,6 +1649,9 @@
                     clearHighlight();
                     clearBarangayDropdown();
                     updateBarangayDropdown();
+                    updatePeopleBarangayDisplay();
+                    applyPeopleFiltersAndRender();
+                    updateCharts();
                     if (this.value) {
                         zoomToArea();
                         highlightSelectedPolygon();
@@ -1889,6 +1667,9 @@
                         zoomToArea();
                         highlightSelectedPolygon();
                     }
+                    updatePeopleBarangayDisplay();
+                    applyPeopleFiltersAndRender();
+                    updateCharts();
                 });
             }
         }
@@ -3389,35 +3170,43 @@
         
         // Filtering
         var currentPeopleAllFeats = [];
+
+        function updatePeopleBarangayDisplay() {
+            try {
+                var displayEl = document.getElementById('people-filter-barangay-display');
+                if (!displayEl) return;
+
+                var barangaySelect = document.getElementById('barangay-select');
+                var selectedText = '';
+
+                if (barangaySelect) {
+                    var selectedOption = barangaySelect.options[barangaySelect.selectedIndex] || null;
+                    if (selectedOption && selectedOption.textContent) {
+                        selectedText = selectedOption.textContent;
+                    } else if (barangaySelect.value) {
+                        selectedText = barangaySelect.value;
+                    }
+                }
+
+                if (!selectedText) {
+                    selectedText = 'All Barangays';
+                }
+
+                displayEl.textContent = selectedText;
+            } catch (e) { /* ignore */ }
+        }
+
         function populatePeopleFiltersFromFeatures(feats) {
             try {
-                var brgySel = document.getElementById('people-filter-barangay');
-                if (!brgySel) return;
-                // collect names from aggregation_name field as requested
-                var names = new Set();
-                for (var i = 0; i < feats.length; i++) {
-                    var p = feats[i] && feats[i].properties ? feats[i].properties : {};
-                    var val = p['aggregation_name'] || '';
-                    if (val && typeof val === 'string') names.add(val);
-                }
-                // build options
-                brgySel.innerHTML = '';
-                var optAll = document.createElement('option');
-                optAll.value = '';
-                optAll.textContent = 'All';
-                brgySel.appendChild(optAll);
-                Array.from(names).sort().forEach(function(n){
-                    var o = document.createElement('option');
-                    o.value = n; o.textContent = n; brgySel.appendChild(o);
-                });
+                updatePeopleBarangayDisplay();
             } catch (e) { /* ignore */ }
         }
 
         function applyPeopleFiltersAndRender() {
             var tbody = document.querySelector('#people-24-table-inner tbody');
             if (!tbody) return;
-            var brgy = (document.getElementById('people-filter-barangay') || {}).value || '';
-            var exposure = (document.getElementById('people-filter-exposure') || {}).value || '';
+            var topBarangaySelect = document.getElementById('barangay-select');
+            var brgy = topBarangaySelect ? (topBarangaySelect.value || '') : '';
 
             var rendered = 0;
             var rows = '';
@@ -3434,12 +3223,6 @@
                 var brgySel = (brgy || '').toString().trim().toLowerCase();
                 if (brgySel && brgyVal !== brgySel) continue;
                 
-                // Apply flood exposure filter
-                var hazardClass = (p['hazard_class'] || '').toString().trim().toLowerCase();
-                if (hazardClass === 'use_caution') hazardClass = 'very low'; // Normalize use_caution to very low
-                var exposureSel = (exposure || '').toString().trim().toLowerCase();
-                if (exposureSel && hazardClass !== exposureSel) continue;
-                
                 // Count all records matching filters
                 totalRecords++;
             }
@@ -3453,12 +3236,6 @@
                 var brgyVal = (p['aggregation_name'] || '').toString().trim().toLowerCase();
                 var brgySel = (brgy || '').toString().trim().toLowerCase();
                 if (brgySel && brgyVal !== brgySel) continue;
-                
-                // Apply flood exposure filter
-                var hazardClass = (p['hazard_class'] || '').toString().trim().toLowerCase();
-                if (hazardClass === 'use_caution') hazardClass = 'very low'; // Normalize use_caution to very low
-                var exposureSel = (exposure || '').toString().trim().toLowerCase();
-                if (exposureSel && hazardClass !== exposureSel) continue;
                 
                 // Collect feature for highlighting
                 filteredFeatures.push(f);
@@ -3596,26 +3373,6 @@
                 btn.addEventListener('click', function(){ hidePeople24Table(); });
                 btn._wired = true;
             }
-            // Wire filters
-            var brgy = document.getElementById('people-filter-barangay');
-            var exposure = document.getElementById('people-filter-exposure');
-            function wire(el){ if (el && !el._wired){ el.addEventListener('change', applyPeopleFiltersAndRender); el._wired=true; } }
-            wire(brgy);
-            wire(exposure);
-            
-            // Wire barangay and exposure dropdowns to update charts
-            if (brgy && !brgy._chartWired) {
-                brgy.addEventListener('change', function() {
-                    updateCharts();
-                });
-                brgy._chartWired = true;
-            }
-            if (exposure && !exposure._chartWired) {
-                exposure.addEventListener('change', function() {
-                    updateCharts();
-                });
-                exposure._chartWired = true;
-            }
         })();
         
         // Chart instances
@@ -3655,10 +3412,8 @@
                 return;
             }
             
-            var brgySelect = document.getElementById('people-filter-barangay');
-            var exposureSelect = document.getElementById('people-filter-exposure');
+            var brgySelect = document.getElementById('barangay-select');
             var selectedBarangay = brgySelect ? brgySelect.value : '';
-            var selectedExposure = exposureSelect ? exposureSelect.value : '';
             
             // Filter data based on selected filters (if any) - same logic as table
             var filteredData = [];
@@ -3671,14 +3426,6 @@
                     var brgyVal = (p['aggregation_name'] || '').toString().trim().toLowerCase();
                     var brgySel = selectedBarangay.toString().trim().toLowerCase();
                     if (brgyVal !== brgySel) continue;
-                }
-                
-                // Apply exposure filter if selected
-                if (selectedExposure) {
-                    var hazardClass = (p['hazard_class'] || '').toString().trim().toLowerCase();
-                    if (hazardClass === 'use_caution') hazardClass = 'very low';
-                    var exposureSel = selectedExposure.toLowerCase();
-                    if (hazardClass !== exposureSel) continue;
                 }
                 
                 filteredData.push(p);
