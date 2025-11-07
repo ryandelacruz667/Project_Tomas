@@ -106,6 +106,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed "Ask TOMAS" button and chat widget from the interface
 - Made map legend background 80% transparent (20% opacity) and changed text color to dark (#1a1a1a) for visibility on white map background
 - Adjusted legend width and height to fit content (changed from fixed min-width to auto/fit-content)
+- Removed location information popup (Region, Province, Municipality, Barangay) that appeared when hovering over map features
+- Added automatic highlighting of all polygons displayed in the population exposure table on the map
+- Enforced hierarchical dropdown selection: Province dropdown only shows options when a Region is selected, Municipality only when Province is selected, and Barangay only when Municipality is selected
+- Added modern callout tooltip that displays barangay name and population count when hovering over barangay polygons on the map
+- Callout now also appears when a barangay polygon is clicked and stays pinned until another area is clicked or cleared
+- Tooltip now follows the mouse pointer with a smooth scale/opacity entrance animation for better feedback
+- Created `countHouseholdsByBarangay()` function to count households by barangay, with optional municipality filtering
+- Tooltip anchors above the hovered polygon with a callout arrow and shows Barangay Name and Number of Population with modern styling
 
 ### Security
 

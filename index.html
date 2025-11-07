@@ -528,6 +528,50 @@
             top: 0;
             left: 0;
         }
+        #barangay-tooltip {
+            position: absolute;
+            background: rgba(15, 19, 29, 0.92);
+            border: 1px solid rgba(112, 178, 255, 0.45);
+            border-radius: 18px;
+            padding: 22px 26px;
+            box-shadow: 0 22px 40px rgba(3, 8, 20, 0.55);
+            z-index: 2000;
+            pointer-events: none;
+            min-width: 240px;
+            max-width: 360px;
+            color: #f7faff;
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.82);
+            transform-origin: center;
+            transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+        }
+        #barangay-tooltip.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+        #barangay-tooltip .barangay-tooltip-section {
+            color: rgba(150, 197, 255, 0.95);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            letter-spacing: 0.35px;
+            text-transform: uppercase;
+        }
+        #barangay-tooltip .barangay-tooltip-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: #f7faff;
+        }
+        #barangay-tooltip .barangay-tooltip-count {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.55px;
+        }
         
         /* Flood Data Table Styles */
         #flood-data-table {
@@ -1294,11 +1338,31 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Barangay Population Modal -->
+                    <div id="barangay-population-modal" class="modal" style="display: none;">
+                        <div class="modal-content" style="width: 90%; max-width: 700px; max-height: 85vh; display: flex; flex-direction: column;">
+                            <div class="modal-header">
+                                <h3 id="barangay-population-title">Population by Barangay</h3>
+                                <button id="barangay-population-close" class="close-btn">&times;</button>
+                            </div>
+                            <div class="modal-body" style="flex: 1 1 auto; overflow: hidden;">
+                                <div id="barangay-population-content" style="height: 100%; overflow-y: auto;"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="lower-pane-map">
                         <div id="map">
                             <div>
                                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                                 <div id="popup-content"></div>
+                            </div>
+                            <!-- Barangay Tooltip -->
+                            <div id="barangay-tooltip">
+                                <div class="barangay-tooltip-section">Barangay Name:</div>
+                                <div id="tooltip-barangay-name" class="barangay-tooltip-value barangay-tooltip-name"></div>
+                                <div class="barangay-tooltip-section">Number of Population:</div>
+                                <div id="tooltip-population-count" class="barangay-tooltip-value barangay-tooltip-count"></div>
                             </div>
                         </div>
                         <!-- Map Legend -->
@@ -1413,6 +1477,7 @@
         var regionLayer = null;
         var highlightLayer = null;
         var popupOverlay = null;
+        var barangayTooltipOverlay = null;
         var selectedFeatures = [];
         
         // Initialize map with base map and Region_2 layer visible
@@ -1482,6 +1547,9 @@
                 // Add event listeners for flood extent functionality
                 setupFloodExtentListeners();
                 
+                // Setup barangay tooltip on hover
+                setupBarangayTooltip();
+                
             }, 2000); // Increased wait time to 2 seconds
         });
         
@@ -1540,27 +1608,191 @@
             };
         }
         
+        // Setup barangay tooltip on hover
+        function setupBarangayTooltip() {
+            var tooltip = document.getElementById('barangay-tooltip');
+            var tooltipBarangayName = document.getElementById('tooltip-barangay-name');
+            var tooltipPopulationCount = document.getElementById('tooltip-population-count');
+            
+            if (!tooltip || !tooltipBarangayName || !tooltipPopulationCount) {
+                setTimeout(setupBarangayTooltip, 250);
+                return;
+            }
+            
+            // Cache population counts by barangay for performance
+            var populationCache = {};
+            var clickedFeature = null;
+            
+            function getPopulationForBarangay(barangayName) {
+                if (populationCache[barangayName] !== undefined) {
+                    return populationCache[barangayName];
+                }
+                
+                var count = 0;
+                if (typeof json_Households_1 !== 'undefined' && json_Households_1.features) {
+                    json_Households_1.features.forEach(function(feature) {
+                        if (feature.properties && feature.properties.BARANGAY) {
+                            var householdBarangay = String(feature.properties.BARANGAY).trim();
+                            if (householdBarangay === barangayName) {
+                                count++;
+                            }
+                        }
+                    });
+                }
+                
+                populationCache[barangayName] = count;
+                return count;
+            }
+            
+            function findRegionLayer() {
+                if (typeof map === 'undefined' || !map.getLayers) return null;
+                
+                var layers = map.getLayers().getArray();
+                for (var i = 0; i < layers.length; i++) {
+                    var layer = layers[i];
+                    var title = (layer.get('title') || layer.get('name') || '').toString().toLowerCase();
+                    if (title.indexOf('region2') !== -1 || title.indexOf('region_2') !== -1) {
+                        return layer;
+                    }
+                }
+                return null;
+            }
+            
+            var regionLayer = findRegionLayer();
+            if (!regionLayer) {
+                setTimeout(setupBarangayTooltip, 300);
+                return;
+            }
+            
+            if (!barangayTooltipOverlay) {
+                barangayTooltipOverlay = new ol.Overlay({
+                    element: tooltip,
+                    positioning: 'center-center',
+                    stopEvent: false,
+                    offset: [0, 0]
+                });
+                map.addOverlay(barangayTooltipOverlay);
+            }
+            
+            function hideTooltip(clearPinned) {
+                if (clearPinned) {
+                    clickedFeature = null;
+                }
+                tooltip.classList.remove('is-visible');
+                if (barangayTooltipOverlay) {
+                    barangayTooltipOverlay.setPosition(undefined);
+                }
+            }
+
+            function showTooltipForFeature(feature) {
+                if (!feature) {
+                    hideTooltip(false);
+                    return;
+                }
+
+                var props = feature.getProperties ? feature.getProperties() : null;
+                var barangayName = props ? (props.Bgy_Name || props.BARANGAY || props.barangay) : null;
+
+                if (!barangayName) {
+                    hideTooltip(false);
+                    return;
+                }
+
+                barangayName = String(barangayName).trim();
+                var population = getPopulationForBarangay(barangayName);
+
+                tooltipBarangayName.textContent = barangayName;
+                tooltipPopulationCount.textContent = population.toLocaleString();
+
+                var geometry = feature.getGeometry ? feature.getGeometry() : null;
+                var position = null;
+
+                if (geometry) {
+                    try {
+                        if (typeof geometry.getInteriorPoint === 'function') {
+                            position = geometry.getInteriorPoint().getCoordinates();
+                        } else if (typeof geometry.getExtent === 'function') {
+                            var extent = geometry.getExtent();
+                            if (extent && extent.length === 4) {
+                                position = [
+                                    (extent[0] + extent[2]) / 2,
+                                    (extent[1] + extent[3]) / 2
+                                ];
+                            }
+                        }
+
+                        if (!position && typeof geometry.getClosestPoint === 'function') {
+                            position = geometry.getClosestPoint(map.getView().getCenter());
+                        }
+                    } catch (e) {
+                        position = null;
+                    }
+                }
+
+                if (!position) {
+                    position = map.getView().getCenter();
+                }
+
+                if (barangayTooltipOverlay) {
+                    barangayTooltipOverlay.setPosition(position);
+                }
+
+                requestAnimationFrame(function() {
+                    tooltip.classList.add('is-visible');
+                });
+            }
+
+            function handleClick(evt) {
+                if (!regionLayer || map.getLayers().getArray().indexOf(regionLayer) === -1) {
+                    regionLayer = findRegionLayer();
+                    if (!regionLayer) {
+                        hideTooltip(true);
+                        return;
+                    }
+                }
+
+                var feature = map.forEachFeatureAtPixel(evt.pixel, function(feat, layer) {
+                    if (layer === regionLayer) {
+                        return feat;
+                    }
+                    return null;
+                });
+
+                if (feature) {
+                    clickedFeature = feature;
+                    showTooltipForFeature(feature);
+                } else {
+                    hideTooltip(true);
+                }
+            }
+
+            if (map._barangayTooltipMoveHandler) {
+                map.un('pointermove', map._barangayTooltipMoveHandler);
+                map._barangayTooltipMoveHandler = null;
+            }
+            if (map._barangayTooltipClickHandler) {
+                map.un('click', map._barangayTooltipClickHandler);
+            }
+
+            map._barangayTooltipClickHandler = handleClick;
+            map.on('click', handleClick);
+        }
+        
         // Function to populate dropdowns from Region2_39 data
         function populateDropdowns() {
             if (typeof json_Region2_39 !== 'undefined' && json_Region2_39.features) {
                 console.log('Populating dropdowns from Region2_39 data...');
                 
-                // Get unique values for each dropdown
+                // Get unique values for Region dropdown only
                 var regions = new Set();
-                var provinces = new Set();
-                var municipalities = new Set();
-                var barangays = new Set();
                 
                 json_Region2_39.features.forEach(function(feature) {
-                    if (feature.properties) {
-                        if (feature.properties.Reg_Name) regions.add(feature.properties.Reg_Name);
-                        if (feature.properties.Pro_Name) provinces.add(feature.properties.Pro_Name);
-                        if (feature.properties.Mun_Name) municipalities.add(feature.properties.Mun_Name);
-                        if (feature.properties.Bgy_Name) barangays.add(feature.properties.Bgy_Name);
+                    if (feature.properties && feature.properties.Reg_Name) {
+                        regions.add(feature.properties.Reg_Name);
                     }
                 });
                 
-                // Populate Region dropdown
+                // Populate Region dropdown only
                 var regionSelect = document.getElementById('region-select');
                 if (regionSelect) {
                     Array.from(regions).sort().forEach(function(region) {
@@ -1571,40 +1803,22 @@
                     });
                 }
                 
-                // Populate Province dropdown
+                // Clear other dropdowns - they will be populated based on selections
                 var provinceSelect = document.getElementById('province-select');
-                if (provinceSelect) {
-                    Array.from(provinces).sort().forEach(function(province) {
-                        var option = document.createElement('option');
-                        option.value = province;
-                        option.textContent = province;
-                        provinceSelect.appendChild(option);
-                    });
-                }
-                
-                // Populate Municipality dropdown
                 var municipalitySelect = document.getElementById('municipality-select');
-                if (municipalitySelect) {
-                    Array.from(municipalities).sort().forEach(function(municipality) {
-                        var option = document.createElement('option');
-                        option.value = municipality;
-                        option.textContent = municipality;
-                        municipalitySelect.appendChild(option);
-                    });
-                }
-                
-                // Populate Barangay dropdown
                 var barangaySelect = document.getElementById('barangay-select');
+                
+                if (provinceSelect) {
+                    provinceSelect.innerHTML = '<option value="">Select Province</option>';
+                }
+                if (municipalitySelect) {
+                    municipalitySelect.innerHTML = '<option value="">Select Municipality</option>';
+                }
                 if (barangaySelect) {
-                    Array.from(barangays).sort().forEach(function(barangay) {
-                        var option = document.createElement('option');
-                        option.value = barangay;
-                        option.textContent = barangay;
-                        barangaySelect.appendChild(option);
-                    });
+                    barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
                 }
                 
-                console.log('Dropdowns populated successfully');
+                console.log('Region dropdown populated successfully. Other dropdowns will populate based on selections.');
             } else {
                 console.log('Region2_39 data not found');
             }
@@ -1621,6 +1835,10 @@
             if (regionSelect) {
                 regionSelect.addEventListener('change', function() {
                     clearHighlight();
+                    // Clear province dropdown value
+                    if (provinceSelect) {
+                        provinceSelect.value = '';
+                    }
                     clearLowerDropdowns();
                     updateProvinceDropdown();
                     updateMunicipalityDropdown();
@@ -1636,6 +1854,10 @@
             if (provinceSelect) {
                 provinceSelect.addEventListener('change', function() {
                     clearHighlight();
+                    // Clear municipality dropdown value if province is cleared
+                    if (!this.value && municipalitySelect) {
+                        municipalitySelect.value = '';
+                    }
                     clearBarangayDropdown();
                     updateMunicipalityDropdown();
                     updateBarangayDropdown();
@@ -1782,6 +2004,7 @@
             var provinces = new Set();
             
             if (selectedRegion) {
+                // Only show provinces if a region is selected
                 json_Region2_39.features.forEach(function(feature) {
                     if (feature.properties && 
                         feature.properties.Reg_Name === selectedRegion && 
@@ -1789,23 +2012,19 @@
                         provinces.add(feature.properties.Pro_Name);
                     }
                 });
-            } else {
-                // If no region is selected, show all provinces
-                json_Region2_39.features.forEach(function(feature) {
-                    if (feature.properties && feature.properties.Pro_Name) {
-                        provinces.add(feature.properties.Pro_Name);
                     }
-                });
-            }
+            // If no region is selected, don't show any provinces
             
             // Clear and repopulate province dropdown
             provinceSelect.innerHTML = '<option value="">Select Province</option>';
+            if (selectedRegion && provinces.size > 0) {
             Array.from(provinces).sort().forEach(function(province) {
                 var option = document.createElement('option');
                 option.value = province;
                 option.textContent = province;
                 provinceSelect.appendChild(option);
             });
+            }
             
             console.log('Updated province dropdown with', provinces.size, 'options for region:', selectedRegion);
         }
@@ -1825,6 +2044,7 @@
             console.log('updateMunicipalityDropdown called with region:', selectedRegion, 'province:', selectedProvince);
             
             if (selectedProvince) {
+                // Only show municipalities if a province is selected
                 json_Region2_39.features.forEach(function(feature) {
                     if (feature.properties && 
                         feature.properties.Reg_Name === selectedRegion && 
@@ -1833,32 +2053,19 @@
                         municipalities.add(feature.properties.Mun_Name);
                     }
                 });
-            } else if (selectedRegion) {
-                // If only region is selected, show all municipalities in that region
-                json_Region2_39.features.forEach(function(feature) {
-                    if (feature.properties && 
-                        feature.properties.Reg_Name === selectedRegion && 
-                        feature.properties.Mun_Name) {
-                        municipalities.add(feature.properties.Mun_Name);
-                    }
-                });
-            } else {
-                // If nothing is selected, show all municipalities
-                json_Region2_39.features.forEach(function(feature) {
-                    if (feature.properties && feature.properties.Mun_Name) {
-                        municipalities.add(feature.properties.Mun_Name);
-                    }
-                });
             }
+            // If no province is selected, don't show any municipalities
             
             // Clear and repopulate municipality dropdown
             municipalitySelect.innerHTML = '<option value="">Select Municipality</option>';
+            if (selectedProvince && municipalities.size > 0) {
             Array.from(municipalities).sort().forEach(function(municipality) {
                 var option = document.createElement('option');
                 option.value = municipality;
                 option.textContent = municipality;
                 municipalitySelect.appendChild(option);
             });
+            }
             
             console.log('Updated municipality dropdown with', municipalities.size, 'options for region:', selectedRegion, 'province:', selectedProvince);
         }
@@ -1880,6 +2087,7 @@
             console.log('updateBarangayDropdown called with region:', selectedRegion, 'province:', selectedProvince, 'municipality:', selectedMunicipality);
             
             if (selectedMunicipality) {
+                // Only show barangays if a municipality is selected
                 json_Region2_39.features.forEach(function(feature) {
                     if (feature.properties && 
                         feature.properties.Reg_Name === selectedRegion && 
@@ -1889,42 +2097,19 @@
                         barangays.add(feature.properties.Bgy_Name);
                     }
                 });
-            } else if (selectedProvince) {
-                // If only province is selected, show all barangays in that province
-                json_Region2_39.features.forEach(function(feature) {
-                    if (feature.properties && 
-                        feature.properties.Reg_Name === selectedRegion && 
-                        feature.properties.Pro_Name === selectedProvince && 
-                        feature.properties.Bgy_Name) {
-                        barangays.add(feature.properties.Bgy_Name);
-                    }
-                });
-            } else if (selectedRegion) {
-                // If only region is selected, show all barangays in that region
-                json_Region2_39.features.forEach(function(feature) {
-                    if (feature.properties && 
-                        feature.properties.Reg_Name === selectedRegion && 
-                        feature.properties.Bgy_Name) {
-                        barangays.add(feature.properties.Bgy_Name);
-                    }
-                });
-            } else {
-                // If nothing is selected, show all barangays
-                json_Region2_39.features.forEach(function(feature) {
-                    if (feature.properties && feature.properties.Bgy_Name) {
-                        barangays.add(feature.properties.Bgy_Name);
-                    }
-                });
             }
+            // If no municipality is selected, don't show any barangays
             
             // Clear and repopulate barangay dropdown
             barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
+            if (selectedMunicipality && barangays.size > 0) {
             Array.from(barangays).sort().forEach(function(barangay) {
                 var option = document.createElement('option');
                 option.value = barangay;
                 option.textContent = barangay;
                 barangaySelect.appendChild(option);
             });
+            }
             
             console.log('Updated barangay dropdown with', barangays.size, 'options for region:', selectedRegion, 'province:', selectedProvince, 'municipality:', selectedMunicipality);
         }
@@ -1953,7 +2138,7 @@
             }
         }
         
-        // Function to zoom to selected area
+        // Zoom to selected area
         function zoomToArea() {
             var region = document.getElementById('region-select').value;
             var province = document.getElementById('province-select').value;
@@ -2075,21 +2260,8 @@
                 return null;
             });
             
-            if (feature) {
-                var props = feature.getProperties();
-                var popupContent = '<div style="padding: 10px; background: #fff; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">';
-                popupContent += '<strong>' + (props.Bgy_Name || props.Mun_Name || props.Pro_Name || props.Reg_Name) + '</strong><br>';
-                if (props.Reg_Name) popupContent += 'Region: ' + props.Reg_Name + '<br>';
-                if (props.Pro_Name) popupContent += 'Province: ' + props.Pro_Name + '<br>';
-                if (props.Mun_Name) popupContent += 'Municipality: ' + props.Mun_Name + '<br>';
-                if (props.Bgy_Name) popupContent += 'Barangay: ' + props.Bgy_Name + '<br>';
-                popupContent += '</div>';
-                
-                document.getElementById('popup-content').innerHTML = popupContent;
-                popupOverlay.setPosition(coordinate);
-            } else {
+            // Popup disabled - always hide it
                 popupOverlay.setPosition(undefined);
-            }
         }
         
         // Clear highlight
@@ -3056,6 +3228,165 @@
             }
         }
         
+        // Count households by barangay that match Region2_39 barangays
+        // Optional: filter by municipality name
+        function countHouseholdsByBarangay(municipalityName) {
+            try {
+                // Check if both data sources are available
+                if (typeof json_Region2_39 === 'undefined' || !json_Region2_39.features) {
+                    console.error('Region2_39 data not available');
+                    return null;
+                }
+                
+                if (typeof json_Households_1 === 'undefined' || !json_Households_1.features) {
+                    console.error('Households_1 data not available');
+                    return null;
+                }
+                
+                // Get all unique Bgy_Name values from Region2_39, optionally filtered by municipality
+                var regionBarangays = new Set();
+                var municipalityBarangays = new Set(); // Barangays in the selected municipality
+                
+                json_Region2_39.features.forEach(function(feature) {
+                    if (feature.properties && feature.properties.Bgy_Name) {
+                        var bgyName = String(feature.properties.Bgy_Name).trim();
+                        var munName = feature.properties.Mun_Name ? String(feature.properties.Mun_Name).trim() : '';
+                        
+                        if (bgyName) {
+                            // If municipality filter is provided, only include barangays from that municipality
+                            if (municipalityName) {
+                                if (munName === municipalityName) {
+                                    regionBarangays.add(bgyName);
+                                    municipalityBarangays.add(bgyName);
+                                }
+                            } else {
+                                regionBarangays.add(bgyName);
+                            }
+                        }
+                    }
+                });
+                
+                // Count households by barangay
+                var counts = {};
+                var totalCount = 0;
+                
+                // Initialize counts for all region barangays (filtered by municipality if provided)
+                regionBarangays.forEach(function(bgyName) {
+                    counts[bgyName] = 0;
+                });
+                
+                // Count households that match
+                json_Households_1.features.forEach(function(feature) {
+                    if (feature.properties && feature.properties.BARANGAY) {
+                        var householdBarangay = String(feature.properties.BARANGAY).trim();
+                        
+                        // Check if this barangay exists in Region2_39 (and matches municipality filter if provided)
+                        if (regionBarangays.has(householdBarangay)) {
+                            counts[householdBarangay] = (counts[householdBarangay] || 0) + 1;
+                            totalCount++;
+                        }
+                    }
+                });
+                
+                // Return summary object
+                var result = {
+                    total: totalCount,
+                    byBarangay: counts,
+                    matchedBarangays: Object.keys(counts).filter(function(bgy) { return counts[bgy] > 0; }),
+                    unmatchedCount: json_Households_1.features.length - totalCount,
+                    municipality: municipalityName || null
+                };
+                
+                console.log('Household count by barangay:', result);
+                return result;
+            } catch (e) {
+                console.error('Error counting households by barangay:', e);
+                return null;
+            }
+        }
+        
+        // Show barangay population popup
+        function showBarangayPopulationPopup(municipalityName) {
+            try {
+                var modal = document.getElementById('barangay-population-modal');
+                var title = document.getElementById('barangay-population-title');
+                var content = document.getElementById('barangay-population-content');
+                
+                if (!modal || !title || !content) {
+                    console.error('Barangay population modal elements not found');
+                    return;
+                }
+                
+                // Set title
+                title.textContent = 'Population by Barangay - ' + municipalityName;
+                
+                // Show loading state
+                content.innerHTML = '<div style="text-align: center; padding: 40px;"><div class="spinner" style="margin: 0 auto;"></div><p style="margin-top: 20px; color: #ccc;">Loading population data...</p></div>';
+                modal.style.display = 'flex';
+                
+                // Get population counts
+                var result = countHouseholdsByBarangay(municipalityName);
+                
+                if (!result || !result.byBarangay) {
+                    content.innerHTML = '<div style="text-align: center; padding: 40px; color: #ccc;">No data available for this municipality.</div>';
+                    return;
+                }
+                
+                // Build content HTML
+                var html = '<div style="padding: 20px;">';
+                html += '<div style="margin-bottom: 20px; padding: 15px; background: rgba(74, 144, 226, 0.1); border-radius: 8px; border-left: 4px solid #4a90e2;">';
+                html += '<div style="color: #4a90e2; font-weight: 600; font-size: 1.1rem; margin-bottom: 5px;">Total Population</div>';
+                html += '<div style="color: #fafafa; font-size: 1.5rem; font-weight: 700;">' + result.total.toLocaleString() + '</div>';
+                html += '</div>';
+                
+                html += '<div style="max-height: 400px; overflow-y: auto;">';
+                html += '<table style="width: 100%; border-collapse: collapse;">';
+                html += '<thead>';
+                html += '<tr style="background: rgba(74, 144, 226, 0.15); border-bottom: 2px solid #4a90e2;">';
+                html += '<th style="padding: 12px; text-align: left; color: #4a90e2; font-weight: 600;">Barangay Name</th>';
+                html += '<th style="padding: 12px; text-align: right; color: #4a90e2; font-weight: 600;">Number of Population</th>';
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+                
+                // Sort barangays by name
+                var sortedBarangays = Object.keys(result.byBarangay).sort();
+                
+                if (sortedBarangays.length === 0) {
+                    html += '<tr><td colspan="2" style="padding: 20px; text-align: center; color: #999;">No barangays found in this municipality.</td></tr>';
+                } else {
+                    sortedBarangays.forEach(function(bgyName) {
+                        var count = result.byBarangay[bgyName];
+                        html += '<tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">';
+                        html += '<td style="padding: 12px; color: #fafafa;">' + bgyName + '</td>';
+                        html += '<td style="padding: 12px; text-align: right; color: #fafafa; font-weight: 500;">' + count.toLocaleString() + '</td>';
+                        html += '</tr>';
+                    });
+                }
+                
+                html += '</tbody>';
+                html += '</table>';
+                html += '</div>';
+                html += '</div>';
+                
+                content.innerHTML = html;
+            } catch (e) {
+                console.error('Error showing barangay population popup:', e);
+                var content = document.getElementById('barangay-population-content');
+                if (content) {
+                    content.innerHTML = '<div style="text-align: center; padding: 40px; color: #f44336;">Error loading population data.</div>';
+                }
+            }
+        }
+        
+        // Hide barangay population popup
+        function hideBarangayPopulationPopup() {
+            var modal = document.getElementById('barangay-population-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
         // Filtering
         var currentPeopleAllFeats = [];
         function populatePeopleFiltersFromFeatures(feats) {
@@ -3091,6 +3422,7 @@
             var rendered = 0;
             var rows = '';
             var totalRecords = 0; // Count total records matching filters (all records)
+            var filteredFeatures = []; // Collect features that pass filters for highlighting
             
             // First pass: count all records matching filters
             for (var i = 0; i < currentPeopleAllFeats.length; i++) {
@@ -3127,6 +3459,9 @@
                 if (hazardClass === 'use_caution') hazardClass = 'very low'; // Normalize use_caution to very low
                 var exposureSel = (exposure || '').toString().trim().toLowerCase();
                 if (exposureSel && hazardClass !== exposureSel) continue;
+                
+                // Collect feature for highlighting
+                filteredFeatures.push(f);
                 
                 // Show ALL records matching the filters (no deduplication)
                 var hazard = (p.hazard_class != null ? String(p.hazard_class) : '');
@@ -3167,6 +3502,79 @@
             if (rows === '') rows = '<tr><td colspan="11" class="empty-message">No data</td></tr>';
             tbody.innerHTML = rows;
             updatePeopleCount(rendered, totalRecords);
+            
+            // Highlight all filtered features on the map
+            highlightTableFeatures(filteredFeatures);
+        }
+        
+        // Highlight features displayed in the population exposure table
+        function highlightTableFeatures(features) {
+            try {
+                if (!highlightLayer) {
+                    createHighlightLayer();
+                }
+                
+                // Clear previous highlights
+                highlightLayer.getSource().clear();
+                
+                if (features.length === 0) {
+                    return;
+                }
+                
+                // Get the current meter value to find the correct layer
+                var dropdown = document.getElementById('floodExtentDropdown');
+                var meter = dropdown ? dropdown.value : null;
+                if (!meter) return;
+                
+                // Find the layer for this meter (e.g., Numberofpeopleat24meters_12)
+                var layerName = 'Numberofpeopleat' + meter + 'meters';
+                var targetLayer = null;
+                
+                map.getLayers().forEach(function(layer) {
+                    var layerTitle = layer.get('title') || '';
+                    if (layerTitle.toLowerCase().indexOf(layerName.toLowerCase()) !== -1) {
+                        targetLayer = layer;
+                    }
+                });
+                
+                if (!targetLayer || !targetLayer.getSource()) {
+                    console.warn('Could not find layer for meter:', meter);
+                    return;
+                }
+                
+                // Collect exposure_ids from filtered features
+                var exposureIds = new Set();
+                for (var i = 0; i < features.length; i++) {
+                    var f = features[i];
+                    var p = f && f.properties ? f.properties : {};
+                    var exposureId = p.exposure_id;
+                    if (exposureId != null) {
+                        exposureIds.add(String(exposureId));
+                    }
+                }
+                
+                // Find matching features from the layer source
+                var layerSource = targetLayer.getSource();
+                var olFeatures = [];
+                
+                layerSource.forEachFeature(function(olFeature) {
+                    var props = olFeature.getProperties();
+                    var exposureId = props.exposure_id;
+                    if (exposureId != null && exposureIds.has(String(exposureId))) {
+                        // Clone the feature to add to highlight layer
+                        var clonedFeature = olFeature.clone();
+                        olFeatures.push(clonedFeature);
+                    }
+                });
+                
+                // Add all features to highlight layer
+                if (olFeatures.length > 0) {
+                    highlightLayer.getSource().addFeatures(olFeatures);
+                    console.log('Highlighted', olFeatures.length, 'polygons from population exposure table');
+                }
+            } catch (e) {
+                console.error('Error highlighting table features:', e);
+            }
         }
 
         function updatePeopleCount(rendered, total) {
@@ -3498,12 +3906,16 @@
                 showChartsPanel();
             } catch (e) { /* ignore */ }
         }
-        
+
         function hidePeople24Table() {
             var pane = document.getElementById('upper-pane-people24');
             if (pane) { pane.style.display = 'none'; pane.style.height = '0'; }
             updatePeopleCount(0, 0);
             hideChartsPanel();
+            // Clear highlights when table is hidden
+            if (highlightLayer) {
+                highlightLayer.getSource().clear();
+            }
         }
         
         // Household Modal Functions
@@ -4193,6 +4605,13 @@
             if (irClose && !irClose._wired) {
                 irClose.addEventListener('click', hideImpactReportModal);
                 irClose._wired = true;
+            }
+            
+            // Barangay Population modal close
+            var barangayPopClose = document.getElementById('barangay-population-close');
+            if (barangayPopClose && !barangayPopClose._wired) {
+                barangayPopClose.addEventListener('click', hideBarangayPopulationPopup);
+                barangayPopClose._wired = true;
             }
 
             // Impact Report modal maximize
