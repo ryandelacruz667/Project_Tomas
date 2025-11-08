@@ -112,6 +112,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed barangay polygon callout overlay from the map interface
 - Population exposure table now uses the barangay selected in the top pane (display only, no table-level filter)
 - Removed flood exposure level filter from the population exposure table controls
+- Demographics bar chart is now interactive: clicking a bar filters the population exposure table to rows with non-zero counts for that demographic; clicking empty space clears the filter
+- Bar chart data labels now show formatted counts (with thousands separators) directly above each bar
+- Flood extent dropdown is disabled until a barangay is selected; clearing barangay reset hides flood layers automatically
 - Created `countHouseholdsByBarangay()` function to count households by barangay, with optional municipality filtering
 
 ### Security

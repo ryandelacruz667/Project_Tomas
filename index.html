@@ -196,6 +196,10 @@
             box-shadow: 0 0 0 1.5px #f39c12;
             z-index: 100; /* Higher when focused to show dropdown options */
         }
+        .flood-modern-select.is-disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
         .flood-divider {
             border: none;
             border-top: 2px solid #444;
@@ -1190,12 +1194,7 @@
                                 <button id="people-24-close" class="close-table-btn" title="Close" style="position: static;">&times;</button>
                             </div>
                             <!-- Filters -->
-                            <div id="people-filters" style="margin-top: 0.75rem; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                                <div style="display:flex; flex-direction:column; gap:4px;">
-                                    <label style="font-size: 0.85rem; color:#ccc;">Barangay</label>
-                                    <div id="people-filter-barangay-display" style="min-width: 180px; padding: 0.55rem 0.75rem; border-radius: 6px; border: 1px solid rgba(243, 156, 18, 0.35); background: rgba(26, 30, 38, 0.85); color: #f7f7f7; font-weight: 600; letter-spacing: 0.3px;">All Barangays</div>
-                                </div>
-                            </div>
+                            <div id="people-filters" style="margin-top: 0.75rem; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;"></div>
                             
                             <div id="people-table-wrapper" style="margin-top: 0.5rem; overflow-y: auto; overflow-x: hidden; background: rgba(42, 47, 57, 0.5); border: 1px solid rgba(243, 156, 18, 0.2); border-radius: 8px; max-height: calc(40vh - 200px); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">
                                 <table class="flood-table" id="people-24-table-inner" style="margin:0;">
@@ -1482,6 +1481,7 @@
 
                 // Initialize barangay display value
                 updatePeopleBarangayDisplay();
+                updateFloodExtentAvailability();
                 
                 // Add event listeners for navigation buttons
                 setupNavigationButtons();
@@ -1613,6 +1613,7 @@
                     updateMunicipalityDropdown();
                     updateBarangayDropdown();
                     updatePeopleBarangayDisplay();
+                    updateFloodExtentAvailability();
                     applyPeopleFiltersAndRender();
                     updateCharts();
                     if (this.value) {
@@ -1634,6 +1635,7 @@
                     updateMunicipalityDropdown();
                     updateBarangayDropdown();
                     updatePeopleBarangayDisplay();
+                    updateFloodExtentAvailability();
                     applyPeopleFiltersAndRender();
                     updateCharts();
                     if (this.value) {
@@ -1650,6 +1652,7 @@
                     clearBarangayDropdown();
                     updateBarangayDropdown();
                     updatePeopleBarangayDisplay();
+                    updateFloodExtentAvailability();
                     applyPeopleFiltersAndRender();
                     updateCharts();
                     if (this.value) {
@@ -1668,6 +1671,7 @@
                         highlightSelectedPolygon();
                     }
                     updatePeopleBarangayDisplay();
+                    updateFloodExtentAvailability();
                     applyPeopleFiltersAndRender();
                     updateCharts();
                 });
@@ -1908,6 +1912,7 @@
                 barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
                 barangaySelect.value = '';
             }
+            updateFloodExtentAvailability();
         }
         
         // Clear only barangay dropdown
@@ -1917,6 +1922,7 @@
                 barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
                 barangaySelect.value = '';
             }
+            updateFloodExtentAvailability();
         }
         
         // Zoom to selected area
@@ -3199,7 +3205,50 @@
         function populatePeopleFiltersFromFeatures(feats) {
             try {
                 updatePeopleBarangayDisplay();
+                updateFloodExtentAvailability();
             } catch (e) { /* ignore */ }
+        }
+
+        function updateFloodExtentAvailability() {
+            try {
+                var floodDropdown = document.getElementById('floodExtentDropdown');
+                if (!floodDropdown) return;
+                var barangaySelect = document.getElementById('barangay-select');
+                var hasBarangay = !!(barangaySelect && barangaySelect.value);
+                if (!hasBarangay && floodDropdown.value) {
+                    floodDropdown.value = '';
+                    floodDropdown.dispatchEvent(new Event('change'));
+                }
+                floodDropdown.disabled = !hasBarangay;
+                floodDropdown.classList.toggle('is-disabled', !hasBarangay);
+            } catch (e) { /* ignore */ }
+        }
+
+        function checkDemoFilter(filter, demos, properties) {
+            try {
+                var lower = (filter || '').toLowerCase();
+                var fallback = function(key) {
+                    var raw = properties ? properties[key] : 0;
+                    var num = parseFloat(raw || 0);
+                    return isNaN(num) ? 0 : num;
+                };
+                var values = {
+                    infant: demos ? demos.infant : fallback('infant'),
+                    child: demos ? demos.child : fallback('child'),
+                    youth: demos ? demos.youth : fallback('youth'),
+                    adult: demos ? demos.adult : fallback('adult'),
+                    elderly: demos ? demos.elderly : fallback('elderly'),
+                    male: demos ? demos.male : fallback('male'),
+                    female: demos ? demos.female : fallback('female'),
+                    disabled: demos ? demos.disabled : fallback('disabled')
+                };
+                if (!values.hasOwnProperty(lower)) {
+                    return true;
+                }
+                return (values[lower] || 0) > 0;
+            } catch (e) {
+                return true;
+            }
         }
 
         function applyPeopleFiltersAndRender() {
@@ -3213,6 +3262,8 @@
             var totalRecords = 0; // Count total records matching filters (all records)
             var filteredFeatures = []; // Collect features that pass filters for highlighting
             
+            var demoFilter = (currentDemoFilter || '').toLowerCase();
+
             // First pass: count all records matching filters
             for (var i = 0; i < currentPeopleAllFeats.length; i++) {
                 var f = currentPeopleAllFeats[i];
@@ -3222,6 +3273,13 @@
                 var brgyVal = (p['aggregation_name'] || '').toString().trim().toLowerCase();
                 var brgySel = (brgy || '').toString().trim().toLowerCase();
                 if (brgySel && brgyVal !== brgySel) continue;
+
+                if (demoFilter) {
+                    var exposureIdFirst = p.exposure_id || '';
+                    var demosFirst = calculateDemographicsFromHouseholds(exposureIdFirst);
+                    var passes = checkDemoFilter(demoFilter, demosFirst, p);
+                    if (!passes) continue;
+                }
                 
                 // Count all records matching filters
                 totalRecords++;
@@ -3236,6 +3294,13 @@
                 var brgyVal = (p['aggregation_name'] || '').toString().trim().toLowerCase();
                 var brgySel = (brgy || '').toString().trim().toLowerCase();
                 if (brgySel && brgyVal !== brgySel) continue;
+
+                if (demoFilter) {
+                    var exposureIdFilter = p.exposure_id || '';
+                    var demosFilter = calculateDemographicsFromHouseholds(exposureIdFilter);
+                    var passesFilter = checkDemoFilter(demoFilter, demosFilter, p);
+                    if (!passesFilter) continue;
+                }
                 
                 // Collect feature for highlighting
                 filteredFeatures.push(f);
@@ -3358,7 +3423,11 @@
             try {
                 var el = document.getElementById('people-table-count');
                 if (el) {
-                    el.textContent = String(rendered) + ' of ' + String(total) + ' rows';
+                    var text = String(rendered) + ' of ' + String(total) + ' rows';
+                    if (currentDemoFilter) {
+                        text += ' (filtered by ' + currentDemoFilter.replace(/_/g, ' ') + ')';
+                    }
+                    el.textContent = text;
                 }
             } catch (e) { /* ignore */ }
         }
@@ -3378,6 +3447,7 @@
         // Chart instances
         var hazardPieChart = null;
         var demographicsBarChart = null;
+        var currentDemoFilter = '';
         
         // Show Charts Panel
         function showChartsPanel() {
@@ -3466,6 +3536,7 @@
                 elderly: 0,
                 disabled: 0
             };
+            var demoKeysForChart = ['infant', 'child', 'youth', 'adult', 'elderly', 'disabled'];
             
             for (var i = 0; i < filteredData.length; i++) {
                 var p = filteredData[i];
@@ -3551,6 +3622,12 @@
             var barCtx = document.getElementById('demographicsBarChart');
             if (barCtx) {
                 if (demographicsBarChart) demographicsBarChart.destroy();
+                var demoColors = demoKeysForChart.map(function(key) {
+                    if (!currentDemoFilter) {
+                        return 'rgba(243, 156, 18, 0.8)';
+                    }
+                    return currentDemoFilter === key ? 'rgba(243, 156, 18, 1)' : 'rgba(243, 156, 18, 0.35)';
+                });
                 demographicsBarChart = new Chart(barCtx, {
                     type: 'bar',
                     data: {
@@ -3565,7 +3642,7 @@
                                 demoData.elderly,
                                 demoData.disabled
                             ],
-                            backgroundColor: 'rgba(243, 156, 18, 0.8)',
+                            backgroundColor: demoColors,
                             borderColor: 'rgba(243, 156, 18, 1)',
                             borderWidth: 2
                         }]
@@ -3586,8 +3663,9 @@
                                     weight: 'bold',
                                     size: 11
                                 },
-                                formatter: function(value, context) {
-                                    return Math.round(value);
+                                formatter: function(value) {
+                                    var rounded = Math.round(value);
+                                    return rounded > 0 ? rounded.toLocaleString() : '';
                                 },
                                 anchor: 'end',
                                 align: 'top',
@@ -3618,6 +3696,29 @@
                                 grid: {
                                     color: 'rgba(255, 255, 255, 0.1)'
                                 }
+                            }
+                        },
+                        onClick: function(evt, elements) {
+                            if (!elements || elements.length === 0) {
+                                if (currentDemoFilter) {
+                                    currentDemoFilter = '';
+                                    applyPeopleFiltersAndRender();
+                                    updateCharts();
+                                }
+                                return;
+                            }
+                            var first = elements[0];
+                            if (typeof first.index === 'undefined') return;
+                            var key = demoKeysForChart[first.index] || '';
+                            if (!key) return;
+                            currentDemoFilter = (currentDemoFilter === key) ? '' : key;
+                            applyPeopleFiltersAndRender();
+                            updateCharts();
+                        },
+                        onHover: function(evt, elements) {
+                            var target = evt && evt.native ? evt.native.target : (evt ? evt.target : null);
+                            if (target) {
+                                target.style.cursor = (elements && elements.length) ? 'pointer' : 'default';
                             }
                         }
                     },
