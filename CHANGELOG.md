@@ -115,6 +115,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Demographics bar chart is now interactive: clicking a bar filters the population exposure table to rows with non-zero counts for that demographic; clicking empty space clears the filter
 - Bar chart data labels now show formatted counts (with thousands separators) directly above each bar
 - Flood extent dropdown is disabled until a barangay is selected; clearing barangay reset hides flood layers automatically
+- Selecting a row in the population exposure table no longer opens the household modal automatically
+- Household navigation button once again only toggles the household polygon layer visibility
+- Added filtered household overlay and barangay highlight: the households button now displays only polygons inside the chosen barangay and the selected barangay is outlined on the map
+- Selecting a grid row zooms the map to its polygon; clicking the polygon on the map opens the household details modal and keeps the row selection in sync
 - Created `countHouseholdsByBarangay()` function to count households by barangay, with optional municipality filtering
 
 ### Security
