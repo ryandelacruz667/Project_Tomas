@@ -120,6 +120,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added filtered household overlay and barangay highlight: the households button now displays only polygons inside the chosen barangay and the selected barangay is outlined on the map
 - Selecting a grid row zooms the map to its polygon; clicking the polygon on the map opens the household details modal and keeps the row selection in sync
 - Created `countHouseholdsByBarangay()` function to count households by barangay, with optional municipality filtering
+- Household button now toggles the `People_0` layer while keeping household polygons hidden for clearer demographic review
+- Implemented FAMILY-ID based lookup that returns all matching household rows when a `People_0` polygon is clicked, and logs the full result set
+- Expanded `findHouseholdDataByFamilyId()` and related helpers to handle both `FAMILY-ID` and `FAMILY_ID` fields for consistent cross-layer matching
+- Barangay selector upgraded to a multi-checkbox control: zoom, highlight, filtered household overlays, population table, and charts all respond to every checked barangay; selections stay highlighted until an empty map click clears them, with detailed console logging for each update
+- Household, Infographics, and Impact Report actions now remain disabled until at least one barangay is selected, preventing accidental usage without context while preserving their original functionality once enabled
 
 ### Security
 
