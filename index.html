@@ -1609,25 +1609,12 @@
             }, 2000); // Increased wait time to 2 seconds
         });
         
-        function setFloodExtent24InitialVisibility() {
-                var layer = findFloodExtent24Layer();
-                if (!layer) {
-                    setTimeout(setFloodExtent24InitialVisibility, 150);
-                    return;
-                }
-                layer.setVisible(false);
-                var dropdown = document.getElementById('flood-extent-select');
-                if (!dropdown) return;
-                dropdown.addEventListener('change', function(){
-                    if(this.value === "24") {
-                        layer.setVisible(true);
-                    } else {
-                        layer.setVisible(false);
-                    }
-                });
-            }
-            setFloodExtent24InitialVisibility();
-        // Create highlight layer for selected polygons
+        /**
+         * Creates a highlight layer for selected polygons on the map.
+         * This layer is used to visually highlight selected features with a red dashed border.
+         * Called during map initialization. Uses global variable 'highlightLayer'.
+         * Connected to: clearHighlight(), highlightSelectedPolygon(), highlightTableFeatures()
+         */
         function createHighlightLayer() {
             highlightLayer = new ol.layer.Vector({
                 source: new ol.source.Vector(),
@@ -1646,7 +1633,12 @@
             map.addLayer(highlightLayer);
         }
         
-        // Create popup overlay
+        /**
+         * Creates a popup overlay for displaying feature information on the map.
+         * The popup appears when hovering over or clicking features.
+         * Called during map initialization. Uses global variable 'popupOverlay'.
+         * Connected to: handlePointerMove(), setupMapClickHandler()
+         */
         function createPopupOverlay() {
             var popupElement = document.getElementById('popup');
             popupOverlay = new ol.Overlay({
@@ -1664,7 +1656,12 @@
             };
         }
         
-        // Function to populate dropdowns from Region2_39 data
+        /**
+         * Populates the Region dropdown from Region2_39 GeoJSON data.
+         * Extracts unique region names and adds them to the region select element.
+         * Called during page initialization. Clears province, municipality, and barangay dropdowns.
+         * Connected to: updateProvinceDropdown(), updateMunicipalityDropdown(), updateBarangayDropdown()
+         */
         function populateDropdowns() {
             if (typeof json_Region2_39 !== 'undefined' && json_Region2_39.features) {
                 console.log('Populating dropdowns from Region2_39 data...');
@@ -1707,7 +1704,13 @@
             }
         }
         
-        // Setup event listeners for dropdowns
+        /**
+         * Sets up event listeners for Region, Province, and Municipality dropdowns.
+         * When a selection changes, it cascades updates to lower-level dropdowns and triggers map highlighting/zooming.
+         * Called during page initialization.
+         * Connected to: updateProvinceDropdown(), updateMunicipalityDropdown(), updateBarangayDropdown(),
+         *              highlightSelectedPolygon(), zoomToArea(), clearHighlight(), handleBarangaySelectionChange()
+         */
         function setupDropdownEventListeners() {
             var regionSelect = document.getElementById('region-select');
             var provinceSelect = document.getElementById('province-select');
@@ -1762,6 +1765,12 @@
             }
         }
 
+        /**
+         * Initializes the barangay multiselect dropdown component.
+         * Sets up click handlers for opening/closing the dropdown and prevents event bubbling.
+         * Called once during page initialization. Uses global variable 'barangayDropdownInitialized'.
+         * Connected to: toggleBarangayDropdown(), closeBarangayDropdown(), renderBarangayOptions()
+         */
         function initializeBarangayMultiselect() {
             if (barangayDropdownInitialized) return;
             var button = document.getElementById('barangay-multiselect-button');
@@ -1786,6 +1795,12 @@
             barangayDropdownInitialized = true;
         }
 
+        /**
+         * Toggles the barangay multiselect dropdown open/closed state.
+         * Adds or removes 'is-open' class from button and dropdown elements.
+         * Called by: initializeBarangayMultiselect(), closeBarangayDropdown()
+         * Connected to: closeBarangayDropdown()
+         */
         function toggleBarangayDropdown(shouldOpen) {
             var button = document.getElementById('barangay-multiselect-button');
             var dropdown = document.getElementById('barangay-multiselect-dropdown');
@@ -1799,18 +1814,43 @@
             }
         }
 
+        /**
+         * Closes the barangay multiselect dropdown.
+         * Wrapper function that calls toggleBarangayDropdown(false).
+         * Called when clicking outside the dropdown or when closing programmatically.
+         * Connected to: toggleBarangayDropdown()
+         */
         function closeBarangayDropdown() {
             toggleBarangayDropdown(false);
         }
 
+        /**
+         * Returns an array of currently selected barangay names.
+         * Converts the Set stored in barangaySelectionState.selected to an array.
+         * Used throughout the application to check which barangays are selected.
+         * Connected to: filterHouseholdsBySelectedBarangay(), handleBarangaySelectionChange(),
+         *              updateFloodExtentAvailability(), applyPeopleFiltersAndRender()
+         */
         function getSelectedBarangays() {
             return Array.from(barangaySelectionState.selected);
         }
 
+        /**
+         * Normalizes a barangay name for comparison by converting to lowercase and trimming whitespace.
+         * Used to ensure consistent matching when comparing barangay names from different sources.
+         * Called by: filterHouseholdsBySelectedBarangay(), getSelectedBarangayFeatures(),
+         *           applyPeopleFiltersAndRender(), updateCharts()
+         */
         function normalizeBarangayName(value) {
             return (value || '').toString().trim().toLowerCase();
         }
 
+        /**
+         * Updates the display text on the barangay multiselect button.
+         * Shows "Select Barangay", single barangay name, or count of selected barangays.
+         * Called whenever barangay selection changes.
+         * Connected to: handleBarangayOptionToggle(), renderBarangayOptions(), clearBarangaySelections()
+         */
         function updateBarangaySelectionDisplay() {
             var button = document.getElementById('barangay-multiselect-button');
             if (!button) return;
@@ -1828,6 +1868,14 @@
             }
         }
 
+        /**
+         * Renders the barangay multiselect dropdown options as checkboxes.
+         * Creates checkbox elements for each barangay and maintains selection state.
+         * Prunes selections that are no longer available in the current options.
+         * Called by: updateBarangayDropdown(), clearLowerDropdowns()
+         * Connected to: handleBarangayOptionToggle(), updateBarangaySelectionDisplay(),
+         *              handleBarangaySelectionChange(), barangaySelectionState
+         */
         function renderBarangayOptions(barangays) {
             var dropdown = document.getElementById('barangay-multiselect-dropdown');
             if (!dropdown) return;
@@ -1888,6 +1936,13 @@
             }
         }
 
+        /**
+         * Handles checkbox toggle for a barangay option in the multiselect dropdown.
+         * Adds or removes the barangay from the selection state and triggers updates.
+         * Called when a checkbox is clicked in the barangay dropdown.
+         * Connected to: updateBarangaySelectionDisplay(), handleBarangaySelectionChange(),
+         *              barangaySelectionState.selected
+         */
         function handleBarangayOptionToggle(name, isChecked) {
             if (!name) return;
             if (isChecked) {
@@ -1900,6 +1955,14 @@
             handleBarangaySelectionChange({ reason: 'checkbox' });
         }
 
+        /**
+         * Clears all barangay selections from the multiselect dropdown.
+         * Unchecks all checkboxes and clears the selection state.
+         * Can be forced to clear even if already empty.
+         * Called by: setupMapClickHandler(), clearLowerDropdowns()
+         * Connected to: updateBarangaySelectionDisplay(), handleBarangaySelectionChange(),
+         *              barangaySelectionState.selected
+         */
         function clearBarangaySelections(options) {
             options = options || {};
             if (barangaySelectionState.selected.size === 0 && !options.force) {
@@ -1917,6 +1980,15 @@
             handleBarangaySelectionChange({ skipZoom: true, reason: options.reason || 'clear' });
         }
 
+        /**
+         * Handles changes to barangay selection and triggers related updates.
+         * Updates map highlights, filters households, updates people table, and updates charts.
+         * This is the main coordination function for barangay selection changes.
+         * Called by: handleBarangayOptionToggle(), clearBarangaySelections(), renderBarangayOptions()
+         * Connected to: clearHighlight(), highlightSelectedPolygon(), zoomToArea(),
+         *              updatePeopleBarangayDisplay(), updateFloodExtentAvailability(),
+         *              filterHouseholdsBySelectedBarangay(), applyPeopleFiltersAndRender(), updateCharts()
+         */
         function handleBarangaySelectionChange(options) {
             options = options || {};
             var selections = getSelectedBarangays();
@@ -1944,7 +2016,12 @@
             updateCharts();
         }
         
-        // Setup navigation button event listeners
+        /**
+         * Sets up event listeners for navigation buttons (Household, Roads, Schools, Documentation).
+         * Handles button clicks and toggles layer visibility or navigation.
+         * Called during page initialization.
+         * Connected to: toggleLayer(), toggleButtonActive()
+         */
         function setupNavigationButtons() {
             console.log('Setting up navigation buttons...');
             
@@ -2002,9 +2079,14 @@
             } else {
                 console.log('Documentation button not found');
             }
-
-            // (Removed redundant nav Infographics button wiring)
         }
+        /**
+         * Ensures the People layer is initialized and added to the map.
+         * Creates a vector layer from json_People_0 GeoJSON data if it doesn't already exist.
+         * Called during map initialization and when toggling layers.
+         * Uses global variable 'peopleLayer'.
+         * Connected to: setPeopleLayerVisible(), toggleLayer()
+         */
         function ensurePeopleLayer() {
             if (peopleLayer || typeof map === 'undefined' || !map.getView || !map.getView().getProjection) {
                 return;
@@ -2035,7 +2117,14 @@
             }
         }
         
-        // Toggle layer visibility
+        /**
+         * Toggles visibility of map layers based on layer type.
+         * Handles household, roads, and schools layer toggling.
+         * For household layers, also manages filtered household display based on barangay selection.
+         * Called by navigation button click handlers.
+         * Connected to: ensureHouseholdLayers(), filterHouseholdsBySelectedBarangay(),
+         *              setBaseHouseholdLayersVisible(), setPeopleLayerVisible(), toggleButtonActive()
+         */
         function toggleLayer(layerType) {
             if (typeof map === 'undefined' || !map.getLayers) {
                 return;
@@ -2101,7 +2190,12 @@
             });
         }
         
-        // Toggle button active state
+        /**
+         * Toggles the active state of navigation buttons.
+         * Removes active class from all nav buttons and adds it to the clicked button.
+         * Called when a navigation button is clicked.
+         * Connected to: toggleLayer(), setupNavigationButtons()
+         */
         function toggleButtonActive(button) {
             // Remove active class from all nav buttons
             var allNavBtns = document.querySelectorAll('.nav-btn');
@@ -2113,7 +2207,13 @@
             button.classList.add('active');
         }
         
-        // Update province dropdown based on selected region
+        /**
+         * Updates the Province dropdown based on the selected region.
+         * Extracts unique province names from Region2_39 data that match the selected region.
+         * Cascades updates to municipality and barangay dropdowns.
+         * Called when region selection changes.
+         * Connected to: updateMunicipalityDropdown(), updateBarangayDropdown(), setupDropdownEventListeners()
+         */
         function updateProvinceDropdown() {
             var regionSelect = document.getElementById('region-select');
             var provinceSelect = document.getElementById('province-select');
@@ -2149,7 +2249,13 @@
             console.log('Updated province dropdown with', provinces.size, 'options for region:', selectedRegion);
         }
         
-        // Update municipality dropdown based on selected province
+        /**
+         * Updates the Municipality dropdown based on the selected province.
+         * Extracts unique municipality names from Region2_39 data that match the selected region and province.
+         * Cascades updates to barangay dropdown.
+         * Called when province selection changes.
+         * Connected to: updateBarangayDropdown(), setupDropdownEventListeners(), updateProvinceDropdown()
+         */
         function updateMunicipalityDropdown() {
             var regionSelect = document.getElementById('region-select');
             var provinceSelect = document.getElementById('province-select');
@@ -2190,7 +2296,13 @@
             console.log('Updated municipality dropdown with', municipalities.size, 'options for region:', selectedRegion, 'province:', selectedProvince);
         }
         
-        // Update barangay dropdown based on selected municipality
+        /**
+         * Updates the Barangay multiselect dropdown based on the selected municipality.
+         * Extracts unique barangay names from Region2_39 data and renders them as checkboxes.
+         * Called when municipality selection changes.
+         * Connected to: renderBarangayOptions(), setupDropdownEventListeners(),
+         *              updateMunicipalityDropdown(), updateProvinceDropdown()
+         */
         function updateBarangayDropdown() {
             var regionSelect = document.getElementById('region-select');
             var provinceSelect = document.getElementById('province-select');
@@ -2299,7 +2411,14 @@
             }
         }
         
-        // Highlight selected polygon
+        /**
+         * Highlights the selected polygon(s) on the map based on dropdown selections.
+         * Matches features from Region2_39 data based on region, province, municipality, and barangay selections.
+         * Adds matching features to the highlight layer for visual feedback.
+         * Called when dropdown selections change.
+         * Connected to: highlightLayer, setupDropdownEventListeners(), handleBarangaySelectionChange(),
+         *              getSelectedBarangays(), addHoverListeners()
+         */
         function highlightSelectedPolygon() {
             var region = document.getElementById('region-select').value;
             var province = document.getElementById('province-select').value;
@@ -2346,7 +2465,12 @@
             }
         }
         
-        // Add hover event listeners to highlighted features
+        /**
+         * Adds hover event listeners to highlighted features on the map.
+         * Sets up pointer move event to handle popup display on hover (currently disabled).
+         * Called after highlighting polygons.
+         * Connected to: handlePointerMove(), highlightSelectedPolygon(), popupOverlay
+         */
         function addHoverListeners() {
             // Remove existing listeners
             map.un('pointermove', handlePointerMove);
@@ -2355,7 +2479,12 @@
             map.on('pointermove', handlePointerMove);
         }
         
-        // Handle pointer move for popup display
+        /**
+         * Handles pointer move events for popup display (currently popup is disabled).
+         * Checks if pointer is over highlighted features and would show popup if enabled.
+         * Called on mouse move over the map.
+         * Connected to: addHoverListeners(), popupOverlay, highlightLayer
+         */
         function handlePointerMove(evt) {
             if (selectedFeatures.length === 0) {
                 popupOverlay.setPosition(undefined);
@@ -2377,7 +2506,14 @@
                 popupOverlay.setPosition(undefined);
         }
         
-        // Clear highlight
+        /**
+         * Clears all highlights from the map.
+         * Removes features from highlight layer and clears selected features array.
+         * Also removes hover listeners and hides popup.
+         * Called when clearing selections or clicking on the map.
+         * Connected to: highlightLayer, selectedFeatures, setupMapClickHandler(),
+         *              setupDropdownEventListeners(), handleBarangaySelectionChange()
+         */
         function clearHighlight() {
             if (highlightLayer) {
                 highlightLayer.getSource().clear();
@@ -2388,7 +2524,14 @@
             popupOverlay.setPosition(undefined);
         }
         
-        // Setup map click handler to clear highlights
+        /**
+         * Sets up the map click handler for feature interaction.
+         * Handles clicks on People layer features (shows household modal),
+         * household layer features (shows household modal), and map background (clears selections).
+         * Called during map initialization.
+         * Connected to: showHouseholdModal(), applyHouseholdSelection(), clearBarangaySelections(),
+         *              clearHighlight(), resetHouseholdSelection(), peopleLayer, highlightLayer
+         */
         function setupMapClickHandler() {
             if (typeof map !== 'undefined') {
                 map.on('click', function(evt) {
@@ -2449,58 +2592,15 @@
         }
         
               
-        // Show specific flood group
-        function showFloodGroup(groupName) {
-            if (typeof map !== 'undefined' && map.getLayers) {
-                var layers = map.getLayers().getArray();
-                var found = false;
-                
-                console.log('Looking for flood group:', groupName);
-                
-                layers.forEach(function(layer, index) {
-                    var layerTitle = layer.get('title') || layer.get('name') || 'Unknown';
-                    var layerType = layer.getType ? layer.getType() : 'unknown';
-                    
-                    // Check if this is the group we want to show
-                    if (layerType === 'GROUP' && layerTitle.includes(groupName.replace('group_', ''))) {
-                        layer.setVisible(true);
-                        layer.setZIndex(1000); // Set high z-index to ensure it's on top
-                        
-                        // Also ensure all child layers in the group are visible
-                        if (layer.getLayers) {
-                            var childLayers = layer.getLayers().getArray();
-                            childLayers.forEach(function(childLayer, childIndex) {
-                                childLayer.setVisible(true);
-                                childLayer.setZIndex(1000 + childIndex); // Set z-index for each child
-                                console.log('Enabled child layer:', childLayer.get('title') || childLayer.get('name') || 'Unknown', 'z-index:', 1000 + childIndex);
-                            });
-                        }
-                        
-                        found = true;
-                        console.log('Enabled flood group:', layerTitle, 'z-index: 1000');
-                        
-                        // Force map to re-render
-                        map.render();
-                    }
-                });
-                
-                if (!found) {
-                    console.log('Flood group not found:', groupName);
-                    console.log('Available groups:');
-                    layers.forEach(function(layer, index) {
-                        var layerTitle = layer.get('title') || layer.get('name') || 'Unknown';
-                        var layerType = layer.getType ? layer.getType() : 'unknown';
-                        if (layerType === 'GROUP') {
-                            console.log('Group ' + index + ':', layerTitle);
-                        }
-                    });
-                }
-            }
-        }
+
         
-        
-        
-        // Find flood extent layer for a specific meter value
+        /**
+         * Finds the flood extent layer for a specific meter value (e.g., 24, 25, 27).
+         * Searches through window globals and map layers to locate the layer by URL or title.
+         * Uses cached global references when available (e.g., window.lyr_24).
+         * Called by: showFloodData(), addMeterPNGLayer(), setFloodExtent24InitialVisibility()
+         * Connected to: addMeterPNGLayer(), showFloodData()
+         */
         function findFloodExtentLayer(meter) {
             try {
                 var globalKey = 'lyr_' + meter;
@@ -2572,7 +2672,13 @@
             return null;
         }
 
-        // Add PNG layer for a specific meter value
+        /**
+         * Adds a PNG image layer for a specific flood extent meter value.
+         * Tries multiple candidate PNG files (e.g., 24_8.png, 24_7.png) and uses the first that loads successfully.
+         * Creates an OpenLayers ImageStatic layer and adds it to the map.
+         * Called when flood extent layer doesn't exist and needs to be created.
+         * Connected to: showFloodData(), findFloodExtentLayer()
+         */
         function addMeterPNGLayer(meter) {
             if (typeof map === 'undefined') return;
             var key = 'lyr_' + meter;
@@ -2759,6 +2865,14 @@
             }
         }
 
+        /**
+         * Shows flood data layer for a specific flood extent (in meters).
+         * Hides all flood groups, then either shows existing layer or creates new PNG layer.
+         * Sets layer opacity to 0.8 and ensures basemap remains visible.
+         * Called when flood extent dropdown selection changes.
+         * Connected to: hideAllFloodGroups(), findFloodExtentLayer(), addMeterPNGLayer(),
+         *              ensureBasemapVisible(), setupFloodExtentListeners()
+         */
         function showFloodData(extent) {
             extent = String(extent);
             
@@ -2817,7 +2931,12 @@
 
     
         
-        // Ensure basemap layers always stay visible & ordered
+        /**
+         * Ensures basemap and region layers remain visible and properly ordered.
+         * Places basemap at z-index 0 (bottom), region layer at z-index 5, and flood layers at z-index 2000.
+         * Called after showing flood layers or during map initialization.
+         * Connected to: showFloodData(), map initialization, layer visibility changes
+         */
         function ensureBasemapVisible() {
             if (typeof map === 'undefined' || !map.getLayers) return;
             try {
@@ -2914,10 +3033,23 @@
         
         // ========== Flood Extent 24 meters (24_8.png) raster visibility ===========
 
+        /**
+         * Finds the flood extent layer for 24 meters.
+         * Wrapper function that calls findFloodExtentLayer('24').
+         * Used for 24-meter flood extent layer management.
+         * Connected to: findFloodExtentLayer(), setFloodExtent24InitialVisibility()
+         */
         function findFloodExtent24Layer() {
             return findFloodExtentLayer('24');
         }
 
+        /**
+         * Sets initial visibility state for 24-meter flood extent layer.
+         * Polls until layer is found, then ensures it's hidden initially.
+         * Sets up event listener to sync dropdown selection with layer visibility.
+         * Called during page initialization.
+         * Connected to: findFloodExtent24Layer(), addMeterPNGLayer(), floodExtentDropdown
+         */
         function setFloodExtent24InitialVisibility() {
             var dropdown = document.getElementById('floodExtentDropdown');
             if (!dropdown) {
@@ -2967,6 +3099,13 @@
 
         // ========== Flood Extent 25-30 meters initial visibility ===========
         
+        /**
+         * Sets initial visibility state for flood extent layers (25-30 meters).
+         * Polls until layer is found, then ensures it's hidden initially.
+         * Sets up event listener to sync dropdown selection with layer visibility.
+         * Called during page initialization for meters 25-30.
+         * Connected to: findFloodExtentLayer(), addMeterPNGLayer(), floodExtentDropdown
+         */
         function setFloodExtentInitialVisibilityFor(meter) {
             var dropdown = document.getElementById('floodExtentDropdown');
             if (!dropdown) {
@@ -3013,7 +3152,14 @@
             setFloodExtentInitialVisibilityFor(m);
         });
 
-        // Setup flood extent event listeners
+        /**
+         * Sets up event listeners for the flood extent dropdown.
+         * Handles changes to flood extent selection and shows/hides corresponding flood layers.
+         * Also manages people table display based on selected flood extent.
+         * Called during page initialization.
+         * Connected to: showFloodData(), showPeopleTableFor(), hidePeople24Table(),
+         *              updateFloodExtentAvailability()
+         */
         function setupFloodExtentListeners() {
             var floodExtentDropdown = document.getElementById('floodExtentDropdown');
             if (floodExtentDropdown) {
@@ -3075,7 +3221,13 @@
             }
         }
         
-        // Hide all flood groups and layers except the currently selected one
+        /**
+         * Hides all flood group layers on the map, except the currently selected one.
+         * Iterates through all map layers and sets visibility to false for flood-related layers,
+         * but keeps the currently selected flood extent layer visible.
+         * Called before showing a specific flood extent to ensure only one is visible at a time.
+         * Connected to: showFloodData(), setupFloodExtentListeners()
+         */
         function hideAllFloodGroups() {
             if (typeof map !== 'undefined' && map.getLayers) {
                 var layers = map.getLayers().getArray();
@@ -3150,7 +3302,13 @@
             console.log('Layer switcher control disabled - layer list button hidden');
         }
         
-        // ===== Helpers to find/toggle specific layers =====
+        /**
+         * Finds a layer by searching for a substring in its name or title.
+         * Searches through window globals and map layers to find matching layers.
+         * Used as a utility function to locate layers by partial name match.
+         * Called by: findHouseholdsLayer(), findNumberOfPeople24Layer(), other layer finder functions
+         * Connected to: findHouseholdsLayer(), findNumberOfPeople24Layer()
+         */
         function findLayerByNameIncludes(substr) {
             try {
                 substr = (substr || '').toLowerCase();
@@ -3180,6 +3338,12 @@
             return null;
         }
 
+        /**
+         * Finds the Households layer on the map by searching for 'households' or 'household' in layer name.
+         * Uses findLayerByNameIncludes() to locate the layer.
+         * Called by: toggleHouseholds(), setBaseHouseholdLayersVisible()
+         * Connected to: findLayerByNameIncludes(), toggleHouseholds()
+         */
         function findHouseholdsLayer() {
             // Match common variants
             var cand = findLayerByNameIncludes('households');
@@ -3187,6 +3351,13 @@
             return findLayerByNameIncludes('household');
         }
 
+        /**
+         * Finds the Number of People at 24 meters layer on the map.
+         * Searches for layers containing 'numberofpeopleat24meters' or similar patterns.
+         * Used to locate the population exposure layer for 24-meter flood extent.
+         * Called by: toggleNumberOfPeople24(), showPeopleTableFor()
+         * Connected to: findLayerByNameIncludes(), toggleNumberOfPeople24()
+         */
         function findNumberOfPeople24Layer() {
             // Exact export usually: Numberofpeopleat24meters_12
             var cand = findLayerByNameIncludes('numberofpeopleat24meters_12');
@@ -3197,6 +3368,12 @@
             return findLayerByNameIncludes('numberofpeople');
         }
 
+        /**
+         * Toggles visibility of the Households layer.
+         * Finds the households layer and sets its visibility based on the parameter.
+         * Called by: setBaseHouseholdLayersVisible(), layer management functions
+         * Connected to: findHouseholdsLayer(), setBaseHouseholdLayersVisible()
+         */
         function toggleHouseholds(visible) {
             var lyr = findHouseholdsLayer();
             if (lyr && typeof lyr.setVisible === 'function') {
@@ -3204,6 +3381,12 @@
             }
         }
 
+        /**
+         * Toggles visibility of the Number of People at 24 meters layer.
+         * Finds the layer and sets its visibility based on the parameter.
+         * Called when showing/hiding population exposure data for 24-meter flood extent.
+         * Connected to: findNumberOfPeople24Layer(), showPeopleTableFor()
+         */
         function toggleNumberOfPeople24(visible) {
             var lyr = findNumberOfPeople24Layer();
             if (lyr && typeof lyr.setVisible === 'function') {
@@ -3211,7 +3394,14 @@
             }
         }
         
-        // ===== People Table (24–30m) =====
+        /**
+         * Gets the GeoJSON data for people layer based on flood extent meter value.
+         * Searches window globals for json_Numberofpeople... variables containing the meter number.
+         * Returns the first matching GeoJSON object with features property.
+         * Used to populate the people table with data for the selected flood extent.
+         * Called by: showPeopleTableFor(), applyPeopleFiltersAndRender()
+         * Connected to: showPeopleTableFor(), currentPeopleAllFeats
+         */
         function getPeopleJsonFor(meter) {
             try {
                 var wanted = String(meter);
@@ -3234,55 +3424,15 @@
             return null;
         }
 
-        function buildPeopleRowsFromJson(jsonObj) {
-            try {
-                if (!jsonObj || !jsonObj.features) {
-                    return '';
-                }
-                var rows = '';
-                var feats = jsonObj.features;
-                var seenExposureIds = new Set(); // Track unique exposure_id values
-                
-                for (var i = 0; i < feats.length; i++) {
-                    var p = feats[i] && feats[i].properties ? feats[i].properties : {};
-                    
-                    // Check for unique exposure_id
-                    var exposureId = p.exposure_id;
-                    if (exposureId != null && seenExposureIds.has(exposureId)) {
-                        continue; // Skip duplicate exposure_id
-                    }
-                    seenExposureIds.add(exposureId);
-                    
-                    // Filter to only show affected populations
-                    var affected = p.affected;
-                    if (affected !== 'True' && affected !== true) continue;
-                    
-                    // Check if sum of all demographic values is 0
-                    var sum = (p.infant || 0) + (p.child || 0) + (p.youth || 0) + (p.adult || 0) + 
-                             (p.elderly || 0) + (p.male || 0) + (p.female || 0) + (p.disabled || 0);
-                    if (sum === 0) continue; // Skip rows with no population data
-                    
-                    var brgy = p['aggregation_name'] || '';
-                    rows += '<tr data-exposure-id="' + (exposureId || '') + '">' +
-                        '<td>' + brgy + '</td>' +
-                        '<td>' + (p.infant || 0) + '</td>' +
-                        '<td>' + (p.child || 0) + '</td>' +
-                        '<td>' + (p.youth || 0) + '</td>' +
-                        '<td>' + (p.adult || 0) + '</td>' +
-                        '<td>' + (p.elderly || 0) + '</td>' +
-                        '<td>' + (p.male || 0) + '</td>' +
-                        '<td>' + (p.female || 0) + '</td>' +
-                        '<td>' + (p.disabled || 0) + '</td>' +
-                        '<td>' + (p.hazard_class != null ? p.hazard_class : '') + '</td>' +
-                    '</tr>';
-                }
-                return rows || '<tr><td colspan="10" class="empty-message">No data</td></tr>';
-            } catch (e) {
-                return '<tr><td colspan="10" class="empty-message">Error loading data</td></tr>';
-            }
-        }
 
-        // Helper function to calculate demographics from household data based on exposure_id
+        /**
+         * Calculates demographic data (infant, child, youth, adult, elderly, male, female, disabled)
+         * from household data based on exposure ID (FAMILY-ID).
+         * Iterates through json_Households_1 features and aggregates demographic information by age and sex.
+         * Used to populate people table and charts with calculated demographics.
+         * Called by: applyPeopleFiltersAndRender(), updateCharts()
+         * Connected to: json_Households_1, applyPeopleFiltersAndRender(), updateCharts()
+         */
         function calculateDemographicsFromHouseholds(exposureId) {
             try {
                 if (typeof json_Households_1 === 'undefined' || !json_Households_1.features) {
@@ -3383,8 +3533,14 @@
             }
         }
         
-        // Count households by barangay that match Region2_39 barangays
-        // Optional: filter by municipality name
+        /**
+         * Counts households by barangay for a given municipality.
+         * Extracts unique barangay names and counts households in each from json_Households_1.
+         * Matches barangays with Region2_39 data to ensure consistency.
+         * Used to populate barangay population popup with household counts.
+         * Called by: showBarangayPopulationPopup()
+         * Connected to: json_Households_1, json_Region2_39, showBarangayPopulationPopup()
+         */
         function countHouseholdsByBarangay(municipalityName) {
             try {
                 // Check if both data sources are available
@@ -3461,6 +3617,14 @@
         }
         
         // Show barangay population popup
+        /**
+         * Shows a popup modal displaying barangay population data for a municipality.
+         * Calculates demographics and household counts for each barangay and displays in a table.
+         * Shows loading spinner while data is being calculated.
+         * Called when clicking on municipality in the map or dropdown.
+         * Connected to: countHouseholdsByBarangay(), calculateDemographicsFromHouseholds(),
+         *              hideBarangayPopulationPopup()
+         */
         function showBarangayPopulationPopup(municipalityName) {
             try {
                 var modal = document.getElementById('barangay-population-modal');
@@ -3535,6 +3699,12 @@
         }
         
         // Hide barangay population popup
+        /**
+         * Hides the barangay population popup modal.
+         * Sets the modal display to 'none' to hide it from view.
+         * Called when closing the barangay population modal.
+         * Connected to: showBarangayPopulationPopup(), modal close button
+         */
         function hideBarangayPopulationPopup() {
             var modal = document.getElementById('barangay-population-modal');
             if (modal) {
@@ -3545,6 +3715,12 @@
         // Filtering
         var currentPeopleAllFeats = [];
 
+        /**
+         * Updates the display of selected barangays in the people table section.
+         * Shows selected barangay names or "All Barangays" if none selected.
+         * Called when barangay selection changes.
+         * Connected to: handleBarangaySelectionChange(), getSelectedBarangays()
+         */
         function updatePeopleBarangayDisplay() {
             try {
                 var displayEl = document.getElementById('people-filter-barangay-display');
@@ -3567,6 +3743,13 @@
             } catch (e) { /* ignore */ }
         }
 
+        /**
+         * Populates demographic filter options from people features.
+         * Extracts available demographic filter values from the features array.
+         * Used to set up filter dropdowns in the people table (currently may be unused).
+         * Called by: showPeopleTableFor()
+         * Connected to: applyPeopleFiltersAndRender(), currentPeopleAllFeats
+         */
         function populatePeopleFiltersFromFeatures(feats) {
             try {
                 updatePeopleBarangayDisplay();
@@ -3574,6 +3757,13 @@
             } catch (e) { /* ignore */ }
         }
 
+        /**
+         * Traverses a layer tree recursively, calling callback for each layer.
+         * Handles both single layers and layer groups, calling the callback function for each.
+         * Used to find nested layers within layer groups.
+         * Called by: ensureHouseholdLayers()
+         * Connected to: ensureHouseholdLayers()
+         */
         function traverseLayerTree(layer, callback) {
             if (!layer) return;
             try {
@@ -3589,6 +3779,14 @@
             }
         }
 
+        /**
+         * Ensures household layers are registered and ready for use.
+         * Traverses the map layer tree to find all Households_1 layers and stores them in householdLayers array.
+         * Sets initial visibility to false. Called during map initialization and when toggling household layers.
+         * Uses global variable 'householdLayers'.
+         * Connected to: toggleLayer(), filterHouseholdsBySelectedBarangay(), setBaseHouseholdLayersVisible(),
+         *              traverseLayerTree()
+         */
         function ensureHouseholdLayers() {
             try {
                 if (typeof map === 'undefined' || !map.getLayers || householdLayers.length > 0) {
@@ -3623,6 +3821,12 @@
             }
         }
 
+        /**
+         * Sets visibility of base household layers (from layers.js).
+         * Toggles visibility of all registered household layers based on the parameter.
+         * Called when toggling household layer visibility or when filtering by barangay.
+         * Connected to: ensureHouseholdLayers(), toggleLayer(), filterHouseholdsBySelectedBarangay()
+         */
         function setBaseHouseholdLayersVisible(visible) {
             try {
                 ensureHouseholdLayers();
@@ -3638,6 +3842,12 @@
             }
         }
 
+        /**
+         * Sets visibility of the People layer.
+         * Ensures the People layer exists, then sets its visibility.
+         * Called when toggling between household and people layers.
+         * Connected to: ensurePeopleLayer(), toggleLayer(), handleBarangaySelectionChange()
+         */
         function setPeopleLayerVisible(visible) {
             try {
                 ensurePeopleLayer();
@@ -3653,6 +3863,13 @@
             }
         }
 
+        /**
+         * Sets the disabled state of a control element by ID.
+         * Updates both the disabled attribute and 'is-disabled' class.
+         * Also removes 'active' class from nav buttons when disabled.
+         * Called by: updateFloodExtentAvailability()
+         * Connected to: updateFloodExtentAvailability()
+         */
         function setControlDisabledById(id, disabled) {
             try {
                 var el = document.getElementById(id);
@@ -3671,6 +3888,13 @@
             } catch (e) { /* ignore */ }
         }
 
+        /**
+         * Updates availability of flood extent dropdown and related controls.
+         * Enables/disables flood extent dropdown and infographics/impact report buttons based on barangay selection.
+         * Clears flood extent selection if no barangay is selected.
+         * Called when barangay selection changes.
+         * Connected to: getSelectedBarangays(), handleBarangaySelectionChange(), setControlDisabledById()
+         */
         function updateFloodExtentAvailability() {
             try {
                 var floodDropdown = document.getElementById('floodExtentDropdown');
@@ -3688,6 +3912,13 @@
             } catch (e) { /* ignore */ }
         }
 
+        /**
+         * Resets household selection state.
+         * Clears selected household row, family ID, and removes highlights and markers.
+         * Called when clearing selections or changing filters.
+         * Connected to: removeHighlight(), removeHouseMarker(), clearLowerDropdowns(),
+         *              setupMapClickHandler()
+         */
         function resetHouseholdSelection() {
             if (lastSelectedHouseholdRow) {
                 lastSelectedHouseholdRow.classList.remove('household-row-selected');
@@ -3699,6 +3930,12 @@
             removeHouseMarker();
         }
 
+        /**
+         * Removes the filtered household layer from the map.
+         * Removes the layer created by filterHouseholdsBySelectedBarangay() when barangay filtering changes.
+         * Called when clearing barangay selections or changing filters.
+         * Connected to: filterHouseholdsBySelectedBarangay(), clearBarangayDropdown()
+         */
         function removeFilteredHouseholdLayer() {
             if (filteredHouseholdLayer && map) {
                 map.removeLayer(filteredHouseholdLayer);
@@ -3706,6 +3943,13 @@
             }
         }
 
+        /**
+         * Removes the selected barangay highlight layer from the map.
+         * Removes the layer that highlights selected barangay boundaries.
+         * Called when barangay selection changes or is cleared.
+         * Connected to: filterHouseholdsBySelectedBarangay(), highlightSelectedBarangays(),
+         *              clearBarangaySelections()
+         */
         function removeSelectedBarangayHighlight() {
             if (selectedBarangayHighlightLayer && map) {
                 map.removeLayer(selectedBarangayHighlightLayer);
@@ -3714,6 +3958,13 @@
         }
 
 
+        /**
+         * Converts an OpenLayers feature to GeoJSON format.
+         * Handles both GeoJSON features and OpenLayers features, converting coordinate systems as needed.
+         * Used when passing features between functions that expect GeoJSON format.
+         * Called by: setupMapClickHandler(), applyHouseholdSelection(), highlightFeatureSelection()
+         * Connected to: showHouseholdModal(), applyHouseholdSelection(), zoomToFeature()
+         */
         function featureToGeoJson(feature) {
             if (!feature) return null;
             if (feature.type === 'Feature' && feature.geometry) {
@@ -3734,12 +3985,26 @@
             return null;
         }
 
+        /**
+         * Highlights a selected feature on the map.
+         * Converts feature to GeoJSON and calls highlightPopulationPolygon().
+         * Used to highlight household or population features when selected.
+         * Called by: applyHouseholdSelection(), applyPeopleFiltersAndRender()
+         * Connected to: featureToGeoJson(), highlightPopulationPolygon()
+         */
         function highlightFeatureSelection(feature) {
             var geoFeature = featureToGeoJson(feature);
             if (!geoFeature) return;
             highlightPopulationPolygon(geoFeature);
         }
 
+        /**
+         * Gets GeoJSON features for selected barangays from Region2_39 data.
+         * Matches features based on selected region, province, municipality, and barangay names.
+         * Used to highlight selected barangay boundaries on the map.
+         * Called by: filterHouseholdsBySelectedBarangay(), highlightSelectedBarangays()
+         * Connected to: getSelectedBarangays(), normalizeBarangayName(), json_Region2_39
+         */
         function getSelectedBarangayFeatures() {
             if (typeof json_Region2_39 === 'undefined' || !json_Region2_39.features) {
                 return [];
@@ -3780,6 +4045,14 @@
             return matches;
         }
 
+        /**
+         * Highlights selected barangay boundaries on the map.
+         * Creates a vector layer with orange highlight style for the selected barangay features.
+         * Removes previous highlight before adding new one. Uses z-index 1050.
+         * Called by: filterHouseholdsBySelectedBarangay()
+         * Connected to: removeSelectedBarangayHighlight(), getSelectedBarangayFeatures(),
+         *              selectedBarangayHighlightLayer
+         */
         function highlightSelectedBarangays(features) {
             removeSelectedBarangayHighlight();
             if (!features || !features.length || !map) return;
@@ -3822,6 +4095,13 @@
         }
 
 
+        /**
+         * Updates the visual highlight of selected row in the people table.
+         * Adds 'household-row-selected' class to the row matching lastSelectedFamilyId.
+         * Called when household selection changes or table is re-rendered.
+         * Connected to: applyHouseholdSelection(), applyPeopleFiltersAndRender(),
+         *              lastSelectedFamilyId, lastSelectedHouseholdRow
+         */
         function updateTableSelectionHighlight() {
             var tbody = document.querySelector('#people-24-table-inner tbody');
             if (lastSelectedHouseholdRow) {
@@ -3843,6 +4123,13 @@
             }
         }
 
+        /**
+         * Extracts family ID from a feature's properties.
+         * Tries multiple property names (exposure_id, exposureId, fid, FAMILY-ID, etc.) to find the family identifier.
+         * Returns empty string if no family ID found.
+         * Called by: setupMapClickHandler(), applyHouseholdSelection()
+         * Connected to: showHouseholdModal(), applyHouseholdSelection()
+         */
         function getFamilyIdFromFeature(feature) {
             if (!feature) return '';
             var props = feature.get ? feature.getProperties() : feature.properties;
@@ -3866,6 +4153,14 @@
             return '';
         }
 
+        /**
+         * Applies household selection, updating table highlight and map display.
+         * Stores selected family ID, highlights the feature on the map, and zooms to it.
+         * Updates table row highlight to show which household is selected.
+         * Called when clicking on household features or table rows.
+         * Connected to: updateTableSelectionHighlight(), highlightFeatureSelection(), zoomToFeature(),
+         *              showHouseholdModal(), lastSelectedFamilyId
+         */
         function applyHouseholdSelection(familyId, feature, options) {
             if (!familyId) {
                 resetHouseholdSelection();
@@ -3887,6 +4182,16 @@
             }
         }
 
+        /**
+         * Filters household layer to show only households in selected barangays.
+         * Creates a new filtered layer from json_Households_1 features matching selected barangays.
+         * Hides base household layers and shows filtered layer when barangays are selected.
+         * Also highlights selected barangay boundaries on the map.
+         * Called when barangay selection changes or household layer is toggled.
+         * Connected to: getSelectedBarangays(), getSelectedBarangayFeatures(), highlightSelectedBarangays(),
+         *              setBaseHouseholdLayersVisible(), removeFilteredHouseholdLayer(),
+         *              handleBarangaySelectionChange(), toggleLayer()
+         */
         function filterHouseholdsBySelectedBarangay() {
             ensureHouseholdLayers();
             var selections = getSelectedBarangays();
@@ -4018,6 +4323,15 @@
             }
         }
 
+        /**
+         * Applies filters to people data and renders the filtered results in the table.
+         * Filters by barangay selection and demographic criteria, then builds table rows.
+         * Also highlights filtered features on the map and updates the row count.
+         * Called when barangay selection changes, demographic filter changes, or flood extent changes.
+         * Connected to: getSelectedBarangays(), normalizeBarangayName(), checkDemoFilter(),
+         *              calculateDemographicsFromHouseholds(), highlightTableFeatures(),
+         *              updatePeopleCount(), updateTableSelectionHighlight(), handleBarangaySelectionChange()
+         */
         function applyPeopleFiltersAndRender() {
             var tbody = document.querySelector('#people-24-table-inner tbody');
             if (!tbody) return;
@@ -4119,7 +4433,13 @@
             highlightTableFeatures(filteredFeatures);
         }
         
-        // Highlight features displayed in the population exposure table
+        /**
+         * Highlights features displayed in the population exposure table on the map.
+         * Finds matching features from the current flood extent layer and adds them to highlight layer.
+         * Uses exposure_id to match features between table data and map layer.
+         * Called after filtering and rendering people table.
+         * Connected to: applyPeopleFiltersAndRender(), highlightLayer, currentPeopleAllFeats
+         */
         function highlightTableFeatures(features) {
             try {
                 if (!highlightLayer) {
@@ -4191,6 +4511,12 @@
             }
         }
 
+        /**
+         * Updates the people table count display.
+         * Shows number of rendered rows vs total filtered rows, and includes demographic filter info if active.
+         * Called after rendering people table.
+         * Connected to: applyPeopleFiltersAndRender(), currentDemoFilter
+         */
         function updatePeopleCount(rendered, total) {
             try {
                 var el = document.getElementById('people-table-count');
@@ -4226,7 +4552,12 @@
         var filteredHouseholdLayer = null;
         var selectedBarangayHighlightLayer = null;
         
-        // Show Charts Panel
+        /**
+         * Shows the charts panel and updates chart data.
+         * Displays the charts panel overlay and triggers chart update.
+         * Called when user wants to view charts.
+         * Connected to: updateCharts(), hideChartsPanel()
+         */
         function showChartsPanel() {
             var chartsPanel = document.getElementById('charts-panel');
             var mapContainer = document.getElementById('map-container');
@@ -4237,7 +4568,12 @@
             }
         }
         
-        // Hide Charts Panel
+        /**
+         * Hides the charts panel.
+         * Sets charts panel display to 'none' and removes 'charts-open' class from map container.
+         * Called when closing charts panel.
+         * Connected to: showChartsPanel()
+         */
         function hideChartsPanel() {
             var chartsPanel = document.getElementById('charts-panel');
             var mapContainer = document.getElementById('map-container');
@@ -4247,8 +4583,16 @@
             }
         }
         
-        // Update Charts - shows totals if no filters, or filtered data if filters are selected
-        // Charts now reflect the actual data shown in the Population exposure table
+        /**
+         * Updates charts (pie chart and bar chart) with filtered data.
+         * Calculates hazard level distribution and demographics from filtered people data.
+         * Charts reflect the same data shown in the Population exposure table.
+         * Creates/updates Chart.js instances for hazard pie chart and demographics bar chart.
+         * Called when filters change or charts panel is shown.
+         * Connected to: getSelectedBarangays(), calculateDemographicsFromHouseholds(),
+         *              applyPeopleFiltersAndRender(), handleBarangaySelectionChange(),
+         *              showChartsPanel(), currentPeopleAllFeats, hazardPieChart, demographicsBarChart
+         */
         function updateCharts() {
             if (!currentPeopleAllFeats || currentPeopleAllFeats.length === 0) {
                 // Clear charts if no data
@@ -4504,7 +4848,14 @@
             }
         }
         
-        // Show charts when table is shown, hide when table is hidden
+        /**
+         * Shows the people table for a specific flood extent meter value.
+         * Loads people data for the meter, populates filters, renders table, and displays the pane.
+         * Sets table title and pane height. Also shows charts panel.
+         * Called when flood extent dropdown changes to a valid meter value.
+         * Connected to: getPeopleJsonFor(), populatePeopleFiltersFromFeatures(),
+         *              applyPeopleFiltersAndRender(), hidePeople24Table(), setupFloodExtentListeners()
+         */
         function showPeopleTableFor(meter) {
             try {
                 var dropdown = document.getElementById('floodExtentDropdown');
@@ -4532,6 +4883,12 @@
             } catch (e) { /* ignore */ }
         }
 
+        /**
+         * Hides the people table pane.
+         * Sets display to 'none' to hide the people table from view.
+         * Called when flood extent is cleared or changed to a value without table data.
+         * Connected to: showPeopleTableFor(), setupFloodExtentListeners(), hideAllFloodGroups()
+         */
         function hidePeople24Table() {
             var pane = document.getElementById('upper-pane-people24');
             if (pane) { pane.style.display = 'none'; pane.style.height = '0'; }
@@ -4545,6 +4902,14 @@
         }
         
         // Household Modal Functions
+        /**
+         * Shows the household details modal for a specific family ID.
+         * Loads household data, displays household members in a table, and shows household size.
+         * Zooms to and highlights the household polygon on the map.
+         * Called when clicking on household features or table rows.
+         * Connected to: findHouseholdDataByFamilyId(), generateReligion(), zoomToFeature(),
+         *              highlightPopulationPolygon(), setupMapClickHandler(), setupTableClickHandlers()
+         */
         function showHouseholdModal(familyId, feature) {
             try {
                 var modal = document.getElementById('household-modal');
@@ -4599,6 +4964,12 @@
             }
         }
         
+        /**
+         * Hides the household details modal.
+         * Sets modal display to 'none' and removes house marker and highlight.
+         * Called when closing the household modal.
+         * Connected to: showHouseholdModal(), removeHouseMarker(), removeHighlight()
+         */
         function hideHouseholdModal() {
             var modal = document.getElementById('household-modal');
             if (modal) {
@@ -4610,6 +4981,13 @@
             }
         }
         
+        /**
+         * Finds household data for a given family ID from json_Households_1.
+         * Searches for features matching the family ID (by FAMILY-ID or fid property).
+         * Returns an array of household member property objects.
+         * Called by: showHouseholdModal(), setupMapClickHandler()
+         * Connected to: json_Households_1, showHouseholdModal()
+         */
         function findHouseholdDataByFamilyId(familyId) {
             try {
                 if (typeof json_Households_1 === 'undefined' || !json_Households_1.features) {
@@ -4692,6 +5070,12 @@
             }
         }
         
+        /**
+         * Generates a random religion value for household display.
+         * Uses weighted distribution: 70% Roman Catholic, 15% Iglesia ni Cristo, 10% Born Again Christian, 5% Islam.
+         * Called when displaying household data in the modal.
+         * Connected to: showHouseholdModal()
+         */
         function generateReligion() {
             // Most households are Roman Catholic, then others
             // Weighted distribution: 70% Roman Catholic, 15% Iglesia ni Cristo, 10% Born Again Christian, 5% Islam
@@ -4707,7 +5091,13 @@
             }
         }
         
-        // Infographics modal helpers
+        /**
+         * Shows the infographics modal with PDF for a specific flood extent meter.
+         * Loads PDF from infographics/{meter}/output/infographic.pdf and displays it in an object element.
+         * Shows loading spinner while PDF loads.
+         * Called when clicking infographics button (requires barangay selection).
+         * Connected to: updateFloodExtentAvailability(), hideInfographicsModal()
+         */
         function showInfographicsModal(meter) {
             try {
                 var modal = document.getElementById('infographics-modal');
@@ -4741,6 +5131,12 @@
             } catch (e) { /* ignore */ }
         }
 
+        /**
+         * Hides the infographics modal.
+         * Sets modal display to 'none' and clears the container content.
+         * Called when closing the infographics modal.
+         * Connected to: showInfographicsModal()
+         */
         function hideInfographicsModal() {
             try {
                 var modal = document.getElementById('infographics-modal');
@@ -4751,7 +5147,13 @@
             } catch (e) { /* ignore */ }
         }
 
-        // Impact Report modal helpers
+        /**
+         * Shows the impact report modal with HTML report for a specific flood extent meter.
+         * Loads HTML from infographics/{meter}/output/impact-report-output.html and displays it in an iframe.
+         * Shows loading spinner while report loads.
+         * Called when clicking impact report button (requires barangay selection).
+         * Connected to: updateFloodExtentAvailability(), hideImpactReportModal()
+         */
         function showImpactReportModal(meter) {
             try {
                 var modal = document.getElementById('impact-report-modal');
@@ -4798,6 +5200,12 @@
             } catch (e) { /* ignore */ }
         }
 
+        /**
+         * Hides the impact report modal.
+         * Sets modal display to 'none' and clears the container content.
+         * Called when closing the impact report modal.
+         * Connected to: showImpactReportModal()
+         */
         function hideImpactReportModal() {
             try {
                 var modal = document.getElementById('impact-report-modal');
@@ -4813,7 +5221,14 @@
         // Global variable to store the current highlighted polygon layer
         var currentHighlightLayer = null;
         
-        // Highlight population polygon function
+        /**
+         * Highlights a population polygon on the map with red border and fill.
+         * Converts GeoJSON feature to OpenLayers feature and adds it to a highlight layer.
+         * Removes previous highlight before adding new one. Uses z-index 1100.
+         * Called when selecting a household or clicking on population features.
+         * Connected to: showHouseholdModal(), applyHouseholdSelection(), highlightFeatureSelection(),
+         *              currentHighlightLayer
+         */
         function highlightPopulationPolygon(feature) {
             try {
                 // Remove existing highlight layer
@@ -4865,6 +5280,13 @@
         }
         
         // Remove highlight function
+        /**
+         * Removes the population polygon highlight from the map.
+         * Removes the current highlight layer if it exists.
+         * Called when clearing selection or closing modals.
+         * Connected to: highlightPopulationPolygon(), resetHouseholdSelection(),
+         *              hideHouseholdModal(), currentHighlightLayer
+         */
         function removeHighlight() {
             if (currentHighlightLayer) {
                 map.removeLayer(currentHighlightLayer);
@@ -4873,7 +5295,13 @@
             }
         }
         
-        // Zoom to feature function
+        /**
+         * Zooms the map to a specific feature's extent.
+         * Calculates the feature's geometry extent and fits the map view to that extent.
+         * Uses animation duration of 1000ms and max zoom of 17.
+         * Called when selecting a household or clicking on features.
+         * Connected to: showHouseholdModal(), applyHouseholdSelection(), zoomToArea()
+         */
         function zoomToFeature(feature) {
             try {
                 console.log('zoomToFeature called with:', feature);
@@ -4970,6 +5398,13 @@
         }
         
         // Add house marker function
+        /**
+         * Adds a house marker icon at the specified center coordinate.
+         * Creates an OpenLayers icon feature and adds it to a marker layer on the map.
+         * Uses a house icon with text label "This house".
+         * Called when displaying household location on the map.
+         * Connected to: removeHouseMarker(), currentHouseMarker
+         */
         function addHouseMarker(center) {
             try {
                 // Remove existing marker
@@ -5028,7 +5463,13 @@
             }
         }
         
-        // Remove house marker function
+        /**
+         * Removes the house marker from the map.
+         * Removes the marker layer if it exists.
+         * Called when clearing selection or closing modals.
+         * Connected to: addHouseMarker(), resetHouseholdSelection(), hideHouseholdModal(),
+         *              currentHouseMarker
+         */
         function removeHouseMarker() {
             if (currentHouseMarker) {
                 map.removeLayer(currentHouseMarker);
@@ -5038,6 +5479,12 @@
         }
         
         // Setup modal event listeners
+        /**
+         * Sets up the household modal with close button and drag functionality.
+         * Adds event listener for close button and makes modal draggable by header.
+         * Called during page initialization.
+         * Connected to: hideHouseholdModal(), modal drag handlers
+         */
         function setupHouseholdModal() {
             var modal = document.getElementById('household-modal');
             var modalContent = document.querySelector('.modal-content');
@@ -5095,7 +5542,12 @@
             }
         }
         
-        // Setup table cell click handlers
+        /**
+         * Sets up click handlers for table cells in the people table.
+         * When a cell is clicked, finds the exposure_id and applies household selection.
+         * Called during page initialization.
+         * Connected to: applyHouseholdSelection(), findFeatureByFamilyId(), resetHouseholdSelection()
+         */
         function setupTableClickHandlers() {
             var tbody = document.querySelector('#people-24-table-inner tbody');
             if (tbody) {
@@ -5121,7 +5573,13 @@
             }
         }
         
-        // Find feature by fid
+        /**
+         * Finds a feature from currentPeopleAllFeats by family ID (exposure_id).
+         * Searches through the current people features array for matching exposure_id.
+         * Returns the feature object or null if not found.
+         * Called when clicking on table rows to locate the corresponding map feature.
+         * Connected to: setupTableClickHandlers(), applyHouseholdSelection(), currentPeopleAllFeats
+         */
         function findFeatureByFamilyId(familyId) {
             try {
                 if (!currentPeopleAllFeats || currentPeopleAllFeats.length === 0) return null;
@@ -5140,78 +5598,10 @@
             }
         }
         
-        // Find household polygon by fid (first match to get the FAMILY-ID, then find polygon)
-        function findHouseholdPolygonByFamilyId(familyId) {
-            try {
-                console.log('Looking for household polygon with fid:', familyId);
-                
-                if (typeof json_Households_1 === 'undefined' || !json_Households_1.features) {
-                    console.log('json_Households_1 not available');
-                    return null;
-                }
-                
-                var familyIdStr = String(familyId);
-                console.log('Searching for fid string:', familyIdStr);
-                console.log('Total household features:', json_Households_1.features.length);
-                
-                // Check first 10 household IDs for debugging
-                var sampleIds = json_Households_1.features
-                    .slice(0, 10)
-                    .map(function(f) { 
-                        return f.properties ? f.properties['fid'] : 'no-properties'; 
-                    });
-                console.log('Sample household fids:', sampleIds);
-                
-                // First, find the fid match to get the FAMILY-ID
-                var matchedFeature = null;
-                for (var i = 0; i < json_Households_1.features.length; i++) {
-                    var feature = json_Households_1.features[i];
-                    if (feature && feature.properties) {
-                        var householdFid = String(feature.properties['fid']);
-                        if (householdFid === familyIdStr) {
-                            matchedFeature = feature;
-                            console.log('Found matching fid!', feature);
-                            break;
-                        }
-                    }
-                }
-                
-                if (!matchedFeature) {
-                    console.log('No matching fid found:', familyIdStr);
-                    return null;
-                }
-                
-                // Now get the FAMILY-ID from the matched feature
-                var familyIdValue = matchedFeature.properties['FAMILY-ID'];
-                console.log('FAMILY-ID for fid', familyIdStr, 'is:', familyIdValue);
-                
-                // Return the first feature we found (they all have the same FAMILY-ID)
-                return matchedFeature;
-            } catch (e) {
-                console.error('Error finding household polygon by fid:', e);
-                return null;
-            }
-        }
-        
         // Initialize modal functionality
         document.addEventListener('DOMContentLoaded', function() {
             setupHouseholdModal();
             setupTableClickHandlers();
-            // Restore last selected flood extent if available
-            (function restoreLastMeter(){
-                try {
-                    // Removed localStorage memory - always start with "Select Flood Extent"
-                    // var last = localStorage.getItem('lastFloodMeter');
-                    // if (!last) return;
-                    // var dropdown = document.getElementById('floodExtentDropdown');
-                    // if (!dropdown) return;
-                    // var exists = false;
-                    // for (var i = 0; i < dropdown.options.length; i++) {
-                    //     if (String(dropdown.options[i].value) === String(last)) { exists = true; break; }
-                    // }
-                    // if (exists) dropdown.value = String(last);
-                } catch (e) { /* ignore */ }
-            })();
             var infoClose = document.getElementById('infographics-modal-close');
             if (infoClose && !infoClose._wired) {
                 infoClose.addEventListener('click', hideInfographicsModal);
