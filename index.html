@@ -1519,6 +1519,8 @@
         var popupOverlay = null;
         var selectedFeatures = [];
         var peopleLayer = null;
+        var householdLayers = [];
+        var householdLayersVisible = false;
         var barangaySelectionState = {
             options: [],
             selected: new Set()
@@ -1579,6 +1581,7 @@
 
                     // Prepare the People layer so it is ready for toggling
                     ensurePeopleLayer();
+                    ensureHouseholdLayers();
                 } else {
                     console.log('Map not found or not ready');
                 }
@@ -1932,6 +1935,11 @@
             updatePeopleBarangayDisplay();
             updateFloodExtentAvailability();
             filterHouseholdsBySelectedBarangay();
+            if (selections.length > 0) {
+                setPeopleLayerVisible(false);
+            } else if (householdLayersVisible) {
+                setBaseHouseholdLayersVisible(true);
+            }
             applyPeopleFiltersAndRender();
             updateCharts();
         }
@@ -2037,31 +2045,40 @@
             console.log('toggleLayer called for:', layerType);
 
             if (layerType === 'household') {
-                ensurePeopleLayer();
-
-                var newVisibility = true;
-                if (peopleLayer) {
-                    newVisibility = !peopleLayer.getVisible();
-                    peopleLayer.setVisible(newVisibility);
-                    console.log('People layer visibility set to:', newVisibility);
-                } else {
-                    console.warn('People layer not available to toggle.');
-                }
-
-                layers.forEach(function(layer) {
-                    var layerTitle = layer.get('title') || layer.get('name') || 'Unknown';
-                    var layerTitleLower = layerTitle.toLowerCase();
-                    if (layerTitleLower.includes('household') || layerTitleLower.includes('households')) {
-                        layer.setVisible(false);
-                        console.log('Hid household layer:', layerTitle);
+                ensureHouseholdLayers();
+                var householdBtn = document.getElementById('household-btn');
+                if (!householdLayersVisible) {
+                    householdLayersVisible = true;
+                    if (householdBtn) {
+                        toggleButtonActive(householdBtn);
                     }
-                });
-
-                if (filteredHouseholdLayer) {
-                    filteredHouseholdLayer.setVisible(false);
-                    console.log('Hid filtered household overlay');
+                    console.log('Activating household layer view. Current barangay selections:', getSelectedBarangays());
+                    setPeopleLayerVisible(false);
+                    var selections = getSelectedBarangays();
+                    if (selections.length > 0) {
+                        filterHouseholdsBySelectedBarangay();
+                        if (filteredHouseholdLayer) {
+                            filteredHouseholdLayer.setVisible(true);
+                        }
+                        setBaseHouseholdLayersVisible(false);
+                    } else {
+                        setBaseHouseholdLayersVisible(true);
+                        if (filteredHouseholdLayer) {
+                            filteredHouseholdLayer.setVisible(false);
+                        }
+                    }
+                } else {
+                    householdLayersVisible = false;
+                    if (householdBtn) {
+                        householdBtn.classList.remove('active');
+                    }
+                    console.log('Deactivating household layer view.');
+                    setBaseHouseholdLayersVisible(false);
+                    if (filteredHouseholdLayer) {
+                        filteredHouseholdLayer.setVisible(false);
+                        removeFilteredHouseholdLayer();
+                    }
                 }
-
                 return;
             }
 
@@ -3557,6 +3574,85 @@
             } catch (e) { /* ignore */ }
         }
 
+        function traverseLayerTree(layer, callback) {
+            if (!layer) return;
+            try {
+                callback(layer);
+            } catch (e) { /* ignore */ }
+            if (layer && typeof layer.getLayers === 'function') {
+                var children = layer.getLayers();
+                if (children && typeof children.forEach === 'function') {
+                    children.forEach(function(child) {
+                        traverseLayerTree(child, callback);
+                    });
+                }
+            }
+        }
+
+        function ensureHouseholdLayers() {
+            try {
+                if (typeof map === 'undefined' || !map.getLayers || householdLayers.length > 0) {
+                    return;
+                }
+                var layersCollection = map.getLayers();
+                var registered = [];
+                layersCollection.forEach(function(layer) {
+                    traverseLayerTree(layer, function(candidate) {
+                        if (!candidate || typeof candidate.get !== 'function') return;
+                        var title = candidate.get('title') || candidate.get('name') || '';
+                        if (!title) return;
+                        var lower = String(title).toLowerCase();
+                        if (lower.indexOf('households_1') !== -1) {
+                            if (householdLayers.indexOf(candidate) === -1) {
+                                householdLayers.push(candidate);
+                                registered.push(title);
+                                if (candidate.setVisible) {
+                                    candidate.setVisible(false);
+                                }
+                            }
+                        }
+                    });
+                });
+                if (registered.length) {
+                    console.log('Registered household base layers:', registered);
+                } else {
+                    console.warn('No household base layers found during initialization.');
+                }
+            } catch (e) {
+                console.error('Failed to register household layers:', e);
+            }
+        }
+
+        function setBaseHouseholdLayersVisible(visible) {
+            try {
+                ensureHouseholdLayers();
+                var bool = !!visible;
+                householdLayers.forEach(function(layer) {
+                    if (layer && typeof layer.setVisible === 'function') {
+                        layer.setVisible(bool);
+                    }
+                });
+                console.log('Base household layers visibility set to:', bool);
+            } catch (e) {
+                console.error('Failed to toggle household base layers:', e);
+            }
+        }
+
+        function setPeopleLayerVisible(visible) {
+            try {
+                ensurePeopleLayer();
+                if (!peopleLayer || typeof peopleLayer.setVisible !== 'function') return;
+                var bool = !!visible;
+                if (peopleLayer.getVisible && peopleLayer.getVisible() === bool) {
+                    return;
+                }
+                peopleLayer.setVisible(bool);
+                console.log('People layer visibility forced to:', bool);
+            } catch (e) {
+                console.error('Failed to toggle people layer visibility:', e);
+            }
+        }
+
         function setControlDisabledById(id, disabled) {
             try {
                 var el = document.getElementById(id);
@@ -3587,7 +3683,6 @@
                 floodDropdown.disabled = !hasBarangay;
                 floodDropdown.classList.toggle('is-disabled', !hasBarangay);
 
-                setControlDisabledById('household-btn', !hasBarangay);
                 setControlDisabledById('toggleInfographicsBtn', !hasBarangay);
                 setControlDisabledById('impactReportBtn', !hasBarangay);
             } catch (e) { /* ignore */ }
@@ -3793,103 +3888,77 @@
         }
 
         function filterHouseholdsBySelectedBarangay() {
-            var barangayFeatures = getSelectedBarangayFeatures();
+            ensureHouseholdLayers();
+            var selections = getSelectedBarangays();
+            var selectionSet = new Set(selections.map(normalizeBarangayName));
             removeSelectedBarangayHighlight();
             removeFilteredHouseholdLayer();
 
-            if (!barangayFeatures.length) {
+            if (selectionSet.size === 0) {
                 console.log('No barangay selections detected. Household filter cleared.');
+                if (householdLayersVisible) {
+                    setBaseHouseholdLayersVisible(true);
+                }
                 return;
             }
 
             if (typeof json_Households_1 === 'undefined' || !json_Households_1.features) {
                 console.warn('Household data unavailable');
-                highlightSelectedBarangays(barangayFeatures);
                 return;
             }
 
             if (!map) {
                 console.warn('Map not available for filtering households');
-                highlightSelectedBarangays(barangayFeatures);
                 return;
             }
+
+            var barangayFeatures = getSelectedBarangayFeatures();
+            if (!barangayFeatures.length) {
+                console.warn('Unable to locate barangay boundary features for selections:', selections);
+                return;
+            }
+
+            highlightSelectedBarangays(barangayFeatures);
 
             var format = new ol.format.GeoJSON({
                 dataProjection: 'EPSG:4326',
                 featureProjection: map.getView().getProjection()
             });
 
-            var barangayOlFeatures = [];
-            var barangayGeometries = [];
-
-            for (var i = 0; i < barangayFeatures.length; i++) {
-                try {
-                    var olFeature = format.readFeature(barangayFeatures[i]);
-                    if (olFeature) {
-                        barangayOlFeatures.push(olFeature);
-                        var geom = olFeature.getGeometry();
-                        if (geom) {
-                            barangayGeometries.push(geom);
-                        }
-                    }
-                } catch (e) {
-                    console.warn('Failed to convert barangay feature for household filtering:', e);
-                }
-            }
-
-            if (!barangayGeometries.length) {
-                console.warn('Selected barangays have no valid geometry for filtering.');
-                highlightSelectedBarangays(barangayFeatures);
-                return;
-            }
-
-            highlightSelectedBarangays(barangayFeatures);
-
-            var selectedBarangaySet = new Set(getSelectedBarangays().map(normalizeBarangayName));
-            var region = normalizeBarangayName((document.getElementById('region-select') || {}).value);
-            var province = normalizeBarangayName((document.getElementById('province-select') || {}).value);
-            var municipality = normalizeBarangayName((document.getElementById('municipality-select') || {}).value);
-
             var matchedFeatures = [];
-            for (var j = 0; j < json_Households_1.features.length; j++) {
-                var feat = json_Households_1.features[j];
+            for (var i = 0; i < json_Households_1.features.length; i++) {
+                var feat = json_Households_1.features[i];
                 if (!feat || !feat.properties || !feat.geometry) continue;
 
                 var props = feat.properties;
                 var featureBarangay = normalizeBarangayName(props.BARANGAY);
-                var featureMunicipality = normalizeBarangayName(props['CITY/MUN'] || props.MUNICIPALITY);
-                var featureProvince = normalizeBarangayName(props.PROVINCE);
-                var featureRegion = normalizeBarangayName(props.REGION);
-
-                if (selectedBarangaySet.size && !selectedBarangaySet.has(featureBarangay)) continue;
-                if (municipality && featureMunicipality && featureMunicipality !== municipality) continue;
-                if (province && featureProvince && featureProvince !== province) continue;
-                if (region && featureRegion && featureRegion !== region) continue;
+                if (!selectionSet.has(featureBarangay)) {
+                    continue;
+                }
 
                 try {
-                    var olHousehold = format.readFeature(feat);
-                    var geomHousehold = olHousehold.getGeometry();
-                    if (!geomHousehold) continue;
-
-                    var intersects = barangayGeometries.some(function(geom) {
-                        return geom.intersectsExtent(geomHousehold.getExtent());
-                    });
-
-                    if (intersects) {
-                        matchedFeatures.push(olHousehold);
+                    var olFeature = format.readFeature(feat);
+                    if (olFeature) {
+                        matchedFeatures.push(olFeature);
                     }
                 } catch (err) {
-                    console.warn('Failed to convert household feature:', err);
+                    console.warn('Failed to convert household feature for filtering:', err);
                 }
             }
 
-            console.log('Found', matchedFeatures.length, 'household polygons across selected barangays:', Array.from(selectedBarangaySet));
+            console.log('Prepared', matchedFeatures.length, 'household polygons for barangay selections:', selections);
 
             if (matchedFeatures.length === 0) {
+                if (householdLayersVisible) {
+                    setBaseHouseholdLayersVisible(false);
+                }
                 return;
             }
 
-            var householdsShouldBeVisible = !(peopleLayer && peopleLayer.getVisible());
+            if (!householdLayersVisible) {
+                console.log('Household layers are currently hidden; filtered results will render when activated.');
+                return;
+            }
 
             filteredHouseholdLayer = new ol.layer.Vector({
                 source: new ol.source.Vector({
@@ -3908,13 +3977,18 @@
                         })
                     ];
                 },
-                visible: householdsShouldBeVisible && matchedFeatures.length > 0,
+                visible: householdLayersVisible,
                 title: 'Filtered Households',
                 zIndex: 1200
             });
 
             map.addLayer(filteredHouseholdLayer);
-            filteredHouseholdLayer.setVisible(householdsShouldBeVisible && matchedFeatures.length > 0);
+            if (householdLayersVisible) {
+                setBaseHouseholdLayersVisible(false);
+                filteredHouseholdLayer.setVisible(true);
+            } else {
+                filteredHouseholdLayer.setVisible(false);
+            }
         }
 
         function checkDemoFilter(filter, demos, properties) {

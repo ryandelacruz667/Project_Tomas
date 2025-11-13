@@ -124,7 +124,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented FAMILY-ID based lookup that returns all matching household rows when a `People_0` polygon is clicked, and logs the full result set
 - Expanded `findHouseholdDataByFamilyId()` and related helpers to handle both `FAMILY-ID` and `FAMILY_ID` fields for consistent cross-layer matching
 - Barangay selector upgraded to a multi-checkbox control: zoom, highlight, filtered household overlays, population table, and charts all respond to every checked barangay; selections stay highlighted until an empty map click clears them, with detailed console logging for each update
-- Household, Infographics, and Impact Report actions now remain disabled until at least one barangay is selected, preventing accidental usage without context while preserving their original functionality once enabled
+- Infographics and Impact Report actions now remain disabled until at least one barangay is selected, preventing accidental usage without context while preserving their original functionality once enabled
+- Household button once again drives the `Households_1` dataset directly: clicking it shows all household polygons, or only those whose `BARANGAY` matches the current selection (with detailed logs); the `People_0` layer is suppressed whenever barangays are chosen to keep the view focused on households
 
 ### Security
 
