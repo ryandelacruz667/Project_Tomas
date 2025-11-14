@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - CHANGELOG.md file to track project changes
+- Multiselect functionality for Region, Province, and Municipality dropdowns:
+  - **Region multiselect**: Users can now select multiple regions simultaneously via checkboxes. Selection state stored in `regionSelectionState.selected` (Set). Button displays "Select Region", single region name, or count of selections (e.g., "3 regions selected"). Selecting/deselecting regions automatically filters the Province dropdown. All selection changes logged to console for debugging.
+  - **Province multiselect**: Users can select multiple provinces based on selected regions. Hierarchical filtering ensures only provinces within selected regions are shown. Selection state stored in `provinceSelectionState.selected` (Set). Automatically filters Municipality dropdown when provinces are selected/deselected.
+  - **Municipality multiselect**: Users can select multiple municipalities based on selected regions and provinces. Hierarchical filtering ensures only municipalities within selected regions and provinces are shown. Selection state stored in `municipalitySelectionState.selected` (Set). Automatically filters Barangay dropdown when municipalities are selected/deselected.
+  - **Implementation details**: All multiselect dropdowns use checkbox-based UI with opening/closing animations. Each multiselect has comprehensive initialization, rendering, toggle, and selection change handler functions. Functions include detailed documentation explaining workflow, connections, and how each multiselect works. Selection pruning automatically removes selections that are no longer available when parent selections change.
+  - **Workflow**: 1) Initialize multiselect components on page load, 2) Populate options from GeoJSON data, 3) Render checkboxes for available options, 4) Handle checkbox toggles, 5) Coordinate cascading updates to lower-level dropdowns, 6) Update map highlights and zoom based on selections.
 - Population analysis functionality for Numberofpeopleat24meters_12.js dataset
 - Displacement calculation methodology based on hazard class percentages:
   - High hazard: 5% displacement rate
@@ -34,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced data analysis capabilities for hazard assessment
 - Moved "Flood Exposure" filter from table filters area to left sidebar in Flood Extent section for better organization and accessibility
 - Improved layout and organization of Flood Extent controls in sidebar
+- **Converted Region, Province, and Municipality dropdowns from single-select to multiselect**: All three dropdowns now use checkbox-based multiselect interface matching the existing Barangay multiselect pattern. Hierarchical filtering maintained: regions filter provinces, provinces filter municipalities, municipalities filter barangays. Updated `populateDropdowns()`, `updateProvinceDropdown()`, `updateMunicipalityDropdown()`, `updateBarangayDropdown()`, and `setupDropdownEventListeners()` to work with multiselect functionality.
 
 ### Deprecated
 

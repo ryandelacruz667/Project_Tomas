@@ -1239,22 +1239,31 @@
             <div id="top-pane">
                 <form class="search-form" autocomplete="off">
                     <div class="form-group">
-                        <label class="form-label" for="region-select">Region</label>
-                        <select id="region-select" class="modern-select">
-                            <option value="">Select Region</option>
-                        </select>
+                        <label class="form-label" for="region-multiselect-button">Region</label>
+                        <div id="region-multiselect" class="modern-multiselect">
+                            <button type="button" id="region-multiselect-button" class="modern-select multiselect-button">Select Region</button>
+                            <div id="region-multiselect-dropdown" class="multiselect-dropdown">
+                                <div class="multiselect-empty">Loading regions...</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="province-select">Province</label>
-                        <select id="province-select" class="modern-select">
-                            <option value="">Select Province</option>
-                        </select>
+                        <label class="form-label" for="province-multiselect-button">Province</label>
+                        <div id="province-multiselect" class="modern-multiselect">
+                            <button type="button" id="province-multiselect-button" class="modern-select multiselect-button">Select Province</button>
+                            <div id="province-multiselect-dropdown" class="multiselect-dropdown">
+                                <div class="multiselect-empty">Select a region first</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="municipality-select">Municipality</label>
-                        <select id="municipality-select" class="modern-select">
-                            <option value="">Select Municipality</option>
-                        </select>
+                        <label class="form-label" for="municipality-multiselect-button">Municipality</label>
+                        <div id="municipality-multiselect" class="modern-multiselect">
+                            <button type="button" id="municipality-multiselect-button" class="modern-select multiselect-button">Select Municipality</button>
+                            <div id="municipality-multiselect-dropdown" class="multiselect-dropdown">
+                                <div class="multiselect-empty">Select a province first</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="barangay-multiselect-button">Barangay</label>
@@ -1527,6 +1536,25 @@
         };
         var barangayDropdownInitialized = false;
         
+        // Multiselect state for Region, Province, and Municipality
+        var regionSelectionState = {
+            options: [],
+            selected: new Set()
+        };
+        var regionDropdownInitialized = false;
+        
+        var provinceSelectionState = {
+            options: [],
+            selected: new Set()
+        };
+        var provinceDropdownInitialized = false;
+        
+        var municipalitySelectionState = {
+            options: [],
+            selected: new Set()
+        };
+        var municipalityDropdownInitialized = false;
+        
         // Initialize map with base map and Region_2 layer visible
         document.addEventListener('DOMContentLoaded', function() {
             // Wait for the map to be fully loaded
@@ -1587,6 +1615,10 @@
                 }
                 
                 // Initialize custom barangay multiselect before populating options
+                // Initialize all multiselect dropdowns
+                initializeRegionMultiselect();
+                initializeProvinceMultiselect();
+                initializeMunicipalityMultiselect();
                 initializeBarangayMultiselect();
 
                 // Populate dropdowns from Region2_39 data
@@ -1657,16 +1689,17 @@
         }
         
         /**
-         * Populates the Region dropdown from Region2_39 GeoJSON data.
-         * Extracts unique region names and adds them to the region select element.
+         * Populates the Region multiselect dropdown from Region2_39 GeoJSON data.
+         * Extracts unique region names and renders them as checkboxes in the region multiselect.
          * Called during page initialization. Clears province, municipality, and barangay dropdowns.
-         * Connected to: updateProvinceDropdown(), updateMunicipalityDropdown(), updateBarangayDropdown()
+         * Connected to: updateProvinceDropdown(), updateMunicipalityDropdown(), updateBarangayDropdown(),
+         *              renderRegionOptions()
          */
         function populateDropdowns() {
             if (typeof json_Region2_39 !== 'undefined' && json_Region2_39.features) {
                 console.log('Populating dropdowns from Region2_39 data...');
                 
-                // Get unique values for Region dropdown only
+                // Get unique values for Region multiselect
                 var regions = new Set();
                 
                 json_Region2_39.features.forEach(function(feature) {
@@ -1675,94 +1708,37 @@
                     }
                 });
                 
-                // Populate Region dropdown only
-                var regionSelect = document.getElementById('region-select');
-                if (regionSelect) {
-                    Array.from(regions).sort().forEach(function(region) {
-                        var option = document.createElement('option');
-                        option.value = region;
-                        option.textContent = region;
-                        regionSelect.appendChild(option);
-                    });
-                }
+                // Populate Region multiselect with sorted regions
+                var sortedRegions = Array.from(regions).sort();
+                renderRegionOptions(sortedRegions);
                 
                 // Clear other dropdowns - they will be populated based on selections
-                var provinceSelect = document.getElementById('province-select');
-                var municipalitySelect = document.getElementById('municipality-select');
-                
-                if (provinceSelect) {
-                    provinceSelect.innerHTML = '<option value="">Select Province</option>';
-                }
-                if (municipalitySelect) {
-                    municipalitySelect.innerHTML = '<option value="">Select Municipality</option>';
-                }
+                renderProvinceOptions([]);
+                renderMunicipalityOptions([]);
                 renderBarangayOptions([]);
                 
-                console.log('Region dropdown populated successfully. Other dropdowns will populate based on selections.');
+                console.log('Region multiselect populated successfully with', sortedRegions.length, 'regions. Other dropdowns will populate based on selections.');
             } else {
                 console.log('Region2_39 data not found');
+                renderRegionOptions([]);
             }
         }
         
         /**
-         * Sets up event listeners for Region, Province, and Municipality dropdowns.
-         * When a selection changes, it cascades updates to lower-level dropdowns and triggers map highlighting/zooming.
+         * Sets up event listeners for Region, Province, and Municipality multiselect dropdowns.
+         * Multiselect functionality is handled by their respective initialization and handler functions.
+         * This function now serves as a placeholder for any additional setup needed.
+         * The multiselect dropdowns handle their own events via:
+         * - initializeRegionMultiselect(), initializeProvinceMultiselect(), initializeMunicipalityMultiselect()
+         * - handleRegionSelectionChange(), handleProvinceSelectionChange(), handleMunicipalitySelectionChange()
          * Called during page initialization.
-         * Connected to: updateProvinceDropdown(), updateMunicipalityDropdown(), updateBarangayDropdown(),
-         *              highlightSelectedPolygon(), zoomToArea(), clearHighlight(), handleBarangaySelectionChange()
+         * Connected to: All multiselect initialization and handler functions
          */
         function setupDropdownEventListeners() {
-            var regionSelect = document.getElementById('region-select');
-            var provinceSelect = document.getElementById('province-select');
-            var municipalitySelect = document.getElementById('municipality-select');
-            
-            if (regionSelect) {
-                regionSelect.addEventListener('change', function() {
-                    clearHighlight();
-                    if (provinceSelect) {
-                        provinceSelect.value = '';
-                    }
-                    clearLowerDropdowns();
-                    updateProvinceDropdown();
-                    updateMunicipalityDropdown();
-                    updateBarangayDropdown();
-                    handleBarangaySelectionChange({ skipZoom: true, reason: 'region-change' });
-                    if (this.value) {
-                        highlightSelectedPolygon();
-                        zoomToArea();
-                    }
-                });
-            }
-            
-            if (provinceSelect) {
-                provinceSelect.addEventListener('change', function() {
-                    clearHighlight();
-                    if (!this.value && municipalitySelect) {
-                        municipalitySelect.value = '';
-                    }
-                    clearBarangayDropdown();
-                    updateMunicipalityDropdown();
-                    updateBarangayDropdown();
-                    handleBarangaySelectionChange({ skipZoom: true, reason: 'province-change' });
-                    if (this.value) {
-                        highlightSelectedPolygon();
-                        zoomToArea();
-                    }
-                });
-            }
-            
-            if (municipalitySelect) {
-                municipalitySelect.addEventListener('change', function() {
-                    clearHighlight();
-                    clearBarangayDropdown();
-                    updateBarangayDropdown();
-                    handleBarangaySelectionChange({ skipZoom: true, reason: 'municipality-change' });
-                    if (this.value) {
-                        highlightSelectedPolygon();
-                        zoomToArea();
-                    }
-                });
-            }
+            // Event listeners are now handled by the multiselect initialization functions
+            // (initializeRegionMultiselect, initializeProvinceMultiselect, initializeMunicipalityMultiselect)
+            // and their respective handler functions (handleRegionSelectionChange, etc.)
+            console.log('Dropdown event listeners setup complete. Multiselect dropdowns handle their own events.');
         }
 
         /**
@@ -2017,6 +1993,882 @@
         }
         
         /**
+         * ============================================================================
+         * REGION MULTISELECT FUNCTIONS
+         * ============================================================================
+         * 
+         * These functions implement a multiselect dropdown for Region selection.
+         * 
+         * How it works:
+         * - Users can select multiple regions simultaneously via checkboxes
+         * - Selection state is stored in regionSelectionState.selected (a Set)
+         * - The button displays "Select Region", single region name, or count of selections
+         * - Selecting/deselecting regions triggers updates to Province, Municipality, and Barangay dropdowns
+         * - The dropdown opens/closes on button click and closes when clicking outside
+         * - Selection changes are logged to console for debugging
+         * 
+         * Workflow:
+         * 1. initializeRegionMultiselect() - Sets up click handlers (called once on page load)
+         * 2. populateDropdowns() - Populates initial region options from GeoJSON data
+         * 3. renderRegionOptions() - Renders checkboxes for available regions
+         * 4. handleRegionOptionToggle() - Handles checkbox click (add/remove from selection)
+         * 5. handleRegionSelectionChange() - Coordinates updates (cascades to lower dropdowns)
+         * 6. updateProvinceDropdown() - Filters provinces based on selected regions
+         * 
+         * Connected to: Province, Municipality, Barangay multiselects (hierarchical filtering)
+         * ============================================================================
+         */
+
+        /**
+         * Initializes the region multiselect dropdown component.
+         * Sets up click handlers for opening/closing the dropdown and prevents event bubbling.
+         * This must be called once during page initialization before using the region multiselect.
+         * Uses global variable 'regionDropdownInitialized' to prevent multiple initializations.
+         * Connected to: toggleRegionDropdown(), closeRegionDropdown(), renderRegionOptions()
+         */
+        function initializeRegionMultiselect() {
+            if (regionDropdownInitialized) return;
+            console.log('Initializing region multiselect...');
+            var button = document.getElementById('region-multiselect-button');
+            var dropdown = document.getElementById('region-multiselect-dropdown');
+            if (!button || !dropdown) {
+                console.warn('Region multiselect elements not found');
+                return;
+            }
+
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var willOpen = !dropdown.classList.contains('is-open');
+                toggleRegionDropdown(willOpen);
+                console.log('Region dropdown toggled:', willOpen ? 'open' : 'closed');
+            });
+
+            dropdown.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+
+            document.addEventListener('click', function() {
+                closeRegionDropdown();
+            });
+
+            regionDropdownInitialized = true;
+            console.log('Region multiselect initialized successfully');
+        }
+
+        /**
+         * Toggles the region multiselect dropdown open/closed state.
+         * Adds or removes 'is-open' class from button and dropdown elements to control visibility.
+         * Called by: initializeRegionMultiselect(), closeRegionDropdown()
+         * Connected to: closeRegionDropdown()
+         */
+        function toggleRegionDropdown(shouldOpen) {
+            var button = document.getElementById('region-multiselect-button');
+            var dropdown = document.getElementById('region-multiselect-dropdown');
+            if (!button || !dropdown) return;
+            if (shouldOpen) {
+                dropdown.classList.add('is-open');
+                button.classList.add('is-open');
+            } else {
+                dropdown.classList.remove('is-open');
+                button.classList.remove('is-open');
+            }
+        }
+
+        /**
+         * Closes the region multiselect dropdown.
+         * Wrapper function that calls toggleRegionDropdown(false).
+         * Called when clicking outside the dropdown or when closing programmatically.
+         * Connected to: toggleRegionDropdown()
+         */
+        function closeRegionDropdown() {
+            toggleRegionDropdown(false);
+        }
+
+        /**
+         * Returns an array of currently selected region names.
+         * Converts the Set stored in regionSelectionState.selected to an array.
+         * Used throughout the application to check which regions are selected.
+         * Connected to: updateProvinceDropdown(), handleRegionSelectionChange(),
+         *              renderRegionOptions(), getSelectedRegions()
+         */
+        function getSelectedRegions() {
+            return Array.from(regionSelectionState.selected);
+        }
+
+        /**
+         * Normalizes a region name for comparison by converting to lowercase and trimming whitespace.
+         * Used to ensure consistent matching when comparing region names from different sources.
+         * Called by: updateProvinceDropdown(), handleRegionOptionToggle()
+         */
+        function normalizeRegionName(value) {
+            return (value || '').toString().trim().toLowerCase();
+        }
+
+        /**
+         * Updates the display text on the region multiselect button.
+         * Shows "Select Region", single region name, or count of selected regions.
+         * Called whenever region selection changes.
+         * Connected to: handleRegionOptionToggle(), renderRegionOptions(), clearRegionSelections()
+         */
+        function updateRegionSelectionDisplay() {
+            var button = document.getElementById('region-multiselect-button');
+            if (!button) return;
+            var selections = getSelectedRegions();
+            if (regionSelectionState.options.length === 0) {
+                button.textContent = 'Select Region';
+                return;
+            }
+            if (selections.length === 0) {
+                button.textContent = 'Select Region';
+            } else if (selections.length === 1) {
+                button.textContent = selections[0];
+            } else {
+                button.textContent = selections.length + ' regions selected';
+            }
+        }
+
+        /**
+         * Renders the region multiselect dropdown options as checkboxes.
+         * Creates checkbox elements for each region and maintains selection state.
+         * Prunes selections that are no longer available in the current options.
+         * This is the main rendering function that populates the dropdown with interactive checkboxes.
+         * Called by: populateDropdowns()
+         * Connected to: handleRegionOptionToggle(), updateRegionSelectionDisplay(),
+         *              handleRegionSelectionChange(), regionSelectionState
+         */
+        function renderRegionOptions(regions) {
+            var dropdown = document.getElementById('region-multiselect-dropdown');
+            if (!dropdown) return;
+
+            dropdown.innerHTML = '';
+            regionSelectionState.options = Array.isArray(regions) ? regions.slice() : [];
+
+            if (!regionSelectionState.options.length) {
+                regionSelectionState.selected.clear();
+                dropdown.innerHTML = '<div class="multiselect-empty">No regions available</div>';
+                updateRegionSelectionDisplay();
+                handleRegionSelectionChange({ skipZoom: true, reason: 'options-cleared' });
+                return;
+            }
+
+            var previousSelection = new Set(regionSelectionState.selected);
+            regionSelectionState.selected.clear();
+            var availableSet = new Set(regionSelectionState.options);
+            var selectionChanged = false;
+
+            // Preserve previous selections that are still available
+            previousSelection.forEach(function(name) {
+                if (availableSet.has(name)) {
+                    regionSelectionState.selected.add(name);
+                } else {
+                    selectionChanged = true;
+                }
+            });
+
+            // Create checkbox elements for each region
+            var fragment = document.createDocumentFragment();
+            regionSelectionState.options.forEach(function(name, index) {
+                var option = document.createElement('div');
+                option.className = 'multiselect-option';
+
+                var checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = 'region-checkbox-' + index;
+                checkbox.value = name;
+                checkbox.checked = regionSelectionState.selected.has(name);
+                checkbox.addEventListener('change', function(event) {
+                    handleRegionOptionToggle(name, event.target.checked);
+                });
+
+                var label = document.createElement('label');
+                label.setAttribute('for', checkbox.id);
+                label.textContent = name;
+
+                option.appendChild(checkbox);
+                option.appendChild(label);
+                fragment.appendChild(option);
+            });
+
+            dropdown.appendChild(fragment);
+            updateRegionSelectionDisplay();
+
+            if (selectionChanged) {
+                console.log('Pruned region selections that are no longer available.');
+                handleRegionSelectionChange({ skipZoom: true, reason: 'pruned-selection' });
+            }
+            
+            console.log('Region options rendered:', regionSelectionState.options.length, 'options');
+        }
+
+        /**
+         * Handles checkbox toggle for a region option in the multiselect dropdown.
+         * Adds or removes the region from the selection state and triggers cascading updates.
+         * When a region is selected/deselected, it automatically updates the Province dropdown
+         * which in turn updates Municipality and Barangay dropdowns.
+         * Called when a checkbox is clicked in the region dropdown.
+         * Connected to: updateRegionSelectionDisplay(), handleRegionSelectionChange(),
+         *              regionSelectionState.selected
+         */
+        function handleRegionOptionToggle(name, isChecked) {
+            if (!name) return;
+            if (isChecked) {
+                regionSelectionState.selected.add(name);
+                console.log('Region selected:', name);
+            } else {
+                regionSelectionState.selected.delete(name);
+                console.log('Region deselected:', name);
+            }
+            updateRegionSelectionDisplay();
+            console.log('Region selection updated:', getSelectedRegions());
+            handleRegionSelectionChange({ reason: 'checkbox' });
+        }
+
+        /**
+         * Handles changes to region selection and triggers cascading updates.
+         * When regions are selected/deselected, this function:
+         * 1. Updates the Province dropdown to show only provinces in selected regions
+         * 2. Cascades updates to Municipality and Barangay dropdowns
+         * 3. Updates map highlights and zooms to selected regions (if applicable)
+         * This is the main coordination function for region selection changes.
+         * Called by: handleRegionOptionToggle(), clearRegionSelections(), renderRegionOptions()
+         * Connected to: updateProvinceDropdown(), updateMunicipalityDropdown(), updateBarangayDropdown(),
+         *              clearHighlight(), highlightSelectedPolygon(), zoomToArea()
+         */
+        function handleRegionSelectionChange(options) {
+            options = options || {};
+            var selections = getSelectedRegions();
+            if (!options.reason) {
+                console.log('Region selection change detected.');
+            }
+            console.log('Current region selections:', selections, 'Reason:', options.reason || 'unknown');
+            
+            // Update lower-level dropdowns based on region selection
+            if (selections.length === 0) {
+                clearHighlight();
+                // Clear all lower dropdowns
+                clearProvinceSelections({ reason: 'region-cleared' });
+                clearMunicipalitySelections({ reason: 'region-cleared' });
+                clearBarangaySelections({ reason: 'region-cleared' });
+            } else {
+                // Update province dropdown to show only provinces in selected regions
+                updateProvinceDropdown();
+                if (!options.skipZoom) {
+                    highlightSelectedPolygon();
+                    zoomToArea();
+                }
+            }
+        }
+
+        /**
+         * Clears all region selections from the multiselect dropdown.
+         * Unchecks all checkboxes and clears the selection state.
+         * Can be forced to clear even if already empty.
+         * Called by: clearLowerDropdowns(), handleRegionSelectionChange()
+         * Connected to: updateRegionSelectionDisplay(), handleRegionSelectionChange(),
+         *              regionSelectionState.selected
+         */
+        function clearRegionSelections(options) {
+            options = options || {};
+            if (regionSelectionState.selected.size === 0 && !options.force) {
+                return;
+            }
+            regionSelectionState.selected.clear();
+            var dropdown = document.getElementById('region-multiselect-dropdown');
+            if (dropdown) {
+                dropdown.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+                    cb.checked = false;
+                });
+            }
+            updateRegionSelectionDisplay();
+            console.log('Region selections cleared.', options.reason ? '(' + options.reason + ')' : '');
+            handleRegionSelectionChange({ skipZoom: true, reason: options.reason || 'clear' });
+        }
+
+        /**
+         * ============================================================================
+         * PROVINCE MULTISELECT FUNCTIONS
+         * ============================================================================
+         * 
+         * These functions implement a multiselect dropdown for Province selection.
+         * 
+         * How it works:
+         * - Users can select multiple provinces simultaneously via checkboxes
+         * - Selection state is stored in provinceSelectionState.selected (a Set)
+         * - Provinces are filtered based on selected regions (hierarchical filtering)
+         * - The button displays "Select Province", single province name, or count of selections
+         * - Selecting/deselecting provinces triggers updates to Municipality and Barangay dropdowns
+         * - The dropdown opens/closes on button click and closes when clicking outside
+         * - Selection changes are logged to console for debugging
+         * 
+         * Workflow:
+         * 1. initializeProvinceMultiselect() - Sets up click handlers (called once on page load)
+         * 2. updateProvinceDropdown() - Populates province options based on selected regions
+         * 3. renderProvinceOptions() - Renders checkboxes for available provinces
+         * 4. handleProvinceOptionToggle() - Handles checkbox click (add/remove from selection)
+         * 5. handleProvinceSelectionChange() - Coordinates updates (cascades to lower dropdowns)
+         * 6. updateMunicipalityDropdown() - Filters municipalities based on selected provinces
+         * 
+         * Connected to: Region multiselect (filters provinces), Municipality and Barangay multiselects (hierarchical filtering)
+         * ============================================================================
+         */
+
+        /**
+         * Initializes the province multiselect dropdown component.
+         * Sets up click handlers for opening/closing the dropdown and prevents event bubbling.
+         * This must be called once during page initialization before using the province multiselect.
+         * Uses global variable 'provinceDropdownInitialized' to prevent multiple initializations.
+         * Connected to: toggleProvinceDropdown(), closeProvinceDropdown(), renderProvinceOptions()
+         */
+        function initializeProvinceMultiselect() {
+            if (provinceDropdownInitialized) return;
+            console.log('Initializing province multiselect...');
+            var button = document.getElementById('province-multiselect-button');
+            var dropdown = document.getElementById('province-multiselect-dropdown');
+            if (!button || !dropdown) {
+                console.warn('Province multiselect elements not found');
+                return;
+            }
+
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var willOpen = !dropdown.classList.contains('is-open');
+                toggleProvinceDropdown(willOpen);
+                console.log('Province dropdown toggled:', willOpen ? 'open' : 'closed');
+            });
+
+            dropdown.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+
+            document.addEventListener('click', function() {
+                closeProvinceDropdown();
+            });
+
+            provinceDropdownInitialized = true;
+            console.log('Province multiselect initialized successfully');
+        }
+
+        /**
+         * Toggles the province multiselect dropdown open/closed state.
+         * Adds or removes 'is-open' class from button and dropdown elements to control visibility.
+         * Called by: initializeProvinceMultiselect(), closeProvinceDropdown()
+         * Connected to: closeProvinceDropdown()
+         */
+        function toggleProvinceDropdown(shouldOpen) {
+            var button = document.getElementById('province-multiselect-button');
+            var dropdown = document.getElementById('province-multiselect-dropdown');
+            if (!button || !dropdown) return;
+            if (shouldOpen) {
+                dropdown.classList.add('is-open');
+                button.classList.add('is-open');
+            } else {
+                dropdown.classList.remove('is-open');
+                button.classList.remove('is-open');
+            }
+        }
+
+        /**
+         * Closes the province multiselect dropdown.
+         * Wrapper function that calls toggleProvinceDropdown(false).
+         * Called when clicking outside the dropdown or when closing programmatically.
+         * Connected to: toggleProvinceDropdown()
+         */
+        function closeProvinceDropdown() {
+            toggleProvinceDropdown(false);
+        }
+
+        /**
+         * Returns an array of currently selected province names.
+         * Converts the Set stored in provinceSelectionState.selected to an array.
+         * Used throughout the application to check which provinces are selected.
+         * Connected to: updateMunicipalityDropdown(), handleProvinceSelectionChange(),
+         *              renderProvinceOptions(), getSelectedProvinces()
+         */
+        function getSelectedProvinces() {
+            return Array.from(provinceSelectionState.selected);
+        }
+
+        /**
+         * Normalizes a province name for comparison by converting to lowercase and trimming whitespace.
+         * Used to ensure consistent matching when comparing province names from different sources.
+         * Called by: updateMunicipalityDropdown(), handleProvinceOptionToggle()
+         */
+        function normalizeProvinceName(value) {
+            return (value || '').toString().trim().toLowerCase();
+        }
+
+        /**
+         * Updates the display text on the province multiselect button.
+         * Shows "Select Province", single province name, or count of selected provinces.
+         * Called whenever province selection changes.
+         * Connected to: handleProvinceOptionToggle(), renderProvinceOptions(), clearProvinceSelections()
+         */
+        function updateProvinceSelectionDisplay() {
+            var button = document.getElementById('province-multiselect-button');
+            if (!button) return;
+            var selections = getSelectedProvinces();
+            if (provinceSelectionState.options.length === 0) {
+                button.textContent = 'Select Province';
+                return;
+            }
+            if (selections.length === 0) {
+                button.textContent = 'Select Province';
+            } else if (selections.length === 1) {
+                button.textContent = selections[0];
+            } else {
+                button.textContent = selections.length + ' provinces selected';
+            }
+        }
+
+        /**
+         * Renders the province multiselect dropdown options as checkboxes.
+         * Creates checkbox elements for each province and maintains selection state.
+         * Prunes selections that are no longer available in the current options.
+         * This is the main rendering function that populates the dropdown with interactive checkboxes.
+         * Called by: updateProvinceDropdown()
+         * Connected to: handleProvinceOptionToggle(), updateProvinceSelectionDisplay(),
+         *              handleProvinceSelectionChange(), provinceSelectionState
+         */
+        function renderProvinceOptions(provinces) {
+            var dropdown = document.getElementById('province-multiselect-dropdown');
+            if (!dropdown) return;
+
+            dropdown.innerHTML = '';
+            provinceSelectionState.options = Array.isArray(provinces) ? provinces.slice() : [];
+
+            if (!provinceSelectionState.options.length) {
+                provinceSelectionState.selected.clear();
+                dropdown.innerHTML = '<div class="multiselect-empty">Select a region first</div>';
+                updateProvinceSelectionDisplay();
+                handleProvinceSelectionChange({ skipZoom: true, reason: 'options-cleared' });
+                return;
+            }
+
+            var previousSelection = new Set(provinceSelectionState.selected);
+            provinceSelectionState.selected.clear();
+            var availableSet = new Set(provinceSelectionState.options);
+            var selectionChanged = false;
+
+            // Preserve previous selections that are still available
+            previousSelection.forEach(function(name) {
+                if (availableSet.has(name)) {
+                    provinceSelectionState.selected.add(name);
+                } else {
+                    selectionChanged = true;
+                }
+            });
+
+            // Create checkbox elements for each province
+            var fragment = document.createDocumentFragment();
+            provinceSelectionState.options.forEach(function(name, index) {
+                var option = document.createElement('div');
+                option.className = 'multiselect-option';
+
+                var checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = 'province-checkbox-' + index;
+                checkbox.value = name;
+                checkbox.checked = provinceSelectionState.selected.has(name);
+                checkbox.addEventListener('change', function(event) {
+                    handleProvinceOptionToggle(name, event.target.checked);
+                });
+
+                var label = document.createElement('label');
+                label.setAttribute('for', checkbox.id);
+                label.textContent = name;
+
+                option.appendChild(checkbox);
+                option.appendChild(label);
+                fragment.appendChild(option);
+            });
+
+            dropdown.appendChild(fragment);
+            updateProvinceSelectionDisplay();
+
+            if (selectionChanged) {
+                console.log('Pruned province selections that are no longer available.');
+                handleProvinceSelectionChange({ skipZoom: true, reason: 'pruned-selection' });
+            }
+            
+            console.log('Province options rendered:', provinceSelectionState.options.length, 'options');
+        }
+
+        /**
+         * Handles checkbox toggle for a province option in the multiselect dropdown.
+         * Adds or removes the province from the selection state and triggers cascading updates.
+         * When a province is selected/deselected, it automatically updates the Municipality dropdown
+         * which in turn updates the Barangay dropdown.
+         * Called when a checkbox is clicked in the province dropdown.
+         * Connected to: updateProvinceSelectionDisplay(), handleProvinceSelectionChange(),
+         *              provinceSelectionState.selected
+         */
+        function handleProvinceOptionToggle(name, isChecked) {
+            if (!name) return;
+            if (isChecked) {
+                provinceSelectionState.selected.add(name);
+                console.log('Province selected:', name);
+            } else {
+                provinceSelectionState.selected.delete(name);
+                console.log('Province deselected:', name);
+            }
+            updateProvinceSelectionDisplay();
+            console.log('Province selection updated:', getSelectedProvinces());
+            handleProvinceSelectionChange({ reason: 'checkbox' });
+        }
+
+        /**
+         * Handles changes to province selection and triggers cascading updates.
+         * When provinces are selected/deselected, this function:
+         * 1. Updates the Municipality dropdown to show only municipalities in selected provinces
+         * 2. Cascades updates to Barangay dropdown
+         * 3. Updates map highlights and zooms to selected provinces (if applicable)
+         * This is the main coordination function for province selection changes.
+         * Called by: handleProvinceOptionToggle(), clearProvinceSelections(), renderProvinceOptions()
+         * Connected to: updateMunicipalityDropdown(), updateBarangayDropdown(),
+         *              clearHighlight(), highlightSelectedPolygon(), zoomToArea()
+         */
+        function handleProvinceSelectionChange(options) {
+            options = options || {};
+            var selections = getSelectedProvinces();
+            if (!options.reason) {
+                console.log('Province selection change detected.');
+            }
+            console.log('Current province selections:', selections, 'Reason:', options.reason || 'unknown');
+            
+            // Update lower-level dropdowns based on province selection
+            if (selections.length === 0) {
+                clearHighlight();
+                // Clear all lower dropdowns
+                clearMunicipalitySelections({ reason: 'province-cleared' });
+                clearBarangaySelections({ reason: 'province-cleared' });
+            } else {
+                // Update municipality dropdown to show only municipalities in selected provinces
+                updateMunicipalityDropdown();
+                if (!options.skipZoom) {
+                    highlightSelectedPolygon();
+                    zoomToArea();
+                }
+            }
+        }
+
+        /**
+         * Clears all province selections from the multiselect dropdown.
+         * Unchecks all checkboxes and clears the selection state.
+         * Can be forced to clear even if already empty.
+         * Called by: clearLowerDropdowns(), handleRegionSelectionChange(), handleProvinceSelectionChange()
+         * Connected to: updateProvinceSelectionDisplay(), handleProvinceSelectionChange(),
+         *              provinceSelectionState.selected
+         */
+        function clearProvinceSelections(options) {
+            options = options || {};
+            if (provinceSelectionState.selected.size === 0 && !options.force) {
+                return;
+            }
+            provinceSelectionState.selected.clear();
+            var dropdown = document.getElementById('province-multiselect-dropdown');
+            if (dropdown) {
+                dropdown.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+                    cb.checked = false;
+                });
+            }
+            updateProvinceSelectionDisplay();
+            console.log('Province selections cleared.', options.reason ? '(' + options.reason + ')' : '');
+            handleProvinceSelectionChange({ skipZoom: true, reason: options.reason || 'clear' });
+        }
+
+        /**
+         * ============================================================================
+         * MUNICIPALITY MULTISELECT FUNCTIONS
+         * ============================================================================
+         * 
+         * These functions implement a multiselect dropdown for Municipality selection.
+         * 
+         * How it works:
+         * - Users can select multiple municipalities simultaneously via checkboxes
+         * - Selection state is stored in municipalitySelectionState.selected (a Set)
+         * - Municipalities are filtered based on selected regions and provinces (hierarchical filtering)
+         * - The button displays "Select Municipality", single municipality name, or count of selections
+         * - Selecting/deselecting municipalities triggers updates to Barangay dropdown
+         * - The dropdown opens/closes on button click and closes when clicking outside
+         * - Selection changes are logged to console for debugging
+         * 
+         * Workflow:
+         * 1. initializeMunicipalityMultiselect() - Sets up click handlers (called once on page load)
+         * 2. updateMunicipalityDropdown() - Populates municipality options based on selected regions/provinces
+         * 3. renderMunicipalityOptions() - Renders checkboxes for available municipalities
+         * 4. handleMunicipalityOptionToggle() - Handles checkbox click (add/remove from selection)
+         * 5. handleMunicipalitySelectionChange() - Coordinates updates (cascades to Barangay dropdown)
+         * 6. updateBarangayDropdown() - Filters barangays based on selected municipalities
+         * 
+         * Connected to: Region and Province multiselects (filters municipalities), Barangay multiselect (hierarchical filtering)
+         * ============================================================================
+         */
+
+        /**
+         * Initializes the municipality multiselect dropdown component.
+         * Sets up click handlers for opening/closing the dropdown and prevents event bubbling.
+         * This must be called once during page initialization before using the municipality multiselect.
+         * Uses global variable 'municipalityDropdownInitialized' to prevent multiple initializations.
+         * Connected to: toggleMunicipalityDropdown(), closeMunicipalityDropdown(), renderMunicipalityOptions()
+         */
+        function initializeMunicipalityMultiselect() {
+            if (municipalityDropdownInitialized) return;
+            console.log('Initializing municipality multiselect...');
+            var button = document.getElementById('municipality-multiselect-button');
+            var dropdown = document.getElementById('municipality-multiselect-dropdown');
+            if (!button || !dropdown) {
+                console.warn('Municipality multiselect elements not found');
+                return;
+            }
+
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                var willOpen = !dropdown.classList.contains('is-open');
+                toggleMunicipalityDropdown(willOpen);
+                console.log('Municipality dropdown toggled:', willOpen ? 'open' : 'closed');
+            });
+
+            dropdown.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+
+            document.addEventListener('click', function() {
+                closeMunicipalityDropdown();
+            });
+
+            municipalityDropdownInitialized = true;
+            console.log('Municipality multiselect initialized successfully');
+        }
+
+        /**
+         * Toggles the municipality multiselect dropdown open/closed state.
+         * Adds or removes 'is-open' class from button and dropdown elements to control visibility.
+         * Called by: initializeMunicipalityMultiselect(), closeMunicipalityDropdown()
+         * Connected to: closeMunicipalityDropdown()
+         */
+        function toggleMunicipalityDropdown(shouldOpen) {
+            var button = document.getElementById('municipality-multiselect-button');
+            var dropdown = document.getElementById('municipality-multiselect-dropdown');
+            if (!button || !dropdown) return;
+            if (shouldOpen) {
+                dropdown.classList.add('is-open');
+                button.classList.add('is-open');
+            } else {
+                dropdown.classList.remove('is-open');
+                button.classList.remove('is-open');
+            }
+        }
+
+        /**
+         * Closes the municipality multiselect dropdown.
+         * Wrapper function that calls toggleMunicipalityDropdown(false).
+         * Called when clicking outside the dropdown or when closing programmatically.
+         * Connected to: toggleMunicipalityDropdown()
+         */
+        function closeMunicipalityDropdown() {
+            toggleMunicipalityDropdown(false);
+        }
+
+        /**
+         * Returns an array of currently selected municipality names.
+         * Converts the Set stored in municipalitySelectionState.selected to an array.
+         * Used throughout the application to check which municipalities are selected.
+         * Connected to: updateBarangayDropdown(), handleMunicipalitySelectionChange(),
+         *              renderMunicipalityOptions(), getSelectedMunicipalities()
+         */
+        function getSelectedMunicipalities() {
+            return Array.from(municipalitySelectionState.selected);
+        }
+
+        /**
+         * Normalizes a municipality name for comparison by converting to lowercase and trimming whitespace.
+         * Used to ensure consistent matching when comparing municipality names from different sources.
+         * Called by: updateBarangayDropdown(), handleMunicipalityOptionToggle()
+         */
+        function normalizeMunicipalityName(value) {
+            return (value || '').toString().trim().toLowerCase();
+        }
+
+        /**
+         * Updates the display text on the municipality multiselect button.
+         * Shows "Select Municipality", single municipality name, or count of selected municipalities.
+         * Called whenever municipality selection changes.
+         * Connected to: handleMunicipalityOptionToggle(), renderMunicipalityOptions(), clearMunicipalitySelections()
+         */
+        function updateMunicipalitySelectionDisplay() {
+            var button = document.getElementById('municipality-multiselect-button');
+            if (!button) return;
+            var selections = getSelectedMunicipalities();
+            if (municipalitySelectionState.options.length === 0) {
+                button.textContent = 'Select Municipality';
+                return;
+            }
+            if (selections.length === 0) {
+                button.textContent = 'Select Municipality';
+            } else if (selections.length === 1) {
+                button.textContent = selections[0];
+            } else {
+                button.textContent = selections.length + ' municipalities selected';
+            }
+        }
+
+        /**
+         * Renders the municipality multiselect dropdown options as checkboxes.
+         * Creates checkbox elements for each municipality and maintains selection state.
+         * Prunes selections that are no longer available in the current options.
+         * This is the main rendering function that populates the dropdown with interactive checkboxes.
+         * Called by: updateMunicipalityDropdown()
+         * Connected to: handleMunicipalityOptionToggle(), updateMunicipalitySelectionDisplay(),
+         *              handleMunicipalitySelectionChange(), municipalitySelectionState
+         */
+        function renderMunicipalityOptions(municipalities) {
+            var dropdown = document.getElementById('municipality-multiselect-dropdown');
+            if (!dropdown) return;
+
+            dropdown.innerHTML = '';
+            municipalitySelectionState.options = Array.isArray(municipalities) ? municipalities.slice() : [];
+
+            if (!municipalitySelectionState.options.length) {
+                municipalitySelectionState.selected.clear();
+                dropdown.innerHTML = '<div class="multiselect-empty">Select a province first</div>';
+                updateMunicipalitySelectionDisplay();
+                handleMunicipalitySelectionChange({ skipZoom: true, reason: 'options-cleared' });
+                return;
+            }
+
+            var previousSelection = new Set(municipalitySelectionState.selected);
+            municipalitySelectionState.selected.clear();
+            var availableSet = new Set(municipalitySelectionState.options);
+            var selectionChanged = false;
+
+            // Preserve previous selections that are still available
+            previousSelection.forEach(function(name) {
+                if (availableSet.has(name)) {
+                    municipalitySelectionState.selected.add(name);
+                } else {
+                    selectionChanged = true;
+                }
+            });
+
+            // Create checkbox elements for each municipality
+            var fragment = document.createDocumentFragment();
+            municipalitySelectionState.options.forEach(function(name, index) {
+                var option = document.createElement('div');
+                option.className = 'multiselect-option';
+
+                var checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = 'municipality-checkbox-' + index;
+                checkbox.value = name;
+                checkbox.checked = municipalitySelectionState.selected.has(name);
+                checkbox.addEventListener('change', function(event) {
+                    handleMunicipalityOptionToggle(name, event.target.checked);
+                });
+
+                var label = document.createElement('label');
+                label.setAttribute('for', checkbox.id);
+                label.textContent = name;
+
+                option.appendChild(checkbox);
+                option.appendChild(label);
+                fragment.appendChild(option);
+            });
+
+            dropdown.appendChild(fragment);
+            updateMunicipalitySelectionDisplay();
+
+            if (selectionChanged) {
+                console.log('Pruned municipality selections that are no longer available.');
+                handleMunicipalitySelectionChange({ skipZoom: true, reason: 'pruned-selection' });
+            }
+            
+            console.log('Municipality options rendered:', municipalitySelectionState.options.length, 'options');
+        }
+
+        /**
+         * Handles checkbox toggle for a municipality option in the multiselect dropdown.
+         * Adds or removes the municipality from the selection state and triggers cascading updates.
+         * When a municipality is selected/deselected, it automatically updates the Barangay dropdown.
+         * Called when a checkbox is clicked in the municipality dropdown.
+         * Connected to: updateMunicipalitySelectionDisplay(), handleMunicipalitySelectionChange(),
+         *              municipalitySelectionState.selected
+         */
+        function handleMunicipalityOptionToggle(name, isChecked) {
+            if (!name) return;
+            if (isChecked) {
+                municipalitySelectionState.selected.add(name);
+                console.log('Municipality selected:', name);
+            } else {
+                municipalitySelectionState.selected.delete(name);
+                console.log('Municipality deselected:', name);
+            }
+            updateMunicipalitySelectionDisplay();
+            console.log('Municipality selection updated:', getSelectedMunicipalities());
+            handleMunicipalitySelectionChange({ reason: 'checkbox' });
+        }
+
+        /**
+         * Handles changes to municipality selection and triggers cascading updates.
+         * When municipalities are selected/deselected, this function:
+         * 1. Updates the Barangay dropdown to show only barangays in selected municipalities
+         * 2. Updates map highlights and zooms to selected municipalities (if applicable)
+         * This is the main coordination function for municipality selection changes.
+         * Called by: handleMunicipalityOptionToggle(), clearMunicipalitySelections(), renderMunicipalityOptions()
+         * Connected to: updateBarangayDropdown(),
+         *              clearHighlight(), highlightSelectedPolygon(), zoomToArea()
+         */
+        function handleMunicipalitySelectionChange(options) {
+            options = options || {};
+            var selections = getSelectedMunicipalities();
+            if (!options.reason) {
+                console.log('Municipality selection change detected.');
+            }
+            console.log('Current municipality selections:', selections, 'Reason:', options.reason || 'unknown');
+            
+            // Update lower-level dropdowns based on municipality selection
+            if (selections.length === 0) {
+                clearHighlight();
+                // Clear barangay dropdown
+                clearBarangaySelections({ reason: 'municipality-cleared' });
+            } else {
+                // Update barangay dropdown to show only barangays in selected municipalities
+                updateBarangayDropdown();
+                if (!options.skipZoom) {
+                    highlightSelectedPolygon();
+                    zoomToArea();
+                }
+            }
+        }
+
+        /**
+         * Clears all municipality selections from the multiselect dropdown.
+         * Unchecks all checkboxes and clears the selection state.
+         * Can be forced to clear even if already empty.
+         * Called by: clearLowerDropdowns(), handleProvinceSelectionChange(), handleMunicipalitySelectionChange()
+         * Connected to: updateMunicipalitySelectionDisplay(), handleMunicipalitySelectionChange(),
+         *              municipalitySelectionState.selected
+         */
+        function clearMunicipalitySelections(options) {
+            options = options || {};
+            if (municipalitySelectionState.selected.size === 0 && !options.force) {
+                return;
+            }
+            municipalitySelectionState.selected.clear();
+            var dropdown = document.getElementById('municipality-multiselect-dropdown');
+            if (dropdown) {
+                dropdown.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+                    cb.checked = false;
+                });
+            }
+            updateMunicipalitySelectionDisplay();
+            console.log('Municipality selections cleared.', options.reason ? '(' + options.reason + ')' : '');
+            handleMunicipalitySelectionChange({ skipZoom: true, reason: options.reason || 'clear' });
+        }
+
+        /**
          * Sets up event listeners for navigation buttons (Household, Roads, Schools, Documentation).
          * Handles button clicks and toggles layer visibility or navigation.
          * Called during page initialization.
@@ -2208,169 +3060,244 @@
         }
         
         /**
-         * Updates the Province dropdown based on the selected region.
-         * Extracts unique province names from Region2_39 data that match the selected region.
-         * Cascades updates to municipality and barangay dropdowns.
+         * Updates the Province multiselect dropdown based on selected regions.
+         * Extracts unique province names from Region2_39 data that match the selected regions.
+         * Cascades updates to municipality and barangay dropdowns when provinces change.
          * Called when region selection changes.
-         * Connected to: updateMunicipalityDropdown(), updateBarangayDropdown(), setupDropdownEventListeners()
+         * Connected to: updateMunicipalityDropdown(), updateBarangayDropdown(), handleRegionSelectionChange(),
+         *              renderProvinceOptions(), getSelectedRegions()
          */
         function updateProvinceDropdown() {
-            var regionSelect = document.getElementById('region-select');
-            var provinceSelect = document.getElementById('province-select');
-            
-            if (!regionSelect || !provinceSelect) return;
-            
-            var selectedRegion = regionSelect.value;
+            var selectedRegions = getSelectedRegions();
             var provinces = new Set();
             
-            if (selectedRegion) {
-                // Only show provinces if a region is selected
+            if (selectedRegions.length > 0) {
+                // Only show provinces if at least one region is selected
+                var selectedRegionsSet = new Set(selectedRegions);
                 json_Region2_39.features.forEach(function(feature) {
                     if (feature.properties && 
-                        feature.properties.Reg_Name === selectedRegion && 
+                        selectedRegionsSet.has(feature.properties.Reg_Name) && 
                         feature.properties.Pro_Name) {
                         provinces.add(feature.properties.Pro_Name);
                     }
                 });
-                    }
-            // If no region is selected, don't show any provinces
-            
-            // Clear and repopulate province dropdown
-            provinceSelect.innerHTML = '<option value="">Select Province</option>';
-            if (selectedRegion && provinces.size > 0) {
-            Array.from(provinces).sort().forEach(function(province) {
-                var option = document.createElement('option');
-                option.value = province;
-                option.textContent = province;
-                provinceSelect.appendChild(option);
-            });
             }
             
-            console.log('Updated province dropdown with', provinces.size, 'options for region:', selectedRegion);
+            // Render province multiselect with sorted provinces
+            var sortedProvinces = Array.from(provinces).sort();
+            renderProvinceOptions(sortedProvinces);
+            
+            console.log('Updated province multiselect with', sortedProvinces.length, 'options for regions:', selectedRegions);
         }
         
         /**
-         * Updates the Municipality dropdown based on the selected province.
-         * Extracts unique municipality names from Region2_39 data that match the selected region and province.
-         * Cascades updates to barangay dropdown.
-         * Called when province selection changes.
-         * Connected to: updateBarangayDropdown(), setupDropdownEventListeners(), updateProvinceDropdown()
+         * Updates the Municipality multiselect dropdown based on selected regions and provinces.
+         * Extracts unique municipality names from Region2_39 data that match the selected regions and provinces.
+         * Cascades updates to barangay dropdown when municipalities change.
+         * Called when region or province selection changes.
+         * Connected to: updateBarangayDropdown(), handleProvinceSelectionChange(), updateProvinceDropdown(),
+         *              renderMunicipalityOptions(), getSelectedRegions(), getSelectedProvinces()
          */
         function updateMunicipalityDropdown() {
-            var regionSelect = document.getElementById('region-select');
-            var provinceSelect = document.getElementById('province-select');
-            var municipalitySelect = document.getElementById('municipality-select');
-            
-            if (!regionSelect || !provinceSelect || !municipalitySelect) return;
-            
-            var selectedRegion = regionSelect.value;
-            var selectedProvince = provinceSelect.value;
+            var selectedRegions = getSelectedRegions();
+            var selectedProvinces = getSelectedProvinces();
             var municipalities = new Set();
             
-            console.log('updateMunicipalityDropdown called with region:', selectedRegion, 'province:', selectedProvince);
+            console.log('updateMunicipalityDropdown called with regions:', selectedRegions, 'provinces:', selectedProvinces);
             
-            if (selectedProvince) {
-                // Only show municipalities if a province is selected
+            if (selectedProvinces.length > 0) {
+                // Only show municipalities if at least one province is selected
+                var selectedRegionsSet = new Set(selectedRegions);
+                var selectedProvincesSet = new Set(selectedProvinces);
                 json_Region2_39.features.forEach(function(feature) {
                     if (feature.properties && 
-                        feature.properties.Reg_Name === selectedRegion && 
-                        feature.properties.Pro_Name === selectedProvince && 
+                        (selectedRegions.length === 0 || selectedRegionsSet.has(feature.properties.Reg_Name)) &&
+                        selectedProvincesSet.has(feature.properties.Pro_Name) && 
                         feature.properties.Mun_Name) {
                         municipalities.add(feature.properties.Mun_Name);
                     }
                 });
             }
-            // If no province is selected, don't show any municipalities
             
-            // Clear and repopulate municipality dropdown
-            municipalitySelect.innerHTML = '<option value="">Select Municipality</option>';
-            if (selectedProvince && municipalities.size > 0) {
-            Array.from(municipalities).sort().forEach(function(municipality) {
-                var option = document.createElement('option');
-                option.value = municipality;
-                option.textContent = municipality;
-                municipalitySelect.appendChild(option);
-            });
-            }
+            // Render municipality multiselect with sorted municipalities
+            var sortedMunicipalities = Array.from(municipalities).sort();
+            renderMunicipalityOptions(sortedMunicipalities);
             
-            console.log('Updated municipality dropdown with', municipalities.size, 'options for region:', selectedRegion, 'province:', selectedProvince);
+            console.log('Updated municipality multiselect with', sortedMunicipalities.length, 'options for regions:', selectedRegions, 'provinces:', selectedProvinces);
         }
         
         /**
-         * Updates the Barangay multiselect dropdown based on the selected municipality.
-         * Extracts unique barangay names from Region2_39 data and renders them as checkboxes.
-         * Called when municipality selection changes.
-         * Connected to: renderBarangayOptions(), setupDropdownEventListeners(),
-         *              updateMunicipalityDropdown(), updateProvinceDropdown()
+         * ============================================================================
+         * BARANGAY DROPDOWN UPDATE FUNCTION
+         * ============================================================================
+         * 
+         * This function updates the Barangay multiselect dropdown based on selected 
+         * regions, provinces, and municipalities. It implements hierarchical filtering 
+         * so that only barangays within the selected geographic hierarchy are shown.
+         * 
+         * How it works:
+         * 1. Gets current selections from Region, Province, and Municipality multiselects
+         * 2. Filters Region2_39 GeoJSON features to match selected hierarchy
+         * 3. Extracts unique barangay names (using Bgy_Name property, falls back to Brg_Name)
+         * 4. Renders the filtered barangays as checkboxes in the multiselect dropdown
+         * 5. Logs all changes for debugging
+         * 
+         * Property name handling:
+         * - Primary: Uses feature.properties.Bgy_Name (standard property name)
+         * - Fallback: Also checks feature.properties.Brg_Name for compatibility
+         * - This handles any inconsistencies in the GeoJSON data
+         * 
+         * Filtering logic:
+         * - If regions selected: Only shows barangays in those regions
+         * - If provinces selected: Only shows barangays in those provinces (within selected regions)
+         * - If municipalities selected: Only shows barangays in those municipalities
+         * - If nothing selected: Shows empty dropdown with "Select a municipality first" message
+         * 
+         * Called by: handleMunicipalitySelectionChange(), handleProvinceSelectionChange(),
+         *           handleRegionSelectionChange(), updateMunicipalityDropdown()
+         * Connected to: renderBarangayOptions(), getSelectedRegions(), getSelectedProvinces(),
+         *              getSelectedMunicipalities()
+         * ============================================================================
          */
         function updateBarangayDropdown() {
-            var regionSelect = document.getElementById('region-select');
-            var provinceSelect = document.getElementById('province-select');
-            var municipalitySelect = document.getElementById('municipality-select');
+            console.log('=== BARANGAY DROPDOWN UPDATE START ===');
             
-            if (!regionSelect || !provinceSelect || !municipalitySelect) return;
-            
-            var selectedRegion = regionSelect.value;
-            var selectedProvince = provinceSelect.value;
-            var selectedMunicipality = municipalitySelect.value;
+            // Get current selections from parent multiselects
+            var selectedRegions = getSelectedRegions();
+            var selectedProvinces = getSelectedProvinces();
+            var selectedMunicipalities = getSelectedMunicipalities();
             var barangays = new Set();
             
-            console.log('updateBarangayDropdown called with region:', selectedRegion, 'province:', selectedProvince, 'municipality:', selectedMunicipality);
+            console.log('Current selections - Regions:', selectedRegions.length, selectedRegions);
+            console.log('Current selections - Provinces:', selectedProvinces.length, selectedProvinces);
+            console.log('Current selections - Municipalities:', selectedMunicipalities.length, selectedMunicipalities);
             
-            if (selectedMunicipality) {
+            // Check if we have the necessary data
+            if (typeof json_Region2_39 === 'undefined' || !json_Region2_39.features) {
+                console.error('BARANGAY DROPDOWN ERROR: json_Region2_39 data not available');
+                renderBarangayOptions([]);
+                return;
+            }
+            
+            // Only show barangays if at least one municipality is selected
+            if (selectedMunicipalities.length > 0) {
+                console.log('Municipalities selected, filtering barangays...');
+                
+                // Convert arrays to Sets for efficient lookup
+                var selectedRegionsSet = new Set(selectedRegions);
+                var selectedProvincesSet = new Set(selectedProvinces);
+                var selectedMunicipalitiesSet = new Set(selectedMunicipalities);
+                
+                var totalFeatures = json_Region2_39.features.length;
+                var matchedCount = 0;
+                
+                // Iterate through all features to find matching barangays
                 json_Region2_39.features.forEach(function(feature) {
-                    if (feature.properties && 
-                        feature.properties.Reg_Name === selectedRegion && 
-                        feature.properties.Pro_Name === selectedProvince && 
-                        feature.properties.Mun_Name === selectedMunicipality && 
-                        feature.properties.Bgy_Name) {
-                        barangays.add(feature.properties.Bgy_Name);
+                    if (!feature.properties) {
+                        return; // Skip features without properties
+                    }
+                    
+                    var props = feature.properties;
+                    
+                    // Check if this feature matches the selected hierarchy
+                    var matchesRegion = selectedRegions.length === 0 || selectedRegionsSet.has(props.Reg_Name);
+                    var matchesProvince = selectedProvinces.length === 0 || selectedProvincesSet.has(props.Pro_Name);
+                    var matchesMunicipality = selectedMunicipalitiesSet.has(props.Mun_Name);
+                    
+                    // Only include if all conditions match
+                    if (matchesRegion && matchesProvince && matchesMunicipality) {
+                        // Get barangay name - try Bgy_Name first, then Brg_Name as fallback
+                        var barangayName = props.Bgy_Name || props.Brg_Name;
+                        if (barangayName) {
+                            barangays.add(barangayName);
+                            matchedCount++;
+                        }
                     }
                 });
+                
+                console.log('Filtering complete:', {
+                    totalFeatures: totalFeatures,
+                    matchedFeatures: matchedCount,
+                    uniqueBarangays: barangays.size
+                });
+                
+                // Log a sample of found barangay names for debugging
+                if (barangays.size > 0) {
+                    var sampleBarangays = Array.from(barangays).slice(0, 5);
+                    console.log('Sample barangays found (first 5):', sampleBarangays);
+                } else {
+                    console.warn('WARNING: No barangays found matching the selected municipalities');
+                }
+            } else {
+                console.log('No municipalities selected, clearing barangay dropdown');
             }
             
-            var sortedBarangays = selectedMunicipality && barangays.size > 0
-                ? Array.from(barangays).sort()
-                : [];
-            
+            // Render barangay multiselect with sorted barangays
+            var sortedBarangays = Array.from(barangays).sort();
+            console.log('Rendering', sortedBarangays.length, 'barangay options');
             renderBarangayOptions(sortedBarangays);
             
-            console.log('Updated barangay checkbox list with', sortedBarangays.length, 'options for region:', selectedRegion, 'province:', selectedProvince, 'municipality:', selectedMunicipality);
+            console.log('=== BARANGAY DROPDOWN UPDATE COMPLETE ===');
+            console.log('Final result:', {
+                regions: selectedRegions.length,
+                provinces: selectedProvinces.length,
+                municipalities: selectedMunicipalities.length,
+                barangays: sortedBarangays.length
+            });
         }
         
-        // Clear lower level dropdowns
+        /**
+         * Clears lower-level multiselect dropdowns (province, municipality, barangay) when a higher-level selection is cleared.
+         * Used to maintain hierarchical consistency in the multiselect selections.
+         * Also resets household selection and updates flood extent availability.
+         * Called by: handleRegionSelectionChange()
+         * Connected to: clearProvinceSelections(), clearMunicipalitySelections(), clearBarangaySelections(),
+         *              resetHouseholdSelection(), updateFloodExtentAvailability(), filterHouseholdsBySelectedBarangay()
+         */
         function clearLowerDropdowns() {
-            var municipalitySelect = document.getElementById('municipality-select');
-            
-            if (municipalitySelect) {
-                municipalitySelect.innerHTML = '<option value="">Select Municipality</option>';
-                municipalitySelect.value = '';
-            }
-            renderBarangayOptions([]);
+            clearProvinceSelections({ reason: 'parent-cleared' });
+            clearMunicipalitySelections({ reason: 'parent-cleared' });
+            clearBarangaySelections({ reason: 'parent-cleared' });
             resetHouseholdSelection();
             updateFloodExtentAvailability();
             filterHouseholdsBySelectedBarangay();
         }
         
-        // Clear only barangay dropdown
+        /**
+         * Clears only the barangay multiselect dropdown.
+         * Also resets household selection and updates flood extent availability.
+         * Called when municipality selection changes or is cleared.
+         * Connected to: clearBarangaySelections(), resetHouseholdSelection(),
+         *              updateFloodExtentAvailability(), filterHouseholdsBySelectedBarangay()
+         */
         function clearBarangayDropdown() {
-            renderBarangayOptions([]);
+            clearBarangaySelections({ reason: 'parent-cleared' });
             resetHouseholdSelection();
             updateFloodExtentAvailability();
             filterHouseholdsBySelectedBarangay();
         }
         
-        // Zoom to selected area
+        /**
+         * Zooms the map to the area defined by selected regions, provinces, municipalities, and barangays.
+         * Calculates the bounding box of all selected geographic features and fits the map view to it.
+         * If no selections are made, returns without zooming.
+         * Called when selections change and zoom is not skipped.
+         * Connected to: getSelectedRegions(), getSelectedProvinces(), getSelectedMunicipalities(),
+         *              getSelectedBarangays(), highlightSelectedPolygon()
+         */
         function zoomToArea() {
-            var region = document.getElementById('region-select').value;
-            var province = document.getElementById('province-select').value;
-            var municipality = document.getElementById('municipality-select').value;
+            var regions = getSelectedRegions();
+            var provinces = getSelectedProvinces();
+            var municipalities = getSelectedMunicipalities();
             var barangays = getSelectedBarangays();
             var barangaySet = new Set(barangays.map(function(name) {
                 return (name || '').toString().trim().toLowerCase();
             }));
+            var regionSet = new Set(regions);
+            var provinceSet = new Set(provinces);
+            var municipalitySet = new Set(municipalities);
             
-            if (!region && !province && !municipality && barangaySet.size === 0) {
+            if (regionSet.size === 0 && provinceSet.size === 0 && municipalitySet.size === 0 && barangaySet.size === 0) {
                 return;
             }
             
@@ -2384,12 +3311,33 @@
                     var props = feature.getProperties();
                     var matches = true;
                     
-                    if (region && props.Reg_Name !== region) matches = false;
-                    if (province && props.Pro_Name !== province) matches = false;
-                    if (municipality && props.Mun_Name !== municipality) matches = false;
+                    // Match regions (if any selected)
+                    if (regionSet.size > 0) {
+                        if (!regionSet.has(props.Reg_Name)) {
+                            matches = false;
+                        }
+                    }
+                    
+                    // Match provinces (if any selected)
+                    if (provinceSet.size > 0) {
+                        if (!provinceSet.has(props.Pro_Name)) {
+                            matches = false;
+                        }
+                    }
+                    
+                    // Match municipalities (if any selected)
+                    if (municipalitySet.size > 0) {
+                        if (!municipalitySet.has(props.Mun_Name)) {
+                            matches = false;
+                        }
+                    }
+                    
+                    // Match barangays (if any selected)
                     if (barangaySet.size > 0) {
-                        var bgyName = (props.Bgy_Name || '').toString().trim().toLowerCase();
-                        if (!barangaySet.has(bgyName)) matches = false;
+                        var bgyName = (props.Brg_Name || props.Bgy_Name || '').toString().trim().toLowerCase();
+                        if (!barangaySet.has(bgyName)) {
+                            matches = false;
+                        }
                     }
                     
                     return matches;
@@ -2412,23 +3360,28 @@
         }
         
         /**
-         * Highlights the selected polygon(s) on the map based on dropdown selections.
-         * Matches features from Region2_39 data based on region, province, municipality, and barangay selections.
+         * Highlights the selected polygon(s) on the map based on multiselect dropdown selections.
+         * Matches features from Region2_39 data based on selected regions, provinces, municipalities, and barangays.
          * Adds matching features to the highlight layer for visual feedback.
          * Called when dropdown selections change.
-         * Connected to: highlightLayer, setupDropdownEventListeners(), handleBarangaySelectionChange(),
+         * Connected to: highlightLayer, handleRegionSelectionChange(), handleProvinceSelectionChange(),
+         *              handleMunicipalitySelectionChange(), handleBarangaySelectionChange(),
+         *              getSelectedRegions(), getSelectedProvinces(), getSelectedMunicipalities(),
          *              getSelectedBarangays(), addHoverListeners()
          */
         function highlightSelectedPolygon() {
-            var region = document.getElementById('region-select').value;
-            var province = document.getElementById('province-select').value;
-            var municipality = document.getElementById('municipality-select').value;
+            var regions = getSelectedRegions();
+            var provinces = getSelectedProvinces();
+            var municipalities = getSelectedMunicipalities();
             var barangays = getSelectedBarangays();
+            var regionSet = new Set(regions);
+            var provinceSet = new Set(provinces);
+            var municipalitySet = new Set(municipalities);
             var barangaySet = new Set(barangays.map(function(name) {
                 return (name || '').toString().trim().toLowerCase();
             }));
             
-            if (!region && !province && !municipality && barangaySet.size === 0) {
+            if (regionSet.size === 0 && provinceSet.size === 0 && municipalitySet.size === 0 && barangaySet.size === 0) {
                 return;
             }
             
@@ -2442,12 +3395,33 @@
                     var props = feature.getProperties();
                     var matches = true;
                     
-                    if (region && props.Reg_Name !== region) matches = false;
-                    if (province && props.Pro_Name !== province) matches = false;
-                    if (municipality && props.Mun_Name !== municipality) matches = false;
+                    // Match regions (if any selected)
+                    if (regionSet.size > 0) {
+                        if (!regionSet.has(props.Reg_Name)) {
+                            matches = false;
+                        }
+                    }
+                    
+                    // Match provinces (if any selected)
+                    if (provinceSet.size > 0) {
+                        if (!provinceSet.has(props.Pro_Name)) {
+                            matches = false;
+                        }
+                    }
+                    
+                    // Match municipalities (if any selected)
+                    if (municipalitySet.size > 0) {
+                        if (!municipalitySet.has(props.Mun_Name)) {
+                            matches = false;
+                        }
+                    }
+                    
+                    // Match barangays (if any selected)
                     if (barangaySet.size > 0) {
-                        var bgyName = (props.Bgy_Name || '').toString().trim().toLowerCase();
-                        if (!barangaySet.has(bgyName)) matches = false;
+                        var bgyName = (props.Brg_Name || props.Bgy_Name || '').toString().trim().toLowerCase();
+                        if (!barangaySet.has(bgyName)) {
+                            matches = false;
+                        }
                     }
                     
                     return matches;
