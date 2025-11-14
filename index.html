@@ -1013,21 +1013,21 @@
         /* Responsive Design - Multiple Screen Sizes */
         @media (max-width: 1400px) {
             #charts-panel {
-                width: 350px;
+                width: 500px;
             }
             #map-container.charts-open {
-                right: 350px;
-                width: calc(100vw - 670px); /* 320px sidebar + 350px charts panel */
+                right: 500px;
+                width: calc(100vw - 820px); /* 320px sidebar + 500px charts panel */
             }
         }
 
         @media (max-width: 1200px) {
             #charts-panel {
-                width: 300px;
+                width: 450px;
             }
             #map-container.charts-open {
-                right: 300px;
-                width: calc(100vw - 620px); /* 320px sidebar + 300px charts panel */
+                right: 450px;
+                width: calc(100vw - 770px); /* 320px sidebar + 450px charts panel */
             }
             #upper-pane-people24 {
                 height: 35vh;
@@ -1279,11 +1279,35 @@
             <!-- Map Container -->
             <div id="map-container">
                 <!-- Charts Panel (Right Side) -->
-                <div id="charts-panel" style="display: none; position: fixed; right: 0; top: 72px; bottom: 0; height: auto; width: 400px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
-                    <div style="flex: 1; max-width: 100%; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; min-height: 0; margin-bottom: 0.75rem;">
-                        <h4>Hazard Level Distribution</h4>
-                        <div style="position: relative; flex: 1; max-width: 100%; background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 1rem; box-sizing: border-box; overflow: hidden; min-height: 0;">
-                            <canvas id="hazardPieChart" style="max-width: 100%; max-height: 100%; box-sizing: border-box;"></canvas>
+                <div id="charts-panel" style="display: none; position: fixed; right: 0; top: 72px; bottom: 0; height: auto; width: 550px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
+                    <div style="flex: 1; max-width: 100%; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: row; gap: 1rem; min-height: 0; margin-bottom: 0.75rem;">
+                        <div style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
+                            <h4>Hazard Level Distribution</h4>
+                            <div style="position: relative; flex: 1; max-width: 100%; background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 1rem; box-sizing: border-box; overflow: hidden; min-height: 0;">
+                                <canvas id="hazardPieChart" style="max-width: 100%; max-height: 100%; box-sizing: border-box;"></canvas>
+                            </div>
+                        </div>
+                        <!-- Flood Exposure Legend -->
+                        <div style="flex: 0 0 auto; min-width: 140px; display: flex; flex-direction: column;">
+                            <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #f39c12; font-weight: 600;">Flood Exposure</h4>
+                            <div style="background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 0.75rem; display: flex; flex-direction: column; gap: 6px;">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <img src="styles/legend/Numberofpeopleat24meters_12_0.png" alt="High" style="width: 18px; height: 18px; flex-shrink: 0;" />
+                                    <span style="color: #cccccc; font-size: 0.8em; line-height: 1.2;">High (> 1.5 m)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <img src="styles/legend/Numberofpeopleat24meters_12_1.png" alt="Moderate" style="width: 18px; height: 18px; flex-shrink: 0;" />
+                                    <span style="color: #cccccc; font-size: 0.8em; line-height: 1.2;">Moderate (> 0.7 - 1.5 m)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <img src="styles/legend/Numberofpeopleat24meters_12_2.png" alt="Low" style="width: 18px; height: 18px; flex-shrink: 0;" />
+                                    <span style="color: #cccccc; font-size: 0.8em; line-height: 1.2;">Low (> 0.1 - 0.7 m)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <img src="styles/legend/Numberofpeopleat24meters_12_3.png" alt="Very Low" style="width: 18px; height: 18px; flex-shrink: 0;" />
+                                    <span style="color: #cccccc; font-size: 0.8em; line-height: 1.2;">Very Low (<= 0.1 m)</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div style="flex: 1; max-width: 100%; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; min-height: 0;">
@@ -1440,28 +1464,6 @@
                                     <div style="display: flex; align-items: center; gap: 6px;">
                                         <img src="styles/legend/24_10_4.png" alt="9.3000" style="width: 18px; height: 18px; padding: 4px;" />
                                         <span style="color: #1a1a1a; font-size: 0.85em;">9.3000m</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Population Affected Legend -->
-                            <div>
-                                <div style="color: #1a1a1a; font-size: 0.85rem; font-weight: 500; margin-bottom: 4px; padding-top: 4px; padding-bottom: 4px; border-top: 1px solid #999; border-bottom: 1px solid #999;">Flood Exposure</div>
-                                <div style="display: flex; flex-direction: column; gap: 3px;">
-                                    <div style="display: flex; align-items: center; gap: 6px;">
-                                        <img src="styles/legend/Numberofpeopleat24meters_12_0.png" alt="High" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #1a1a1a; font-size: 0.85em;">High (> 1.5 m)</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 6px;">
-                                        <img src="styles/legend/Numberofpeopleat24meters_12_1.png" alt="Moderate" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #1a1a1a; font-size: 0.85em;">Moderate (> 0.7 - 1.5 m)</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 6px;">
-                                        <img src="styles/legend/Numberofpeopleat24meters_12_2.png" alt="Low" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #1a1a1a; font-size: 0.85em;">Low (> 0.1 - 0.7 m)</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 6px;">
-                                        <img src="styles/legend/Numberofpeopleat24meters_12_3.png" alt="Very Low" style="width: 18px; height: 18px; padding: 4px;" />
-                                        <span style="color: #1a1a1a; font-size: 0.85em;">Very Low (<= 0.1 m)</span>
                                     </div>
                                 </div>
                             </div>
