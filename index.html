@@ -2229,6 +2229,8 @@
             updateBarangaySelectionDisplay();
             console.log('Barangay selection updated:', getSelectedBarangays());
             handleBarangaySelectionChange({ reason: 'checkbox' });
+            // Auto-collapse dropdown after selection
+            closeBarangayDropdown();
         }
 
         /**
@@ -2527,6 +2529,8 @@
             updateRegionSelectionDisplay();
             console.log('Region selection updated:', getSelectedRegions());
             handleRegionSelectionChange({ reason: 'checkbox' });
+            // Auto-collapse dropdown after selection
+            closeRegionDropdown();
         }
 
         /**
@@ -2821,6 +2825,8 @@
             updateProvinceSelectionDisplay();
             console.log('Province selection updated:', getSelectedProvinces());
             handleProvinceSelectionChange({ reason: 'checkbox' });
+            // Auto-collapse dropdown after selection
+            closeProvinceDropdown();
         }
 
         /**
@@ -3113,6 +3119,8 @@
             updateMunicipalitySelectionDisplay();
             console.log('Municipality selection updated:', getSelectedMunicipalities());
             handleMunicipalitySelectionChange({ reason: 'checkbox' });
+            // Auto-collapse dropdown after selection
+            closeMunicipalityDropdown();
         }
 
         /**
