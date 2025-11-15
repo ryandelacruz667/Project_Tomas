@@ -77,6 +77,36 @@
             top: 0;
         }
         
+        #right-pane {
+            width: 450px;
+            background: #23272f;
+            color: #fff;
+            height: 100vh;
+            box-shadow: -2px 0 8px rgba(34,34,34,0.04);
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            z-index: 10;
+            overflow: hidden;
+            position: fixed;
+            right: 0;
+            top: 0;
+        }
+        
+        /* Ensure all child elements inherit the dark background */
+        #right-pane * {
+            background-color: inherit;
+        }
+        
+        /* Override any white backgrounds that might be inherited */
+        #right-pane .sidebar-header,
+        #right-pane .nav-bar,
+        #right-pane .flood-section,
+        #right-pane .flood-form-group,
+        #right-pane .flood-legend-section {
+            background: #23272f !important;
+        }
+        
         /* Ensure all child elements inherit the dark background */
         #left-pane * {
             background-color: inherit;
@@ -259,7 +289,7 @@
             position: fixed;
             left: 320px;
             top: 0;
-            right: 0;
+            right: 450px; /* Account for right pane */
             height: 80px;
             background: #23272f;
             color: #fafafa;
@@ -458,17 +488,17 @@
             position: fixed;
             left: 320px;
             top: 80px;
-            right: 0;
+            right: 450px; /* Account for right pane */
             bottom: 0;
-            width: calc(100vw - 320px);
+            width: calc(100vw - 770px); /* 320px left + 450px right */
             height: calc(100vh - 80px);
             transition: left 0.3s ease, right 0.3s ease, width 0.3s ease;
         }
         
         /* Charts panel adjustments */
         #map-container.charts-open {
-            right: 400px; /* 400px charts panel on right */
-            width: calc(100vw - 720px); /* 320px sidebar + 400px charts panel */
+            right: 850px; /* 450px right pane + 400px charts panel */
+            width: calc(100vw - 1170px); /* 320px left + 450px right + 400px charts */
         }
         
         #charts-panel {
@@ -1056,8 +1086,8 @@
                 width: 350px;
             }
             #map-container.charts-open {
-                right: 350px;
-                width: calc(100vw - 670px); /* 320px sidebar + 350px charts panel */
+                right: 800px; /* 450px right pane + 350px charts panel */
+                width: calc(100vw - 1120px); /* 320px left + 450px right + 350px charts */
             }
         }
 
@@ -1066,8 +1096,8 @@
                 width: 300px;
             }
             #map-container.charts-open {
-                right: 300px;
-                width: calc(100vw - 620px); /* 320px sidebar + 300px charts panel */
+                right: 750px; /* 450px right pane + 300px charts panel */
+                width: calc(100vw - 1070px); /* 320px left + 450px right + 300px charts */
             }
             #upper-pane-people24 {
                 height: 35vh;
@@ -1083,8 +1113,8 @@
                 padding: 1rem;
             }
             #map-container.charts-open {
-                right: 280px;
-                width: calc(100vw - 600px); /* 320px sidebar + 280px charts panel */
+                right: 730px; /* 450px right pane + 280px charts panel */
+                width: calc(100vw - 1050px); /* 320px left + 450px right + 280px charts */
             }
             #upper-pane-people24 {
                 height: 30vh;
@@ -1109,9 +1139,13 @@
             #left-pane {
                 width: 280px;
             }
+            #right-pane {
+                width: 280px;
+            }
             #map-container {
                 left: 280px;
-                width: calc(100vw - 280px);
+                right: 280px;
+                width: calc(100vw - 560px);
             }
             #charts-panel {
                 width: 250px;
@@ -1119,8 +1153,8 @@
             }
             #map-container.charts-open {
                 left: 280px;
-                right: 250px;
-                width: calc(100vw - 530px);
+                right: 530px; /* 280px right pane + 250px charts panel */
+                width: calc(100vw - 810px); /* 280px left + 280px right + 250px charts */
             }
             #upper-pane-people24 {
                 height: 25vh;
@@ -1271,7 +1305,7 @@
                         
                         TO RE-ENABLE: Remove disabled attribute from the select element below
                         -->
-                        <select id="floodExtentDropdown" class="flood-modern-select" disabled>
+                        <select id="floodExtentDropdown" class="flood-modern-select">
                             <option value="">Select Flood Extent</option>
                             <option value="24">24 meters</option>
                             <option value="25">25 meters</option>
@@ -1345,7 +1379,7 @@
                 
                 TO RE-ENABLE DISABLED COMPONENTS: Remove display: none from their style attributes
                 -->
-                <div id="charts-panel" style="display: none; position: fixed; right: 0; top: 80px; bottom: 0; height: auto; width: 400px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
+                <div id="charts-panel" style="display: none; position: fixed; right: 450px; top: 80px; bottom: 0; height: auto; width: 400px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
                     <!-- Pie Chart Section - ENABLED -->
                     <div style="flex: 1; max-width: 100%; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; min-height: 0; margin-bottom: 0.75rem;">
                         <h4>Hazard Level Distribution</h4>
@@ -1599,14 +1633,74 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Right Pane -->
+            <div id="right-pane">
+                <div class="sidebar-header" style="background: #24b2ff; border-bottom: none; padding-bottom: 0.7rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.2rem; justify-content: center; text-align: center;">
+                    <i class="fas fa-info-circle" style="font-size: 2.1rem; color: #fff;"></i>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 1.45rem; font-weight: 800; color: #fff; letter-spacing: 1.1px; line-height: 1; text-align: center;">Information</span>
+                        <div style="font-size: 0.98rem; color: #e6e6e6; margin-top: 0.18rem; font-weight: 400; letter-spacing: 0.2px; font-style: italic; opacity: 0.95; text-align: center;">
+                            (Additional Details)
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-header">
+                    <span>Details</span>
+                </div>
+                <div style="padding: 0.75rem; flex: 1; overflow-y: auto; overflow-x: hidden;">
+                    <!-- Charts Grid Container -->
+                    <div id="right-pane-charts-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0;">
+                        <!-- Total Households Chart -->
+                        <div class="right-pane-chart-wrapper" style="background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 0.3rem; min-height: 110px; display: flex; flex-direction: column;">
+                            <h4 style="color: #fafafa; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.2rem; text-align: center; line-height: 1.2;">Total Households</h4>
+                            <div style="position: relative; height: 70px; flex: 1;">
+                                <canvas id="householdsChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Total Population Chart -->
+                        <div class="right-pane-chart-wrapper" style="background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 0.3rem; min-height: 110px; display: flex; flex-direction: column;">
+                            <h4 style="color: #fafafa; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.2rem; text-align: center; line-height: 1.2;">Total Population</h4>
+                            <div style="position: relative; height: 70px; flex: 1;">
+                                <canvas id="populationChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Group by Sex Chart -->
+                        <div class="right-pane-chart-wrapper" style="background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 0.3rem; min-height: 125px; display: flex; flex-direction: column;">
+                            <h4 style="color: #fafafa; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.2rem; text-align: center; line-height: 1.2;">Group by Sex</h4>
+                            <div style="position: relative; height: 85px; flex: 1;">
+                                <canvas id="sexChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Group by Age Chart -->
+                        <div class="right-pane-chart-wrapper" style="background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 0.3rem; min-height: 110px; display: flex; flex-direction: column;">
+                            <h4 style="color: #fafafa; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.2rem; text-align: center; line-height: 1.2;">Group by Age</h4>
+                            <div style="position: relative; height: 70px; flex: 1;">
+                                <canvas id="ageChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <script src="resources/qgis2web_expressions.js"></script>
         <script src="./resources/functions.js"></script>
         <script src="./resources/ol.js"></script>
         <script src="./resources/ol-layerswitcher.js"></script>
         <script src="resources/photon-geocoder-autocomplete.min.js"></script>
-        <script src="layers/Households_1.js"></script><script src="layers/People_0.js"></script><script src="layers/AnalysisSummaryat24meters_9.js"></script><script src="layers/AggregationSummaryat24meters_10.js"></script><script src="layers/HazardAggregationSummaryat24meters_11.js"></script><script src="layers/Numberofpeopleat24meters_12.js"></script><script src="layers/AnalysisSummaryat25meters_13.js"></script><script src="layers/AggregationSummaryat25meters_14.js"></script><script src="layers/HazardAggregationSummaryat25meters_15.js"></script><script src="layers/Numberofpeopleat25meters_16.js"></script><script src="layers/AnalysisSummaryat27meters_17.js"></script><script src="layers/AggregationSummaryat27meters_18.js"></script><script src="layers/HazardAggregationSummaryat27meters_19.js"></script><script src="layers/Numberofpeopleat26meters_20.js"></script><script src="layers/AnalysisSummaryat27meters_21.js"></script><script src="layers/AggregationSummaryatat27meters_22.js"></script><script src="layers/HazardAggregationSummaryat27meters_23.js"></script><script src="layers/Numberofpeopleat27meters_24.js"></script><script src="layers/AnalysisSummaryat28meters_25.js"></script><script src="layers/AggregationSummaryat28meters_26.js"></script><script src="layers/HazardAggregationSummaryat28meters_27.js"></script><script src="layers/Numberofpeopleat28meters_28.js"></script><script src="layers/AnalysisSummaryat29meters_29.js"></script><script src="layers/AggregationSummaryat29meters_30.js"></script><script src="layers/HazardAggregationSummaryat29meters_31.js"></script><script src="layers/Numberofpeopleat29meters_32.js"></script><script src="layers/AnalysisSummaryat30meters_33.js"></script><script src="layers/AggregationSummaryfor30meters_34.js"></script><script src="layers/HazardAggregationSummaryat30meters_35.js"></script><script src="layers/Numberofpeopleaffectedat30meters_36.js"></script><script src="layers/Schools_37.js"></script><script src="layers/Roads_38.js"></script><script src="layers/Region2_39.js"></script>
-        <script src="styles/Households_1_style.js"></script><script src="styles/People_0_style.js"></script><script src="styles/AnalysisSummaryat24meters_9_style.js"></script><script src="styles/AggregationSummaryat24meters_10_style.js"></script><script src="styles/HazardAggregationSummaryat24meters_11_style.js"></script><script src="styles/Numberofpeopleat24meters_12_style.js"></script><script src="styles/AnalysisSummaryat25meters_13_style.js"></script><script src="styles/AggregationSummaryat25meters_14_style.js"></script><script src="styles/HazardAggregationSummaryat25meters_15_style.js"></script><script src="styles/Numberofpeopleat25meters_16_style.js"></script><script src="styles/AnalysisSummaryat27meters_17_style.js"></script><script src="styles/AggregationSummaryat27meters_18_style.js"></script><script src="styles/HazardAggregationSummaryat27meters_19_style.js"></script><script src="styles/Numberofpeopleat26meters_20_style.js"></script><script src="styles/AnalysisSummaryat27meters_21_style.js"></script><script src="styles/AggregationSummaryatat27meters_22_style.js"></script><script src="styles/HazardAggregationSummaryat27meters_23_style.js"></script><script src="styles/Numberofpeopleat27meters_24_style.js"></script><script src="styles/AnalysisSummaryat28meters_25_style.js"></script><script src="styles/AggregationSummaryat28meters_26_style.js"></script><script src="styles/HazardAggregationSummaryat28meters_27_style.js"></script><script src="styles/Numberofpeopleat28meters_28_style.js"></script><script src="styles/AnalysisSummaryat29meters_29_style.js"></script><script src="styles/AggregationSummaryat29meters_30_style.js"></script><script src="styles/HazardAggregationSummaryat29meters_31_style.js"></script><script src="styles/Numberofpeopleat29meters_32_style.js"></script><script src="styles/AnalysisSummaryat30meters_33_style.js"></script><script src="styles/AggregationSummaryfor30meters_34_style.js"></script><script src="styles/HazardAggregationSummaryat30meters_35_style.js"></script><script src="styles/Numberofpeopleaffectedat30meters_36_style.js"></script><script src="styles/Schools_37_style.js"></script><script src="styles/Roads_38_style.js"></script><script src="styles/Region2_39_style.js"></script>
+        <!-- Households_1.js - Required for layers.js -->
+        <script src="layers/Households_1.js"></script>
+        <!-- People_0.js - DISABLED: Hidden but kept in code for future use -->
+        <!-- <script src="layers/People_0.js"></script> -->
+        <script src="layers/AnalysisSummaryat24meters_9.js"></script><script src="layers/AggregationSummaryat24meters_10.js"></script><script src="layers/HazardAggregationSummaryat24meters_11.js"></script><script src="layers/Numberofpeopleat24meters_12.js"></script><script src="layers/AnalysisSummaryat25meters_13.js"></script><script src="layers/AggregationSummaryat25meters_14.js"></script><script src="layers/HazardAggregationSummaryat25meters_15.js"></script><script src="layers/Numberofpeopleat25meters_16.js"></script><script src="layers/AnalysisSummaryat27meters_17.js"></script><script src="layers/AggregationSummaryat27meters_18.js"></script><script src="layers/HazardAggregationSummaryat27meters_19.js"></script><script src="layers/Numberofpeopleat26meters_20.js"></script><script src="layers/AnalysisSummaryat27meters_21.js"></script><script src="layers/AggregationSummaryatat27meters_22.js"></script><script src="layers/HazardAggregationSummaryat27meters_23.js"></script><script src="layers/Numberofpeopleat27meters_24.js"></script><script src="layers/AnalysisSummaryat28meters_25.js"></script><script src="layers/AggregationSummaryat28meters_26.js"></script><script src="layers/HazardAggregationSummaryat28meters_27.js"></script><script src="layers/Numberofpeopleat28meters_28.js"></script><script src="layers/AnalysisSummaryat29meters_29.js"></script><script src="layers/AggregationSummaryat29meters_30.js"></script><script src="layers/HazardAggregationSummaryat29meters_31.js"></script><script src="layers/Numberofpeopleat29meters_32.js"></script><script src="layers/AnalysisSummaryat30meters_33.js"></script><script src="layers/AggregationSummaryfor30meters_34.js"></script><script src="layers/HazardAggregationSummaryat30meters_35.js"></script><script src="layers/Numberofpeopleaffectedat30meters_36.js"></script><script src="layers/Schools_37.js"></script><script src="layers/Roads_38.js"></script><script src="layers/Region2_39.js"></script><script src="layers/DB_0.js"></script><script src="layers/StoTomasHouseholdsjoined_layer_1.js"></script>
+        <!-- Households_1_style.js - Required for layers.js -->
+        <script src="styles/Households_1_style.js"></script>
+        <!-- People_0_style.js - DISABLED: Hidden but kept in code for future use -->
+        <!-- <script src="styles/People_0_style.js"></script> -->
+        <script src="styles/AnalysisSummaryat24meters_9_style.js"></script><script src="styles/AggregationSummaryat24meters_10_style.js"></script><script src="styles/HazardAggregationSummaryat24meters_11_style.js"></script><script src="styles/Numberofpeopleat24meters_12_style.js"></script><script src="styles/AnalysisSummaryat25meters_13_style.js"></script><script src="styles/AggregationSummaryat25meters_14_style.js"></script><script src="styles/HazardAggregationSummaryat25meters_15_style.js"></script><script src="styles/Numberofpeopleat25meters_16_style.js"></script><script src="styles/AnalysisSummaryat27meters_17_style.js"></script><script src="styles/AggregationSummaryat27meters_18_style.js"></script><script src="styles/HazardAggregationSummaryat27meters_19_style.js"></script><script src="styles/Numberofpeopleat26meters_20_style.js"></script><script src="styles/AnalysisSummaryat27meters_21_style.js"></script><script src="styles/AggregationSummaryatat27meters_22_style.js"></script><script src="styles/HazardAggregationSummaryat27meters_23_style.js"></script><script src="styles/Numberofpeopleat27meters_24_style.js"></script><script src="styles/AnalysisSummaryat28meters_25_style.js"></script><script src="styles/AggregationSummaryat28meters_26_style.js"></script><script src="styles/HazardAggregationSummaryat28meters_27_style.js"></script><script src="styles/Numberofpeopleat28meters_28_style.js"></script><script src="styles/AnalysisSummaryat29meters_29_style.js"></script><script src="styles/AggregationSummaryat29meters_30_style.js"></script><script src="styles/HazardAggregationSummaryat29meters_31_style.js"></script><script src="styles/Numberofpeopleat29meters_32_style.js"></script><script src="styles/AnalysisSummaryat30meters_33_style.js"></script><script src="styles/AggregationSummaryfor30meters_34_style.js"></script><script src="styles/HazardAggregationSummaryat30meters_35_style.js"></script><script src="styles/Numberofpeopleaffectedat30meters_36_style.js"></script><script src="styles/Schools_37_style.js"></script><script src="styles/Roads_38_style.js"></script><script src="styles/Region2_39_style.js"></script><script src="styles/DB_0_style.js"></script><script src="styles/StoTomasHouseholdsjoined_layer_1_style.js"></script>
         
         <!-- Place a small safe-guard before layers/layers.js runs to avoid undefined style references -->
         <script>
@@ -1642,6 +1736,8 @@
         var peopleLayer = null;
         var householdLayers = [];
         var householdLayersVisible = false;
+        // Global variable to store selected barangays for StoTomasHouseholdsjoined_layer_1 filtering
+        var stoTomasFilteredBarangays = new Set();
         var barangaySelectionState = {
             options: [],
             selected: new Set()
@@ -1719,9 +1815,16 @@
                     // Ensure basemap and region layers are visible and ordered correctly now that layers exist
                     ensureBasemapVisible();
 
-                    // Prepare the People layer so it is ready for toggling
-                    ensurePeopleLayer();
+                    // People layer initialization - DISABLED
+                    // ensurePeopleLayer(); // People_0.js is disabled, so this function is not called
                     ensureHouseholdLayers();
+                    
+                    // Ensure StoTomasHouseholdsjoined_layer_1 layer is hidden by default
+                    var stoTomasLayer = findStoTomasHouseholdsLayer();
+                    if (stoTomasLayer) {
+                        stoTomasLayer.setVisible(false);
+                        console.log('StoTomasHouseholdsjoined_layer_1 layer hidden on initialization');
+                    }
                 } else {
                     console.log('Map not found or not ready');
                 }
@@ -1749,6 +1852,17 @@
                 
                 // Add event listeners for flood extent functionality
                 setupFloodExtentListeners();
+                
+                // Initialize right pane charts - wait for canvas elements to be ready
+                function initializeRightPaneCharts() {
+                    if (areChartCanvasesReady()) {
+                        updateRightPaneCharts();
+                    } else {
+                        console.log('Waiting for chart canvases...');
+                        setTimeout(initializeRightPaneCharts, 500);
+                    }
+                }
+                initializeRightPaneCharts();
                 
             }, 2000); // Increased wait time to 2 seconds
         });
@@ -2095,13 +2209,18 @@
             updatePeopleBarangayDisplay();
             updateFloodExtentAvailability();
             filterHouseholdsBySelectedBarangay();
+            filterStoTomasHouseholdsByBarangay();
             if (selections.length > 0) {
-                setPeopleLayerVisible(false);
+                // People layer is disabled - no need to hide it
+                // setPeopleLayerVisible(false);
             } else if (householdLayersVisible) {
-                setBaseHouseholdLayersVisible(true);
+                // Household layers are disabled - don't show them
+                // setBaseHouseholdLayersVisible(true);
+                setBaseHouseholdLayersVisible(false);
             }
             applyPeopleFiltersAndRender();
             updateCharts();
+            updateRightPaneCharts();
         }
         
         /**
@@ -3045,13 +3164,45 @@
             }
         }
         /**
-         * Ensures the People layer is initialized and added to the map.
-         * Creates a vector layer from json_People_0 GeoJSON data if it doesn't already exist.
-         * Called during map initialization and when toggling layers.
+         * ============================================================================
+         * ENSURE PEOPLE LAYER FUNCTION - DISABLED
+         * ============================================================================
+         * 
+         * This function ensures the People layer is initialized and added to the map.
+         * 
+         * HOW IT WORKS (currently disabled):
+         * - Creates a vector layer from json_People_0 GeoJSON data if it doesn't already exist
+         * - Adds the layer to the map with appropriate styling
+         * - Sets initial visibility to false
+         * - Currently disabled: Function returns immediately without creating the layer
+         * 
+         * CURRENT STATE:
+         * - People_0.js script is DISABLED (commented out in HTML)
+         * - ensurePeopleLayer() is DISABLED (returns immediately)
+         * - setPeopleLayerVisible() is DISABLED (does nothing)
+         * - Layer will never be created or shown on the map
+         * 
+         * NOTE: People_0.js layer is permanently disabled. It will not load even when
+         * the household button is clicked.
+         * 
+         * TO RE-ENABLE:
+         * 1. Uncomment the People_0.js script tag in HTML
+         * 2. Uncomment the People_0_style.js script tag in HTML
+         * 3. Remove the early return statement below
+         * 4. Uncomment the ensurePeopleLayer() call during map initialization
+         * 
+         * Called during map initialization and when toggling layers (but currently disabled).
          * Uses global variable 'peopleLayer'.
          * Connected to: setPeopleLayerVisible(), toggleLayer()
+         * ============================================================================
          */
         function ensurePeopleLayer() {
+            // PEOPLE_0.JS IS DISABLED - Return immediately without creating layer
+            console.log('People layer initialization skipped - People_0.js is disabled');
+            return;
+            
+            // Original code below is disabled but preserved for future use
+            /*
             if (peopleLayer || typeof map === 'undefined' || !map.getView || !map.getView().getProjection) {
                 return;
             }
@@ -3079,6 +3230,7 @@
             } catch (e) {
                 console.error('Failed to initialize People layer:', e);
             }
+            */
         }
         
         /**
@@ -3100,32 +3252,58 @@
             if (layerType === 'household') {
                 ensureHouseholdLayers();
                 var householdBtn = document.getElementById('household-btn');
+                
+                // Find StoTomasHouseholdsjoined_layer_1 layer using helper function
+                var stoTomasLayer = findStoTomasHouseholdsLayer();
+                
                 if (!householdLayersVisible) {
+                    // Activating: Show only StoTomasHouseholdsjoined_layer_1, hide all other layers
                     householdLayersVisible = true;
                     if (householdBtn) {
                         toggleButtonActive(householdBtn);
                     }
-                    console.log('Activating household layer view. Current barangay selections:', getSelectedBarangays());
-                    setPeopleLayerVisible(false);
-                    var selections = getSelectedBarangays();
-                    if (selections.length > 0) {
-                        filterHouseholdsBySelectedBarangay();
-                        if (filteredHouseholdLayer) {
-                            filteredHouseholdLayer.setVisible(true);
-                        }
-                        setBaseHouseholdLayersVisible(false);
+                    console.log('Activating household layer view. Showing only StoTomasHouseholdsjoined_layer_1');
+                    
+                    // Apply barangay filter BEFORE showing the layer, so filtered results are shown immediately
+                    filterStoTomasHouseholdsByBarangay();
+                    
+                    // 1. Show StoTomasHouseholdsjoined_layer_1 layer
+                    if (stoTomasLayer) {
+                        stoTomasLayer.setVisible(true);
+                        console.log('Sto.Tomas Households layer shown');
                     } else {
-                        setBaseHouseholdLayersVisible(true);
-                        if (filteredHouseholdLayer) {
-                            filteredHouseholdLayer.setVisible(false);
-                        }
+                        console.warn('StoTomasHouseholdsjoined_layer_1 layer not found');
+                    }
+                    
+                    // 2. Hide peopleLayer if it exists
+                    if (peopleLayer && typeof peopleLayer.setVisible === 'function') {
+                        peopleLayer.setVisible(false);
+                        console.log('People layer hidden');
+                    }
+                    
+                    // 3. Hide all household layers (Households_1)
+                    setBaseHouseholdLayersVisible(false);
+                    
+                    // 4. Hide any filtered household layers
+                    if (filteredHouseholdLayer) {
+                        filteredHouseholdLayer.setVisible(false);
+                        console.log('Filtered household layer hidden');
                     }
                 } else {
+                    // Deactivating: Hide StoTomasHouseholdsjoined_layer_1 layer
                     householdLayersVisible = false;
                     if (householdBtn) {
                         householdBtn.classList.remove('active');
                     }
                     console.log('Deactivating household layer view.');
+                    
+                    // 5. Hide StoTomasHouseholdsjoined_layer_1 layer
+                    if (stoTomasLayer) {
+                        stoTomasLayer.setVisible(false);
+                        console.log('Sto.Tomas Households layer hidden');
+                    }
+                    
+                    // Ensure all household layers remain hidden
                     setBaseHouseholdLayersVisible(false);
                     if (filteredHouseholdLayer) {
                         filteredHouseholdLayer.setVisible(false);
@@ -4023,11 +4201,36 @@
          * Called after showing flood layers or during map initialization.
          * Connected to: showFloodData(), map initialization, layer visibility changes
          */
+        /**
+         * ============================================================================
+         * ENSURE BASEMAP AND REGION LAYERS VISIBLE FUNCTION
+         * ============================================================================
+         * 
+         * This function ensures the base map (Positron) and Region2_39 layer are visible
+         * and properly ordered in the layer stack. The base map should be at the bottom
+         * (zIndex 0) and the region layer should be just above it (zIndex 5).
+         * 
+         * HOW IT WORKS:
+         * 1. Detects the base map layer by checking for tile/XYZ sources
+         * 2. Detects the Region2_39 layer by checking layer titles
+         * 3. Sets both layers to visible
+         * 4. Sets appropriate z-index values
+         * 5. Reorders layers in the collection (basemap at index 0, region at index 1)
+         * 
+         * Called during map initialization and when layers need to be reordered.
+         * Connected to: map initialization, layer management
+         * ============================================================================
+         */
         function ensureBasemapVisible() {
-            if (typeof map === 'undefined' || !map.getLayers) return;
+            console.log('=== ENSURE BASEMAP VISIBLE START ===');
+            if (typeof map === 'undefined' || !map.getLayers) {
+                console.warn('Map not available in ensureBasemapVisible');
+                return;
+            }
             try {
                 var layersColl = map.getLayers();
                 var layers = layersColl.getArray().slice(); // copy to avoid mutation issues
+                console.log('Total layers found:', layers.length);
                 var basemapLayer = null;
                 var regionLyr = null;
 
@@ -4038,45 +4241,91 @@
                         var src = lyr.getSource && lyr.getSource();
                         var srcName = (src && (src.constructor && src.constructor.name || '') || '').toString().toLowerCase();
                         var title = (lyr.get('title') || lyr.get('name') || '').toString().toLowerCase();
+                        
+                        console.log('Checking layer', i, ':', title, 'Source type:', srcName);
 
                         // tile-based basemap detection
                         if (!basemapLayer && (srcName.indexOf('tile') !== -1 || srcName.indexOf('xyz') !== -1 || typeof src.getTileGrid === 'function' || typeof src.getTileLoadFunction === 'function')) {
                             basemapLayer = lyr;
+                            console.log('Base map layer found:', title);
                         }
 
                         // region layer detection by title
-                        if (!regionLyr && (title.indexOf('region2') !== -1 || title.indexOf('region_2') !== -1 || title === 'region2' || title === 'region_2')) {
+                        // Check for various forms: "region2", "region 2", "region_2", or HTML title with region2
+                        if (!regionLyr && (
+                            title.indexOf('region2') !== -1 || 
+                            title.indexOf('region 2') !== -1 || 
+                            title.indexOf('region_2') !== -1 || 
+                            title === 'region2' || 
+                            title === 'region 2' ||
+                            title === 'region_2' || 
+                            (title.indexOf('<img') !== -1 && (title.indexOf('region2') !== -1 || title.indexOf('region 2') !== -1))
+                        )) {
                             regionLyr = lyr;
+                            console.log('Region layer found:', title);
                         }
-                    } catch (e) { /* ignore per-layer inspect errors */ }
+                    } catch (e) { 
+                        console.warn('Error inspecting layer', i, ':', e);
+                    }
                 }
 
                 // 2) Ensure basemap visible and put at bottom (zIndex 0)
                 if (basemapLayer) {
-                    try { basemapLayer.setVisible(true); } catch (e) {}
-                    try { basemapLayer.setZIndex(0); } catch (e) {}
+                    try { 
+                        basemapLayer.setVisible(true); 
+                        console.log('Base map layer set to visible');
+                    } catch (e) {
+                        console.error('Error setting basemap visible:', e);
+                    }
+                    try { 
+                        basemapLayer.setZIndex(0); 
+                        console.log('Base map layer z-index set to 0');
+                    } catch (e) {
+                        console.error('Error setting basemap z-index:', e);
+                    }
                     // move to bottom of collection
                     try {
                         layersColl.remove(basemapLayer);
                         layersColl.insertAt(0, basemapLayer);
-                    } catch (e) {}
+                        console.log('Base map layer moved to bottom of layer stack');
+                    } catch (e) {
+                        console.error('Error reordering basemap:', e);
+                    }
+                } else {
+                    console.warn('WARNING: Base map layer not found!');
                 }
 
                 // 3) Ensure region visible and placed above basemap (zIndex 5)
                 if (regionLyr) {
-                    try { regionLyr.setVisible(true); } catch (e) {}
-                    try { regionLyr.setZIndex(5); } catch (e) {}
+                    try { 
+                        regionLyr.setVisible(true); 
+                        console.log('Region layer set to visible');
+                    } catch (e) {
+                        console.error('Error setting region visible:', e);
+                    }
+                    try { 
+                        regionLyr.setZIndex(5); 
+                        console.log('Region layer z-index set to 5');
+                    } catch (e) {
+                        console.error('Error setting region z-index:', e);
+                    }
                     // move to just above basemap
                     try {
                         if (basemapLayer) {
                             layersColl.remove(regionLyr);
                             layersColl.insertAt(1, regionLyr);
+                            console.log('Region layer moved to position 1 (above basemap)');
                         } else {
                             layersColl.remove(regionLyr);
                             layersColl.insertAt(0, regionLyr);
+                            console.log('Region layer moved to position 0 (no basemap found)');
                         }
-                    } catch (e) {}
+                    } catch (e) {
+                        console.error('Error reordering region layer:', e);
+                    }
                     console.log('Region2 ensured visible and ordered above basemap');
+                } else {
+                    console.warn('WARNING: Region layer not found!');
                 }
 
                 // 4) For safety: ensure any known highlight layer stays above region but below flood PNGs
@@ -4111,9 +4360,15 @@
                     }
                 });
                 
-                try { map.render(); } catch (e) {}
+                try { 
+                    map.render(); 
+                    console.log('Map render triggered');
+                } catch (e) {
+                    console.error('Error rendering map:', e);
+                }
+                console.log('=== ENSURE BASEMAP VISIBLE COMPLETE ===');
             } catch (err) {
-                console.warn('ensureBasemapVisible error', err);
+                console.error('ensureBasemapVisible error', err);
             }
         }
         
@@ -4452,6 +4707,99 @@
             cand = findLayerByNameIncludes('numberofpeopleat24');
             if (cand) return cand;
             return findLayerByNameIncludes('numberofpeople');
+        }
+
+        /**
+         * Finds the Sto.Tomas Households joined layer on the map.
+         * Searches for layers containing 'stotomas' or 'sto.tomas' in layer name.
+         * Used to locate the StoTomasHouseholdsjoined_layer_1 layer.
+         * Called by: toggleLayer() for household type
+         * Connected to: findLayerByNameIncludes(), toggleLayer()
+         */
+        function findStoTomasHouseholdsLayer() {
+            // Try direct reference first if available
+            if (typeof lyr_StoTomasHouseholdsjoined_layer_1 !== 'undefined') {
+                return lyr_StoTomasHouseholdsjoined_layer_1;
+            }
+            // Fallback to search by name
+            var cand = findLayerByNameIncludes('stotomas');
+            if (cand) return cand;
+            cand = findLayerByNameIncludes('sto.tomas');
+            if (cand) return cand;
+            return findLayerByNameIncludes('householdsjoined');
+        }
+
+        /**
+         * Filters the StoTomasHouseholdsjoined_layer_1 layer to show only polygons
+         * where the BARANGAY property matches selected barangays from the dropdown.
+         * Uses a style-based approach: matching polygons get normal style, non-matching get transparent style.
+         * If no barangays are selected, all polygons are transparent.
+         * Called by: handleBarangaySelectionChange(), toggleLayer() for household type
+         * Connected to: findStoTomasHouseholdsLayer(), getSelectedBarangays(), normalizeBarangayName()
+         */
+        function filterStoTomasHouseholdsByBarangay() {
+            try {
+                var stoTomasLayer = findStoTomasHouseholdsLayer();
+                if (!stoTomasLayer) {
+                    console.log('StoTomasHouseholdsjoined_layer_1 layer not found for filtering');
+                    return;
+                }
+
+                var selectedBarangays = getSelectedBarangays();
+                
+                // Update global set of filtered barangays (normalized for comparison)
+                stoTomasFilteredBarangays.clear();
+                selectedBarangays.forEach(function(barangay) {
+                    stoTomasFilteredBarangays.add(normalizeBarangayName(barangay));
+                });
+
+                // Create a dynamic style function that checks if feature's BARANGAY matches selected barangays
+                var originalStyle = typeof style_StoTomasHouseholdsjoined_layer_1 !== 'undefined' 
+                    ? style_StoTomasHouseholdsjoined_layer_1 
+                    : function(feature, resolution) {
+                        // Fallback style if original is not available
+                        return [new ol.style.Style({
+                            stroke: new ol.style.Stroke({color: 'rgba(35,35,35,1.0)', lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0.988}),
+                            fill: new ol.style.Fill({color: 'rgba(255,84,111,1.0)'})
+                        })];
+                    };
+                
+                stoTomasLayer.setStyle(function(feature, resolution) {
+                    // If no barangays selected, make all transparent
+                    if (stoTomasFilteredBarangays.size === 0) {
+                        return [new ol.style.Style({
+                            stroke: new ol.style.Stroke({color: 'rgba(0,0,0,0)', width: 0}),
+                            fill: new ol.style.Fill({color: 'rgba(0,0,0,0)'})
+                        })];
+                    }
+
+                    // Check if this feature's BARANGAY matches any selected barangay
+                    var featBarangay = normalizeBarangayName(feature.get('BARANGAY'));
+                    var isMatch = stoTomasFilteredBarangays.has(featBarangay);
+
+                    if (isMatch) {
+                        // Matching polygon: use original style
+                        return originalStyle(feature, resolution);
+                    } else {
+                        // Non-matching polygon: make transparent
+                        return [new ol.style.Style({
+                            stroke: new ol.style.Stroke({color: 'rgba(0,0,0,0)', width: 0}),
+                            fill: new ol.style.Fill({color: 'rgba(0,0,0,0)'})
+                        })];
+                    }
+                });
+
+                // Trigger layer redraw to apply new styles
+                stoTomasLayer.changed();
+
+                if (selectedBarangays.length === 0) {
+                    console.log('StoTomasHouseholdsjoined_layer_1 filter applied - all polygons transparent (no barangays selected)');
+                } else {
+                    console.log('StoTomasHouseholdsjoined_layer_1 filtered by barangays:', selectedBarangays);
+                }
+            } catch (e) {
+                console.error('Error filtering StoTomasHouseholdsjoined_layer_1 by barangay:', e);
+            }
         }
 
         /**
@@ -4908,12 +5256,52 @@
         }
 
         /**
-         * Sets visibility of base household layers (from layers.js).
-         * Toggles visibility of all registered household layers based on the parameter.
-         * Called when toggling household layer visibility or when filtering by barangay.
+         * ============================================================================
+         * SET BASE HOUSEHOLD LAYERS VISIBLE FUNCTION - DISABLED
+         * ============================================================================
+         * 
+         * This function sets the visibility of base household layers (from layers.js).
+         * 
+         * HOW IT WORKS (currently disabled):
+         * - Toggles visibility of all registered household layers (lyr_Households_1)
+         * - Called when toggling household layer visibility or when filtering by barangay
+         * - Currently disabled: Function always keeps household layers hidden
+         * 
+         * CURRENT STATE:
+         * - Households_1.js layer is PERMANENTLY DISABLED
+         * - This function always sets layers to invisible (false)
+         * - Household layers will never be shown on the map
+         * 
+         * NOTE: Households_1.js layer is permanently disabled. It will not show even when
+         * the household button is clicked. Only Sto.Tomas Households layer can be shown.
+         * 
+         * TO RE-ENABLE:
+         * 1. Uncomment the Households_1.js script tag in HTML
+         * 2. Uncomment the Households_1_style.js script tag in HTML
+         * 3. Remove the early return and always-false logic below
+         * 
+         * Called when toggling household layer visibility or when filtering by barangay (but currently disabled).
          * Connected to: ensureHouseholdLayers(), toggleLayer(), filterHouseholdsBySelectedBarangay()
+         * ============================================================================
          */
         function setBaseHouseholdLayersVisible(visible) {
+            // HOUSEHOLDS_1.JS IS DISABLED - Always keep household layers hidden
+            console.log('Household layers visibility change skipped - Households_1.js is disabled. Requested visibility:', visible, '(always set to false)');
+            try {
+                ensureHouseholdLayers();
+                // Always set to false (hidden) regardless of requested visibility
+                householdLayers.forEach(function(layer) {
+                    if (layer && typeof layer.setVisible === 'function') {
+                        layer.setVisible(false);
+                    }
+                });
+                console.log('Base household layers forced to hidden (disabled)');
+            } catch (e) {
+                console.error('Failed to toggle household base layers:', e);
+            }
+            
+            // Original code below is disabled but preserved for future use
+            /*
             try {
                 ensureHouseholdLayers();
                 var bool = !!visible;
@@ -4926,15 +5314,42 @@
             } catch (e) {
                 console.error('Failed to toggle household base layers:', e);
             }
+            */
         }
 
         /**
-         * Sets visibility of the People layer.
-         * Ensures the People layer exists, then sets its visibility.
-         * Called when toggling between household and people layers.
+         * ============================================================================
+         * SET PEOPLE LAYER VISIBLE FUNCTION - DISABLED
+         * ============================================================================
+         * 
+         * This function sets the visibility of the People layer.
+         * 
+         * HOW IT WORKS (currently disabled):
+         * - Shows or hides the People layer on the map
+         * - Ensures the layer is initialized before changing visibility
+         * - Currently disabled: Function returns immediately without doing anything
+         * 
+         * CURRENT STATE:
+         * - People_0.js layer is PERMANENTLY DISABLED
+         * - This function does nothing and returns immediately
+         * - Layer will never be shown or hidden
+         * 
+         * NOTE: People_0.js layer is permanently disabled. This function will not
+         * show or hide the layer even when called.
+         * 
+         * TO RE-ENABLE: See ensurePeopleLayer() function documentation
+         * 
+         * Called when toggling layers or when barangay selection changes (but currently disabled).
          * Connected to: ensurePeopleLayer(), toggleLayer(), handleBarangaySelectionChange()
+         * ============================================================================
          */
         function setPeopleLayerVisible(visible) {
+            // PEOPLE_0.JS IS DISABLED - Return immediately without doing anything
+            console.log('People layer visibility change skipped - People_0.js is disabled. Requested visibility:', visible);
+            return;
+            
+            // Original code below is disabled but preserved for future use
+            /*
             try {
                 ensurePeopleLayer();
                 if (!peopleLayer || typeof peopleLayer.setVisible !== 'function') return;
@@ -4947,6 +5362,7 @@
             } catch (e) {
                 console.error('Failed to toggle people layer visibility:', e);
             }
+            */
         }
 
         /**
@@ -5316,7 +5732,67 @@
          *              setBaseHouseholdLayersVisible(), removeFilteredHouseholdLayer(),
          *              handleBarangaySelectionChange(), toggleLayer()
          */
+        /**
+         * ============================================================================
+         * FILTER HOUSEHOLDS BY SELECTED BARANGAY FUNCTION - DISABLED
+         * ============================================================================
+         * 
+         * This function filters household polygons based on selected barangays and creates
+         * a filtered household layer on the map.
+         * 
+         * HOW IT WORKS (currently disabled):
+         * - Filters json_Households_1 features by selected barangays
+         * - Creates a filtered household layer with matching polygons
+         * - Shows/hides the filtered layer based on household button state
+         * - Currently disabled: Function returns immediately without creating any layers
+         * 
+         * CURRENT STATE:
+         * - Households_1.js layer is PERMANENTLY DISABLED
+         * - This function does nothing and returns immediately
+         * - Filtered household layers will never be created or shown
+         * 
+         * NOTE: Households_1.js layer is permanently disabled. This function will not
+         * create or show filtered household layers even when barangays are selected.
+         * 
+         * TO RE-ENABLE: See setBaseHouseholdLayersVisible() function documentation
+         * 
+         * Called when barangay selection changes (but currently disabled).
+         * Connected to: handleBarangaySelectionChange(), setBaseHouseholdLayersVisible()
+         * ============================================================================
+         */
         function filterHouseholdsBySelectedBarangay() {
+            // HOUSEHOLDS_1.JS IS DISABLED - Return immediately without creating filtered layer
+            console.log('Household filtering skipped - Households_1.js is disabled');
+            
+            // Always remove any existing filtered layer
+            removeFilteredHouseholdLayer();
+            
+            // Always keep base household layers hidden
+            setBaseHouseholdLayersVisible(false);
+            
+            // BUT: Still highlight selected barangays even if household filtering is disabled
+            var selections = getSelectedBarangays();
+            if (selections.length > 0) {
+                // Get barangay features for highlighting
+                var barangayFeatures = getSelectedBarangayFeatures();
+                if (barangayFeatures.length > 0) {
+                    highlightSelectedBarangays(barangayFeatures);
+                    console.log('Barangay highlight applied for', selections.length, 'selected barangay(s)');
+                } else {
+                    // If no features found, remove highlight
+                    removeSelectedBarangayHighlight();
+                    console.log('No barangay features found for selections:', selections);
+                }
+            } else {
+                // If no selections, remove highlight
+                removeSelectedBarangayHighlight();
+                console.log('No barangay selections - highlight removed');
+            }
+            
+            return;
+            
+            // Original code below is disabled but preserved for future use
+            /*
             ensureHouseholdLayers();
             var selections = getSelectedBarangays();
             var selectionSet = new Set(selections.map(normalizeBarangayName));
@@ -5418,6 +5894,8 @@
             } else {
                 filteredHouseholdLayer.setVisible(false);
             }
+            console.log('Filtered household layer created and added to map');
+            */
         }
 
         function checkDemoFilter(filter, demos, properties) {
@@ -5669,6 +6147,19 @@
         // Chart instances
         var hazardPieChart = null;
         var demographicsBarChart = null;
+        // Right pane chart instances
+        var householdsChart = null;
+        var populationChart = null;
+        var sexChart = null;
+        var ageChart = null;
+        
+        /**
+         * Formats a number with thousands separators (commas).
+         * Example: 1346 becomes "1,346", 2951 becomes "2,951"
+         */
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
         var currentDemoFilter = '';
         var lastSelectedFamilyId = '';
         var lastSelectedHouseholdRow = null;
@@ -5969,6 +6460,496 @@
                     },
                     plugins: [ChartDataLabels] // Register the plugin
                 });
+            }
+        }
+        
+        /**
+         * Checks if all canvas elements for right pane charts exist in the DOM.
+         * Returns true if all canvas elements are found, false otherwise.
+         */
+        function areChartCanvasesReady() {
+            var canvases = [
+                document.getElementById('householdsChart'),
+                document.getElementById('populationChart'),
+                document.getElementById('sexChart'),
+                document.getElementById('ageChart')
+            ];
+            var allReady = canvases.every(function(canvas) {
+                return canvas !== null && canvas !== undefined;
+            });
+            if (!allReady) {
+                console.log('Chart canvases not ready yet. Found:', canvases.filter(function(c) { return c !== null; }).length, 'of 4');
+            }
+            return allReady;
+        }
+        
+        /**
+         * Updates the right pane charts with statistics from DB_0.js based on selected barangays.
+         * Calculates and displays: Total Households, Total Population, Group by Sex, and Group by Age.
+         * Called when barangay selection changes or on page load.
+         * Connected to: getSelectedBarangays(), normalizeBarangayName(), json_DB_0,
+         *              householdsChart, populationChart, sexChart, ageChart
+         */
+        function updateRightPaneCharts() {
+            try {
+                // Check if canvas elements exist
+                if (!areChartCanvasesReady()) {
+                    console.warn('Chart canvas elements not ready, retrying in 500ms...');
+                    setTimeout(updateRightPaneCharts, 500);
+                    return;
+                }
+                
+                console.log('Updating right pane charts...');
+                
+                // Check if DB_0 data is available
+                if (typeof json_DB_0 === 'undefined' || !json_DB_0.features) {
+                    console.warn('DB_0 data not available for right pane charts, initializing with zero values');
+                    // Initialize charts with zero values
+                    updateHouseholdsChart(0);
+                    updatePopulationChart(0);
+                    updateSexChart(0, 0);
+                    updateAgeChart([]);
+                    return;
+                }
+                
+                // Get selected barangays
+                var selectedBarangays = getSelectedBarangays();
+                var barangaySet = new Set();
+                selectedBarangays.forEach(function(barangay) {
+                    barangaySet.add(normalizeBarangayName(barangay));
+                });
+                
+                // Filter features by selected barangays
+                var filteredFeatures = [];
+                if (barangaySet.size > 0) {
+                    for (var i = 0; i < json_DB_0.features.length; i++) {
+                        var feature = json_DB_0.features[i];
+                        if (!feature || !feature.properties) continue;
+                        var featBarangay = normalizeBarangayName(feature.properties.BARANGAY || '');
+                        if (barangaySet.has(featBarangay)) {
+                            filteredFeatures.push(feature);
+                        }
+                    }
+                }
+                
+                // Calculate statistics
+                var stats = {
+                    totalHouseholds: 0,
+                    totalPopulation: filteredFeatures.length,
+                    male: 0,
+                    female: 0
+                };
+                
+                // Count unique FAMILY-ID for households
+                var uniqueFamilyIds = new Set();
+                for (var j = 0; j < filteredFeatures.length; j++) {
+                    var feat = filteredFeatures[j];
+                    var props = feat.properties;
+                    var familyId = props['FAMILY-ID'] || props['FAMILY_ID'] || '';
+                    if (familyId) {
+                        uniqueFamilyIds.add(String(familyId));
+                    }
+                    // Count by sex
+                    var sex = String(props.SEX || '').toUpperCase();
+                    if (sex === 'M') {
+                        stats.male++;
+                    } else if (sex === 'F') {
+                        stats.female++;
+                    }
+                }
+                stats.totalHouseholds = uniqueFamilyIds.size;
+                
+                console.log('Chart statistics calculated:', stats);
+                
+                // Update Total Households Chart
+                updateHouseholdsChart(stats.totalHouseholds);
+                
+                // Update Total Population Chart
+                updatePopulationChart(stats.totalPopulation);
+                
+                // Update Group by Sex Chart
+                updateSexChart(stats.male, stats.female);
+                
+                // Update Group by Age Chart (placeholder for now)
+                updateAgeChart([]);
+                
+                console.log('Right pane charts updated successfully');
+                
+            } catch (e) {
+                console.error('Error updating right pane charts:', e);
+                // Initialize charts with zero values on error
+                try {
+                    updateHouseholdsChart(0);
+                    updatePopulationChart(0);
+                    updateSexChart(0, 0);
+                    updateAgeChart([]);
+                } catch (err) {
+                    console.error('Error initializing charts with zero values:', err);
+                }
+            }
+        }
+        
+        /**
+         * Updates the Total Households donut chart.
+         */
+        function updateHouseholdsChart(total) {
+            try {
+                var ctx = document.getElementById('householdsChart');
+                if (!ctx) {
+                    console.warn('householdsChart canvas not found');
+                    return;
+                }
+                
+                if (householdsChart) {
+                    householdsChart.destroy();
+                    householdsChart = null;
+                }
+                
+                // Ensure total is a number, default to 0 if undefined/null
+                total = total || 0;
+                
+                console.log('Creating households chart with value:', total);
+                
+                // For single value, show as a donut with one segment
+                householdsChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Households'],
+                    datasets: [{
+                        data: [total],
+                        backgroundColor: ['rgba(36, 178, 255, 0.8)'],
+                        borderColor: ['rgba(36, 178, 255, 1)'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Total: ' + formatNumber(context.parsed);
+                                }
+                            }
+                        },
+                        datalabels: {
+                            color: '#ffffff',
+                            font: {
+                                weight: 'bold',
+                                size: 12
+                            },
+                            formatter: function(value) {
+                                return formatNumber(value || 0);
+                            },
+                            anchor: 'center',
+                            align: 'center'
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+            } catch (e) {
+                console.error('Error creating households chart:', e);
+            }
+        }
+        
+        /**
+         * Updates the Total Population donut chart.
+         */
+        function updatePopulationChart(total) {
+            try {
+                console.log('updatePopulationChart called with total:', total);
+                
+                // Check if Chart.js is available
+                if (typeof Chart === 'undefined') {
+                    console.error('Chart.js library not loaded');
+                    return;
+                }
+                
+                var ctx = document.getElementById('populationChart');
+                if (!ctx) {
+                    console.warn('populationChart canvas not found');
+                    return;
+                }
+                
+                console.log('Population chart canvas found:', ctx);
+                
+                if (populationChart) {
+                    populationChart.destroy();
+                    populationChart = null;
+                }
+                
+                // Ensure total is a number, default to 0 if undefined/null
+                total = Number(total) || 0;
+                
+                console.log('Creating population chart with value:', total);
+                
+                // Use a minimum value of 1 for Chart.js to render properly, but display 0 in label
+                var chartValue = Math.max(total, 1);
+                
+                populationChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Population'],
+                        datasets: [{
+                            data: [chartValue],
+                            backgroundColor: ['rgba(243, 156, 18, 0.8)'],
+                            borderColor: ['rgba(243, 156, 18, 1)'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        animation: {
+                            animateRotate: true,
+                            animateScale: true
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                enabled: true,
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                callbacks: {
+                                    label: function(context) {
+                                        return 'Total: ' + formatNumber(total);
+                                    }
+                                }
+                            },
+                            datalabels: {
+                                color: '#ffffff',
+                                font: {
+                                    weight: 'bold',
+                                    size: 12
+                                },
+                                formatter: function(value, context) {
+                                    // Always show the actual total value, not the chart value
+                                    return formatNumber(total);
+                                },
+                                anchor: 'center',
+                                align: 'center'
+                            }
+                        }
+                    },
+                    plugins: [ChartDataLabels]
+                });
+                
+                console.log('Population chart created successfully');
+            } catch (e) {
+                console.error('Error creating population chart:', e);
+                console.error('Error stack:', e.stack);
+            }
+        }
+        
+        /**
+         * Updates the Group by Sex donut chart.
+         */
+        function updateSexChart(male, female) {
+            try {
+                var ctx = document.getElementById('sexChart');
+                if (!ctx) {
+                    console.warn('sexChart canvas not found');
+                    return;
+                }
+                
+                if (sexChart) {
+                    sexChart.destroy();
+                    sexChart = null;
+                }
+                
+                // Ensure values are numbers
+                male = male || 0;
+                female = female || 0;
+                var total = male + female;
+                var malePercent = total > 0 ? ((male / total) * 100).toFixed(2) : 0;
+                var femalePercent = total > 0 ? ((female / total) * 100).toFixed(2) : 0;
+                
+                console.log('Creating sex chart with values - Male:', male, 'Female:', female);
+                
+                sexChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Male', 'Female'],
+                    datasets: [{
+                        data: [male, female],
+                        backgroundColor: [
+                            'rgba(36, 178, 255, 0.8)',   // Light blue for Male
+                            'rgba(243, 156, 18, 0.8)'    // Orange for Female
+                        ],
+                        borderColor: [
+                            'rgba(36, 178, 255, 1)',
+                            'rgba(243, 156, 18, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#fafafa',
+                                font: {
+                                    size: 9,
+                                    weight: '500'
+                                },
+                                padding: 5,
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                generateLabels: function(chart) {
+                                    var data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map(function(label, i) {
+                                            var value = data.datasets[0].data[i];
+                                            var percent = total > 0 ? ((value / total) * 100).toFixed(2) : 0;
+                                            return {
+                                                text: label + ': ' + formatNumber(value) + ' (' + percent + '%)',
+                                                fillStyle: data.datasets[0].backgroundColor[i],
+                                                strokeStyle: data.datasets[0].borderColor[i],
+                                                lineWidth: 2,
+                                                hidden: false,
+                                                index: i,
+                                                fontColor: '#fafafa'
+                                            };
+                                        });
+                                    }
+                                    return [];
+                                }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    var label = context.label || '';
+                                    var value = context.parsed;
+                                    var percent = total > 0 ? ((value / total) * 100).toFixed(2) : 0;
+                                    return label + ': ' + formatNumber(value) + ' (' + percent + '%)';
+                                }
+                            }
+                        },
+                        datalabels: {
+                            color: '#ffffff',
+                            font: {
+                                weight: 'bold',
+                                size: 9
+                            },
+                            formatter: function(value, context) {
+                                var percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                return percent + '%';
+                            },
+                            anchor: 'end',
+                            align: 'end',
+                            textStrokeColor: 'rgba(0, 0, 0, 0.5)',
+                            textStrokeWidth: 2
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+            } catch (e) {
+                console.error('Error creating sex chart:', e);
+            }
+        }
+        
+        /**
+         * Updates the Group by Age donut chart (placeholder for now).
+         */
+        function updateAgeChart(ageData) {
+            try {
+                console.log('updateAgeChart called with ageData:', ageData);
+                
+                // Check if Chart.js is available
+                if (typeof Chart === 'undefined') {
+                    console.error('Chart.js library not loaded');
+                    return;
+                }
+                
+                var ctx = document.getElementById('ageChart');
+                if (!ctx) {
+                    console.warn('ageChart canvas not found');
+                    return;
+                }
+                
+                console.log('Age chart canvas found:', ctx);
+                
+                if (ageChart) {
+                    ageChart.destroy();
+                    ageChart = null;
+                }
+                
+                console.log('Creating age chart (placeholder)');
+                
+                // Placeholder chart - use a larger value to ensure visibility
+                ageChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Placeholder'],
+                        datasets: [{
+                            data: [100],
+                            backgroundColor: ['rgba(108, 117, 125, 0.8)'],
+                            borderColor: ['rgba(108, 117, 125, 1)'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        animation: {
+                            animateRotate: true,
+                            animateScale: true
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                enabled: false
+                            },
+                            datalabels: {
+                                color: '#9aa0ae',
+                                font: {
+                                    weight: 'normal',
+                                    size: 10
+                                },
+                                formatter: function() {
+                                    return 'Coming Soon';
+                                },
+                                anchor: 'center',
+                                align: 'center'
+                            }
+                        }
+                    },
+                    plugins: [ChartDataLabels]
+                });
+                
+                console.log('Age chart created successfully');
+            } catch (e) {
+                console.error('Error creating age chart:', e);
+                console.error('Error stack:', e.stack);
             }
         }
         

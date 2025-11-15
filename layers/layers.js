@@ -721,6 +721,42 @@ lyr_Numberofpeopleaffectedat30meters_36.setVisible(false);
 lyr_Schools_37.setVisible(false);
 lyr_Roads_38.setVisible(false);
 
+// New DB and Sto.Tomas Households layers
+var format_DB_0 = new ol.format.GeoJSON();
+var features_DB_0 = format_DB_0.readFeatures(json_DB_0, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_DB_0 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_DB_0.addFeatures(features_DB_0);
+var lyr_DB_0 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_DB_0, 
+                style: style_DB_0,
+                popuplayertitle: 'DB',
+                interactive: true,
+                title: '<img src="styles/legend/DB_0.png" /> DB'
+            });
+
+var format_StoTomasHouseholdsjoined_layer_1 = new ol.format.GeoJSON();
+var features_StoTomasHouseholdsjoined_layer_1 = format_StoTomasHouseholdsjoined_layer_1.readFeatures(json_StoTomasHouseholdsjoined_layer_1, 
+            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_StoTomasHouseholdsjoined_layer_1 = new ol.source.Vector({
+    attributions: ' ',
+});
+jsonSource_StoTomasHouseholdsjoined_layer_1.addFeatures(features_StoTomasHouseholdsjoined_layer_1);
+var lyr_StoTomasHouseholdsjoined_layer_1 = new ol.layer.Vector({
+                declutter: false,
+                source:jsonSource_StoTomasHouseholdsjoined_layer_1, 
+                style: style_StoTomasHouseholdsjoined_layer_1,
+                popuplayertitle: 'Sto.Tomas Households — joined_layer',
+                interactive: true,
+                title: '<img src="styles/legend/StoTomasHouseholdsjoined_layer_1.png" /> Sto.Tomas Households — joined_layer'
+            });
+
+lyr_DB_0.setVisible(true);
+lyr_StoTomasHouseholdsjoined_layer_1.setVisible(false);
+
 // Set all layer groups to hidden by default
 group_FloodExtent.setVisible(false);
 group_Affectedpeopleat24meterswaterlevel.setVisible(false);
@@ -731,7 +767,7 @@ group_Affectedpeopleat28meterswaterlevel.setVisible(false);
 group_Affectedpeopleat29meterswaterlevel.setVisible(false);
 group_Affectedpeopleat30meterswaterlevel.setVisible(false);
 
-var layersList = [lyr_Positron_0,lyr_Households_1,group_FloodExtent,group_Affectedpeopleat24meterswaterlevel,group_Affectedpeopleat25meterswaterlevel,group_Affectedpeopleat26meterswaterlevel,group_Affectedpeopleat27meterswaterlevel,group_Affectedpeopleat28meterswaterlevel,group_Affectedpeopleat29meterswaterlevel,group_Affectedpeopleat30meterswaterlevel,lyr_Schools_37,lyr_Roads_38,lyr_Region2_39];
+var layersList = [lyr_Positron_0,lyr_Households_1,group_FloodExtent,group_Affectedpeopleat24meterswaterlevel,group_Affectedpeopleat25meterswaterlevel,group_Affectedpeopleat26meterswaterlevel,group_Affectedpeopleat27meterswaterlevel,group_Affectedpeopleat28meterswaterlevel,group_Affectedpeopleat29meterswaterlevel,group_Affectedpeopleat30meterswaterlevel,lyr_Schools_37,lyr_Roads_38,lyr_Region2_39,lyr_DB_0,lyr_StoTomasHouseholdsjoined_layer_1];
 lyr_Households_1.set('fieldAliases', {'fid': 'fid', 'FAMILY-ID': 'FAMILY-ID', 'REGION': 'REGION', 'PROVINCE': 'PROVINCE', 'CITY/MUN': 'CITY/MUN', 'BARANGAY': 'BARANGAY', 'NUMBER OF OCCUPANTS': 'NUMBER OF OCCUPANTS', 'HOUSE OWNERSHIP': 'HOUSE OWNERSHIP', 'CLASSIFICATION': 'CLASSIFICATION', 'STOREYS': 'STOREYS', 'ROOFING': 'ROOFING', 'YEARS BUILT': 'YEARS BUILT', 'OTHER DETAILS': 'OTHER DETAILS', 'RELATION': 'RELATION', 'LAST NAME': 'LAST NAME', 'GIVEN NAME': 'GIVEN NAME', 'MIDDLE NAME': 'MIDDLE NAME', 'AGE': 'AGE', 'SEX': 'SEX', 'OCCUPATION': 'OCCUPATION', 'Religion': 'Religion', });
 lyr_AnalysisSummaryat24meters_9.set('fieldAliases', {'analysis_name': 'analysis_name', 'use_caution_hazard_count': 'use_caution_hazard_count', 'not exposed_hazard_count': 'not exposed_hazard_count', 'medium_hazard_count': 'medium_hazard_count', 'low_hazard_count': 'low_hazard_count', 'high_hazard_count': 'high_hazard_count', 'total_affected': 'total_affected', 'total_not_affected': 'total_not_affected', 'total_exposed': 'total_exposed', 'total_not_exposed': 'total_not_exposed', 'total': 'total', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', 'exposed_population': 'exposed_population', });
 lyr_AggregationSummaryat24meters_10.set('fieldAliases', {'aggregation_id': 'aggregation_id', 'aggregation_name': 'aggregation_name', 'population_affected': 'population_affected', 'total_affected': 'total_affected', 'population': 'population', 'infant': 'infant', 'child': 'child', 'youth': 'youth', 'adult': 'adult', 'elderly': 'elderly', 'male': 'male', 'female': 'female', 'under_5': 'under_5', 'over_60': 'over_60', 'disabled': 'disabled', 'displaced': 'displaced', 'male_displaced': 'male_displaced', 'female_displaced': 'female_displaced', 'hygiene_packs': 'hygiene_packs', 'infant_displaced': 'infant_displaced', 'child_displaced': 'child_displaced', 'youth_displaced': 'youth_displaced', 'adult_displaced': 'adult_displaced', 'elderly_displaced': 'elderly_displaced', 'minimum_needs__family_food_pack': 'minimum_needs__family_food_pack', 'minimum_needs__hygiene_kits': 'minimum_needs__hygiene_kits', 'minimum_needs__family_kits': 'minimum_needs__family_kits', 'minimum_needs__water_kits': 'minimum_needs__water_kits', 'minimum_needs__drinking_water': 'minimum_needs__drinking_water', 'minimum_needs__clean_water': 'minimum_needs__clean_water', 'minimum_needs__minimum_water_demand_for_prolonged_period': 'minimum_needs__minimum_water_demand_for_prolonged_period', 'minimum_needs__shelter_space': 'minimum_needs__shelter_space', 'minimum_needs__toilet': 'minimum_needs__toilet', 'minimum_needs__child_friendly_facilities': 'minimum_needs__child_friendly_facilities', 'minimum_needs__laundry_spaces': 'minimum_needs__laundry_spaces', 'minimum_needs__water_spaces': 'minimum_needs__water_spaces', 'minimum_needs__health_station': 'minimum_needs__health_station', 'minimum_needs__couple_room': 'minimum_needs__couple_room', 'under_5_displaced': 'under_5_displaced', 'over_60_displaced': 'over_60_displaced', 'disabled_displaced': 'disabled_displaced', });
@@ -829,5 +865,21 @@ lyr_Schools_37.set('fieldLabels', {'fid': 'no label', 'full_id': 'no label', 'bu
 lyr_Roads_38.set('fieldLabels', {'fid': 'no label', 'full_id': 'no label', 'osm_id': 'no label', 'osm_type': 'no label', 'highway': 'no label', 'name': 'no label', 'surface': 'no label', 'maxspeed': 'no label', 'ref': 'no label', });
 lyr_Region2_39.set('fieldLabels', {'Reg_Code': 'no label', 'Reg_Name': 'header label - visible with data', 'Pro_Code': 'no label', 'Pro_Name': 'no label', 'Mun_Code': 'header label - visible with data', 'Mun_Name': 'no label', 'Bgy_Code': 'no label', 'Bgy_Name': 'header label - visible with data', 'auxiliary_': 'no label', 'auxiliar_1': 'no label', });
 lyr_Region2_39.on('precompose', function(evt) {
+    evt.context.globalCompositeOperation = 'normal';
+});
+
+lyr_DB_0.set('fieldAliases', {'fid': 'fid', 'FAMILY-ID': 'FAMILY-ID', 'REGION': 'REGION', 'PROVINCE': 'PROVINCE', 'CITY/MUN': 'CITY/MUN', 'BARANGAY': 'BARANGAY', 'PUROK/SITION': 'PUROK/SITION', 'NUMBER OF OCCUPANTS': 'NUMBER OF OCCUPANTS', 'HOUSE OWNERSHIP': 'HOUSE OWNERSHIP', 'CLASSIFICATION': 'CLASSIFICATION', 'STOREYS': 'STOREYS', 'ROOFING': 'ROOFING', 'YEARS BUILT': 'YEARS BUILT', 'RELATION': 'RELATION', 'LAST NAME': 'LAST NAME', 'GIVEN NAME': 'GIVEN NAME', 'MIDDLE NAME': 'MIDDLE NAME', 'AGE': 'AGE', 'SEX': 'SEX', 'OCCUPATION': 'OCCUPATION', });
+
+lyr_StoTomasHouseholdsjoined_layer_1.set('fieldAliases', {'fid': 'fid', 'FAMILY-ID': 'FAMILY-ID', 'BARANGAY': 'BARANGAY', });
+
+lyr_DB_0.set('fieldImages', {'fid': '', 'FAMILY-ID': '', 'REGION': '', 'PROVINCE': '', 'CITY/MUN': '', 'BARANGAY': '', 'PUROK/SITION': '', 'NUMBER OF OCCUPANTS': '', 'HOUSE OWNERSHIP': '', 'CLASSIFICATION': '', 'STOREYS': '', 'ROOFING': '', 'YEARS BUILT': '', 'RELATION': '', 'LAST NAME': '', 'GIVEN NAME': '', 'MIDDLE NAME': '', 'AGE': '', 'SEX': '', 'OCCUPATION': '', });
+
+lyr_StoTomasHouseholdsjoined_layer_1.set('fieldImages', {'fid': 'TextEdit', 'FAMILY-ID': 'TextEdit', 'BARANGAY': 'TextEdit', });
+
+lyr_DB_0.set('fieldLabels', {'fid': 'no label', 'FAMILY-ID': 'no label', 'REGION': 'no label', 'PROVINCE': 'no label', 'CITY/MUN': 'no label', 'BARANGAY': 'no label', 'PUROK/SITION': 'no label', 'NUMBER OF OCCUPANTS': 'no label', 'HOUSE OWNERSHIP': 'no label', 'CLASSIFICATION': 'no label', 'STOREYS': 'no label', 'ROOFING': 'no label', 'YEARS BUILT': 'no label', 'RELATION': 'no label', 'LAST NAME': 'no label', 'GIVEN NAME': 'no label', 'MIDDLE NAME': 'no label', 'AGE': 'no label', 'SEX': 'no label', 'OCCUPATION': 'no label', });
+
+lyr_StoTomasHouseholdsjoined_layer_1.set('fieldLabels', {'fid': 'no label', 'FAMILY-ID': 'no label', 'BARANGAY': 'no label', });
+
+lyr_StoTomasHouseholdsjoined_layer_1.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
 });
