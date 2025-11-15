@@ -181,6 +181,48 @@
             flex-shrink: 0;
         }
         
+        /* Family table styling */
+        #family-table table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        #family-table th, #family-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+        
+        #family-table th {
+            background: #1e88e5;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        #family-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        #family-table tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        #family-table td {
+            color: #fafafa;
+        }
+        
+        #family-table p {
+            color: #fafafa;
+            text-align: center;
+            padding: 1rem;
+            margin: 0;
+        }
+        
         /* Ensure all child elements inherit the dark background */
         #left-pane * {
             background-color: inherit;
@@ -1757,6 +1799,12 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Family Members Table Container -->
+                    <div id="family-table-container" style="margin-top: 1rem; padding: 0.75rem; background: rgba(42, 47, 57, 0.4); border-radius: 8px; display: none;">
+                        <h4 style="color: #fafafa; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem;">Household Members</h4>
+                        <div id="family-table"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1899,6 +1947,9 @@
                         stoTomasLayer.setVisible(false);
                         console.log('StoTomasHouseholdsjoined_layer_1 layer hidden on initialization');
                     }
+                    
+                    // Setup household polygon click handler
+                    setupHouseholdPolygonClickHandler();
                 } else {
                     console.log('Map not found or not ready');
                 }
@@ -4881,6 +4932,139 @@
                 }
             } catch (e) {
                 console.error('Error filtering StoTomasHouseholdsjoined_layer_1 by barangay:', e);
+            }
+        }
+        
+        /**
+         * Renders the family members table in the right pane.
+         * Filters DB_0 data by FAMILY-ID and displays results in a modern responsive table.
+         * @param {Array} members - Array of household member records from DB_0
+         */
+        function renderFamilyTable(members) {
+            var container = document.getElementById('family-table');
+            var tableContainer = document.getElementById('family-table-container');
+            
+            if (!container || !tableContainer) {
+                console.warn('Family table container not found');
+                return;
+            }
+            
+            // Show the container
+            tableContainer.style.display = 'block';
+            
+            if (!members || members.length === 0) {
+                container.innerHTML = '<p>No household members found.</p>';
+                return;
+            }
+            
+            var html = '<table><thead><tr>';
+            html += '<th>Relation</th>';
+            html += '<th>Given Name</th>';
+            html += '<th>Last Name</th>';
+            html += '<th>Age</th>';
+            html += '<th>Sex</th>';
+            html += '<th>Occupation</th>';
+            html += '</tr></thead><tbody>';
+            
+            members.forEach(function(m) {
+                var props = m.properties || m;
+                html += '<tr>';
+                html += '<td>' + (props.RELATION || '-') + '</td>';
+                html += '<td>' + (props['GIVEN NAME'] || props.GIVEN_NAME || '-') + '</td>';
+                html += '<td>' + (props['LAST NAME'] || props.LAST_NAME || '-') + '</td>';
+                html += '<td>' + (props.AGE || '-') + '</td>';
+                html += '<td>' + (props.SEX || '-') + '</td>';
+                html += '<td>' + (props.OCCUPATION || '-') + '</td>';
+                html += '</tr>';
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        
+        /**
+         * Handles polygon click events on StoTomasHouseholdsjoined_layer_1 layer.
+         * Gets FAMILY-ID from clicked feature and displays matching household members.
+         */
+        function setupHouseholdPolygonClickHandler() {
+            try {
+                var stoTomasLayer = findStoTomasHouseholdsLayer();
+                if (!stoTomasLayer) {
+                    console.warn('StoTomasHouseholdsjoined_layer_1 layer not found for click handler');
+                    return;
+                }
+                
+                // Get the map instance
+                if (typeof map === 'undefined') {
+                    console.warn('Map not available for click handler');
+                    return;
+                }
+                
+                // Add click event listener to the map
+                map.on('singleclick', function(evt) {
+                    // Check if DB_0 data is available
+                    if (typeof json_DB_0 === 'undefined' || !json_DB_0.features) {
+                        console.warn('DB_0 data not available');
+                        return;
+                    }
+                    
+                    // Only process clicks if the layer is visible
+                    if (!stoTomasLayer.getVisible()) {
+                        return;
+                    }
+                    
+                    // Get clicked feature
+                    var feature = map.forEachFeatureAtPixel(evt.pixel, function(feat) {
+                        return feat;
+                    }, {
+                        hitTolerance: 5,
+                        layerFilter: function(layer) {
+                            return layer === stoTomasLayer;
+                        }
+                    });
+                    
+                    if (!feature) {
+                        // Hide table if clicking outside polygons
+                        var tableContainer = document.getElementById('family-table-container');
+                        if (tableContainer) {
+                            tableContainer.style.display = 'none';
+                        }
+                        return;
+                    }
+                    
+                    // Get FAMILY-ID from clicked feature
+                    var familyId = feature.get('FAMILY-ID') || feature.get('FAMILY_ID');
+                    
+                    if (!familyId) {
+                        console.warn('No FAMILY-ID found on clicked feature');
+                        renderFamilyTable([]);
+                        return;
+                    }
+                    
+                    console.log('Polygon clicked, FAMILY-ID:', familyId);
+                    
+                    // Filter DB_0 data by FAMILY-ID
+                    var members = [];
+                    for (var i = 0; i < json_DB_0.features.length; i++) {
+                        var record = json_DB_0.features[i];
+                        var props = record.properties || {};
+                        var recordFamilyId = props['FAMILY-ID'] || props.FAMILY_ID || props['FAMILY_ID'];
+                        
+                        // Compare as strings to handle different formats
+                        if (String(recordFamilyId) === String(familyId)) {
+                            members.push(record);
+                        }
+                    }
+                    
+                    console.log('Found', members.length, 'household members for FAMILY-ID:', familyId);
+                    
+                    // Render the table
+                    renderFamilyTable(members);
+                });
+                
+                console.log('Household polygon click handler initialized');
+            } catch (e) {
+                console.error('Error setting up household polygon click handler:', e);
             }
         }
 
