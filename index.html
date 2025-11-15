@@ -78,7 +78,9 @@
         }
         
         #right-pane {
-            width: 450px;
+            width: 420px;
+            min-width: 380px;
+            max-width: 450px;
             background: #23272f;
             color: #fff;
             height: 100vh;
@@ -105,6 +107,78 @@
         #right-pane .flood-form-group,
         #right-pane .flood-legend-section {
             background: #23272f !important;
+        }
+        
+        /* Custom scrollbar for right pane charts container */
+        #right-pane-content {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) rgba(42, 47, 57, 0.5);
+        }
+        
+        #right-pane-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        #right-pane-content::-webkit-scrollbar-track {
+            background: rgba(42, 47, 57, 0.5);
+            border-radius: 4px;
+        }
+        
+        #right-pane-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+        
+        #right-pane-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Right pane charts grid container */
+        #right-pane-charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 16px;
+            padding: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Chart container wrapper */
+        .right-pane-chart-wrapper {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            background: rgba(42, 47, 57, 0.4);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        /* Chart canvas container */
+        .right-pane-chart-wrapper > div {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+        }
+        
+        /* Prevent canvas overflow */
+        .right-pane-chart-wrapper canvas {
+            max-width: 100% !important;
+            max-height: 100% !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        /* Chart title styling */
+        .right-pane-chart-wrapper h4 {
+            margin: 0 0 8px 0;
+            text-align: center;
+            flex-shrink: 0;
         }
         
         /* Ensure all child elements inherit the dark background */
@@ -289,7 +363,7 @@
             position: fixed;
             left: 320px;
             top: 0;
-            right: 450px; /* Account for right pane */
+            right: 420px; /* Account for right pane */
             height: 80px;
             background: #23272f;
             color: #fafafa;
@@ -488,17 +562,17 @@
             position: fixed;
             left: 320px;
             top: 80px;
-            right: 450px; /* Account for right pane */
+            right: 420px; /* Account for right pane */
             bottom: 0;
-            width: calc(100vw - 770px); /* 320px left + 450px right */
+            width: calc(100vw - 740px); /* 320px left + 420px right */
             height: calc(100vh - 80px);
             transition: left 0.3s ease, right 0.3s ease, width 0.3s ease;
         }
         
         /* Charts panel adjustments */
         #map-container.charts-open {
-            right: 850px; /* 450px right pane + 400px charts panel */
-            width: calc(100vw - 1170px); /* 320px left + 450px right + 400px charts */
+            right: 820px; /* 420px right pane + 400px charts panel */
+            width: calc(100vw - 1140px); /* 320px left + 420px right + 400px charts */
         }
         
         #charts-panel {
@@ -1086,8 +1160,8 @@
                 width: 350px;
             }
             #map-container.charts-open {
-                right: 800px; /* 450px right pane + 350px charts panel */
-                width: calc(100vw - 1120px); /* 320px left + 450px right + 350px charts */
+                right: 770px; /* 420px right pane + 350px charts panel */
+                width: calc(100vw - 1090px); /* 320px left + 420px right + 350px charts */
             }
         }
 
@@ -1096,8 +1170,8 @@
                 width: 300px;
             }
             #map-container.charts-open {
-                right: 750px; /* 450px right pane + 300px charts panel */
-                width: calc(100vw - 1070px); /* 320px left + 450px right + 300px charts */
+                right: 720px; /* 420px right pane + 300px charts panel */
+                width: calc(100vw - 1040px); /* 320px left + 420px right + 300px charts */
             }
             #upper-pane-people24 {
                 height: 35vh;
@@ -1113,8 +1187,8 @@
                 padding: 1rem;
             }
             #map-container.charts-open {
-                right: 730px; /* 450px right pane + 280px charts panel */
-                width: calc(100vw - 1050px); /* 320px left + 450px right + 280px charts */
+                right: 700px; /* 420px right pane + 280px charts panel */
+                width: calc(100vw - 1020px); /* 320px left + 420px right + 280px charts */
             }
             #upper-pane-people24 {
                 height: 30vh;
@@ -1379,7 +1453,7 @@
                 
                 TO RE-ENABLE DISABLED COMPONENTS: Remove display: none from their style attributes
                 -->
-                <div id="charts-panel" style="display: none; position: fixed; right: 450px; top: 80px; bottom: 0; height: auto; width: 400px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
+                <div id="charts-panel" style="display: none; position: fixed; right: 420px; top: 80px; bottom: 0; height: auto; width: 400px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
                     <!-- Pie Chart Section - ENABLED -->
                     <div style="flex: 1; max-width: 100%; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; min-height: 0; margin-bottom: 0.75rem;">
                         <h4>Hazard Level Distribution</h4>
@@ -1648,37 +1722,37 @@
                 <div class="sidebar-header">
                     <span>Details</span>
                 </div>
-                <div style="padding: 0.75rem; flex: 1; overflow-y: auto; overflow-x: hidden;">
+                <div id="right-pane-content" style="flex: 1; overflow-y: auto; overflow-x: hidden;">
                     <!-- Charts Grid Container -->
-                    <div id="right-pane-charts-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0;">
+                    <div id="right-pane-charts-container">
                         <!-- Total Households Chart -->
-                        <div class="right-pane-chart-wrapper" style="background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 0.3rem; min-height: 110px; display: flex; flex-direction: column;">
-                            <h4 style="color: #fafafa; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.2rem; text-align: center; line-height: 1.2;">Total Households</h4>
-                            <div style="position: relative; height: 70px; flex: 1;">
+                        <div class="right-pane-chart-wrapper">
+                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Total Households</h4>
+                            <div>
                                 <canvas id="householdsChart"></canvas>
                             </div>
                         </div>
                         
                         <!-- Total Population Chart -->
-                        <div class="right-pane-chart-wrapper" style="background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 0.3rem; min-height: 110px; display: flex; flex-direction: column;">
-                            <h4 style="color: #fafafa; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.2rem; text-align: center; line-height: 1.2;">Total Population</h4>
-                            <div style="position: relative; height: 70px; flex: 1;">
+                        <div class="right-pane-chart-wrapper">
+                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Total Population</h4>
+                            <div>
                                 <canvas id="populationChart"></canvas>
                             </div>
                         </div>
                         
                         <!-- Group by Sex Chart -->
-                        <div class="right-pane-chart-wrapper" style="background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 0.3rem; min-height: 125px; display: flex; flex-direction: column;">
-                            <h4 style="color: #fafafa; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.2rem; text-align: center; line-height: 1.2;">Group by Sex</h4>
-                            <div style="position: relative; height: 85px; flex: 1;">
+                        <div class="right-pane-chart-wrapper">
+                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Group by Sex</h4>
+                            <div>
                                 <canvas id="sexChart"></canvas>
                             </div>
                         </div>
                         
                         <!-- Group by Age Chart -->
-                        <div class="right-pane-chart-wrapper" style="background: rgba(42, 47, 57, 0.4); border-radius: 8px; padding: 0.3rem; min-height: 110px; display: flex; flex-direction: column;">
-                            <h4 style="color: #fafafa; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.2rem; text-align: center; line-height: 1.2;">Group by Age</h4>
-                            <div style="position: relative; height: 70px; flex: 1;">
+                        <div class="right-pane-chart-wrapper">
+                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Group by Age</h4>
+                            <div>
                                 <canvas id="ageChart"></canvas>
                             </div>
                         </div>
@@ -6645,7 +6719,7 @@
                             color: '#ffffff',
                             font: {
                                 weight: 'bold',
-                                size: 12
+                                size: 11
                             },
                             formatter: function(value) {
                                 return formatNumber(value || 0);
@@ -6734,7 +6808,7 @@
                                 color: '#ffffff',
                                 font: {
                                     weight: 'bold',
-                                    size: 12
+                                    size: 11
                                 },
                                 formatter: function(value, context) {
                                     // Always show the actual total value, not the chart value
@@ -6854,7 +6928,7 @@
                             color: '#ffffff',
                             font: {
                                 weight: 'bold',
-                                size: 9
+                                size: 8
                             },
                             formatter: function(value, context) {
                                 var percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
@@ -6933,7 +7007,7 @@
                                 color: '#9aa0ae',
                                 font: {
                                     weight: 'normal',
-                                    size: 10
+                                    size: 9
                                 },
                                 formatter: function() {
                                     return 'Coming Soon';
