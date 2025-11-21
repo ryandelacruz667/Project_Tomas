@@ -738,14 +738,53 @@ var lyr_DB_0 = new ol.layer.Vector({
                 title: '<img src="styles/legend/DB_0.png" /> DB'
             });
 
-var format_StoTomasHouseholdsjoined_layer_1 = new ol.format.GeoJSON();
-var features_StoTomasHouseholdsjoined_layer_1 = format_StoTomasHouseholdsjoined_layer_1.readFeatures(json_StoTomasHouseholdsjoined_layer_1, 
-            {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_StoTomasHouseholdsjoined_layer_1 = new ol.source.Vector({
-    attributions: ' ',
-});
-jsonSource_StoTomasHouseholdsjoined_layer_1.addFeatures(features_StoTomasHouseholdsjoined_layer_1);
-var lyr_StoTomasHouseholdsjoined_layer_1 = new ol.layer.Vector({
+// Alias for the data variable in case it has a different name
+if (typeof json_StoTomasHouseholdsjoined_layer_1 === 'undefined' && typeof json_FinalHouseholdstotomas_householdsnew__joined_layer_0 !== 'undefined') {
+    var json_StoTomasHouseholdsjoined_layer_1 = json_FinalHouseholdstotomas_householdsnew__joined_layer_0;
+    console.log('Using aliased variable json_FinalHouseholdstotomas_householdsnew__joined_layer_0 for StoTomasHouseholdsjoined_layer_1');
+}
+
+// Check if data exists before creating layer
+if (typeof json_StoTomasHouseholdsjoined_layer_1 !== 'undefined' && json_StoTomasHouseholdsjoined_layer_1 !== null) {
+    try {
+        var format_StoTomasHouseholdsjoined_layer_1 = new ol.format.GeoJSON();
+        var features_StoTomasHouseholdsjoined_layer_1 = format_StoTomasHouseholdsjoined_layer_1.readFeatures(json_StoTomasHouseholdsjoined_layer_1, 
+                    {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+        var jsonSource_StoTomasHouseholdsjoined_layer_1 = new ol.source.Vector({
+            attributions: ' ',
+        });
+        jsonSource_StoTomasHouseholdsjoined_layer_1.addFeatures(features_StoTomasHouseholdsjoined_layer_1);
+        var lyr_StoTomasHouseholdsjoined_layer_1 = new ol.layer.Vector({
+                    declutter: false,
+                    source:jsonSource_StoTomasHouseholdsjoined_layer_1, 
+                    style: style_StoTomasHouseholdsjoined_layer_1,
+                    popuplayertitle: 'Sto.Tomas Households — joined_layer',
+                    interactive: true,
+                    title: '<img src="styles/legend/StoTomasHouseholdsjoined_layer_1.png" /> Sto.Tomas Households — joined_layer'
+                });
+        console.log('StoTomasHouseholdsjoined_layer_1 layer created successfully with', features_StoTomasHouseholdsjoined_layer_1.length, 'features');
+    } catch (e) {
+        console.error('Error creating StoTomasHouseholdsjoined_layer_1 layer:', e);
+        // Create empty layer as fallback
+        var jsonSource_StoTomasHouseholdsjoined_layer_1 = new ol.source.Vector({
+            attributions: ' ',
+        });
+        var lyr_StoTomasHouseholdsjoined_layer_1 = new ol.layer.Vector({
+                    declutter: false,
+                    source:jsonSource_StoTomasHouseholdsjoined_layer_1, 
+                    style: style_StoTomasHouseholdsjoined_layer_1,
+                    popuplayertitle: 'Sto.Tomas Households — joined_layer',
+                    interactive: true,
+                    title: '<img src="styles/legend/StoTomasHouseholdsjoined_layer_1.png" /> Sto.Tomas Households — joined_layer'
+                });
+    }
+} else {
+    console.error('json_StoTomasHouseholdsjoined_layer_1 data is undefined. Cannot create layer.');
+    // Create empty layer as fallback to prevent errors
+    var jsonSource_StoTomasHouseholdsjoined_layer_1 = new ol.source.Vector({
+        attributions: ' ',
+    });
+    var lyr_StoTomasHouseholdsjoined_layer_1 = new ol.layer.Vector({
                 declutter: false,
                 source:jsonSource_StoTomasHouseholdsjoined_layer_1, 
                 style: style_StoTomasHouseholdsjoined_layer_1,
@@ -753,6 +792,7 @@ var lyr_StoTomasHouseholdsjoined_layer_1 = new ol.layer.Vector({
                 interactive: true,
                 title: '<img src="styles/legend/StoTomasHouseholdsjoined_layer_1.png" /> Sto.Tomas Households — joined_layer'
             });
+}
 
 lyr_DB_0.setVisible(true);
 lyr_StoTomasHouseholdsjoined_layer_1.setVisible(false);

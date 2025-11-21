@@ -11,6 +11,10 @@
         <link href="resources/photon-geocoder-autocomplete.min.css" rel="stylesheet">
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+        <!-- Bootstrap CSS for alert styles -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
         <style>
@@ -78,12 +82,12 @@
         }
         
         #right-pane {
-            width: 420px;
-            min-width: 380px;
-            max-width: 450px;
+            width: 600px;
+            min-width: 600px;
+            max-width: 600px;
             background: #23272f;
             color: #fff;
-            height: 100vh;
+            height: 970px;
             box-shadow: -2px 0 8px rgba(34,34,34,0.04);
             display: flex;
             flex-direction: column;
@@ -174,6 +178,11 @@
             height: 100% !important;
         }
         
+        .age-chart-wrapper {
+            height: 250px;
+        }
+        
+        
         /* Chart title styling */
         .right-pane-chart-wrapper h4 {
             margin: 0 0 8px 0;
@@ -187,12 +196,12 @@
             border-collapse: collapse;
             border-radius: 8px;
             overflow: hidden;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         
         #family-table th, #family-table td {
-            padding: 8px 10px;
+            padding: 10px 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             text-align: left;
         }
@@ -201,7 +210,7 @@
             background: #1e88e5;
             color: white;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.95rem;
         }
         
         #family-table tr:nth-child(even) {
@@ -405,7 +414,7 @@
             position: fixed;
             left: 320px;
             top: 0;
-            right: 420px; /* Account for right pane */
+            right: 600px; /* Account for right pane */
             height: 80px;
             background: #23272f;
             color: #fafafa;
@@ -604,17 +613,17 @@
             position: fixed;
             left: 320px;
             top: 80px;
-            right: 420px; /* Account for right pane */
+            right: 600px; /* Account for right pane */
             bottom: 0;
-            width: calc(100vw - 740px); /* 320px left + 420px right */
+            width: calc(100vw - 920px); /* 320px left + 600px right */
             height: calc(100vh - 80px);
             transition: left 0.3s ease, right 0.3s ease, width 0.3s ease;
         }
         
         /* Charts panel adjustments */
         #map-container.charts-open {
-            right: 820px; /* 420px right pane + 400px charts panel */
-            width: calc(100vw - 1140px); /* 320px left + 420px right + 400px charts */
+            right: 1000px; /* 600px right pane + 400px charts panel */
+            width: calc(100vw - 1320px); /* 320px left + 600px right + 400px charts */
         }
         
         #charts-panel {
@@ -1202,8 +1211,8 @@
                 width: 350px;
             }
             #map-container.charts-open {
-                right: 770px; /* 420px right pane + 350px charts panel */
-                width: calc(100vw - 1090px); /* 320px left + 420px right + 350px charts */
+                right: 950px; /* 600px right pane + 350px charts panel */
+                width: calc(100vw - 1270px); /* 320px left + 600px right + 350px charts */
             }
         }
 
@@ -1212,8 +1221,8 @@
                 width: 300px;
             }
             #map-container.charts-open {
-                right: 720px; /* 420px right pane + 300px charts panel */
-                width: calc(100vw - 1040px); /* 320px left + 420px right + 300px charts */
+                right: 900px; /* 600px right pane + 300px charts panel */
+                width: calc(100vw - 1220px); /* 320px left + 600px right + 300px charts */
             }
             #upper-pane-people24 {
                 height: 35vh;
@@ -1229,8 +1238,8 @@
                 padding: 1rem;
             }
             #map-container.charts-open {
-                right: 700px; /* 420px right pane + 280px charts panel */
-                width: calc(100vw - 1020px); /* 320px left + 420px right + 280px charts */
+                right: 880px; /* 600px right pane + 280px charts panel */
+                width: calc(100vw - 1200px); /* 320px left + 600px right + 280px charts */
             }
             #upper-pane-people24 {
                 height: 30vh;
@@ -1411,15 +1420,13 @@
                     <div class="flood-form-group">
                         <label class="flood-form-label" for="floodExtentDropdown">Flood Extent</label>
                         <!-- 
-                        FLOOD EXTENT DROPDOWN - DISABLED
-                        HOW IT WORKS (currently disabled):
+                        FLOOD EXTENT DROPDOWN - ENABLED
+                        HOW IT WORKS:
                         - Allows users to select flood extent levels (24-30 meters)
                         - When selected, displays corresponding flood layer PNGs on the map
                         - Triggers chart panel to appear showing hazard distribution
                         - Filters population exposure table and charts based on selected extent
-                        - Currently disabled via disabled attribute to prevent user interaction
-                        
-                        TO RE-ENABLE: Remove disabled attribute from the select element below
+                        - Enabled when at least one barangay is selected
                         -->
                         <select id="floodExtentDropdown" class="flood-modern-select">
                             <option value="">Select Flood Extent</option>
@@ -1434,8 +1441,8 @@
                         <button id="toggleInfographicsBtn" style="margin-top: 12px; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #3a3f4a; background:#2a2f39; color:#fff; cursor:pointer; font-weight:600; width: 100%;">Infographics</button>
                         <button id="impactReportBtn" style="margin-top: 8px; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #3a3f4a; background:#2a2f39; color:#fff; cursor:pointer; font-weight:600; width: 100%;">Impact Report</button>
                     </div>
-                </div>
-            </div>
+                            </div>
+                            </div>
             <!-- Top Bar -->
             <div id="top-pane">
                 <form class="search-form" autocomplete="off">
@@ -1446,25 +1453,25 @@
                             <div id="region-multiselect-dropdown" class="multiselect-dropdown">
                                 <div class="multiselect-empty">Loading regions...</div>
                             </div>
-                        </div>
-                    </div>
+                            </div>
+                            </div>
                     <div class="form-group">
                         <label class="form-label" for="province-multiselect-button">Province</label>
                         <div id="province-multiselect" class="modern-multiselect">
                             <button type="button" id="province-multiselect-button" class="modern-select multiselect-button">Select Province</button>
                             <div id="province-multiselect-dropdown" class="multiselect-dropdown">
                                 <div class="multiselect-empty">Select a region first</div>
-                            </div>
                         </div>
                     </div>
+                </div>
                     <div class="form-group">
                         <label class="form-label" for="municipality-multiselect-button">Municipality</label>
                         <div id="municipality-multiselect" class="modern-multiselect">
                             <button type="button" id="municipality-multiselect-button" class="modern-select multiselect-button">Select Municipality</button>
                             <div id="municipality-multiselect-dropdown" class="multiselect-dropdown">
                                 <div class="multiselect-empty">Select a province first</div>
-                            </div>
-                        </div>
+                    </div>
+                    </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="barangay-multiselect-button">Barangay</label>
@@ -1495,7 +1502,7 @@
                 
                 TO RE-ENABLE DISABLED COMPONENTS: Remove display: none from their style attributes
                 -->
-                <div id="charts-panel" style="display: none; position: fixed; right: 420px; top: 80px; bottom: 0; height: auto; width: 400px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
+                <div id="charts-panel" style="display: none; position: fixed; right: 600px; top: 80px; bottom: 0; height: auto; width: 400px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
                     <!-- Pie Chart Section - ENABLED -->
                     <div style="flex: 1; max-width: 100%; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; min-height: 0; margin-bottom: 0.75rem;">
                         <h4>Hazard Level Distribution</h4>
@@ -1555,6 +1562,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
                 <div id="split-pane">
                     <!-- Population Exposure Table - DISABLED: Hidden but kept in code for future use -->
                     <!-- 
@@ -1679,6 +1687,19 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Family Members Modal -->
+                    <div id="family-table-modal" class="modal" style="display: none;">
+                        <div class="modal-content" id="family-table-modal-content" style="width: 90%; max-width: 900px; max-height: 85vh; display: flex; flex-direction: column;">
+                            <div class="modal-header" id="family-table-modal-header">
+                                <h3 id="family-table-modal-title">Household Members</h3>
+                                <button id="family-table-modal-close" class="close-btn">&times;</button>
+                            </div>
+                            <div class="modal-body" style="overflow-y: auto; padding: 1.5rem;">
+                                <div id="family-table"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="lower-pane-map">
                         <div id="map">
                             <div>
@@ -1748,7 +1769,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             
             <!-- Right Pane -->
             <div id="right-pane">
@@ -1792,18 +1812,12 @@
                         </div>
                         
                         <!-- Group by Age Chart -->
-                        <div class="right-pane-chart-wrapper">
+                        <div class="right-pane-chart-wrapper age-chart-wrapper">
                             <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Group by Age</h4>
                             <div>
                                 <canvas id="ageChart"></canvas>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Family Members Table Container -->
-                    <div id="family-table-container" style="margin-top: 1rem; padding: 0.75rem; background: rgba(42, 47, 57, 0.4); border-radius: 8px; display: none;">
-                        <h4 style="color: #fafafa; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem;">Household Members</h4>
-                        <div id="family-table"></div>
                     </div>
                 </div>
             </div>
@@ -1950,6 +1964,12 @@
                     
                     // Setup household polygon click handler
                     setupHouseholdPolygonClickHandler();
+                    
+                    // Setup cursor change on hover for household polygons
+                    setupHouseholdPolygonHoverCursor();
+                    
+                    // Setup family table modal
+                    setupFamilyTableModal();
                 } else {
                     console.log('Map not found or not ready');
                 }
@@ -1960,7 +1980,7 @@
                 initializeProvinceMultiselect();
                 initializeMunicipalityMultiselect();
                 initializeBarangayMultiselect();
-
+                
                 // Populate dropdowns from Region2_39 data
                 populateDropdowns();
                 
@@ -2348,6 +2368,13 @@
             applyPeopleFiltersAndRender();
             updateCharts();
             updateRightPaneCharts();
+            
+            // Show charts panel if flood extent is selected and barangay is selected
+            var dropdown = document.getElementById('floodExtentDropdown');
+            var meterVal = dropdown ? String(dropdown.value || '').trim() : '';
+            if (meterVal && selections.length > 0) {
+                showChartsPanel();
+            }
         }
         
         /**
@@ -2605,16 +2632,16 @@
             
             // Update lower-level dropdowns based on region selection
             if (selections.length === 0) {
-                clearHighlight();
+                    clearHighlight();
                 // Clear all lower dropdowns
                 clearProvinceSelections({ reason: 'region-cleared' });
                 clearMunicipalitySelections({ reason: 'region-cleared' });
                 clearBarangaySelections({ reason: 'region-cleared' });
             } else {
                 // Update province dropdown to show only provinces in selected regions
-                updateProvinceDropdown();
+                    updateProvinceDropdown();
                 if (!options.skipZoom) {
-                    highlightSelectedPolygon();
+                        highlightSelectedPolygon();
                     zoomToArea();
                 }
             }
@@ -2901,15 +2928,15 @@
             
             // Update lower-level dropdowns based on province selection
             if (selections.length === 0) {
-                clearHighlight();
+                    clearHighlight();
                 // Clear all lower dropdowns
                 clearMunicipalitySelections({ reason: 'province-cleared' });
                 clearBarangaySelections({ reason: 'province-cleared' });
             } else {
                 // Update municipality dropdown to show only municipalities in selected provinces
-                updateMunicipalityDropdown();
+                    updateMunicipalityDropdown();
                 if (!options.skipZoom) {
-                    highlightSelectedPolygon();
+                        highlightSelectedPolygon();
                     zoomToArea();
                 }
             }
@@ -3194,14 +3221,14 @@
             
             // Update lower-level dropdowns based on municipality selection
             if (selections.length === 0) {
-                clearHighlight();
+                    clearHighlight();
                 // Clear barangay dropdown
                 clearBarangaySelections({ reason: 'municipality-cleared' });
             } else {
                 // Update barangay dropdown to show only barangays in selected municipalities
                 updateBarangayDropdown();
                 if (!options.skipZoom) {
-                    highlightSelectedPolygon();
+                        highlightSelectedPolygon();
                     zoomToArea();
                 }
             }
@@ -3251,8 +3278,8 @@
                         return;
                     }
                     console.log('Household button clicked');
+                    // toggleLayer will handle button state via toggleButtonActive
                     toggleLayer('household');
-                    toggleButtonActive(this);
                 });
             } else {
                 console.log('Household button not found');
@@ -3379,8 +3406,8 @@
                 return;
             }
 
-            var layers = map.getLayers().getArray();
-            console.log('toggleLayer called for:', layerType);
+                var layers = map.getLayers().getArray();
+                console.log('toggleLayer called for:', layerType);
 
             if (layerType === 'household') {
                 ensureHouseholdLayers();
@@ -3389,23 +3416,33 @@
                 // Find StoTomasHouseholdsjoined_layer_1 layer using helper function
                 var stoTomasLayer = findStoTomasHouseholdsLayer();
                 
+                if (!stoTomasLayer) {
+                    console.error('Cannot toggle household layer: StoTomasHouseholdsjoined_layer_1 layer not found. Check if the data file is loaded correctly.');
+                    alert('Household layer not found. Please check the browser console for details.');
+                    return;
+                }
+                
                 if (!householdLayersVisible) {
                     // Activating: Show only StoTomasHouseholdsjoined_layer_1, hide all other layers
                     householdLayersVisible = true;
-                    if (householdBtn) {
-                        toggleButtonActive(householdBtn);
-                    }
                     console.log('Activating household layer view. Showing only StoTomasHouseholdsjoined_layer_1');
                     
                     // Apply barangay filter BEFORE showing the layer, so filtered results are shown immediately
                     filterStoTomasHouseholdsByBarangay();
                     
                     // 1. Show StoTomasHouseholdsjoined_layer_1 layer
-                    if (stoTomasLayer) {
+                    try {
                         stoTomasLayer.setVisible(true);
-                        console.log('Sto.Tomas Households layer shown');
-                    } else {
-                        console.warn('StoTomasHouseholdsjoined_layer_1 layer not found');
+                        ensureStoTomasLayerOnTop();
+                        console.log('Sto.Tomas Households layer shown successfully');
+                        
+                        // Update button state after successful layer activation
+                        if (householdBtn) {
+                            toggleButtonActive(householdBtn);
+                        }
+                    } catch (e) {
+                        console.error('Error showing Sto.Tomas Households layer:', e);
+                        householdLayersVisible = false; // Revert state on error
                     }
                     
                     // 2. Hide peopleLayer if it exists
@@ -3427,13 +3464,18 @@
                     householdLayersVisible = false;
                     if (householdBtn) {
                         householdBtn.classList.remove('active');
+                        toggleButtonActive(householdBtn); // Ensure button state is updated
                     }
                     console.log('Deactivating household layer view.');
                     
                     // 5. Hide StoTomasHouseholdsjoined_layer_1 layer
                     if (stoTomasLayer) {
-                        stoTomasLayer.setVisible(false);
-                        console.log('Sto.Tomas Households layer hidden');
+                        try {
+                            stoTomasLayer.setVisible(false);
+                            console.log('Sto.Tomas Households layer hidden successfully');
+                        } catch (e) {
+                            console.error('Error hiding Sto.Tomas Households layer:', e);
+                        }
                     }
                     
                     // Ensure all household layers remain hidden
@@ -3445,24 +3487,24 @@
                 }
                 return;
             }
-
-            layers.forEach(function(layer) {
-                var layerTitle = layer.get('title') || layer.get('name') || 'Unknown';
-                var layerTitleLower = layerTitle.toLowerCase();
-                console.log('Checking layer:', layerTitle, 'for type:', layerType);
-
+                
+                layers.forEach(function(layer) {
+                    var layerTitle = layer.get('title') || layer.get('name') || 'Unknown';
+                    var layerTitleLower = layerTitle.toLowerCase();
+                    console.log('Checking layer:', layerTitle, 'for type:', layerType);
+                    
                 if (layerType === 'roads' &&
-                    (layerTitleLower.includes('roads') || layerTitleLower.includes('road') ||
-                     layerTitle === 'Roads_38' || layerTitleLower.includes('roads_38'))) {
-                    layer.setVisible(!layer.getVisible());
-                    console.log('Toggled roads layer:', layerTitle, 'Visible:', layer.getVisible());
-                } else if (layerType === 'schools' &&
-                           (layerTitleLower.includes('schools') || layerTitleLower.includes('school') ||
-                            layerTitle === 'Schools_37' || layerTitleLower.includes('schools_37'))) {
-                    layer.setVisible(!layer.getVisible());
-                    console.log('Toggled schools layer:', layerTitle, 'Visible:', layer.getVisible());
-                }
-            });
+                               (layerTitleLower.includes('roads') || layerTitleLower.includes('road') || 
+                                layerTitle === 'Roads_38' || layerTitleLower.includes('roads_38'))) {
+                        layer.setVisible(!layer.getVisible());
+                        console.log('Toggled roads layer:', layerTitle, 'Visible:', layer.getVisible());
+                    } else if (layerType === 'schools' && 
+                               (layerTitleLower.includes('schools') || layerTitleLower.includes('school') || 
+                                layerTitle === 'Schools_37' || layerTitleLower.includes('schools_37'))) {
+                        layer.setVisible(!layer.getVisible());
+                        console.log('Toggled schools layer:', layerTitle, 'Visible:', layer.getVisible());
+                    }
+                });
         }
         
         /**
@@ -3648,7 +3690,7 @@
                 if (barangays.size > 0) {
                     var sampleBarangays = Array.from(barangays).slice(0, 5);
                     console.log('Sample barangays found (first 5):', sampleBarangays);
-                } else {
+            } else {
                     console.warn('WARNING: No barangays found matching the selected municipalities');
                 }
             } else {
@@ -3942,7 +3984,7 @@
                             var props = hit.feature.get ? hit.feature.getProperties() : hit.feature.properties;
                             var familyCode = '';
                             if (props) {
-                                familyCode = props['FAMILY_ID'] || props['FAMILY-ID'] || props['fid'] || '';
+                                familyCode = props['FAMILY-ID'] || props['fid'] || '';
                             }
                             if (familyCode) {
                                 var geoFeature = featureToGeoJson(hit.feature);
@@ -3973,9 +4015,7 @@
                         }
                     }
 
-                    console.log('Map clicked - clearing highlights and barangay selections');
-                    clearBarangaySelections({ reason: 'map-click', force: true });
-                    clearHighlight();
+                    console.log('Map background clicked - preserving barangay selections');
                     resetHouseholdSelection();
                     
                     // Also clear any active button states
@@ -4492,6 +4532,8 @@
                         } catch (e) {}
                     }
                 });
+
+                ensureStoTomasLayerOnTop();
                 
                 try { 
                     map.render(); 
@@ -4655,7 +4697,7 @@
                         setTimeout(function(){
                             try {
                                 toggleHouseholds(false);
-                                toggleNumberOfPeople24(true);
+                                toggleNumberOfPeople24(false); // Keep hidden for all flood extents
                             } catch (e) { /* ignore */ }
                         }, 250);
                     } else if (selectedValue === '25') {
@@ -4851,15 +4893,62 @@
          */
         function findStoTomasHouseholdsLayer() {
             // Try direct reference first if available
-            if (typeof lyr_StoTomasHouseholdsjoined_layer_1 !== 'undefined') {
+            if (typeof lyr_StoTomasHouseholdsjoined_layer_1 !== 'undefined' && lyr_StoTomasHouseholdsjoined_layer_1 !== null) {
+                console.log('Found StoTomasHouseholdsjoined_layer_1 layer via direct reference');
                 return lyr_StoTomasHouseholdsjoined_layer_1;
             }
-            // Fallback to search by name
+            // Fallback to search by name in map layers
+            if (typeof map !== 'undefined' && map.getLayers) {
+                var layers = map.getLayers().getArray();
+                for (var i = 0; i < layers.length; i++) {
+                    var layer = layers[i];
+                    if (layer && typeof layer.get === 'function') {
+                        var title = layer.get('title') || '';
+                        var name = layer.get('name') || '';
+                        var combined = (title + ' ' + name).toLowerCase();
+                        if (combined.indexOf('stotomas') >= 0 || 
+                            combined.indexOf('sto.tomas') >= 0 || 
+                            combined.indexOf('householdsjoined') >= 0 ||
+                            combined.indexOf('households — joined') >= 0) {
+                            console.log('Found StoTomasHouseholdsjoined_layer_1 layer via name search:', combined);
+                            return layer;
+                        }
+                    }
+                }
+            }
+            // Fallback to search by name using helper function
             var cand = findLayerByNameIncludes('stotomas');
-            if (cand) return cand;
+            if (cand) {
+                console.log('Found StoTomasHouseholdsjoined_layer_1 layer via findLayerByNameIncludes: stotomas');
+                return cand;
+            }
             cand = findLayerByNameIncludes('sto.tomas');
-            if (cand) return cand;
-            return findLayerByNameIncludes('householdsjoined');
+            if (cand) {
+                console.log('Found StoTomasHouseholdsjoined_layer_1 layer via findLayerByNameIncludes: sto.tomas');
+                return cand;
+            }
+            cand = findLayerByNameIncludes('householdsjoined');
+            if (cand) {
+                console.log('Found StoTomasHouseholdsjoined_layer_1 layer via findLayerByNameIncludes: householdsjoined');
+                return cand;
+            }
+            console.warn('StoTomasHouseholdsjoined_layer_1 layer not found by any method');
+            return null;
+        }
+
+        /**
+         * Ensures the Sto.Tomas households layer draws above flood extent layers.
+         * Sets its z-index to a value higher than flood layers (which use 2000).
+         */
+        function ensureStoTomasLayerOnTop() {
+            try {
+                var stoLayer = findStoTomasHouseholdsLayer();
+                if (stoLayer && typeof stoLayer.setZIndex === 'function') {
+                    stoLayer.setZIndex(2500);
+                }
+            } catch (e) {
+                console.warn('Unable to set StoTomas layer z-index:', e);
+            }
         }
 
         /**
@@ -4930,30 +5019,56 @@
                 } else {
                     console.log('StoTomasHouseholdsjoined_layer_1 filtered by barangays:', selectedBarangays);
                 }
+                ensureStoTomasLayerOnTop();
             } catch (e) {
                 console.error('Error filtering StoTomasHouseholdsjoined_layer_1 by barangay:', e);
             }
         }
         
         /**
-         * Renders the family members table in the right pane.
+         * Renders the family members table in a draggable modal.
          * Filters DB_0 data by FAMILY-ID and displays results in a modern responsive table.
          * @param {Array} members - Array of household member records from DB_0
+         * @param {String} familyId - The FAMILY-ID to display in the header
          */
-        function renderFamilyTable(members) {
+        function renderFamilyTable(members, familyId) {
             var container = document.getElementById('family-table');
-            var tableContainer = document.getElementById('family-table-container');
+            var modal = document.getElementById('family-table-modal');
+            var modalContent = document.getElementById('family-table-modal-content');
+            var modalTitle = document.getElementById('family-table-modal-title');
             
-            if (!container || !tableContainer) {
-                console.warn('Family table container not found');
+            if (!container || !modal || !modalContent) {
+                console.warn('Family table modal not found');
                 return;
             }
             
-            // Show the container
-            tableContainer.style.display = 'block';
+            // Update modal title with FAMILY-ID
+            if (modalTitle) {
+                modalTitle.textContent = 'FAMILY-ID: ' + (familyId || 'N/A');
+            }
+            
+            // Reset transform to center the modal when shown
+            familyTableModalDragState.xOffset = 0;
+            familyTableModalDragState.yOffset = 0;
+            familyTableModalDragState.currentX = 0;
+            familyTableModalDragState.currentY = 0;
+            familyTableModalDragState.initialX = 0;
+            familyTableModalDragState.initialY = 0;
+            modalContent.style.transform = 'translate(0px, 0px)';
+            
+            // Show the modal
+            modal.style.display = 'flex';
             
             if (!members || members.length === 0) {
-                container.innerHTML = '<p>No household members found.</p>';
+                // Create Bootstrap alert with icon using Bootstrap Icons
+                var alertHtml = '<div class="alert alert-danger d-flex align-items-center" role="alert" style="margin: 0;">';
+                alertHtml += '<i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" style="font-size: 1.5rem;" aria-label="Danger:"></i>';
+                alertHtml += '<div>';
+                alertHtml += 'Sorry! We donot have data for this household!';
+                alertHtml += '</div>';
+                alertHtml += '</div>';
+                
+                container.innerHTML = alertHtml;
                 return;
             }
             
@@ -4983,6 +5098,88 @@
         }
         
         /**
+         * Hides the family table modal.
+         */
+        function hideFamilyTableModal() {
+            var modal = document.getElementById('family-table-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Global drag state for family table modal
+        var familyTableModalDragState = {
+            isDragging: false,
+            currentX: 0,
+            currentY: 0,
+            initialX: 0,
+            initialY: 0,
+            xOffset: 0,
+            yOffset: 0
+        };
+        
+        /**
+         * Sets up the family table modal with drag functionality and close button.
+         */
+        function setupFamilyTableModal() {
+            var modal = document.getElementById('family-table-modal');
+            var modalContent = document.getElementById('family-table-modal-content');
+            var modalHeader = document.getElementById('family-table-modal-header');
+            var closeBtn = document.getElementById('family-table-modal-close');
+            
+            if (!modal || !modalContent || !modalHeader) {
+                console.warn('Family table modal elements not found');
+                return;
+            }
+            
+            // Close button handler
+            if (closeBtn) {
+                closeBtn.addEventListener('click', hideFamilyTableModal);
+            }
+            
+            // Make modal draggable
+            modalHeader.addEventListener('mousedown', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+            
+            function dragStart(e) {
+                familyTableModalDragState.initialX = e.clientX - familyTableModalDragState.xOffset;
+                familyTableModalDragState.initialY = e.clientY - familyTableModalDragState.yOffset;
+                
+                if (e.target === modalHeader || modalHeader.contains(e.target)) {
+                    // Don't start dragging if clicking the close button
+                    if (e.target === closeBtn || closeBtn.contains(e.target)) {
+                        return;
+                    }
+                    familyTableModalDragState.isDragging = true;
+                }
+            }
+            
+            function drag(e) {
+                if (familyTableModalDragState.isDragging) {
+                    e.preventDefault();
+                    familyTableModalDragState.currentX = e.clientX - familyTableModalDragState.initialX;
+                    familyTableModalDragState.currentY = e.clientY - familyTableModalDragState.initialY;
+                    
+                    familyTableModalDragState.xOffset = familyTableModalDragState.currentX;
+                    familyTableModalDragState.yOffset = familyTableModalDragState.currentY;
+                    
+                    modalContent.style.transform = 'translate(' + familyTableModalDragState.currentX + 'px, ' + familyTableModalDragState.currentY + 'px)';
+                }
+            }
+            
+            function dragEnd(e) {
+                if (familyTableModalDragState.isDragging) {
+                    familyTableModalDragState.initialX = familyTableModalDragState.currentX;
+                    familyTableModalDragState.initialY = familyTableModalDragState.currentY;
+                }
+                familyTableModalDragState.isDragging = false;
+            }
+            
+            console.log('Family table modal drag functionality initialized');
+        }
+        
+        /**
          * Handles polygon click events on StoTomasHouseholdsjoined_layer_1 layer.
          * Gets FAMILY-ID from clicked feature and displays matching household members.
          */
@@ -5001,70 +5198,157 @@
                 }
                 
                 // Add click event listener to the map
+                // Use 'singleclick' to avoid conflicts with other click handlers
                 map.on('singleclick', function(evt) {
-                    // Check if DB_0 data is available
-                    if (typeof json_DB_0 === 'undefined' || !json_DB_0.features) {
-                        console.warn('DB_0 data not available');
-                        return;
-                    }
-                    
-                    // Only process clicks if the layer is visible
-                    if (!stoTomasLayer.getVisible()) {
-                        return;
-                    }
-                    
-                    // Get clicked feature
-                    var feature = map.forEachFeatureAtPixel(evt.pixel, function(feat) {
-                        return feat;
-                    }, {
-                        hitTolerance: 5,
-                        layerFilter: function(layer) {
-                            return layer === stoTomasLayer;
+                    try {
+                        // Check if DB_0 data is available
+                        if (typeof json_DB_0 === 'undefined' || !json_DB_0.features) {
+                            console.warn('DB_0 data not available');
+                            return;
                         }
-                    });
-                    
-                    if (!feature) {
-                        // Hide table if clicking outside polygons
-                        var tableContainer = document.getElementById('family-table-container');
-                        if (tableContainer) {
-                            tableContainer.style.display = 'none';
-                        }
-                        return;
-                    }
-                    
-                    // Get FAMILY-ID from clicked feature
-                    var familyId = feature.get('FAMILY-ID') || feature.get('FAMILY_ID');
-                    
-                    if (!familyId) {
-                        console.warn('No FAMILY-ID found on clicked feature');
-                        renderFamilyTable([]);
-                        return;
-                    }
-                    
-                    console.log('Polygon clicked, FAMILY-ID:', familyId);
-                    
-                    // Filter DB_0 data by FAMILY-ID
-                    var members = [];
-                    for (var i = 0; i < json_DB_0.features.length; i++) {
-                        var record = json_DB_0.features[i];
-                        var props = record.properties || {};
-                        var recordFamilyId = props['FAMILY-ID'] || props.FAMILY_ID || props['FAMILY_ID'];
                         
-                        // Compare as strings to handle different formats
-                        if (String(recordFamilyId) === String(familyId)) {
-                            members.push(record);
+                        // Only process clicks if the layer is visible
+                        if (!stoTomasLayer.getVisible()) {
+                            return;
                         }
+                        
+                        // Get clicked feature from StoTomasHouseholdsjoined_layer_1 layer
+                        var feature = null;
+                        map.forEachFeatureAtPixel(evt.pixel, function(feat, layer) {
+                            // Check if this feature belongs to our target layer
+                            if (layer === stoTomasLayer) {
+                                feature = feat;
+                                return true; // Stop iteration
+                            }
+                            return false;
+                        }, {
+                            hitTolerance: 5,
+                            layerFilter: function(layer) {
+                                return layer === stoTomasLayer;
+                            }
+                        });
+                        
+                        if (!feature) {
+                            // No feature clicked on this layer
+                            return;
+                        }
+                        
+                        // Get FAMILY-ID from clicked feature
+                        // Try multiple methods to get FAMILY-ID for robustness
+                        var familyId = null;
+                        if (feature.get) {
+                            familyId = feature.get('FAMILY-ID');
+                            if (!familyId && feature.getProperties) {
+                                var props = feature.getProperties();
+                                familyId = props['FAMILY-ID'] || props['family_id'] || props['FAMILY_ID'];
+                            }
+                        } else if (feature.properties) {
+                            familyId = feature.properties['FAMILY-ID'] || feature.properties['family_id'] || feature.properties['FAMILY_ID'];
+                        }
+                        
+                        if (!familyId) {
+                            console.warn('No FAMILY-ID found on clicked feature');
+                            renderFamilyTable([], null);
+                            return;
+                        }
+                        
+                        // Convert to string for consistent comparison
+                        familyId = String(familyId).trim();
+                        console.log('StoTomasHouseholdsjoined_layer_1 polygon clicked, FAMILY-ID:', familyId);
+                        
+                        // Filter DB_0 data by FAMILY-ID
+                        var members = [];
+                        for (var i = 0; i < json_DB_0.features.length; i++) {
+                            var record = json_DB_0.features[i];
+                            var props = record.properties || {};
+                            var recordFamilyId = props['FAMILY-ID'];
+                            
+                            // Compare as strings to handle different formats
+                            if (recordFamilyId !== undefined && recordFamilyId !== null && 
+                                String(recordFamilyId).trim() === familyId) {
+                                members.push(record);
+                            }
+                        }
+                        
+                        console.log('Found', members.length, 'household members for FAMILY-ID:', familyId);
+                        
+                        // Render the table in modal with FAMILY-ID
+                        renderFamilyTable(members, familyId);
+                    } catch (e) {
+                        console.error('Error handling polygon click:', e);
                     }
-                    
-                    console.log('Found', members.length, 'household members for FAMILY-ID:', familyId);
-                    
-                    // Render the table
-                    renderFamilyTable(members);
                 });
                 
                 console.log('Household polygon click handler initialized');
             } catch (e) {
                 console.error('Error setting up household polygon click handler:', e);
+            }
+        }
+
+        /**
+         * Sets up cursor change to pointer when hovering over StoTomasHouseholdsjoined_layer_1 polygons.
+         * Changes cursor to 'pointer' when over a feature, and back to 'default' when not.
+         */
+        function setupHouseholdPolygonHoverCursor() {
+            try {
+                var stoTomasLayer = findStoTomasHouseholdsLayer();
+                if (!stoTomasLayer) {
+                    console.warn('StoTomasHouseholdsjoined_layer_1 layer not found for hover cursor handler');
+                    return;
+                }
+                
+                // Get the map instance
+                if (typeof map === 'undefined') {
+                    console.warn('Map not available for hover cursor handler');
+                    return;
+                }
+                
+                // Get the map viewport element to change cursor
+                var mapElement = map.getViewport();
+                if (!mapElement) {
+                    console.warn('Map viewport element not found');
+                    return;
+                }
+                
+                // Add pointer move event listener to the map
+                map.on('pointermove', function(evt) {
+                    try {
+                        // Only process if the layer is visible
+                        if (!stoTomasLayer.getVisible()) {
+                            mapElement.style.cursor = '';
+                            return;
+                        }
+                        
+                        // Check if pointer is over a feature from StoTomasHouseholdsjoined_layer_1 layer
+                        var feature = null;
+                        map.forEachFeatureAtPixel(evt.pixel, function(feat, layer) {
+                            // Check if this feature belongs to our target layer
+                            if (layer === stoTomasLayer) {
+                                feature = feat;
+                                return true; // Stop iteration
+                            }
+                            return false;
+                        }, {
+                            hitTolerance: 5,
+                            layerFilter: function(layer) {
+                                return layer === stoTomasLayer;
+                            }
+                        });
+                        
+                        // Change cursor based on whether we're over a feature
+                        if (feature) {
+                            mapElement.style.cursor = 'pointer';
+                        } else {
+                            mapElement.style.cursor = '';
+                        }
+                    } catch (e) {
+                        console.error('Error handling pointer move for cursor:', e);
+                    }
+                });
+                
+                console.log('Household polygon hover cursor handler initialized');
+            } catch (e) {
+                console.error('Error setting up household polygon hover cursor handler:', e);
             }
         }
 
@@ -5077,7 +5361,12 @@
         function toggleHouseholds(visible) {
             var lyr = findHouseholdsLayer();
             if (lyr && typeof lyr.setVisible === 'function') {
-                try { lyr.setVisible(!!visible); } catch (e) {}
+                try { 
+                    lyr.setVisible(!!visible); 
+                    if (visible) {
+                        ensureStoTomasLayerOnTop();
+                    }
+                } catch (e) {}
             }
         }
 
@@ -5411,7 +5700,7 @@
                 modal.style.display = 'none';
             }
         }
-        
+
         // Filtering
         var currentPeopleAllFeats = [];
 
@@ -5674,8 +5963,8 @@
          * - Infographics button: Enabled when barangays selected, disabled otherwise
          * - Impact Report button: Enabled when barangays selected, disabled otherwise
          * 
-         * NOTE: Flood extent dropdown is permanently disabled regardless of barangay selection.
-         * To re-enable it, remove the line "floodDropdown.disabled = true;" below.
+         * Enables/disables the flood extent dropdown based on barangay selection.
+         * The dropdown is enabled when at least one barangay is selected, disabled otherwise.
          * 
          * Called when barangay selection changes.
          * Connected to: getSelectedBarangays(), handleBarangaySelectionChange(), setControlDisabledById()
@@ -5700,11 +5989,15 @@
                     floodDropdown.dispatchEvent(new Event('change'));
                 }
                 
-                // FLOOD EXTENT DROPDOWN IS PERMANENTLY DISABLED
-                // Always keep it disabled regardless of barangay selection
-                floodDropdown.disabled = true;
-                floodDropdown.classList.add('is-disabled');
-                console.log('Flood extent dropdown: PERMANENTLY DISABLED (not removed, just disabled)');
+                // Enable/disable flood extent dropdown based on barangay selection
+                floodDropdown.disabled = !hasBarangay;
+                if (hasBarangay) {
+                    floodDropdown.classList.remove('is-disabled');
+                    console.log('Flood extent dropdown: ENABLED (barangay selected)');
+                } else {
+                    floodDropdown.classList.add('is-disabled');
+                    console.log('Flood extent dropdown: DISABLED (no barangay selected)');
+                }
 
                 // Infographics and Impact Report buttons still depend on barangay selection
                 var shouldDisableButtons = !hasBarangay;
@@ -5947,7 +6240,6 @@
                 props['fid'],
                 props['FID'],
                 props['FAMILY-ID'],
-                props['FAMILY_ID'],
                 props['family_id']
             ];
             for (var i = 0; i < candidates.length; i++) {
@@ -6426,6 +6718,17 @@
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
+
+        /**
+         * Normalizes an age value to a non-negative number or returns null if invalid.
+         */
+        function sanitizeAgeValue(value) {
+            var parsed = Number(value);
+            if (isNaN(parsed) || !isFinite(parsed) || parsed < 0) {
+                return null;
+            }
+            return parsed;
+        }
         var currentDemoFilter = '';
         var lastSelectedFamilyId = '';
         var lastSelectedHouseholdRow = null;
@@ -6475,6 +6778,19 @@
          *              showChartsPanel(), currentPeopleAllFeats, hazardPieChart, demographicsBarChart
          */
         function updateCharts() {
+            // Check if we have flood extent data, if not, try to get it from current selection
+            if (!currentPeopleAllFeats || currentPeopleAllFeats.length === 0) {
+                var dropdown = document.getElementById('floodExtentDropdown');
+                var meterVal = dropdown ? String(dropdown.value || '').trim() : '';
+                if (meterVal) {
+                    // Try to load data for the selected flood extent
+                    var jsonObj = getPeopleJsonFor(meterVal);
+                    if (jsonObj && jsonObj.features) {
+                        currentPeopleAllFeats = jsonObj.features;
+                    }
+                }
+            }
+            
             if (!currentPeopleAllFeats || currentPeopleAllFeats.length === 0) {
                 // Clear charts if no data
                 if (hazardPieChart) hazardPieChart.destroy();
@@ -6774,7 +7090,7 @@
                     updateHouseholdsChart(0);
                     updatePopulationChart(0);
                     updateSexChart(0, 0);
-                    updateAgeChart([]);
+                    updateAgeChart(null);
                     return;
                 }
                 
@@ -6805,13 +7121,19 @@
                     male: 0,
                     female: 0
                 };
+                var ageStats = {
+                    infant: 0,
+                    child: 0,
+                    adult: 0,
+                    elderly: 0
+                };
                 
                 // Count unique FAMILY-ID for households
                 var uniqueFamilyIds = new Set();
                 for (var j = 0; j < filteredFeatures.length; j++) {
                     var feat = filteredFeatures[j];
                     var props = feat.properties;
-                    var familyId = props['FAMILY-ID'] || props['FAMILY_ID'] || '';
+                    var familyId = props['FAMILY-ID'] || '';
                     if (familyId) {
                         uniqueFamilyIds.add(String(familyId));
                     }
@@ -6821,6 +7143,20 @@
                         stats.male++;
                     } else if (sex === 'F') {
                         stats.female++;
+                    }
+
+                    // Count by age group
+                    var ageValue = sanitizeAgeValue(props.AGE);
+                    if (ageValue !== null) {
+                        if (ageValue <= 4) {
+                            ageStats.infant++;
+                        } else if (ageValue <= 14) {
+                            ageStats.child++;
+                        } else if (ageValue <= 64) {
+                            ageStats.adult++;
+                        } else {
+                            ageStats.elderly++;
+                        }
                     }
                 }
                 stats.totalHouseholds = uniqueFamilyIds.size;
@@ -6836,8 +7172,8 @@
                 // Update Group by Sex Chart
                 updateSexChart(stats.male, stats.female);
                 
-                // Update Group by Age Chart (placeholder for now)
-                updateAgeChart([]);
+                // Update Group by Age Chart
+                updateAgeChart(ageStats);
                 
                 console.log('Right pane charts updated successfully');
                 
@@ -6848,7 +7184,7 @@
                     updateHouseholdsChart(0);
                     updatePopulationChart(0);
                     updateSexChart(0, 0);
-                    updateAgeChart([]);
+                    updateAgeChart(null);
                 } catch (err) {
                     console.error('Error initializing charts with zero values:', err);
                 }
@@ -7119,17 +7455,20 @@
                         datalabels: {
                             color: '#ffffff',
                             font: {
-                                weight: 'bold',
-                                size: 8
+                                weight: '600',
+                                size: 10
                             },
-                            formatter: function(value, context) {
+                            formatter: function(value) {
+                                if (!value) return '';
                                 var percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                return percent + '%';
+                                return formatNumber(value) + '\n(' + percent + '%)';
                             },
-                            anchor: 'end',
-                            align: 'end',
-                            textStrokeColor: 'rgba(0, 0, 0, 0.5)',
-                            textStrokeWidth: 2
+                            anchor: 'center',
+                            align: 'center',
+                            clamp: true,
+                            textStrokeColor: 'rgba(0, 0, 0, 0.55)',
+                            textStrokeWidth: 3,
+                            padding: 2
                         }
                     }
                 },
@@ -7141,13 +7480,12 @@
         }
         
         /**
-         * Updates the Group by Age donut chart (placeholder for now).
+         * Updates the Group by Age donut chart with data sourced from DB_0.js.
          */
         function updateAgeChart(ageData) {
             try {
                 console.log('updateAgeChart called with ageData:', ageData);
                 
-                // Check if Chart.js is available
                 if (typeof Chart === 'undefined') {
                     console.error('Chart.js library not loaded');
                     return;
@@ -7159,53 +7497,166 @@
                     return;
                 }
                 
-                console.log('Age chart canvas found:', ctx);
-                
                 if (ageChart) {
                     ageChart.destroy();
                     ageChart = null;
                 }
                 
-                console.log('Creating age chart (placeholder)');
+                var buckets = {
+                    infant: 0,
+                    child: 0,
+                    adult: 0,
+                    elderly: 0
+                };
                 
-                // Placeholder chart - use a larger value to ensure visibility
+                if (ageData && typeof ageData === 'object') {
+                    if (Array.isArray(ageData) && ageData.length === 4) {
+                        buckets.infant = Number(ageData[0]) || 0;
+                        buckets.child = Number(ageData[1]) || 0;
+                        buckets.adult = Number(ageData[2]) || 0;
+                        buckets.elderly = Number(ageData[3]) || 0;
+                    } else {
+                        buckets.infant = Number(ageData.infant) || 0;
+                        buckets.child = Number(ageData.child) || 0;
+                        buckets.adult = Number(ageData.adult) || 0;
+                        buckets.elderly = Number(ageData.elderly) || 0;
+                    }
+                }
+                
+                var labels = [
+                    'Infant 0-4',
+                    'Child 5-14',
+                    'Adult 15-64',
+                    'Elderly 65+'
+                ];
+                var datasetData = [
+                    buckets.infant,
+                    buckets.child,
+                    buckets.adult,
+                    buckets.elderly
+                ];
+                var total = datasetData.reduce(function(sum, value) {
+                    return sum + (Number(value) || 0);
+                }, 0);
+                
+                if (total === 0) {
+                    console.log('No age data available, rendering empty state for age chart');
+                    ageChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['No Data'],
+                            datasets: [{
+                                data: [1],
+                                backgroundColor: ['rgba(108, 117, 125, 0.4)'],
+                                borderColor: ['rgba(108, 117, 125, 0.8)'],
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: '70%',
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    enabled: false
+                                },
+                                datalabels: {
+                                    color: '#9aa0ae',
+                                    font: {
+                                        weight: 'normal',
+                                        size: 10
+                                    },
+                                    formatter: function() {
+                                        return 'No Data';
+                                    },
+                                    anchor: 'center',
+                                    align: 'center'
+                                }
+                            }
+                        },
+                        plugins: [ChartDataLabels]
+                    });
+                    return;
+                }
+                
+                var colors = [
+                    'rgba(36, 178, 255, 0.85)',   // Infant - Light blue
+                    'rgba(243, 156, 18, 0.85)',    // Child - Orange
+                    'rgba(52, 152, 219, 0.85)',    // Adult - Blue
+                    'rgba(155, 89, 182, 0.85)'     // Elderly - Purple
+                ];
+                
+                var borderColors = [
+                    'rgba(36, 178, 255, 1)',
+                    'rgba(243, 156, 18, 1)',
+                    'rgba(52, 152, 219, 1)',
+                    'rgba(155, 89, 182, 1)'
+                ];
+                
                 ageChart = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        labels: ['Placeholder'],
+                        labels: labels,
                         datasets: [{
-                            data: [100],
-                            backgroundColor: ['rgba(108, 117, 125, 0.8)'],
-                            borderColor: ['rgba(108, 117, 125, 1)'],
+                            data: datasetData,
+                            backgroundColor: colors,
+                            borderColor: borderColors,
                             borderWidth: 2
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        cutout: '70%',
-                        animation: {
-                            animateRotate: true,
-                            animateScale: true
-                        },
+                        cutout: '60%',
                         plugins: {
                             legend: {
                                 display: false
                             },
                             tooltip: {
-                                enabled: false
+                                enabled: true,
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: 'rgba(255, 255, 255, 0.2)',
+                                borderWidth: 1,
+                                callbacks: {
+                                    title: function(context) {
+                                        return context[0].label;
+                                    },
+                                    label: function(context) {
+                                        var value = context.parsed || 0;
+                                        var percent = total > 0 ? ((value / total) * 100).toFixed(2) : 0;
+                                        return [
+                                            'Count: ' + formatNumber(value),
+                                            'Share: ' + percent + '%'
+                                        ];
+                                    }
+                                }
                             },
                             datalabels: {
-                                color: '#9aa0ae',
+                                color: '#ffffff',
                                 font: {
-                                    weight: 'normal',
+                                    weight: '600',
                                     size: 9
                                 },
-                                formatter: function() {
-                                    return 'Coming Soon';
-                                },
                                 anchor: 'center',
-                                align: 'center'
+                                align: 'center',
+                                formatter: function(value, context) {
+                                    if (!value) return '';
+                                    var dataset = context.chart.data.datasets[0];
+                                    var sum = dataset.data.reduce(function(acc, val) {
+                                        return acc + (Number(val) || 0);
+                                    }, 0);
+                                    var percent = sum > 0 ? ((value / sum) * 100).toFixed(1) : 0;
+                                    var percentNum = parseFloat(percent);
+                                    if (percentNum >= 10) {
+                                        return formatNumber(value) + '\n(' + percent + '%)';
+                                    }
+                                    return percent + '%';
+                                }
                             }
                         }
                     },
@@ -7318,7 +7769,7 @@
                     tbody.innerHTML = rows;
                 }
                 
-                title.textContent = 'Household Details - fid: ' + familyId;
+                title.textContent = 'Household Details';
                 modal.style.display = 'flex';
                 
                 // Zoom to and highlight the selected polygon
@@ -7377,7 +7828,7 @@
                 // First try direct FAMILY-ID matches
                 var directMatches = json_Households_1.features.filter(function(feature) {
                     if (!feature || !feature.properties) return false;
-                    var householdFamilyId = feature.properties['FAMILY-ID'] || feature.properties['FAMILY_ID'];
+                    var householdFamilyId = feature.properties['FAMILY-ID'];
                     return householdFamilyId !== undefined && householdFamilyId !== null &&
                         String(householdFamilyId).trim() === familyIdStr;
                 });
@@ -7936,7 +8387,7 @@
                         if (familyId && familyId !== '') {
                             var populationFeature = findFeatureByFamilyId(familyId);
                             applyHouseholdSelection(familyId, populationFeature);
-                        } else {
+                            } else {
                             resetHouseholdSelection();
                         }
                     }
