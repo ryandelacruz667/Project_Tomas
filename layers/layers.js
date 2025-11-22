@@ -759,7 +759,7 @@ if (typeof json_StoTomasHouseholdsjoined_layer_1 !== 'undefined' && json_StoToma
                     source:jsonSource_StoTomasHouseholdsjoined_layer_1, 
                     style: style_StoTomasHouseholdsjoined_layer_1,
                     popuplayertitle: 'Sto.Tomas Households — joined_layer',
-                    interactive: true,
+                    interactive: false,
                     title: '<img src="styles/legend/StoTomasHouseholdsjoined_layer_1.png" /> Sto.Tomas Households — joined_layer'
                 });
         console.log('StoTomasHouseholdsjoined_layer_1 layer created successfully with', features_StoTomasHouseholdsjoined_layer_1.length, 'features');
@@ -774,7 +774,7 @@ if (typeof json_StoTomasHouseholdsjoined_layer_1 !== 'undefined' && json_StoToma
                     source:jsonSource_StoTomasHouseholdsjoined_layer_1, 
                     style: style_StoTomasHouseholdsjoined_layer_1,
                     popuplayertitle: 'Sto.Tomas Households — joined_layer',
-                    interactive: true,
+                    interactive: false,
                     title: '<img src="styles/legend/StoTomasHouseholdsjoined_layer_1.png" /> Sto.Tomas Households — joined_layer'
                 });
     }
@@ -914,7 +914,7 @@ lyr_StoTomasHouseholdsjoined_layer_1.set('fieldAliases', {'fid': 'fid', 'FAMILY-
 
 lyr_DB_0.set('fieldImages', {'fid': '', 'FAMILY-ID': '', 'REGION': '', 'PROVINCE': '', 'CITY/MUN': '', 'BARANGAY': '', 'PUROK/SITION': '', 'NUMBER OF OCCUPANTS': '', 'HOUSE OWNERSHIP': '', 'CLASSIFICATION': '', 'STOREYS': '', 'ROOFING': '', 'YEARS BUILT': '', 'RELATION': '', 'LAST NAME': '', 'GIVEN NAME': '', 'MIDDLE NAME': '', 'AGE': '', 'SEX': '', 'OCCUPATION': '', });
 
-lyr_StoTomasHouseholdsjoined_layer_1.set('fieldImages', {'fid': 'TextEdit', 'FAMILY-ID': 'TextEdit', 'BARANGAY': 'TextEdit', });
+lyr_StoTomasHouseholdsjoined_layer_1.set('fieldImages', {'fid': 'Hidden', 'FAMILY-ID': 'Hidden', 'BARANGAY': 'Hidden', });
 
 lyr_DB_0.set('fieldLabels', {'fid': 'no label', 'FAMILY-ID': 'no label', 'REGION': 'no label', 'PROVINCE': 'no label', 'CITY/MUN': 'no label', 'BARANGAY': 'no label', 'PUROK/SITION': 'no label', 'NUMBER OF OCCUPANTS': 'no label', 'HOUSE OWNERSHIP': 'no label', 'CLASSIFICATION': 'no label', 'STOREYS': 'no label', 'ROOFING': 'no label', 'YEARS BUILT': 'no label', 'RELATION': 'no label', 'LAST NAME': 'no label', 'GIVEN NAME': 'no label', 'MIDDLE NAME': 'no label', 'AGE': 'no label', 'SEX': 'no label', 'OCCUPATION': 'no label', });
 

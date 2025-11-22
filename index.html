@@ -15,6 +15,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
         <!-- Bootstrap CSS for alert styles -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap JS for offcanvas -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
         <style>
@@ -81,114 +83,7 @@
             top: 0;
         }
         
-        #right-pane {
-            width: 600px;
-            min-width: 600px;
-            max-width: 600px;
-            background: #23272f;
-            color: #fff;
-            height: 970px;
-            box-shadow: -2px 0 8px rgba(34,34,34,0.04);
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            z-index: 10;
-            overflow: hidden;
-            position: fixed;
-            right: 0;
-            top: 0;
-        }
-        
-        /* Ensure all child elements inherit the dark background */
-        #right-pane * {
-            background-color: inherit;
-        }
-        
-        /* Override any white backgrounds that might be inherited */
-        #right-pane .sidebar-header,
-        #right-pane .nav-bar,
-        #right-pane .flood-section,
-        #right-pane .flood-form-group,
-        #right-pane .flood-legend-section {
-            background: #23272f !important;
-        }
-        
-        /* Custom scrollbar for right pane charts container */
-        #right-pane-content {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(255, 255, 255, 0.3) rgba(42, 47, 57, 0.5);
-        }
-        
-        #right-pane-content::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        #right-pane-content::-webkit-scrollbar-track {
-            background: rgba(42, 47, 57, 0.5);
-            border-radius: 4px;
-        }
-        
-        #right-pane-content::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-        }
-        
-        #right-pane-content::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-        
-        /* Right pane charts grid container */
-        #right-pane-charts-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto;
-            gap: 16px;
-            padding: 16px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        
-        /* Chart container wrapper */
-        .right-pane-chart-wrapper {
-            width: 100%;
-            height: 250px;
-            position: relative;
-            background: rgba(42, 47, 57, 0.4);
-            border-radius: 8px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-        
-        /* Chart canvas container */
-        .right-pane-chart-wrapper > div {
-            position: relative;
-            width: 100%;
-            flex: 1;
-            min-height: 0;
-        }
-        
-        /* Prevent canvas overflow */
-        .right-pane-chart-wrapper canvas {
-            max-width: 100% !important;
-            max-height: 100% !important;
-            width: 100% !important;
-            height: 100% !important;
-        }
-        
-        .age-chart-wrapper {
-            height: 250px;
-        }
-        
-        
-        /* Chart title styling */
-        .right-pane-chart-wrapper h4 {
-            margin: 0 0 8px 0;
-            text-align: center;
-            flex-shrink: 0;
-        }
+        /* Right pane removed - no longer needed */
         
         /* Family table styling */
         #family-table table {
@@ -612,18 +507,37 @@
         #map-container {
             position: fixed;
             left: 320px;
-            top: 80px;
-            right: 600px; /* Account for right pane */
+            top: 80px; /* Below top-pane */
+            right: 0; /* No right pane */
             bottom: 0;
-            width: calc(100vw - 920px); /* 320px left + 600px right */
+            width: calc(100vw - 320px); /* 320px left only */
             height: calc(100vh - 80px);
             transition: left 0.3s ease, right 0.3s ease, width 0.3s ease;
         }
         
+        /* Adjust map container when navigation bar is visible */
+        #map-container.nav-bar-visible {
+            top: calc(80px + var(--nav-bar-height, 0px)); /* Account for navigation bar height */
+            height: calc(100vh - 80px - var(--nav-bar-height, 0px));
+        }
+        
+        /* Adjust map container when offcanvas is shown */
+        #map-container.offcanvas-open {
+            right: 400px; /* Account for offcanvas width (default Bootstrap offcanvas-end width) */
+            width: calc(100vw - 720px); /* 320px left + 400px offcanvas */
+            transition: right 0.3s ease, width 0.3s ease;
+        }
+        
         /* Charts panel adjustments */
         #map-container.charts-open {
-            right: 1000px; /* 600px right pane + 400px charts panel */
-            width: calc(100vw - 1320px); /* 320px left + 600px right + 400px charts */
+            right: 400px; /* 400px charts panel only */
+            width: calc(100vw - 720px); /* 320px left + 400px charts */
+        }
+        
+        /* Charts panel when offcanvas is also open */
+        #map-container.charts-open.offcanvas-open {
+            right: 800px; /* 400px offcanvas + 400px charts panel */
+            width: calc(100vw - 1120px); /* 320px left + 400px offcanvas + 400px charts */
         }
         
         #charts-panel {
@@ -698,80 +612,195 @@
             background-color: #1e2329 !important;
         }
 
-        /* Split pane inside map container */
-        #split-pane {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-        
-        /* Ensure split-pane respects map container bounds when charts are open */
-        #map-container.charts-open #split-pane {
-            right: 0;
-            max-width: 100%;
-        }
-
-        #upper-pane-people24 {
+        /* Top Navigation Bar - Contains all population exposure table elements */
+        #top-navigation-bar {
             display: none; /* shown when 24m is selected */
+            position: fixed;
+            top: 80px; /* Below top-pane */
+            left: 320px; /* Account for left pane */
+            right: 0; /* No right pane */
             background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%);
             color: #fafafa;
             border-bottom: 2px solid rgba(243, 156, 18, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 950; /* Below modals (1000) but above charts panel (999) */
+            transition: right 0.3s ease, left 0.3s ease, width 0.3s ease;
+            max-height: calc(100vh - 80px);
             overflow-y: auto;
             overflow-x: hidden;
             box-sizing: border-box;
-            z-index: 950; /* Below modals (1000) but above charts panel (999) */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-
-        #upper-pane-people24 .content {
-            height: 100%;
+        
+        /* Adjust navigation bar when offcanvas is open */
+        #map-container.offcanvas-open #top-navigation-bar {
+            right: 400px !important; /* 400px offcanvas */
+        }
+        
+        /* Adjust navigation bar when charts panel is open */
+        #map-container.charts-open #top-navigation-bar {
+            right: 400px !important; /* 400px charts panel */
+        }
+        
+        /* Adjust navigation bar when both offcanvas and charts are open */
+        #map-container.charts-open.offcanvas-open #top-navigation-bar {
+            right: 800px !important; /* 400px offcanvas + 400px charts panel */
+        }
+        
+        /* Bootstrap Offcanvas Custom Styling */
+        #offcanvasRight {
+            width: 400px;
+            background: #23272f;
+            color: #fff;
+        }
+        
+        #offcanvasRight .offcanvas-header {
+            background: #24b2ff;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #offcanvasRight .offcanvas-title {
+            color: #fff;
+            font-weight: 700;
+        }
+        
+        #offcanvasRight .btn-close {
+            filter: invert(1);
+        }
+        
+        #offcanvasRight .offcanvas-body {
+            background: #23272f;
+            overflow-y: auto;
+        }
+        
+        /* Right pane charts container in offcanvas */
+        #offcanvasRight #right-pane-charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 16px;
+            padding: 0;
+        }
+        
+        /* Chart wrapper in offcanvas */
+        #offcanvasRight .right-pane-chart-wrapper {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            background: rgba(42, 47, 57, 0.4);
+            border-radius: 8px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            padding: 1rem 1.5rem 1.25rem 1.5rem;
             box-sizing: border-box;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: hidden;
         }
         
-        /* Ensure table doesn't extend into charts panel area */
-        #map-container.charts-open #upper-pane-people24 {
-            max-width: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
+        #offcanvasRight .right-pane-chart-wrapper > div {
+            position: relative;
             width: 100%;
+            flex: 1;
+            min-height: 0;
         }
         
-        #map-container.charts-open #upper-pane-people24 .content {
-            max-width: 100%;
-            width: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-            padding-right: 0.5rem; /* Small gap from charts */
-        }
-        
-        /* Ensure table and its container don't extend into charts panel */
-        #map-container.charts-open #people-24-table-inner {
-            max-width: 100%;
-            width: 100%;
-            overflow-x: hidden;
-            box-sizing: border-box;
-            table-layout: fixed;
-        }
-        
-        /* Make sure the table wrapper div respects bounds */
-        #map-container.charts-open #people-table-wrapper {
+        #offcanvasRight .right-pane-chart-wrapper canvas {
             max-width: 100% !important;
+            max-height: 100% !important;
             width: 100% !important;
-            overflow-x: hidden !important;
+            height: 100% !important;
+        }
+        
+        #offcanvasRight .age-chart-wrapper {
+            height: 250px;
+        }
+        
+        #offcanvasRight .right-pane-chart-wrapper h4 {
+            margin: 0 0 8px 0;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        #top-navigation-bar .nav-content {
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Navigation bar header */
+        #top-navigation-bar .nav-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        #top-navigation-bar #people-table-title {
+            margin: 0;
+            color: #f39c12;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        #top-navigation-bar #people-table-count {
+            font-size: 0.9rem;
+            color: #cccccc;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+        
+        /* Navigation bar filters */
+        #top-navigation-bar #people-filters {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Navigation bar table wrapper */
+        #top-navigation-bar #people-table-wrapper {
+            overflow-y: auto;
+            overflow-x: auto;
+            background: rgba(42, 47, 57, 0.5);
+            border: 1px solid rgba(243, 156, 18, 0.2);
+            border-radius: 8px;
+            max-height: calc(100vh - 300px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Ensure all navigation bar child elements are responsive */
+        #top-navigation-bar .nav-content,
+        #top-navigation-bar #people-table-wrapper,
+        #top-navigation-bar #people-24-table-inner {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box;
+        }
+        
+        /* Ensure table and its container are responsive */
+        #people-24-table-inner {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto;
+            box-sizing: border-box;
+            table-layout: auto; /* Allow table to adjust column widths */
+        }
+        
+        #people-table-wrapper {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: auto !important;
             overflow-y: auto !important;
             box-sizing: border-box;
-            max-height: calc(40vh - 200px); /* Match table pane height minus header/filters */
+        }
+        
+        /* Responsive adjustments when charts panel is open */
+        #map-container.charts-open #top-navigation-bar .nav-content {
+            padding-right: 0.5rem; /* Small gap from charts */
         }
         
         /* Set specific column widths for better fit */
@@ -808,11 +837,7 @@
             width: 15%;
         }
 
-        #lower-pane-map {
-            flex: 1 1 auto;
-            position: relative;
-        }
-
+        /* Lower pane removed - map is now directly in map-container */
         #map {
             width: 100%;
             height: 100%;
@@ -1224,8 +1249,8 @@
                 right: 900px; /* 600px right pane + 300px charts panel */
                 width: calc(100vw - 1220px); /* 320px left + 600px right + 300px charts */
             }
-            #upper-pane-people24 {
-                height: 35vh;
+            #top-navigation-bar {
+                max-height: 35vh;
             }
             #charts-panel {
                 height: calc(100vh - 80px); /* Full height */
@@ -1241,8 +1266,8 @@
                 right: 880px; /* 600px right pane + 280px charts panel */
                 width: calc(100vw - 1200px); /* 320px left + 600px right + 280px charts */
             }
-            #upper-pane-people24 {
-                height: 30vh;
+            #top-navigation-bar {
+                max-height: 30vh;
             }
             #charts-panel {
                 height: calc(100vh - 80px); /* Full height */
@@ -1281,8 +1306,8 @@
                 right: 530px; /* 280px right pane + 250px charts panel */
                 width: calc(100vw - 810px); /* 280px left + 280px right + 250px charts */
             }
-            #upper-pane-people24 {
-                height: 25vh;
+            #top-navigation-bar {
+                max-height: 25vh;
             }
             #charts-panel {
                 height: calc(100vh - 80px); /* Full height */
@@ -1324,8 +1349,8 @@
                 width: calc(100vw - 260px);
                 bottom: 0;
             }
-            #upper-pane-people24 {
-                height: 30vh;
+            #top-navigation-bar {
+                max-height: 30vh;
             }
             /* Charts will flex to fill available height - no fixed heights */
             .flood-modern-select,
@@ -1356,10 +1381,6 @@
         }
 
         /* Ensure table stays above charts but below modals */
-        #upper-pane-people24 {
-            position: relative;
-            z-index: 950; /* Below modals (1000) but above charts panel (999) */
-        }
         </style>
         <title>PROJECT TOMaS (Tactical Overlay for Mapping and Safety)</title>
     </head>
@@ -1502,7 +1523,7 @@
                 
                 TO RE-ENABLE DISABLED COMPONENTS: Remove display: none from their style attributes
                 -->
-                <div id="charts-panel" style="display: none; position: fixed; right: 600px; top: 80px; bottom: 0; height: auto; width: 400px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
+                <div id="charts-panel" style="display: none; position: fixed; right: 0; top: 80px; bottom: 0; height: auto; width: 400px; background: linear-gradient(135deg, rgba(35, 39, 47, 0.98) 0%, rgba(42, 47, 57, 0.98) 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 999; overflow-y: hidden; overflow-x: hidden; padding: 1.5rem; box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); box-sizing: border-box;">
                     <!-- Pie Chart Section - ENABLED -->
                     <div style="flex: 1; max-width: 100%; box-sizing: border-box; overflow: hidden; display: flex; flex-direction: column; min-height: 0; margin-bottom: 0.75rem;">
                         <h4>Hazard Level Distribution</h4>
@@ -1563,54 +1584,46 @@
                     </div>
                 </div>
             </div>
-                <div id="split-pane">
-                    <!-- Population Exposure Table - DISABLED: Hidden but kept in code for future use -->
-                    <!-- 
-                    HOW IT WORKS (currently disabled):
-                    - Displays population exposure data in a scrollable table format
-                    - Shows demographic breakdown (Infant, Child, Youth, Adult, Elderly, Male, Female, Disabled)
-                    - Filters based on selected barangays and other criteria
-                    - Allows clicking on table rows to highlight corresponding map features
-                    - Currently hidden via display: none and height: 0 to disable functionality without removing code
-                    
-                    TO RE-ENABLE: Remove display: none and change height: 0 to appropriate height value
-                    -->
-                    <div id="upper-pane-people24" style="height: 0; display: none;">
-                        <div class="content">
-                            <div style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
-                                <h3 id="people-table-title" style="margin: 0; color: #f39c12; font-size: 1.2rem; font-weight: 700;">
-                                    <span id="people-table-title-text">Population Exposure</span>
-                                    <span id="people-table-count" style="font-size: 0.9rem; color: #cccccc; font-weight: 500; margin-left: 8px;">0 of 0 rows</span>
-                                </h3>
-                                <button id="people-24-close" class="close-table-btn" title="Close" style="position: static;">&times;</button>
-                            </div>
-                            <!-- Filters -->
-                            <div id="people-filters" style="margin-top: 0.75rem; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;"></div>
-                            
-                            <div id="people-table-wrapper" style="margin-top: 0.5rem; overflow-y: auto; overflow-x: hidden; background: rgba(42, 47, 57, 0.5); border: 1px solid rgba(243, 156, 18, 0.2); border-radius: 8px; max-height: calc(40vh - 200px); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);">
-                                <table class="flood-table" id="people-24-table-inner" style="margin:0;">
-                                    <thead style="position: sticky; top: 0; z-index: 2;">
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Barangay</th>
-                                            <th>Infant</th>
-                                            <th>Child</th>
-                                            <th>Youth</th>
-                                            <th>Adult</th>
-                                            <th>Elderly</th>
-                                            <th>Male</th>
-                                            <th>Female</th>
-                                            <th>Disabled</th>
-                                            <th>Flood Exposure</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                        </div>
+            
+            <!-- Top Navigation Bar - Contains all population exposure table elements -->
+            <div id="top-navigation-bar" style="display: none;">
+                <div class="nav-content">
+                    <div class="nav-header">
+                        <h3 id="people-table-title">
+                            <span id="people-table-title-text">Population Exposure</span>
+                            <span id="people-table-count">0 of 0 rows</span>
+                        </h3>
+                        <button id="people-24-close" class="close-table-btn" title="Close">&times;</button>
                     </div>
+                    <!-- Filters -->
+                    <div id="people-filters"></div>
                     
-                    <!-- Household Details Modal -->
+                    <!-- Table Wrapper -->
+                    <div id="people-table-wrapper">
+                        <table class="flood-table" id="people-24-table-inner" style="margin:0;">
+                            <thead style="position: sticky; top: 0; z-index: 2;">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Barangay</th>
+                                    <th>Infant</th>
+                                    <th>Child</th>
+                                    <th>Youth</th>
+                                    <th>Adult</th>
+                                    <th>Elderly</th>
+                                    <th>Male</th>
+                                    <th>Female</th>
+                                    <th>Disabled</th>
+                                    <th>Flood Exposure</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="map-container">
+                <!-- Household Details Modal -->
                     <div id="household-modal" class="modal" style="display: none;">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -1700,8 +1713,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="lower-pane-map">
-                        <div id="map">
+                    <div id="map">
                             <div>
                                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                                 <div id="popup-content"></div>
@@ -1770,57 +1782,6 @@
                     </div>
                 </div>
             
-            <!-- Right Pane -->
-            <div id="right-pane">
-                <div class="sidebar-header" style="background: #24b2ff; border-bottom: none; padding-bottom: 0.7rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.2rem; justify-content: center; text-align: center;">
-                    <i class="fas fa-info-circle" style="font-size: 2.1rem; color: #fff;"></i>
-                    <div style="display: flex; flex-direction: column; align-items: center;">
-                        <span style="font-size: 1.45rem; font-weight: 800; color: #fff; letter-spacing: 1.1px; line-height: 1; text-align: center;">Information</span>
-                        <div style="font-size: 0.98rem; color: #e6e6e6; margin-top: 0.18rem; font-weight: 400; letter-spacing: 0.2px; font-style: italic; opacity: 0.95; text-align: center;">
-                            (Additional Details)
-                        </div>
-                    </div>
-                </div>
-                <div class="sidebar-header">
-                    <span>Details</span>
-                </div>
-                <div id="right-pane-content" style="flex: 1; overflow-y: auto; overflow-x: hidden;">
-                    <!-- Charts Grid Container -->
-                    <div id="right-pane-charts-container">
-                        <!-- Total Households Chart -->
-                        <div class="right-pane-chart-wrapper">
-                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Total Households</h4>
-                            <div>
-                                <canvas id="householdsChart"></canvas>
-                            </div>
-                        </div>
-                        
-                        <!-- Total Population Chart -->
-                        <div class="right-pane-chart-wrapper">
-                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Total Population</h4>
-                            <div>
-                                <canvas id="populationChart"></canvas>
-                            </div>
-                        </div>
-                        
-                        <!-- Group by Sex Chart -->
-                        <div class="right-pane-chart-wrapper">
-                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Group by Sex</h4>
-                            <div>
-                                <canvas id="sexChart"></canvas>
-                            </div>
-                        </div>
-                        
-                        <!-- Group by Age Chart -->
-                        <div class="right-pane-chart-wrapper age-chart-wrapper">
-                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Group by Age</h4>
-                            <div>
-                                <canvas id="ageChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <script src="resources/qgis2web_expressions.js"></script>
         <script src="./resources/functions.js"></script>
@@ -1899,8 +1860,107 @@
         };
         var municipalityDropdownInitialized = false;
         
+        /**
+         * Updates the top pane position based on right pane and charts panel state.
+         * Called when right pane is toggled or when top pane is shown.
+         * Connected to: setupRightPaneToggle(), showPeopleTableFor()
+         */
+        /**
+         * Updates the top pane position and width based on right pane and charts panel state.
+         * Ensures smooth responsive behavior when right pane is toggled.
+         * Called when right pane is toggled or when top pane is shown.
+         * Connected to: setupRightPaneToggle(), showPeopleTableFor(), showChartsPanel(), hideChartsPanel()
+         */
+        function updateTopPanePosition() {
+            var topNavBar = document.getElementById('top-navigation-bar');
+            var mapContainer = document.getElementById('map-container');
+            
+            if (!topNavBar || !mapContainer) return;
+            
+            // Only update if navigation bar is visible
+            if (topNavBar.style.display === 'none') return;
+            
+            var isChartsOpen = mapContainer.classList.contains('charts-open');
+            
+            // Calculate right position based on state (no right pane anymore)
+            var rightValue;
+            if (isChartsOpen) {
+                rightValue = '400px'; // 400px charts panel only
+            } else {
+                rightValue = '0'; // No right pane
+            }
+            
+            // Set the position with smooth transition
+            topNavBar.style.right = rightValue;
+            topNavBar.style.width = ''; // Clear any fixed width to allow auto calculation
+            topNavBar.style.maxWidth = ''; // Clear any max-width restrictions
+            topNavBar.style.transition = 'right 0.3s ease, left 0.3s ease, width 0.3s ease'; // Ensure smooth transition
+            
+            // Force all child elements to be responsive and fill available width
+            var navContent = topNavBar.querySelector('.nav-content');
+            var tableWrapper = topNavBar.querySelector('#people-table-wrapper');
+            var table = topNavBar.querySelector('#people-24-table-inner');
+            
+            if (navContent) {
+                navContent.style.width = '100%';
+                navContent.style.maxWidth = '100%';
+                navContent.style.minWidth = '0';
+            }
+            if (tableWrapper) {
+                tableWrapper.style.width = '100%';
+                tableWrapper.style.maxWidth = '100%';
+                tableWrapper.style.minWidth = '0';
+            }
+            if (table) {
+                table.style.width = '100%';
+                table.style.maxWidth = '100%';
+                table.style.minWidth = '0';
+            }
+            
+            // Force a reflow to ensure changes take effect immediately
+            void topNavBar.offsetHeight;
+        }
+        
+        // Right pane toggle functionality removed - right pane has been deleted
+        
         // Initialize map with base map and Region_2 layer visible
+        // Setup offcanvas event listeners for map container adjustment
+        function setupOffcanvasListeners() {
+            var offcanvasElement = document.getElementById('offcanvasRight');
+            var mapContainer = document.getElementById('map-container');
+            
+            if (!offcanvasElement || !mapContainer) {
+                console.warn('Offcanvas or map container not found');
+                return;
+            }
+            
+            // Adjust map when offcanvas is shown
+            offcanvasElement.addEventListener('show.bs.offcanvas', function() {
+                mapContainer.classList.add('offcanvas-open');
+                // Update map size after transition
+                setTimeout(function() {
+                    if (typeof map !== 'undefined' && map.updateSize) {
+                        map.updateSize();
+                    }
+                }, 300);
+            });
+            
+            // Adjust map when offcanvas is hidden
+            offcanvasElement.addEventListener('hide.bs.offcanvas', function() {
+                mapContainer.classList.remove('offcanvas-open');
+                // Update map size after transition
+                setTimeout(function() {
+                    if (typeof map !== 'undefined' && map.updateSize) {
+                        map.updateSize();
+                    }
+                }, 300);
+            });
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Setup offcanvas listeners
+            setupOffcanvasListeners();
+            
             // Wait for the map to be fully loaded
             setTimeout(function() {
                 console.log('Checking map layers...');
@@ -2347,10 +2407,37 @@
             console.log('Current barangay selections:', selections, 'Reason:', options.reason || 'unknown');
             if (selections.length === 0) {
                 clearHighlight();
+                // Hide offcanvas when no barangay is selected
+                var offcanvasElement = document.getElementById('offcanvasRight');
+                if (offcanvasElement) {
+                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                    if (offcanvas) {
+                        offcanvas.hide();
+                    }
+                }
             } else {
                 highlightSelectedPolygon();
                 if (!options.skipZoom) {
                     zoomToArea();
+                }
+                // Show offcanvas when barangay is selected
+                var offcanvasElement = document.getElementById('offcanvasRight');
+                if (offcanvasElement) {
+                    // Update offcanvas title with selected barangay names
+                    var titleElement = document.getElementById('offcanvasRightLabel');
+                    if (titleElement) {
+                        if (selections.length === 1) {
+                            titleElement.textContent = 'Barangay: ' + selections[0];
+                        } else {
+                            titleElement.textContent = 'Selected Barangay/s (' + selections.length + ')';
+                        }
+                    }
+                    
+                    var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                    if (!offcanvas) {
+                        offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                    }
+                    offcanvas.show();
                 }
             }
             updatePeopleBarangayDisplay();
@@ -2369,12 +2456,9 @@
             updateCharts();
             updateRightPaneCharts();
             
-            // Show charts panel if flood extent is selected and barangay is selected
-            var dropdown = document.getElementById('floodExtentDropdown');
-            var meterVal = dropdown ? String(dropdown.value || '').trim() : '';
-            if (meterVal && selections.length > 0) {
-                showChartsPanel();
-            }
+            // Don't show charts panel when flood extent is selected
+            // Charts panel is hidden when flood extent is selected
+            hideChartsPanel();
         }
         
         /**
@@ -4692,7 +4776,8 @@
                     
                     if (selectedValue === '24') {
                         showFloodData('24');
-                        setTimeout(function(){ showPeopleTableFor(24); }, 200);
+                        // Load data but don't show table - data still available for other functions
+                        setTimeout(function(){ loadPeopleDataForMeter(24); }, 200);
                         // Toggle thematic layers for 24m
                         setTimeout(function(){
                             try {
@@ -4702,33 +4787,34 @@
                         }, 250);
                     } else if (selectedValue === '25') {
                         showFloodData('25');
-                        setTimeout(function(){ showPeopleTableFor(25); }, 200);
+                        setTimeout(function(){ loadPeopleDataForMeter(25); }, 200);
                         setTimeout(function(){ try { toggleHouseholds(true); toggleNumberOfPeople24(false); } catch (e) {} }, 150);
                     } else if (selectedValue === '26') {
                         showFloodData('26');
-                        setTimeout(function(){ showPeopleTableFor(26); }, 200);
+                        setTimeout(function(){ loadPeopleDataForMeter(26); }, 200);
                         setTimeout(function(){ try { toggleHouseholds(true); toggleNumberOfPeople24(false); } catch (e) {} }, 150);
                     } else if (selectedValue === '27') {
                         showFloodData('27');
-                        setTimeout(function(){ showPeopleTableFor(27); }, 200);
+                        setTimeout(function(){ loadPeopleDataForMeter(27); }, 200);
                         setTimeout(function(){ try { toggleHouseholds(true); toggleNumberOfPeople24(false); } catch (e) {} }, 150);
                     } else if (selectedValue === '28') {
                         showFloodData('28');
-                        setTimeout(function(){ showPeopleTableFor(28); }, 200);
+                        setTimeout(function(){ loadPeopleDataForMeter(28); }, 200);
                         setTimeout(function(){ try { toggleHouseholds(true); toggleNumberOfPeople24(false); } catch (e) {} }, 150);
                     } else if (selectedValue === '29') {
                         showFloodData('29');
-                        setTimeout(function(){ showPeopleTableFor(29); }, 200);
+                        setTimeout(function(){ loadPeopleDataForMeter(29); }, 200);
                         setTimeout(function(){ try { toggleHouseholds(true); toggleNumberOfPeople24(false); } catch (e) {} }, 150);
                     } else if (selectedValue === '30') {
                         showFloodData('30');
-                        setTimeout(function(){ showPeopleTableFor(30); }, 200);
+                        setTimeout(function(){ loadPeopleDataForMeter(30); }, 200);
                         setTimeout(function(){ try { toggleHouseholds(true); toggleNumberOfPeople24(false); } catch (e) {} }, 150);
                     } else {
                         // Only hide all flood layers when no value is selected
                         hideAllFloodGroups();
                         ensureBasemapVisible();
-                            hidePeople24Table();
+                        hidePeople24Table();
+                        hideChartsPanel();
                         setTimeout(function(){ try { toggleHouseholds(true); toggleNumberOfPeople24(false); } catch (e) {} }, 150);
                     }
                 });
@@ -6743,6 +6829,8 @@
          * Connected to: updateCharts(), hideChartsPanel()
          */
         function showChartsPanel() {
+            // Update top pane position when charts panel is shown
+            updateTopPanePosition();
             var chartsPanel = document.getElementById('charts-panel');
             var mapContainer = document.getElementById('map-container');
             if (chartsPanel && mapContainer) {
@@ -6764,6 +6852,8 @@
             if (chartsPanel && mapContainer) {
                 chartsPanel.style.display = 'none';
                 mapContainer.classList.remove('charts-open');
+                // Update top pane position when charts panel is hidden
+                updateTopPanePosition();
             }
         }
         
@@ -6778,12 +6868,22 @@
          *              showChartsPanel(), currentPeopleAllFeats, hazardPieChart, demographicsBarChart
          */
         function updateCharts() {
-            // Check if we have flood extent data, if not, try to get it from current selection
+            // Don't update charts when flood extent is selected - charts panel is hidden
+            var dropdown = document.getElementById('floodExtentDropdown');
+            var meterVal = dropdown ? String(dropdown.value || '').trim() : '';
+            if (meterVal) {
+                // If flood extent is selected, don't show charts
+                if (hazardPieChart) hazardPieChart.destroy();
+                if (demographicsBarChart) demographicsBarChart.destroy();
+                hazardPieChart = null;
+                demographicsBarChart = null;
+                return;
+            }
+            
+            // Check if we have data, if not, try to get it (only if no flood extent is selected)
             if (!currentPeopleAllFeats || currentPeopleAllFeats.length === 0) {
-                var dropdown = document.getElementById('floodExtentDropdown');
-                var meterVal = dropdown ? String(dropdown.value || '').trim() : '';
-                if (meterVal) {
-                    // Try to load data for the selected flood extent
+                // Only load if no flood extent is selected
+                if (!meterVal) {
                     var jsonObj = getPeopleJsonFor(meterVal);
                     if (jsonObj && jsonObj.features) {
                         currentPeopleAllFeats = jsonObj.features;
@@ -7678,6 +7778,40 @@
          * Connected to: getPeopleJsonFor(), populatePeopleFiltersFromFeatures(),
          *              applyPeopleFiltersAndRender(), hidePeople24Table(), setupFloodExtentListeners()
          */
+        /**
+         * Loads people data for the specified meter without displaying the table.
+         * Data is still loaded and available for other functions (filtering, calculations, etc.).
+         * Called when flood extent is selected.
+         * @param {Number} meter - The flood extent meter value (24-30)
+         */
+        function loadPeopleDataForMeter(meter) {
+            try {
+                var dropdown = document.getElementById('floodExtentDropdown');
+                if (!dropdown || String(dropdown.value) !== String(meter)) { 
+                    return; 
+                }
+                // If data not ready yet, retry shortly
+                var jsonObj = getPeopleJsonFor(meter);
+                if (!jsonObj) { 
+                    setTimeout(function(){ loadPeopleDataForMeter(meter); }, 200); 
+                    return; 
+                }
+                var feats = (jsonObj && jsonObj.features) ? jsonObj.features : [];
+                currentPeopleAllFeats = feats;
+                populatePeopleFiltersFromFeatures(feats);
+                // Don't show table or charts panel - data is loaded for other functions
+                hidePeople24Table();
+                hideChartsPanel();
+            } catch (e) { 
+                console.error('Error loading people data for meter:', meter, e);
+            }
+        }
+
+        /**
+         * Shows the population exposure table for the specified meter.
+         * NOTE: This function is kept for backward compatibility but is not called when flood extent is selected.
+         * @param {Number} meter - The flood extent meter value (24-30)
+         */
         function showPeopleTableFor(meter) {
             try {
                 var dropdown = document.getElementById('floodExtentDropdown');
@@ -7685,10 +7819,10 @@
                     hidePeople24Table(); 
                     return; 
                 }
-                var pane = document.getElementById('upper-pane-people24');
+                var navBar = document.getElementById('top-navigation-bar');
                 var tbody = document.querySelector('#people-24-table-inner tbody');
                 var titleTextEl = document.getElementById('people-table-title-text');
-                if (!pane || !tbody) return;
+                if (!navBar || !tbody) return;
                 // If data not ready yet, retry shortly
                 var jsonObj = getPeopleJsonFor(meter);
                 if (!jsonObj) { setTimeout(function(){ showPeopleTableFor(meter); }, 200); return; }
@@ -7696,12 +7830,21 @@
                 currentPeopleAllFeats = feats;
                 populatePeopleFiltersFromFeatures(feats);
                 applyPeopleFiltersAndRender(); // This will update the counter correctly
-                // show pane at 40% of available height
-                pane.style.display = 'block';
-                pane.style.height = '40%';
+                // Show navigation bar
+                navBar.style.display = 'block';
                 if (titleTextEl) titleTextEl.textContent = 'Population Exposure - ' + String(meter) + ' meters';
-                // Show charts panel
-                showChartsPanel();
+                
+                // Update navigation bar position based on right pane and charts panel state
+                updateTopPanePosition();
+                
+                // Adjust map container to account for navigation bar
+                var mapContainer = document.getElementById('map-container');
+                if (mapContainer) {
+                    mapContainer.classList.add('nav-bar-visible');
+                }
+                
+                // Don't show charts panel when flood extent is selected
+                hideChartsPanel();
             } catch (e) { /* ignore */ }
         }
 
@@ -7712,8 +7855,15 @@
          * Connected to: showPeopleTableFor(), setupFloodExtentListeners(), hideAllFloodGroups()
          */
         function hidePeople24Table() {
-            var pane = document.getElementById('upper-pane-people24');
-            if (pane) { pane.style.display = 'none'; pane.style.height = '0'; }
+            var navBar = document.getElementById('top-navigation-bar');
+            if (navBar) { navBar.style.display = 'none'; }
+            
+            // Remove nav-bar-visible class from map container
+            var mapContainer = document.getElementById('map-container');
+            if (mapContainer) {
+                mapContainer.classList.remove('nav-bar-visible');
+            }
+            
             updatePeopleCount(0, 0);
             hideChartsPanel();
             resetHouseholdSelection();
@@ -8793,5 +8943,49 @@
             });
         });
         </script>
+        
+        <!-- Bootstrap Offcanvas for Barangay Statistics -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Selected Barangay/s Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Charts Grid Container -->
+                <div id="right-pane-charts-container">
+                    <!-- Total Households Chart -->
+                    <div class="right-pane-chart-wrapper">
+                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Total Households</h4>
+                        <div>
+                            <canvas id="householdsChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Total Population Chart -->
+                    <div class="right-pane-chart-wrapper">
+                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Total Population</h4>
+                        <div>
+                            <canvas id="populationChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Group by Sex Chart -->
+                    <div class="right-pane-chart-wrapper">
+                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Group by Sex</h4>
+                        <div>
+                            <canvas id="sexChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Group by Age Chart -->
+                    <div class="right-pane-chart-wrapper age-chart-wrapper">
+                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Group by Age</h4>
+                        <div>
+                            <canvas id="ageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </body>
         </html>
