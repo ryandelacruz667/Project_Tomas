@@ -521,12 +521,12 @@
             height: calc(100vh - 80px - var(--nav-bar-height, 0px));
         }
         
-        /* Adjust map container when offcanvas is shown */
-        #map-container.offcanvas-open {
-            right: 400px; /* Account for offcanvas width (default Bootstrap offcanvas-end width) */
-            width: calc(100vw - 720px); /* 320px left + 400px offcanvas */
+        /* Right offcanvas removed - no map adjustments needed */
+        /* #map-container.offcanvas-open {
+            right: 400px;
+            width: calc(100vw - 720px);
             transition: right 0.3s ease, width 0.3s ease;
-        }
+        } */
         
         /* Charts panel adjustments */
         #map-container.charts-open {
@@ -534,11 +534,11 @@
             width: calc(100vw - 720px); /* 320px left + 400px charts */
         }
         
-        /* Charts panel when offcanvas is also open */
-        #map-container.charts-open.offcanvas-open {
-            right: 800px; /* 400px offcanvas + 400px charts panel */
-            width: calc(100vw - 1120px); /* 320px left + 400px offcanvas + 400px charts */
-        }
+        /* Charts panel adjustments - right offcanvas removed */
+        /* #map-container.charts-open.offcanvas-open {
+            right: 800px;
+            width: calc(100vw - 1120px);
+        } */
         
         #charts-panel {
             box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
@@ -631,22 +631,23 @@
             box-sizing: border-box;
         }
         
-        /* Adjust navigation bar when offcanvas is open */
-        #map-container.offcanvas-open #top-navigation-bar {
-            right: 400px !important; /* 400px offcanvas */
-        }
+        /* Right offcanvas removed - no navigation bar adjustments needed */
+        /* #map-container.offcanvas-open #top-navigation-bar {
+            right: 400px !important;
+        } */
         
         /* Adjust navigation bar when charts panel is open */
         #map-container.charts-open #top-navigation-bar {
             right: 400px !important; /* 400px charts panel */
         }
         
-        /* Adjust navigation bar when both offcanvas and charts are open */
-        #map-container.charts-open.offcanvas-open #top-navigation-bar {
-            right: 800px !important; /* 400px offcanvas + 400px charts panel */
-        }
+        /* Right offcanvas removed - no combined adjustments needed */
+        /* #map-container.charts-open.offcanvas-open #top-navigation-bar {
+            right: 800px !important;
+        } */
         
-        /* Bootstrap Offcanvas Custom Styling */
+        /* Bootstrap Offcanvas Custom Styling - DISABLED: Right offcanvas removed */
+        /*
         #offcanvasRight {
             width: 400px;
             background: #23272f;
@@ -672,7 +673,6 @@
             overflow-y: auto;
         }
         
-        /* Right pane charts container in offcanvas */
         #offcanvasRight #right-pane-charts-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -681,7 +681,6 @@
             padding: 0;
         }
         
-        /* Chart wrapper in offcanvas */
         #offcanvasRight .right-pane-chart-wrapper {
             width: 100%;
             height: 250px;
@@ -717,6 +716,107 @@
             margin: 0 0 8px 0;
             text-align: center;
             flex-shrink: 0;
+        }
+        */
+        
+        /* Bootstrap Offcanvas Bottom Custom Styling */
+        #offcanvasBottom {
+            height: 400px;
+            width: calc(100vw - 320px); /* Match map container width */
+            left: 320px; /* Align with map container */
+            background: #23272f;
+            color: #fff;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+        
+        /* Adjust bottom offcanvas width when charts panel is open */
+        #map-container.charts-open ~ #offcanvasBottom {
+            width: calc(100vw - 720px); /* Match map container width when charts open */
+        }
+        
+        #offcanvasBottom .offcanvas-header {
+            background: #24b2ff;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #offcanvasBottom .offcanvas-title {
+            color: #fff;
+            font-weight: 700;
+        }
+        
+        #offcanvasBottom .btn-close {
+            filter: invert(1);
+        }
+        
+        #offcanvasBottom .offcanvas-body {
+            background: #23272f;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        
+        /* Charts container in bottom offcanvas - Horizontal layout */
+        #offcanvasBottom #bottom-pane-charts-container {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            padding: 1rem 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            justify-content: space-around;
+            align-items: stretch;
+        }
+        
+        /* Chart wrapper in bottom offcanvas */
+        #offcanvasBottom .bottom-chart-wrapper {
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            height: 250px;
+            position: relative;
+            background: rgba(42, 47, 57, 0.4);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        #offcanvasBottom .bottom-chart-wrapper > div {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            min-height: 0;
+        }
+        
+        #offcanvasBottom .bottom-chart-wrapper canvas {
+            max-width: 100% !important;
+            max-height: 100% !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        #offcanvasBottom .bottom-chart-wrapper h4 {
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        /* Impact Report Charts Container - Horizontal layout */
+        #offcanvasBottom #impact-report-charts-container {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            padding: 1rem 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            justify-content: space-around;
+            align-items: stretch;
+        }
+        
+        /* Adjust map container when bottom offcanvas is shown */
+        #map-container.offcanvas-bottom-open {
+            bottom: 400px; /* Account for bottom offcanvas height */
+            height: calc(100vh - 90px - 400px); /* 90px for navbar, 400px for offcanvas */
         }
         
         #top-navigation-bar .nav-content {
@@ -1381,6 +1481,25 @@
         }
 
         /* Ensure table stays above charts but below modals */
+        
+        /* Custom Popover Styles */
+        .custom-popover {
+            background-color: #2a2f39;
+            border: 1px solid #f39c12;
+            border-radius: 8px;
+        }
+        
+        .custom-popover .popover-header {
+            background-color: #f39c12;
+            color: #fff;
+            border-bottom: 1px solid #f39c12;
+            font-weight: 600;
+        }
+        
+        .custom-popover .popover-body {
+            background-color: #2a2f39;
+            color: #fafafa;
+        }
         </style>
         <title>PROJECT TOMaS (Tactical Overlay for Mapping and Safety)</title>
     </head>
@@ -1459,8 +1578,14 @@
                             <option value="29">29 meters</option>
                             <option value="30">30 meters</option>
                         </select>
-                        <button id="toggleInfographicsBtn" style="margin-top: 12px; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #3a3f4a; background:#2a2f39; color:#fff; cursor:pointer; font-weight:600; width: 100%;">Infographics</button>
-                        <button id="impactReportBtn" style="margin-top: 8px; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #3a3f4a; background:#2a2f39; color:#fff; cursor:pointer; font-weight:600; width: 100%;">Impact Report</button>
+                        <button id="toggleInfographicsBtn" style="margin-top: 12px; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #3a3f4a; background:#2a2f39; color:#fff; cursor:pointer; font-weight:600; width: 100%;">Impact Report</button>
+                        <button type="button" id="impactReportBtn" class="btn btn-secondary" 
+                                data-bs-toggle="popover" 
+                                data-bs-placement="right"
+                                data-bs-custom-class="custom-popover"
+                                data-bs-title="Minimum Needs"
+                                data-bs-content="Minimum Needs Under construction!"
+                                style="margin-top: 8px; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #3a3f4a; background:#2a2f39; color:#fff; cursor:pointer; font-weight:600; width: 100%;">Minimum Needs</button>
                     </div>
                             </div>
                             </div>
@@ -1792,7 +1917,15 @@
         <script src="layers/Households_1.js"></script>
         <!-- People_0.js - DISABLED: Hidden but kept in code for future use -->
         <!-- <script src="layers/People_0.js"></script> -->
-        <script src="layers/AnalysisSummaryat24meters_9.js"></script><script src="layers/AggregationSummaryat24meters_10.js"></script><script src="layers/HazardAggregationSummaryat24meters_11.js"></script><script src="layers/Numberofpeopleat24meters_12.js"></script><script src="layers/AnalysisSummaryat25meters_13.js"></script><script src="layers/AggregationSummaryat25meters_14.js"></script><script src="layers/HazardAggregationSummaryat25meters_15.js"></script><script src="layers/Numberofpeopleat25meters_16.js"></script><script src="layers/AnalysisSummaryat27meters_17.js"></script><script src="layers/AggregationSummaryat27meters_18.js"></script><script src="layers/HazardAggregationSummaryat27meters_19.js"></script><script src="layers/Numberofpeopleat26meters_20.js"></script><script src="layers/AnalysisSummaryat27meters_21.js"></script><script src="layers/AggregationSummaryatat27meters_22.js"></script><script src="layers/HazardAggregationSummaryat27meters_23.js"></script><script src="layers/Numberofpeopleat27meters_24.js"></script><script src="layers/AnalysisSummaryat28meters_25.js"></script><script src="layers/AggregationSummaryat28meters_26.js"></script><script src="layers/HazardAggregationSummaryat28meters_27.js"></script><script src="layers/Numberofpeopleat28meters_28.js"></script><script src="layers/AnalysisSummaryat29meters_29.js"></script><script src="layers/AggregationSummaryat29meters_30.js"></script><script src="layers/HazardAggregationSummaryat29meters_31.js"></script><script src="layers/Numberofpeopleat29meters_32.js"></script><script src="layers/AnalysisSummaryat30meters_33.js"></script><script src="layers/AggregationSummaryfor30meters_34.js"></script><script src="layers/HazardAggregationSummaryat30meters_35.js"></script><script src="layers/Numberofpeopleaffectedat30meters_36.js"></script><script src="layers/Schools_37.js"></script><script src="layers/Roads_38.js"></script><script src="layers/Region2_39.js"></script><script src="layers/DB_0.js"></script><script src="layers/StoTomasHouseholdsjoined_layer_1.js"></script>
+        <script src="layers/AnalysisSummaryat24meters_9.js"></script><script src="layers/AggregationSummaryat24meters_10.js"></script><script src="layers/HazardAggregationSummaryat24meters_11.js"></script><script src="layers/Numberofpeopleat24meters_12.js"></script><script src="layers/AnalysisSummaryat25meters_13.js"></script><script src="layers/AggregationSummaryat25meters_14.js"></script><script src="layers/HazardAggregationSummaryat25meters_15.js"></script><script src="layers/Numberofpeopleat25meters_16.js"></script><script src="layers/AnalysisSummaryat27meters_17.js"></script><script src="layers/AggregationSummaryat27meters_18.js"></script><script src="layers/HazardAggregationSummaryat27meters_19.js"></script><script src="layers/Numberofpeopleat26meters_20.js"></script><script src="layers/AnalysisSummaryat27meters_21.js"></script><script src="layers/AggregationSummaryatat27meters_22.js"></script><script src="layers/HazardAggregationSummaryat27meters_23.js"></script><script src="layers/Numberofpeopleat27meters_24.js"></script><script src="layers/AnalysisSummaryat28meters_25.js"></script><script src="layers/AggregationSummaryat28meters_26.js"></script><script src="layers/HazardAggregationSummaryat28meters_27.js"></script><script src="layers/Numberofpeopleat28meters_28.js"></script><script src="layers/AnalysisSummaryat29meters_29.js"></script><script src="layers/AggregationSummaryat29meters_30.js"></script><script src="layers/HazardAggregationSummaryat29meters_31.js"></script><script src="layers/Numberofpeopleat29meters_32.js"></script><script src="layers/AnalysisSummaryat30meters_33.js"></script><script src="layers/AggregationSummaryfor30meters_34.js"></script><script src="layers/HazardAggregationSummaryat30meters_35.js"></script><script src="layers/Numberofpeopleaffectedat30meters_36.js"></script><script src="layers/Schools_37.js"></script><script src="layers/Roads_38.js"></script><script src="layers/Region2_39.js"></script><script src="layers/DB_0.js"></script>        <script src="layers/StoTomasHouseholdsjoined_layer_1.js"></script>
+        <!-- Aggregation Summary files for Impact Report charts -->
+        <script src="layers/Agregation Summary/24MetersAgrigationsummary_1.js"></script>
+        <script src="layers/Agregation Summary/25MetersAggregationSummary_3.js"></script>
+        <script src="layers/Agregation Summary/26MetersAggregationSummary_5.js"></script>
+        <script src="layers/Agregation Summary/27MetersAggregationSummary_7.js"></script>
+        <script src="layers/Agregation Summary/28MetersAggregationSummary_9.js"></script>
+        <script src="layers/Agregation Summary/29MetersAggregationSummary_11.js"></script>
+        <script src="layers/Agregation Summary/30MetersAggregationSummary_13.js"></script>
         <!-- Households_1_style.js - Required for layers.js -->
         <script src="styles/Households_1_style.js"></script>
         <!-- People_0_style.js - DISABLED: Hidden but kept in code for future use -->
@@ -1926,17 +2059,129 @@
         // Initialize map with base map and Region_2 layer visible
         // Setup offcanvas event listeners for map container adjustment
         function setupOffcanvasListeners() {
-            var offcanvasElement = document.getElementById('offcanvasRight');
+            // Right offcanvas removed - charts moved to bottom offcanvas
+            // Bottom offcanvas listeners are handled by setupFloodExtentOffcanvasListeners()
+            console.log('Right offcanvas listeners removed - charts moved to bottom offcanvas');
+        }
+        
+        /**
+         * Shows the bottom offcanvas when a flood extent is selected.
+         * Updates the title with the selected flood extent and displays relevant information.
+         * Called when flood extent dropdown changes to a valid meter value.
+         * Connected to: hideFloodExtentOffcanvas(), setupFloodExtentListeners()
+         * @param {string} extent - The flood extent meter value (e.g., '24', '25', '26', etc.)
+         */
+        function showFloodExtentOffcanvas(extent) {
+            var offcanvasElement = document.getElementById('offcanvasBottom');
+            if (!offcanvasElement) {
+                console.warn('Bottom offcanvas element not found');
+                return;
+            }
+            
+            var mapContainer = document.getElementById('map-container');
+            var titleElement = document.getElementById('offcanvasBottomLabel');
+            var contentElement = document.getElementById('flood-extent-content');
+            var chartsContainer = document.getElementById('bottom-pane-charts-container');
+            var impactChartsContainer = document.getElementById('impact-report-charts-container');
+            
+            // Update title
+            if (titleElement && extent) {
+                titleElement.textContent = 'Flood Extent: ' + extent + ' Meters';
+            }
+            
+            // Hide charts, show flood content
+            if (chartsContainer) {
+                chartsContainer.style.display = 'none';
+            }
+            if (impactChartsContainer) {
+                impactChartsContainer.style.display = 'none';
+            }
+            if (contentElement && extent) {
+                contentElement.style.display = 'block';
+                contentElement.innerHTML = '<p>Flood extent data for ' + extent + ' meters is displayed on the map.</p>';
+                // You can add more content here, such as statistics, tables, charts, etc.
+            }
+            
+            // Get or create offcanvas instance
+            var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+            if (!offcanvas) {
+                offcanvas = new bootstrap.Offcanvas(offcanvasElement, {
+                    backdrop: false,  // No backdrop - clicks pass through to map
+                    keyboard: true    // Still allow ESC key to close
+                });
+            }
+            
+            // Show offcanvas
+            offcanvas.show();
+            
+            // Adjust map container
+            if (mapContainer) {
+                mapContainer.classList.add('offcanvas-bottom-open');
+                // Update map size after transition
+                setTimeout(function() {
+                    if (typeof map !== 'undefined' && map.updateSize) {
+                        map.updateSize();
+                    }
+                }, 300);
+            }
+        }
+        
+        /**
+         * Hides the bottom offcanvas when flood extent is deselected.
+         * Removes the offcanvas-bottom-open class from map container.
+         * Called when flood extent dropdown is cleared.
+         * Connected to: showFloodExtentOffcanvas(), setupFloodExtentListeners()
+         */
+        function hideFloodExtentOffcanvas() {
+            var offcanvasElement = document.getElementById('offcanvasBottom');
+            if (!offcanvasElement) {
+                return;
+            }
+            
+            var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+            if (offcanvas) {
+                offcanvas.hide();
+            }
+            
+            var mapContainer = document.getElementById('map-container');
+            if (mapContainer) {
+                mapContainer.classList.remove('offcanvas-bottom-open');
+                // Update map size after transition
+                setTimeout(function() {
+                    if (typeof map !== 'undefined' && map.updateSize) {
+                        map.updateSize();
+                    }
+                }, 300);
+            }
+        }
+        
+        /**
+         * Sets up event listeners for the bottom offcanvas.
+         * Handles show/hide events to adjust map container.
+         * Called during page initialization.
+         * Connected to: showFloodExtentOffcanvas(), hideFloodExtentOffcanvas()
+         */
+        function setupFloodExtentOffcanvasListeners() {
+            var offcanvasElement = document.getElementById('offcanvasBottom');
             var mapContainer = document.getElementById('map-container');
             
             if (!offcanvasElement || !mapContainer) {
-                console.warn('Offcanvas or map container not found');
+                console.warn('Bottom offcanvas or map container not found');
                 return;
+            }
+            
+            // Initialize offcanvas with backdrop disabled so clicks pass through to map
+            var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+            if (!offcanvas) {
+                offcanvas = new bootstrap.Offcanvas(offcanvasElement, {
+                    backdrop: false,  // No backdrop - clicks pass through to map
+                    keyboard: true    // Still allow ESC key to close
+                });
             }
             
             // Adjust map when offcanvas is shown
             offcanvasElement.addEventListener('show.bs.offcanvas', function() {
-                mapContainer.classList.add('offcanvas-open');
+                mapContainer.classList.add('offcanvas-bottom-open');
                 // Update map size after transition
                 setTimeout(function() {
                     if (typeof map !== 'undefined' && map.updateSize) {
@@ -1947,7 +2192,7 @@
             
             // Adjust map when offcanvas is hidden
             offcanvasElement.addEventListener('hide.bs.offcanvas', function() {
-                mapContainer.classList.remove('offcanvas-open');
+                mapContainer.classList.remove('offcanvas-bottom-open');
                 // Update map size after transition
                 setTimeout(function() {
                     if (typeof map !== 'undefined' && map.updateSize) {
@@ -1960,6 +2205,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Setup offcanvas listeners
             setupOffcanvasListeners();
+            
+            // Setup flood extent bottom offcanvas listeners
+            setupFloodExtentOffcanvasListeners();
             
             // Wait for the map to be fully loaded
             setTimeout(function() {
@@ -2407,8 +2655,8 @@
             console.log('Current barangay selections:', selections, 'Reason:', options.reason || 'unknown');
             if (selections.length === 0) {
                 clearHighlight();
-                // Hide offcanvas when no barangay is selected
-                var offcanvasElement = document.getElementById('offcanvasRight');
+                // Hide bottom offcanvas when no barangay is selected
+                var offcanvasElement = document.getElementById('offcanvasBottom');
                 if (offcanvasElement) {
                     var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
                     if (offcanvas) {
@@ -2420,11 +2668,11 @@
                 if (!options.skipZoom) {
                     zoomToArea();
                 }
-                // Show offcanvas when barangay is selected
-                var offcanvasElement = document.getElementById('offcanvasRight');
+                // Show bottom offcanvas when barangay is selected
+                var offcanvasElement = document.getElementById('offcanvasBottom');
                 if (offcanvasElement) {
                     // Update offcanvas title with selected barangay names
-                    var titleElement = document.getElementById('offcanvasRightLabel');
+                    var titleElement = document.getElementById('offcanvasBottomLabel');
                     if (titleElement) {
                         if (selections.length === 1) {
                             titleElement.textContent = 'Barangay: ' + selections[0];
@@ -2433,9 +2681,23 @@
                         }
                     }
                     
+                    // Show charts container, hide flood content
+                    var chartsContainer = document.getElementById('bottom-pane-charts-container');
+                    if (chartsContainer) {
+                        chartsContainer.style.display = 'flex';
+                    }
+                    var floodContent = document.getElementById('flood-extent-content');
+                    if (floodContent) {
+                        floodContent.style.display = 'none';
+                    }
+                    
                     var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
                     if (!offcanvas) {
-                        offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                        // Initialize with backdrop disabled so clicks pass through to map
+                        offcanvas = new bootstrap.Offcanvas(offcanvasElement, {
+                            backdrop: false,  // No backdrop - clicks pass through to map
+                            keyboard: true    // Still allow ESC key to close
+                        });
                     }
                     offcanvas.show();
                 }
@@ -4774,6 +5036,12 @@
                         mapLegend.style.display = (selectedValue !== '') ? 'block' : 'none';
                     }
                     
+                    // Do NOT show bottom offcanvas when flood extent is selected
+                    // Offcanvas will only be shown when impact report button is clicked
+                    if (selectedValue === '') {
+                        hideFloodExtentOffcanvas();
+                    }
+                    
                     if (selectedValue === '24') {
                         showFloodData('24');
                         // Load data but don't show table - data still available for other functions
@@ -4815,6 +5083,7 @@
                         ensureBasemapVisible();
                         hidePeople24Table();
                         hideChartsPanel();
+                        hideFloodExtentOffcanvas();
                         setTimeout(function(){ try { toggleHouseholds(true); toggleNumberOfPeople24(false); } catch (e) {} }, 150);
                     }
                 });
@@ -5283,6 +5552,32 @@
                     return;
                 }
                 
+                // Helper function to check if a polygon is visible (not transparent)
+                function isPolygonVisible(feature) {
+                    var selectedBarangays = getSelectedBarangays();
+                    
+                    // If no barangays selected, all polygons are transparent
+                    if (selectedBarangays.length === 0 || stoTomasFilteredBarangays.size === 0) {
+                        return false;
+                    }
+                    
+                    // Get the feature's BARANGAY property
+                    var featBarangay = null;
+                    if (feature.get) {
+                        featBarangay = feature.get('BARANGAY');
+                    } else if (feature.properties) {
+                        featBarangay = feature.properties.BARANGAY;
+                    }
+                    
+                    if (!featBarangay) {
+                        return false;
+                    }
+                    
+                    // Check if this polygon's barangay matches selected barangays
+                    var normalizedBarangay = normalizeBarangayName(featBarangay);
+                    return stoTomasFilteredBarangays.has(normalizedBarangay);
+                }
+                
                 // Add click event listener to the map
                 // Use 'singleclick' to avoid conflicts with other click handlers
                 map.on('singleclick', function(evt) {
@@ -5316,6 +5611,12 @@
                         
                         if (!feature) {
                             // No feature clicked on this layer
+                            return;
+                        }
+                        
+                        // Check if the clicked polygon is visible (not transparent)
+                        if (!isPolygonVisible(feature)) {
+                            console.log('Transparent polygon clicked - table not shown');
                             return;
                         }
                         
@@ -5396,6 +5697,32 @@
                     return;
                 }
                 
+                // Helper function to check if a polygon is visible (not transparent)
+                function isPolygonVisible(feature) {
+                    var selectedBarangays = getSelectedBarangays();
+                    
+                    // If no barangays selected, all polygons are transparent
+                    if (selectedBarangays.length === 0 || stoTomasFilteredBarangays.size === 0) {
+                        return false;
+                    }
+                    
+                    // Get the feature's BARANGAY property
+                    var featBarangay = null;
+                    if (feature.get) {
+                        featBarangay = feature.get('BARANGAY');
+                    } else if (feature.properties) {
+                        featBarangay = feature.properties.BARANGAY;
+                    }
+                    
+                    if (!featBarangay) {
+                        return false;
+                    }
+                    
+                    // Check if this polygon's barangay matches selected barangays
+                    var normalizedBarangay = normalizeBarangayName(featBarangay);
+                    return stoTomasFilteredBarangays.has(normalizedBarangay);
+                }
+                
                 // Add pointer move event listener to the map
                 map.on('pointermove', function(evt) {
                     try {
@@ -5421,9 +5748,16 @@
                             }
                         });
                         
-                        // Change cursor based on whether we're over a feature
+                        // Change cursor based on whether we're over a feature and if it's visible
                         if (feature) {
-                            mapElement.style.cursor = 'pointer';
+                            // Check if the polygon is visible (not transparent)
+                            if (isPolygonVisible(feature)) {
+                                // Visible polygon: show pointer cursor
+                                mapElement.style.cursor = 'pointer';
+                            } else {
+                                // Transparent polygon: show default (arrow) cursor
+                                mapElement.style.cursor = 'default';
+                            }
                         } else {
                             mapElement.style.cursor = '';
                         }
@@ -6836,6 +7170,8 @@
             if (chartsPanel && mapContainer) {
                 chartsPanel.style.display = 'flex';
                 mapContainer.classList.add('charts-open');
+                // Sync offcanvas bottom width with map container
+                syncOffcanvasBottomWidth();
                 updateCharts();
             }
         }
@@ -6852,8 +7188,28 @@
             if (chartsPanel && mapContainer) {
                 chartsPanel.style.display = 'none';
                 mapContainer.classList.remove('charts-open');
+                // Sync offcanvas bottom width with map container
+                syncOffcanvasBottomWidth();
                 // Update top pane position when charts panel is hidden
                 updateTopPanePosition();
+            }
+        }
+        
+        /**
+         * Syncs the bottom offcanvas width with the map container width.
+         * Called when charts panel state changes or offcanvas is shown/hidden.
+         */
+        function syncOffcanvasBottomWidth() {
+            var offcanvasBottom = document.getElementById('offcanvasBottom');
+            var mapContainer = document.getElementById('map-container');
+            if (offcanvasBottom && mapContainer) {
+                // Check if charts panel is open
+                var isChartsOpen = mapContainer.classList.contains('charts-open');
+                if (isChartsOpen) {
+                    offcanvasBottom.style.width = 'calc(100vw - 720px)';
+                } else {
+                    offcanvasBottom.style.width = 'calc(100vw - 320px)';
+                }
             }
         }
         
@@ -8128,6 +8484,10 @@
          */
         function showImpactReportModal(meter) {
             try {
+                // Show the offcanvas with impact report charts instead of modal
+                showImpactReportInOffcanvas(meter);
+                
+                // Also show the modal (keeping existing functionality)
                 var modal = document.getElementById('impact-report-modal');
                 var container = document.getElementById('impact-report-container');
                 var title = document.getElementById('impact-report-modal-title');
@@ -8172,6 +8532,424 @@
             } catch (e) { /* ignore */ }
         }
 
+        /**
+         * Gets aggregation summary data for a given meter level.
+         * Returns the GeoJSON data object from the corresponding aggregation summary file.
+         * @param {string|number} meter - The meter level (24, 25, 26, 27, 28, 29, or 30)
+         * @returns {object|null} The aggregation summary GeoJSON data or null if not found
+         */
+        function getAggregationSummaryData(meter) {
+            try {
+                var meterNum = parseInt(String(meter).replace(/[^0-9]/g, ''), 10);
+                var dataVarName = '';
+                
+                if (meterNum === 24) {
+                    dataVarName = 'json_24MetersAgrigationsummary_1';
+                } else if (meterNum === 25) {
+                    dataVarName = 'json_25MetersAggregationSummary_3';
+                } else if (meterNum === 26) {
+                    dataVarName = 'json_26MetersAggregationSummary_5';
+                } else if (meterNum === 27) {
+                    dataVarName = 'json_27MetersAggregationSummary_7';
+                } else if (meterNum === 28) {
+                    dataVarName = 'json_28MetersAggregationSummary_9';
+                } else if (meterNum === 29) {
+                    dataVarName = 'json_29MetersAggregationSummary_11';
+                } else if (meterNum === 30) {
+                    dataVarName = 'json_30MetersAggregationSummary_13';
+                }
+                
+                if (dataVarName && window[dataVarName]) {
+                    return window[dataVarName];
+                }
+                
+                return null;
+            } catch (e) {
+                console.error('Error getting aggregation summary data:', e);
+                return null;
+            }
+        }
+        
+        /**
+         * Normalizes a name for comparison by removing special characters, spaces, and converting to lowercase.
+         * @param {string} name - The name to normalize
+         * @returns {string} Normalized name
+         */
+        function normalizeNameForMatching(name) {
+            if (!name) return '';
+            return String(name).trim().toLowerCase()
+                .replace(/[^a-z0-9]/g, '') // Remove all non-alphanumeric characters
+                .replace(/\s+/g, ''); // Remove all spaces
+        }
+        
+        /**
+         * Filters and aggregates aggregation summary data by selected barangays.
+         * Sums up all the relevant properties for the selected barangays.
+         * Matches aggregation_name with selected barangay names using flexible matching.
+         * @param {string|number} meter - The meter level
+         * @param {Array<string>} barangays - Array of selected barangay names
+         * @returns {object} Aggregated data object with summed properties
+         */
+        function filterAndAggregateAggregationData(meter, barangays) {
+            try {
+                console.log('Filtering aggregation data for meter:', meter, 'barangays:', barangays);
+                
+                var data = getAggregationSummaryData(meter);
+                if (!data || !data.features || !Array.isArray(data.features)) {
+                    console.warn('No aggregation data found for meter:', meter);
+                    return {
+                        population_affected: 0,
+                        infant: 0,
+                        child: 0,
+                        adult: 0,
+                        elderly: 0,
+                        male: 0,
+                        female: 0,
+                        displaced: 0
+                    };
+                }
+                
+                // Normalize barangay names for comparison
+                var normalizedBarangays = barangays.map(function(b) {
+                    return normalizeNameForMatching(b);
+                });
+                
+                console.log('Normalized barangays:', normalizedBarangays);
+                
+                var aggregated = {
+                    population_affected: 0,
+                    infant: 0,
+                    child: 0,
+                    adult: 0,
+                    elderly: 0,
+                    male: 0,
+                    female: 0,
+                    displaced: 0
+                };
+                
+                var matchedCount = 0;
+                
+                // Get all unique aggregation names for debugging
+                var allAggregationNames = data.features.map(function(f) {
+                    return f.properties ? f.properties.aggregation_name : null;
+                }).filter(function(n) { return n; });
+                console.log('Available aggregation names:', allAggregationNames);
+                
+                data.features.forEach(function(feature) {
+                    if (!feature.properties) return;
+                    
+                    var aggregationName = feature.properties.aggregation_name || '';
+                    var normalizedAggName = normalizeNameForMatching(aggregationName);
+                    
+                    // Check if this aggregation matches any selected barangay
+                    var matches = normalizedBarangays.some(function(barangay) {
+                        // Exact match
+                        if (normalizedAggName === barangay) return true;
+                        // Contains match (aggregation name contains barangay or vice versa)
+                        if (normalizedAggName.indexOf(barangay) >= 0) return true;
+                        if (barangay.indexOf(normalizedAggName) >= 0) return true;
+                        // Handle common variations (e.g., "San Vicente" vs "SanVicente")
+                        var aggNoSpaces = normalizedAggName.replace(/\s/g, '');
+                        var brgyNoSpaces = barangay.replace(/\s/g, '');
+                        if (aggNoSpaces === brgyNoSpaces) return true;
+                        return false;
+                    });
+                    
+                    if (matches) {
+                        matchedCount++;
+                        console.log('Matched aggregation:', aggregationName, 'with selected barangays');
+                        aggregated.population_affected += parseFloat(feature.properties.population_affected || 0);
+                        aggregated.infant += parseFloat(feature.properties.infant || 0);
+                        aggregated.child += parseFloat(feature.properties.child || 0);
+                        aggregated.adult += parseFloat(feature.properties.adult || 0);
+                        aggregated.elderly += parseFloat(feature.properties.elderly || 0);
+                        aggregated.male += parseFloat(feature.properties.male || 0);
+                        aggregated.female += parseFloat(feature.properties.female || 0);
+                        aggregated.displaced += parseFloat(feature.properties.displaced || 0);
+                    }
+                });
+                
+                console.log('Matched', matchedCount, 'aggregations. Aggregated data:', aggregated);
+                
+                return aggregated;
+            } catch (e) {
+                console.error('Error filtering aggregation data:', e);
+                return {
+                    population_affected: 0,
+                    infant: 0,
+                    child: 0,
+                    adult: 0,
+                    elderly: 0,
+                    male: 0,
+                    female: 0,
+                    displaced: 0
+                };
+            }
+        }
+        
+        /**
+         * Renders impact report doughnut charts in the bottom offcanvas.
+         * Creates charts for Affected Population, Age Groups, Gender, and Displaced Population.
+         * @param {string|number} meter - The meter level
+         */
+        function renderImpactReportCharts(meter) {
+            try {
+                console.log('Rendering impact report charts for meter:', meter);
+                
+                var barangays = getSelectedBarangays();
+                if (!barangays || barangays.length === 0) {
+                    console.log('No barangays selected for impact report charts');
+                    return;
+                }
+                
+                console.log('Selected barangays:', barangays);
+                
+                var aggregated = filterAndAggregateAggregationData(meter, barangays);
+                
+                console.log('Aggregated data:', aggregated);
+                
+                // Check if Chart.js is available
+                if (typeof Chart === 'undefined') {
+                    console.error('Chart.js is not loaded. Cannot render charts.');
+                    return;
+                }
+                
+                // Destroy existing charts if they exist
+                if (window.affectedPopulationChart) {
+                    window.affectedPopulationChart.destroy();
+                    window.affectedPopulationChart = null;
+                }
+                if (window.ageGroupsChart) {
+                    window.ageGroupsChart.destroy();
+                    window.ageGroupsChart = null;
+                }
+                if (window.genderChart) {
+                    window.genderChart.destroy();
+                    window.genderChart = null;
+                }
+                if (window.displacedChart) {
+                    window.displacedChart.destroy();
+                    window.displacedChart = null;
+                }
+                
+                // Chart.js default colors
+                var colors = {
+                    primary: ['#f39c12', '#34495e'],
+                    age: ['#3498db', '#2ecc71', '#e74c3c', '#9b59b6'],
+                    gender: ['#3498db', '#e91e63'],
+                    displaced: ['#f39c12', '#95a5a6']
+                };
+                
+                // Chart configuration
+                var chartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#ffffff',
+                                font: { size: 11 },
+                                padding: 8
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: '#f39c12',
+                            borderWidth: 1
+                        }
+                    }
+                };
+                
+                // Affected Population Chart
+                var affectedCanvas = document.getElementById('affectedPopulationChart');
+                if (!affectedCanvas) {
+                    console.error('Affected Population canvas not found');
+                } else {
+                    var affectedCtx = affectedCanvas.getContext('2d');
+                    var affectedValue = Math.round(aggregated.population_affected);
+                    console.log('Creating Affected Population chart with value:', affectedValue);
+                    
+                    // For doughnut chart, show affected population vs total population
+                    // Use total population if available, otherwise use a proportional base
+                    var totalPopulation = affectedValue; // Since we're showing affected, use it as the main value
+                    // Create a comparison value for visual representation
+                    // Show affected as percentage of a reasonable total
+                    var baseValue = Math.max(affectedValue, 100);
+                    var remainder = Math.max(0, baseValue * 2 - affectedValue);
+                    
+                    window.affectedPopulationChart = new Chart(affectedCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Affected Population', ''],
+                            datasets: [{
+                                data: [affectedValue, remainder],
+                                backgroundColor: [colors.primary[0], colors.primary[1]],
+                                borderColor: ['#ffffff', 'transparent'],
+                                borderWidth: 2
+                            }]
+                        },
+                        options: chartOptions
+                    });
+                    console.log('Affected Population chart created');
+                }
+                
+                // Age Groups Chart
+                var ageGroupsCanvas = document.getElementById('ageGroupsChart');
+                if (!ageGroupsCanvas) {
+                    console.error('Age Groups canvas not found');
+                } else {
+                    var ageGroupsCtx = ageGroupsCanvas.getContext('2d');
+                    var ageData = [
+                        Math.round(aggregated.infant),
+                        Math.round(aggregated.child),
+                        Math.round(aggregated.adult),
+                        Math.round(aggregated.elderly)
+                    ];
+                    console.log('Creating Age Groups chart with data:', ageData);
+                    
+                    window.ageGroupsChart = new Chart(ageGroupsCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Infant', 'Child', 'Adult', 'Elderly'],
+                            datasets: [{
+                                data: ageData,
+                                backgroundColor: colors.age,
+                                borderColor: '#ffffff',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: chartOptions
+                    });
+                    console.log('Age Groups chart created');
+                }
+                
+                // Gender Chart
+                var genderCanvas = document.getElementById('genderChart');
+                if (!genderCanvas) {
+                    console.error('Gender canvas not found');
+                } else {
+                    var genderCtx = genderCanvas.getContext('2d');
+                    var genderData = [
+                        Math.round(aggregated.male),
+                        Math.round(aggregated.female)
+                    ];
+                    console.log('Creating Gender chart with data:', genderData);
+                    
+                    window.genderChart = new Chart(genderCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Male', 'Female'],
+                            datasets: [{
+                                data: genderData,
+                                backgroundColor: colors.gender,
+                                borderColor: '#ffffff',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: chartOptions
+                    });
+                    console.log('Gender chart created');
+                }
+                
+                // Displaced Population Chart
+                var displacedCanvas = document.getElementById('displacedChart');
+                if (!displacedCanvas) {
+                    console.error('Displaced canvas not found');
+                } else {
+                    var displacedCtx = displacedCanvas.getContext('2d');
+                    var displacedValue = Math.round(aggregated.displaced);
+                    var notDisplaced = Math.max(0, aggregated.population_affected - displacedValue);
+                    // If no displaced and no affected, still show a chart with minimal values
+                    if (displacedValue === 0 && notDisplaced === 0) {
+                        displacedValue = 0;
+                        notDisplaced = 1; // Minimum value to show chart
+                    }
+                    console.log('Creating Displaced Population chart - displaced:', displacedValue, 'not displaced:', notDisplaced);
+                    
+                    window.displacedChart = new Chart(displacedCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Displaced', 'Not Displaced'],
+                            datasets: [{
+                                data: [displacedValue, notDisplaced],
+                                backgroundColor: colors.displaced,
+                                borderColor: ['#ffffff', '#ffffff'],
+                                borderWidth: 2
+                            }]
+                        },
+                        options: chartOptions
+                    });
+                    console.log('Displaced Population chart created');
+                }
+                
+                console.log('All impact report charts rendered successfully');
+            } catch (e) {
+                console.error('Error rendering impact report charts:', e);
+                console.error('Stack trace:', e.stack);
+            }
+        }
+        
+        /**
+         * Shows impact report in bottom offcanvas with charts.
+         * Filters aggregation data by selected barangays and displays doughnut charts.
+         * @param {string|number} meter - The meter level
+         */
+        function showImpactReportInOffcanvas(meter) {
+            try {
+                var offcanvasElement = document.getElementById('offcanvasBottom');
+                if (!offcanvasElement) return;
+                
+                // Update title
+                var titleElement = document.getElementById('offcanvasBottomLabel');
+                if (titleElement) {
+                    var safeMeter = String(meter).replace(/[^0-9]/g, '');
+                    titleElement.textContent = 'Impact Report – ' + safeMeter + ' meters';
+                }
+                
+                // Hide flood extent content, show charts container
+                var floodContent = document.getElementById('flood-extent-content');
+                var chartsContainer = document.getElementById('bottom-pane-charts-container');
+                var impactChartsContainer = document.getElementById('impact-report-charts-container');
+                
+                if (floodContent) floodContent.style.display = 'none';
+                if (chartsContainer) chartsContainer.style.display = 'none';
+                if (impactChartsContainer) impactChartsContainer.style.display = 'flex';
+                
+                // Show offcanvas
+                var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                if (!offcanvas) {
+                    offcanvas = new bootstrap.Offcanvas(offcanvasElement, {
+                        backdrop: false,
+                        keyboard: true
+                    });
+                }
+                
+                // Show offcanvas first
+                offcanvas.show();
+                
+                // Render charts after offcanvas is fully visible
+                // Wait for both Bootstrap transition and DOM update
+                setTimeout(function() {
+                    var impactChartsContainer = document.getElementById('impact-report-charts-container');
+                    if (impactChartsContainer && impactChartsContainer.offsetParent !== null) {
+                        console.log('Offcanvas is visible, rendering charts...');
+                        renderImpactReportCharts(meter);
+                    } else {
+                        console.warn('Impact charts container not visible yet, retrying...');
+                        // Retry after another delay
+                        setTimeout(function() {
+                            renderImpactReportCharts(meter);
+                        }, 300);
+                        }
+                }, 500);
+            } catch (e) {
+                console.error('Error showing impact report in offcanvas:', e);
+            }
+        }
+        
         /**
          * Hides the impact report modal.
          * Sets modal display to 'none' and clears the container content.
@@ -8723,25 +9501,27 @@
                 }
             })();
 
-            // Wire Impact Report button
-            var impactBtn = document.getElementById('impactReportBtn');
-            if (impactBtn && !impactBtn._wired) {
-                impactBtn.addEventListener('click', function() {
-                    try {
-                        var dropdown = document.getElementById('floodExtentDropdown');
-                        var meterVal = dropdown ? String(dropdown.value || '').trim() : '';
-                        if (!meterVal) {
-                            alert('Please select a Flood Extent first.');
-                            return;
-                        }
-                        try { localStorage.setItem('lastFloodMeter', meterVal); } catch (e) { /* ignore */ }
-                        showImpactReportModal(meterVal);
-                    } catch (e) { /* ignore */ }
-                });
-                impactBtn._wired = true;
-            }
+            // Wire Impact Report button - DISABLED: Now shows popover instead of modal
+            // The button now uses Bootstrap popover to show "Minimum Needs Under construction!" message
+            // Original modal functionality has been disconnected
+            // var impactBtn = document.getElementById('impactReportBtn');
+            // if (impactBtn && !impactBtn._wired) {
+            //     impactBtn.addEventListener('click', function() {
+            //         try {
+            //             var dropdown = document.getElementById('floodExtentDropdown');
+            //             var meterVal = dropdown ? String(dropdown.value || '').trim() : '';
+            //             if (!meterVal) {
+            //                 alert('Please select a Flood Extent first.');
+            //                 return;
+            //             }
+            //             try { localStorage.setItem('lastFloodMeter', meterVal); } catch (e) { }
+            //             showImpactReportModal(meterVal);
+            //         } catch (e) { }
+            //     });
+            //     impactBtn._wired = true;
+            // }
 
-            // Wire standalone Infographics button (near L645)
+            // Wire standalone Impact Report button (toggleInfographicsBtn)
             var toggleInfoBtn = document.getElementById('toggleInfographicsBtn');
             if (toggleInfoBtn && !toggleInfoBtn._wired) {
                 toggleInfoBtn.addEventListener('click', function() {
@@ -8752,8 +9532,13 @@
                             alert('Please select a Flood Extent first.');
                             return;
                         }
+                        var barangays = getSelectedBarangays();
+                        if (!barangays || barangays.length === 0) {
+                            alert('Please select at least one barangay first.');
+                            return;
+                        }
                         try { localStorage.setItem('lastFloodMeter', meterVal); } catch (e) { /* ignore */ }
-                        showInfographicsModal(meterVal);
+                        showImpactReportInOffcanvas(meterVal);
                     } catch (e) { /* ignore */ }
                 });
                 toggleInfoBtn._wired = true;
@@ -8941,47 +9726,120 @@
                     }
                 } catch (err) { /* ignore */ }
             });
+            
+            // Sync offcanvas bottom width with map container on page load
+            syncOffcanvasBottomWidth();
+            
+            // Set up Bootstrap offcanvas event listeners to sync width
+            var offcanvasBottomEl = document.getElementById('offcanvasBottom');
+            if (offcanvasBottomEl && typeof bootstrap !== 'undefined') {
+                var offcanvasBottom = bootstrap.Offcanvas.getInstance(offcanvasBottomEl) || new bootstrap.Offcanvas(offcanvasBottomEl);
+                offcanvasBottomEl.addEventListener('shown.bs.offcanvas', function() {
+                    syncOffcanvasBottomWidth();
+                });
+                offcanvasBottomEl.addEventListener('hidden.bs.offcanvas', function() {
+                    syncOffcanvasBottomWidth();
+                });
+            }
+            
+            // Initialize popover for Minimum Needs button
+            var minimumNeedsBtn = document.getElementById('impactReportBtn');
+            if (minimumNeedsBtn && typeof bootstrap !== 'undefined') {
+                // Initialize popover
+                var popover = new bootstrap.Popover(minimumNeedsBtn, {
+                    trigger: 'click',
+                    placement: 'right',
+                    customClass: 'custom-popover'
+                });
+                
+                // Prevent default click action - disable the button functionality
+                minimumNeedsBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Popover will show automatically due to data-bs-toggle="popover"
+                });
+            }
         });
         </script>
         
-        <!-- Bootstrap Offcanvas for Barangay Statistics -->
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                
+        <!-- Bootstrap Offcanvas Bottom for Flood Extent -->
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasRightLabel">Selected Barangay/s Details</h5>
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Flood Extent Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <!-- Charts Grid Container -->
-                <div id="right-pane-charts-container">
+                <div id="flood-extent-content">
+                    <!-- Content will be populated dynamically -->
+                    <p>Select a flood extent to view details.</p>
+                </div>
+                <!-- Charts Container - Horizontal Layout -->
+                <div id="bottom-pane-charts-container" style="display: none;">
                     <!-- Total Households Chart -->
-                    <div class="right-pane-chart-wrapper">
-                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Total Households</h4>
+                    <div class="bottom-chart-wrapper">
+                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600; margin: 0 0 8px 0;">Total Households</h4>
                         <div>
                             <canvas id="householdsChart"></canvas>
                         </div>
                     </div>
                     
                     <!-- Total Population Chart -->
-                    <div class="right-pane-chart-wrapper">
-                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Total Population</h4>
+                    <div class="bottom-chart-wrapper">
+                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600; margin: 0 0 8px 0;">Total Population</h4>
                         <div>
                             <canvas id="populationChart"></canvas>
                         </div>
                     </div>
                     
                     <!-- Group by Sex Chart -->
-                    <div class="right-pane-chart-wrapper">
-                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Group by Sex</h4>
+                    <div class="bottom-chart-wrapper">
+                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600; margin: 0 0 8px 0;">Group by Sex</h4>
                         <div>
                             <canvas id="sexChart"></canvas>
                         </div>
                     </div>
                     
                     <!-- Group by Age Chart -->
-                    <div class="right-pane-chart-wrapper age-chart-wrapper">
-                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600;">Group by Age</h4>
+                    <div class="bottom-chart-wrapper">
+                        <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600; margin: 0 0 8px 0;">Group by Age</h4>
                         <div>
                             <canvas id="ageChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Impact Report Charts Container -->
+                    <div id="impact-report-charts-container" style="display: none;">
+                        <!-- Affected Population Chart -->
+                        <div class="bottom-chart-wrapper">
+                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600; margin: 0 0 8px 0;">Affected Population</h4>
+                            <div>
+                                <canvas id="affectedPopulationChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Age Groups Chart (Infant, Child, Adult, Elderly) -->
+                        <div class="bottom-chart-wrapper">
+                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600; margin: 0 0 8px 0;">Age Groups</h4>
+                            <div>
+                                <canvas id="ageGroupsChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Gender Chart (Male, Female) -->
+                        <div class="bottom-chart-wrapper">
+                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600; margin: 0 0 8px 0;">Gender</h4>
+                            <div>
+                                <canvas id="genderChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Displaced Population Chart -->
+                        <div class="bottom-chart-wrapper">
+                            <h4 style="color: #fafafa; font-size: 0.75rem; font-weight: 600; margin: 0 0 8px 0;">Displaced Population</h4>
+                            <div>
+                                <canvas id="displacedChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
